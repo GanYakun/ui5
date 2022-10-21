@@ -1001,14 +1001,15 @@ task createEntityengineFile(group: ofbizServer, description: 'MySQL OR Derby') {
             generateFileFromTemplate(entityEngineTemplateFile,
                     'framework/entity/config/', mysqlDatabaseInfo, 'entityengine.xml')
             println "generated mysql entityengine.xml complete ! "
-        }
-        if (dbPlatform == 'D') {
+        }else if (dbPlatform == 'D') {
             def derbyDatabaseInfo = [
                     'dbPlatform': 'derby'
             ]
             generateFileFromTemplate(entityEngineTemplateFile,
                     'framework/entity/config/', derbyDatabaseInfo, 'entityengine.xml')
             println "generated derby entityengine.xml complete ! "
+        }else{
+            throw new GradleException("The value of dbPlatform can only be upper case D or M !")
         }
     }
 }
