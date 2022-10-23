@@ -1,8 +1,9 @@
-FROM registry.cn-hangzhou.aliyuncs.com/banff/centeros7.9_jdk8:latest
+# FROM registry.cn-hangzhou.aliyuncs.com/banff/centeros7.9_jdk8:latest
+FROM ubuntujava8:latest
 
 
 
-ENV JAVA_HOME=/root/jdk1.8.0_231 \
+ENV JAVA_HOME=/root/jdk1.8.0_351 \
     PATH=$PATH:$JAVA_HOME/bin \
     TZ=Asia/Shanghai  \
     LANG=en_US.UTF-8  \
@@ -10,6 +11,7 @@ ENV JAVA_HOME=/root/jdk1.8.0_231 \
     LC_ALL=en_US.UTF-8
 
 COPY ./ /root/ofbiz/
+WORKDIR /root/ofbiz
 
 RUN ["chmod", "+x", "/root/ofbiz/startofbiz.sh"]
 
