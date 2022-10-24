@@ -1,5 +1,5 @@
-# FROM registry.cn-hangzhou.aliyuncs.com/banff/centeros7.9_jdk8:latest
-FROM ubuntujava8:latest
+FROM registry.cn-hangzhou.aliyuncs.com/banff/ubuntujava8:20.04
+# FROM ubuntujava8:latest
 
 
 
