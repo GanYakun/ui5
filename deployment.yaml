@@ -1,0 +1,24 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: gbms-deployment
+  namespace: gbms
+  labels:
+    k8s-app: gbms-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: gbms-app
+  template:
+    metadata:
+      labels:
+        k8s-app: gbms-app
+    spec:
+      containers:
+        - name: gbms-container
+          image: gbms:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+            - containerPort: 8443
