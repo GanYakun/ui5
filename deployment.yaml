@@ -17,8 +17,7 @@ spec:
     spec:
       containers:
         - name: gbms-container
-          image: gbms:latest
-          imagePullPolicy: Never
+          image: registry.hub.docker.com/wjtong/gbms:latest
           ports:
             - containerPort: 8080
             - containerPort: 8443
