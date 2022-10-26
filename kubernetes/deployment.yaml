@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: gbms-container
-          image: registry.hub.docker.com/wjtong/gbms:latest
+          image: registry.cn-hangzhou.aliyuncs.com/banff/gbmsk8s:latest
           ports:
             - containerPort: 8080
             - containerPort: 8443
@@ -28,3 +28,5 @@ spec:
         - name: gbms-gradle-storage
           persistentVolumeClaim:
             claimName: gbms-pv-claim
+      imagePullSecrets:
+        - name: regcred
