@@ -24,6 +24,12 @@ spec:
           volumeMounts:
             - mountPath: "/root/.gradle"
               name: gbms-gradle-storage
+          env:
+            - name: DB_PLAT_FORM
+              valueFrom:
+                configMapKeyRef:
+                  name: gbms-config
+                  key:   db_platform
       volumes:
         - name: gbms-gradle-storage
           persistentVolumeClaim:

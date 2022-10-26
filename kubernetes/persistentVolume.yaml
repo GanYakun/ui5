@@ -11,4 +11,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/c/Users/Wenji/.gradle"
+    path: "/root/.gradle"
