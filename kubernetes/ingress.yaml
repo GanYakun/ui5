@@ -5,7 +5,7 @@ metadata:
   namespace: gbms
 spec:
   rules:
-    - host: ingresshost.com
+    - host: master.gbms.cloudlakenet.com
       http:
         paths:
           - path: /

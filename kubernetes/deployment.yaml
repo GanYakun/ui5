@@ -1,3 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gbms-config
+  namespace: gbms
+data:
+  db_platform: "derby"
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -36,3 +44,83 @@ spec:
             claimName: gbms-pv-claim
       imagePullSecrets:
         - name: regcred
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: activemq-deployment
+  namespace: gbms
+  labels:
+    k8s-app: activemq-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: activemq-app
+  template:
+    metadata:
+      labels:
+        k8s-app: activemq-app
+    spec:
+      containers:
+        - name: activemq-container
+          image: registry.cn-hangzhou.aliyuncs.com/banff/activemq:latest
+          ports:
+            - containerPort: 61616
+            - containerPort: 1883
+      imagePullSecrets:
+        - name: regcred
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: activemq-service
+  namespace: gbms
+spec:
+  ports:
+    - name: porta
+      protocol: TCP
+      port: 61616
+      targetPort: 61616
+    - name: portb
+      protocol: TCP
+      port: 1883
+      targetPort: 1883
+  selector:
+    k8s-app: activemq-app
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gbms-service
+  namespace: gbms
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: https
+      protocol: TCP
+      port: 8443
+      targetPort: 8443
+  selector:
+    k8s-app: gbms-app
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gbms-ingress
+  namespace: gbms
+spec:
+  rules:
+    - host: master.gbms.cloudlakenet.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gbms-service
+                port:
+                  number: 8080

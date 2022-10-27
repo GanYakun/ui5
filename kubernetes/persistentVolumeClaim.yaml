@@ -5,6 +5,7 @@ metadata:
   namespace: gbms
 spec:
   storageClassName: manual
+  volumeName: gbms-pv-volume
   accessModes:
     - ReadWriteOnce
   resources:
