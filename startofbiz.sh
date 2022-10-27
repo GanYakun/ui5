@@ -37,5 +37,5 @@ rm -f $OFBIZ_LOG
 # start ofbiz
 
 #(cd "$OFBIZ_HOME" && exec ./gradlew ofbiz -x test)
-(cd /root/ofbiz && exec ./gradlew createEntityengineFile -PdbPlatform="D")
+(cd /root/ofbiz && exec ./gradlew createEntityengineFile)
 (cd /root/ofbiz && exec ./gradlew ofbiz -x test)
