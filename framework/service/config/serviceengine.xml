@@ -150,4 +150,25 @@ under the License.
         </jms-service>
         -->
     </service-engine>
+
+    <jms-service name="draculaFixedAssetCommand" send-mode="all">
+        <server jndi-server-name="default"
+                client-id="LocalCommandReceiver"
+                jndi-name="topicConnectionFactory"
+                topic-queue="dracula.services.fixedAsset.command"
+                type="topic"
+                username=""
+                password=""
+                listen="false"/>
+    </jms-service>
+    <jms-service name="draculaFixedAssetCommandReply" send-mode="all">
+        <server jndi-server-name="default"
+                client-id="LocalReplyReceiver"
+                jndi-name="topicConnectionFactory"
+                topic-queue="dracula.services.fixedAsset.command.reply"
+                type="topic"
+                username=""
+                password=""
+                listen="true"/>
+    </jms-service>
 </service-config>
