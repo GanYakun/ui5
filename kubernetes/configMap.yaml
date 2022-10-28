@@ -4,8 +4,8 @@ metadata:
   name: gbms-config
   namespace: gbms
 data:
-  db_platform: "derby"
-  db_ip: "ds216"
+  db_platform: "mysql"
+  db_ip: "192.168.100.235"
   db_port: "3306"
   ofbiz_db_name: "gbms"
   olap_db_name: "gbmsolap"

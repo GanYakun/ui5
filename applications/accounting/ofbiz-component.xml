@@ -89,24 +89,24 @@ under the License.
     <test-suite loader="main" location="testdef/fixedassettests.xml"/>
     <test-suite loader="main" location="testdef/ratetests.xml"/>
 
-    <webapp name="accounting"
-        title="Accounting"
-        server="default-server"
-        location="webapp/accounting"
-        base-permission="OFBTOOLS,ACCOUNTING"
-        mount-point="/accounting"/>
+<!--    <webapp name="accounting"-->
+<!--        title="Accounting"-->
+<!--        server="default-server"-->
+<!--        location="webapp/accounting"-->
+<!--        base-permission="OFBTOOLS,ACCOUNTING"-->
+<!--        mount-point="/accounting"/>-->
 
-    <webapp name="ar"
-        title="Accounting - AR"
-        server="default-server"
-        location="webapp/ar"
-        base-permission="OFBTOOLS,ACCOUNTING"
-        mount-point="/ar"/>
+<!--    <webapp name="ar"-->
+<!--        title="Accounting - AR"-->
+<!--        server="default-server"-->
+<!--        location="webapp/ar"-->
+<!--        base-permission="OFBTOOLS,ACCOUNTING"-->
+<!--        mount-point="/ar"/>-->
 
-    <webapp name="ap"
-        title="Accounting - AP"
-        server="default-server"
-        location="webapp/ap"
-        base-permission="OFBTOOLS,ACCOUNTING"
-        mount-point="/ap"/>
+<!--    <webapp name="ap"-->
+<!--        title="Accounting - AP"-->
+<!--        server="default-server"-->
+<!--        location="webapp/ap"-->
+<!--        base-permission="OFBTOOLS,ACCOUNTING"-->
+<!--        mount-point="/ap"/>-->
 </ofbiz-component>
