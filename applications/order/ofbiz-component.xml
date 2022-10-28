@@ -65,12 +65,12 @@ under the License.
     <test-suite loader="main" location="testdef/ShoppingListTests.xml"/>
     <test-suite loader="main" location="testdef/ShoppingCartTests.xml"/>
 
-    <webapp name="order"
-        title="Order"
-        description="OrderComponentDescription"
-        server="default-server"
-        location="webapp/ordermgr"
-        base-permission="OFBTOOLS,ORDERMGR"
-        mount-point="/ordermgr"/>
+<!--    <webapp name="order"-->
+<!--        title="Order"-->
+<!--        description="OrderComponentDescription"-->
+<!--        server="default-server"-->
+<!--        location="webapp/ordermgr"-->
+<!--        base-permission="OFBTOOLS,ORDERMGR"-->
+<!--        mount-point="/ordermgr"/>-->
 </ofbiz-component>
 

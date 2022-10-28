@@ -1,6 +1,28 @@
 kind: Service
 apiVersion: v1
 metadata:
+  name: activemq-service
+  namespace: gbms
+spec:
+  ports:
+    - name: porta
+      protocol: TCP
+      port: 61616
+      targetPort: 61616
+    - name: portb
+      protocol: TCP
+      port: 1883
+      targetPort: 1883
+    - name: portc
+      protocol: TCP
+      port: 8161
+      targetPort: 8161
+  selector:
+    k8s-app: activemq-app
+---
+kind: Service
+apiVersion: v1
+metadata:
   name: gbms-service
   namespace: gbms
 spec:
@@ -15,3 +37,17 @@ spec:
       targetPort: 8443
   selector:
     k8s-app: gbms-app
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gbmsclient-service
+  namespace: gbms
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    k8s-app: gbmsclient-app

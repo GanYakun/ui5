@@ -34,12 +34,12 @@ under the License.
     <service-resource type="model" loader="main" location="servicedef/services_employment.xml"/>
     <service-resource type="model" loader="main" location="servicedef/services_position.xml"/>
 
-    <webapp name="humanres"
-        title="HR"
-        description="HumanResourceApplication"
-        server="default-server"
-        location="webapp/humanres"
-        base-permission="OFBTOOLS,HUMANRES"
-        mount-point="/humanres"
-        app-bar-display="true"/>
+<!--    <webapp name="humanres"-->
+<!--        title="HR"-->
+<!--        description="HumanResourceApplication"-->
+<!--        server="default-server"-->
+<!--        location="webapp/humanres"-->
+<!--        base-permission="OFBTOOLS,HUMANRES"-->
+<!--        mount-point="/humanres"-->
+<!--        app-bar-display="true"/>-->
 </ofbiz-component>

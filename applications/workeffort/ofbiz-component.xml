@@ -40,17 +40,17 @@ under the License.
 
     <test-suite loader="main" location="testdef/workefforttests.xml"/>
 
-     <webapp name="workeffort"
-        title="WorkEffort"
-        server="default-server"
-        location="webapp/workeffort"
-        base-permission="OFBTOOLS,WORKEFFORTMGR"
-        mount-point="/workeffort"/>
+<!--     <webapp name="workeffort"-->
+<!--        title="WorkEffort"-->
+<!--        server="default-server"-->
+<!--        location="webapp/workeffort"-->
+<!--        base-permission="OFBTOOLS,WORKEFFORTMGR"-->
+<!--        mount-point="/workeffort"/>-->
 
-     <webapp name="ical"
-        title="iCalendar"
-        app-bar-display="false"
-        server="default-server"
-        location="webapp/ical"
-        mount-point="/iCalendar"/>
+<!--     <webapp name="ical"-->
+<!--        title="iCalendar"-->
+<!--        app-bar-display="false"-->
+<!--        server="default-server"-->
+<!--        location="webapp/ical"-->
+<!--        mount-point="/iCalendar"/>-->
 </ofbiz-component>
