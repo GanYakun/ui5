@@ -5,3 +5,12 @@ metadata:
   namespace: gbms
 data:
   db_platform: "derby"
+  db_ip: "ds216"
+  db_port: "3306"
+  ofbiz_db_name: "gbms"
+  olap_db_name: "gbmsolap"
+  tenant_db_name: "gbmstenant"
+  db_user: "root"
+  db_password: "root"
+  host_headers_allowed: "dev.localkubernetes.com"
+  java_naming_provider_url: "tcp://activemq-service:61616"

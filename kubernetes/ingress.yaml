@@ -3,15 +3,42 @@ kind: Ingress
 metadata:
   name: gbms-ingress
   namespace: gbms
+  annotations:
+    kubernetes.io/ingress.class: public
 spec:
+  defaultBackend:
+    service:
+      name: gbms-service
+      port:
+        number: 8080
   rules:
-    - host: master.gbms.cloudlakenet.com
+    - host: dev.localkubernetes.com
       http:
         paths:
-          - path: /
+          - path: /gbms
             pathType: Prefix
             backend:
               service:
                 name: gbms-service
                 port:
                   number: 8080
+    - host: dev.localkubernetes.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gbmsclient-service
+                port:
+                  number: 80
+    - host: activemq.dev.localkubernetes.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: activemq-service
+                port:
+                  number: 8161
