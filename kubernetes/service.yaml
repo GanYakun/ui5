@@ -35,6 +35,7 @@ spec:
       protocol: TCP
       port: 8443
       targetPort: 8443
+  type: LoadBalancer
   selector:
     k8s-app: gbms-app
 ---

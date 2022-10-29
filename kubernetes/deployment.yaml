@@ -41,6 +41,10 @@ spec:
           volumeMounts:
             - mountPath: "/root/.gradle"
               name: gbms-gradle-storage
+              subPath: .gradle
+            - mountPath: "/root/ofbiz/runtime/logs"
+              name: gbms-gradle-storage
+              subPath: logs
           env:
             - name: DB_PLAT_FORM
               valueFrom:
@@ -188,6 +192,7 @@ spec:
       protocol: TCP
       port: 8443
       targetPort: 8443
+  type: LoadBalancer
   selector:
     k8s-app: gbms-app
 ---
