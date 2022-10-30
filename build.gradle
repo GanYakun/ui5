@@ -546,8 +546,8 @@ task createTenant(group: ofbizServer, description: 'Create a new tenant in your 
 // ========== Documentation tasks ==========
 tasks.withType(AsciidoctorTask) { task ->
     backends 'html5', 'pdf'
-    attributes  \
-         'doctype': 'book',
+    attributes     \
+            'doctype': 'book',
             'experimental': '',
             'icons': 'font',
             'sectnums': '',
@@ -980,42 +980,65 @@ task pullAllPluginsSource(group: ofbizPlugin,
     }
 }
 
-task createEntityengineFile(group: ofbizServer, description: 'MySQL OR Derby') {
+task generateConfigFile(group: ofbizServer, description: 'MySQL OR Derby') {
     def entityEngineTemplateFile = "${rootDir}/framework/resources/templates/TemplateEntityengine.xml"
+    def securityPropertiesTemplateFile = "${rootDir}/framework/resources/templates/TemplateSecurity.properties"
+    def jndiPropertiesTemplateFile = "${rootDir}/framework/resources/templates/TemplateJNDI.properties"
     doLast {
-        if (!project.hasProperty("dbPlatform")) {
-            throw new GradleException("Project property dbPlatform is missing")
+        def dbPlatform = System.getenv("DB_PLAT_FORM")
+        if (dbPlatform != null) {
+            if (dbPlatform == 'mysql') {
+                def mysqlDatabaseInfo = [
+                        'dbPlatform'        : dbPlatform,
+                        'dbIP'              : System.getenv("DB_IP").isEmpty() ? '' : System.getenv("DB_IP"),
+                        'dbPort'            : System.getenv("DB_PORT").isEmpty() ? '' : System.getenv("DB_PORT"),
+                        'ofbizDataBaseName' : System.getenv("OFBIZ_DB_NAME").isEmpty() ? '' : System.getenv("OFBIZ_DB_NAME"),
+                        'olapDataBaseName'  : System.getenv("OLAP_DB_NAME").isEmpty() ? '' : System.getenv("OLAP_DB_NAME"),
+                        'tenantDataBaseName': System.getenv("TENANT_DB_NAME").isEmpty() ? '' : System.getenv("TENANT_DB_NAME"),
+                        'dbUser'            : System.getenv("DB_USER").isEmpty() ? '' : System.getenv("DB_USER"),
+                        'dbPassword'        : System.getenv("DB_PASSWORD").isEmpty() ? '' : System.getenv("DB_PASSWORD"),
+                ]
+                generateFileFromTemplate(entityEngineTemplateFile,
+                        'framework/entity/config/', mysqlDatabaseInfo, 'entityengine.xml')
+                println "generated mysql entityengine.xml complete ! "
+            } else if (dbPlatform == 'derby') {
+                def derbyDatabaseInfo = [
+                        'dbPlatform': dbPlatform
+                ]
+                generateFileFromTemplate(entityEngineTemplateFile,
+                        'framework/entity/config/', derbyDatabaseInfo, 'entityengine.xml')
+                println "generated derby entityengine.xml complete ! "
+            } else {
+                throw new GradleException("The value of dbPlatform can only be upper case derby or mysql !")
+            }
+        } else {
+            throw new GradleException("The value of dbPlatform is null !")
         }
-        // dbPlatform values: D(Derby), M(MySQL)
-        if (dbPlatform == 'M') {
-            def mysqlDatabaseInfo = [
-                    'dbPlatform'        : 'mysql',
-                    'dbIP'              : System.getenv("DB_IP").isEmpty() ? '' : System.getenv("DB_IP"),
-                    'dbPort'            : System.getenv("DB_PORT").isEmpty() ? '' : System.getenv("DB_PORT"),
-                    'ofbizDataBaseName' : System.getenv("OFBIZ_DB_NAME").isEmpty() ? '' : System.getenv("OFBIZ_DB_NAME"),
-                    'olapDataBaseName'  : System.getenv("OLAP_DB_NAME").isEmpty() ? '' : System.getenv("OLAP_DB_NAME"),
-                    'tenantDataBaseName': System.getenv("TENANT_DB_NAME").isEmpty() ? '' : System.getenv("TENANT_DB_NAME"),
-                    'dbUser'            : System.getenv("DB_USER").isEmpty() ? '' : System.getenv("DB_USER"),
-                    'dbPassword'        : System.getenv("DB_PASSWORD").isEmpty() ? '' : System.getenv("DB_PASSWORD"),
+        def hostHeadersAllowed = System.getenv("HOST_HEADERS_ALLOWED")
+        if (hostHeadersAllowed != null){
+            def hostHeadersAllowedInfo = [
+                    'hostHeadersAllowed':System.getenv("HOST_HEADERS_ALLOWED").isEmpty() ? 'localhost,127.0.0.1' : System.getenv("HOST_HEADERS_ALLOWED")
             ]
-            generateFileFromTemplate(entityEngineTemplateFile,
-                    'framework/entity/config/', mysqlDatabaseInfo, 'entityengine.xml')
-            println "generated mysql entityengine.xml complete ! "
-        }else if (dbPlatform == 'D') {
-            def derbyDatabaseInfo = [
-                    'dbPlatform': 'derby'
+            generateFileFromTemplate(securityPropertiesTemplateFile,
+            'framework/security/config/',hostHeadersAllowedInfo,'security.properties')
+            println 'generated security.properties complete !'
+        }
+        def javaNamingProviderUrl = System.getenv("JAVA_NAMING_PROVIDER_URL")
+        if (javaNamingProviderUrl !=null){
+            def javaNamingProviderUrlInfo = [
+                    'javaNamingProviderUrl':javaNamingProviderUrl
             ]
-            generateFileFromTemplate(entityEngineTemplateFile,
-                    'framework/entity/config/', derbyDatabaseInfo, 'entityengine.xml')
-            println "generated derby entityengine.xml complete ! "
-        }else{
-            throw new GradleException("The value of dbPlatform can only be upper case D or M !")
+            generateFileFromTemplate(jndiPropertiesTemplateFile,
+                    'framework/base/config/',javaNamingProviderUrlInfo,'jndi.properties')
+            println 'generated jndi.properties complete !'
         }
     }
 }
 
-task getDatabaseEvn {
+task getConfigFileEvn {
     doLast {
+        println '=====Database Info====='
+        println System.getenv("DB_PLAT_FORM")
         println System.getenv("OFBIZ_DB_NAME")
         println System.getenv("OLAP_DB_NAME")
         println System.getenv("TENANT_DB_NAME")
@@ -1023,6 +1046,12 @@ task getDatabaseEvn {
         println System.getenv("DB_PORT")
         println System.getenv("DB_USER")
         println System.getenv("DB_PASSWORD")
+        println '=====Security.properties Info====='
+        println System.getenv("HOST_HEADERS_ALLOWED")
+        println '=====jndi.properties Info====='
+        println System.getenv("JAVA_NAMING_PROVIDER_URL")
+
+
     }
 }
 
