@@ -4,16 +4,16 @@ metadata:
   name: gbms-config
   namespace: gbms
 data:
-  db_platform: "mysql"
-  db_ip: "192.168.100.235"
-  db_port: "3306"
-  ofbiz_db_name: "gbms"
-  olap_db_name: "gbmsolap"
-  tenant_db_name: "gbmstenant"
-  db_user: "root"
-  db_password: "root"
-  host_headers_allowed: "dev.localkubernetes.com"
-  java_naming_provider_url: "tcp://activemq-service:61616"
+  gbms.entityEngine.dbPlatform: "mysql"
+  gbms.entityEngine.dbHost: "192.168.100.235"
+  gbms.entityEngine.dbPort: "3306"
+  gbms.entityEngine.ofbizDbName: "gbms"
+  gbms.entityEngine.olapDbName: "gbmsolap"
+  gbms.entityEngine.tenantDbName: "gbmstenant"
+  gbms.entityEngine.dbUser: "root"
+  gbms.entityEngine.dbPassword: "root"
+  gbms.security.hostHeadersAllowed: "dev.localkubernetes.com"
+  gbms.jndi.javaNamingProviderUrl: "tcp://activemq-service:61616"
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -50,52 +50,52 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: gbms-config
-                  key: db_platform
+                  key: gbms.entityEngine.dbPlatform
             - name: DB_IP
               valueFrom:
                 configMapKeyRef:
                   name: gbms-config
-                  key: db_ip
+                  key: gbms.entityEngine.dbHost
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
                   name: gbms-config
-                  key: db_port
+                  key: gbms.entityEngine.dbPort
             - name: OFBIZ_DB_NAME
               valueFrom:
                 configMapKeyRef:
                   name: gbms-config
-                  key: ofbiz_db_name
+                  key: gbms.entityEngine.ofbizDbName
             - name: OLAP_DB_NAME
               valueFrom:
                 configMapKeyRef:
                   name: gbms-config
-                  key: olap_db_name
+                  key: gbms.entityEngine.olapDbName
             - name: TENANT_DB_NAME
               valueFrom:
                 configMapKeyRef:
                   name: gbms-config
-                  key: tenant_db_name
+                  key: gbms.entityEngine.tenantDbName
             - name: DB_USER
               valueFrom:
                 configMapKeyRef:
                   name: gbms-config
-                  key: db_user
+                  key: gbms.entityEngine.dbUser
             - name: DB_PASSWORD
               valueFrom:
                 configMapKeyRef:
                   name: gbms-config
-                  key: db_password
+                  key: gbms.entityEngine.dbPassword
             - name: HOST_HEADERS_ALLOWED
               valueFrom:
                 configMapKeyRef:
                   name: gbms-config
-                  key: host_headers_allowed
+                  key: gbms.security.hostHeadersAllowed
             - name: JAVA_NAMING_PROVIDER_URL
               valueFrom:
                 configMapKeyRef:
                   name: gbms-config
-                  key: java_naming_provider_url
+                  key: gbms.jndi.javaNamingProviderUrl
       volumes:
         - name: gbms-gradle-storage
           persistentVolumeClaim:
