@@ -1029,7 +1029,7 @@ task generateConfigFile(group: ofbizServer, description: 'MySQL OR Derby') {
                     'javaNamingProviderUrl':javaNamingProviderUrl
             ]
             generateFileFromTemplate(jndiPropertiesTemplateFile,
-                    'ofbiz/framework/base/config/',javaNamingProviderUrlInfo,'jndi.properties')
+                    'framework/base/config/',javaNamingProviderUrlInfo,'jndi.properties')
             println 'generated jndi.properties complete !'
         }
     }
