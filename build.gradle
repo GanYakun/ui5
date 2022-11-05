@@ -49,7 +49,7 @@ ext.os = System.getProperty('os.name').toLowerCase()
 ext.pluginsDir = "${rootDir}/plugins"
 
 // java settings
-List jvmArguments = ['-Xms128M', '-Xmx1024M']
+List jvmArguments = ['-Xms128M', '-Xmx512M']
 if (project.hasProperty('jvmArgs')) {
     jvmArguments = jvmArgs.tokenize()
 }
