@@ -11,4 +11,19 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/root/.gradle"
+    path: "/root/persistentvolume"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gradle-lib
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/root/gradlelib"

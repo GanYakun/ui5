@@ -36,16 +36,16 @@ under the License.
     <entity-resource type="data" reader-name="demo" loader="main" location="data/ManufacturingExampleData.xml"/>
 
     <!-- service resources: model(s) [definitions], eca(s) and group definitions -->
-    <service-resource type="model" loader="main" location="servicedef/services.xml"/>
-    <service-resource type="model" loader="main" location="servicedef/services_calendar.xml"/>
-    <service-resource type="model" loader="main" location="servicedef/services_routing.xml"/>
-    <service-resource type="model" loader="main" location="servicedef/services_production_run.xml"/>
-    <service-resource type="model" loader="main" location="servicedef/services_bom.xml"/>
-    <service-resource type="model" loader="main" location="servicedef/services_mrp.xml"/>
-    <service-resource type="model" loader="main" location="servicedef/services_formula.xml"/>
-    <service-resource type="eca" loader="main" location="servicedef/secas.xml"/>
+<!--    <service-resource type="model" loader="main" location="servicedef/services.xml"/>-->
+<!--    <service-resource type="model" loader="main" location="servicedef/services_calendar.xml"/>-->
+<!--    <service-resource type="model" loader="main" location="servicedef/services_routing.xml"/>-->
+<!--    <service-resource type="model" loader="main" location="servicedef/services_production_run.xml"/>-->
+<!--    <service-resource type="model" loader="main" location="servicedef/services_bom.xml"/>-->
+<!--    <service-resource type="model" loader="main" location="servicedef/services_mrp.xml"/>-->
+<!--    <service-resource type="model" loader="main" location="servicedef/services_formula.xml"/>-->
+<!--    <service-resource type="eca" loader="main" location="servicedef/secas.xml"/>-->
 
-    <test-suite loader="main" location="testdef/productionruntests.xml"/>
+<!--    <test-suite loader="main" location="testdef/productionruntests.xml"/>-->
 
     <!-- web applications; will be mounted when using the embedded container -->
 <!--    <webapp name="manufacturing"-->
