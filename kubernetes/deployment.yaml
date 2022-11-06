@@ -65,7 +65,7 @@ spec:
     spec:
       containers:
         - name: gbms-container
-          image: registry.cn-hangzhou.aliyuncs.com/banff/gbmsk8s:latest
+          image: registry.cn-hangzhou.aliyuncs.com/banff/gbms:latest
           ports:
             - containerPort: 8080
             - containerPort: 8443
@@ -260,7 +260,7 @@ spec:
     spec:
       containers:
         - name: dracula-container
-          image: registry.cn-hangzhou.aliyuncs.com/banff/draculak8s:latest
+          image: registry.cn-hangzhou.aliyuncs.com/banff/dracula:latest
           ports:
             - containerPort: 8080
             - containerPort: 8443
