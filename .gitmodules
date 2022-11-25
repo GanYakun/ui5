@@ -1,0 +1,4 @@
+[submodule "plugins/bf-demo"]
+	path = plugins/bf-demo
+	url = https://gitee.com/cloudlakenet/bf-demo.git
+	branch = bf-demo
