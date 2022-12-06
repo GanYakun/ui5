@@ -1,0 +1,402 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gbms-config
+  namespace: gbms
+data:
+  gbms.entityEngine.dbPlatform: "mysql"
+  gbms.entityEngine.dbHost: "192.168.100.235"
+  gbms.entityEngine.dbPort: "3306"
+  gbms.entityEngine.ofbizDbName: "gbms"
+  gbms.entityEngine.olapDbName: "gbmsolap"
+  gbms.entityEngine.tenantDbName: "gbmstenant"
+  gbms.entityEngine.dbUser: "root"
+  gbms.entityEngine.dbPassword: "root"
+  gbms.security.hostHeadersAllowed: "dev.localkubernetes.com"
+  gbms.jndi.javaNamingProviderUrl: "tcp://activemq-service:61616"
+  uilab.domainName: "k8s.master.gbms.cloudlakenet.com"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metabase-config
+  namespace: gbms
+data:
+  metabase.dbPlatform: "mysql"
+  metabase.dbHost: "rm-8vb42j29t1v5n2h2r.mysql.zhangbei.rds.aliyuncs.com"
+  metabase.dbPort: "3306"
+  metabase.dbName: "metabase"
+  metabase.dbUser: "metabase"
+  metabase.dbPassword: "Metabase@123"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dracula-config
+  namespace: gbms
+data:
+  dracula.entityEngine.dbHost: rm-8vb42j29t1v5n2h2r.mysql.zhangbei.rds.aliyuncs.com
+  dracula.entityEngine.dbPassword: lhDHeL5D%uG7sfew
+  dracula.entityEngine.dbPlatform: mysql
+  dracula.entityEngine.dbPort: '3306'
+  dracula.entityEngine.dbUser: dracula
+  dracula.entityEngine.ofbizDbName: dracula
+  dracula.entityEngine.olapDbName: dracula_olap
+  dracula.entityEngine.tenantDbName: dracula_tenant
+  dracula.jndi.javaNamingProviderUrl: 'tcp://activemq-service:61616'
+  dracula.security.hostHeadersAllowed: dracula.k8s.master.gbms.cloudlakenet.com
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: gbms-deployment
+  namespace: gbms
+  labels:
+    k8s-app: gbms-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: gbms-app
+  template:
+    metadata:
+      labels:
+        k8s-app: gbms-app
+    spec:
+      containers:
+        - name: gbms-container
+          image: registry.cn-hangzhou.aliyuncs.com/banff/gbms:latest
+          ports:
+            - containerPort: 8080
+            - containerPort: 8443
+          volumeMounts:
+            - mountPath: "/root/.gradle"
+              name: gbms-gradle-storage
+              subPath: .gradle
+            - mountPath: "/root/ofbiz/runtime/logs"
+              name: gbms-gradle-storage
+              subPath: logs
+          env:
+            - name: DB_PLAT_FORM
+              valueFrom:
+                configMapKeyRef:
+                  name: gbms-config
+                  key: gbms.entityEngine.dbPlatform
+            - name: DB_IP
+              valueFrom:
+                configMapKeyRef:
+                  name: gbms-config
+                  key: gbms.entityEngine.dbHost
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: gbms-config
+                  key: gbms.entityEngine.dbPort
+            - name: OFBIZ_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: gbms-config
+                  key: gbms.entityEngine.ofbizDbName
+            - name: OLAP_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: gbms-config
+                  key: gbms.entityEngine.olapDbName
+            - name: TENANT_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: gbms-config
+                  key: gbms.entityEngine.tenantDbName
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: gbms-config
+                  key: gbms.entityEngine.dbUser
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: gbms-config
+                  key: gbms.entityEngine.dbPassword
+            - name: HOST_HEADERS_ALLOWED
+              valueFrom:
+                configMapKeyRef:
+                  name: gbms-config
+                  key: gbms.security.hostHeadersAllowed
+            - name: JAVA_NAMING_PROVIDER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: gbms-config
+                  key: gbms.jndi.javaNamingProviderUrl
+      volumes:
+        - name: gbms-gradle-storage
+          persistentVolumeClaim:
+            claimName: gbms-pv-claim
+      imagePullSecrets:
+        - name: regcred
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: activemq-deployment
+  namespace: gbms
+  labels:
+    k8s-app: activemq-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: activemq-app
+  template:
+    metadata:
+      labels:
+        k8s-app: activemq-app
+    spec:
+      containers:
+        - name: activemq-container
+          image: registry.cn-hangzhou.aliyuncs.com/banff/activemq:latest
+          ports:
+            - containerPort: 61616
+            - containerPort: 1883
+            - containerPort: 8161
+      imagePullSecrets:
+        - name: regcred
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: gbmsclient-deployment
+  namespace: gbms
+  labels:
+    k8s-app: gbmsclient-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: gbmsclient-app
+  template:
+    metadata:
+      labels:
+        k8s-app: gbmsclient-app
+    spec:
+      containers:
+        - name: gbmsclient-container
+          image: registry.cn-hangzhou.aliyuncs.com/banff/uilab-gbms:master
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: regcred
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: metabase-deployment
+  namespace: gbms
+  labels:
+    k8s-app: metabase-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: metabase-app
+  template:
+    metadata:
+      labels:
+        k8s-app: metabase-app
+    spec:
+      containers:
+        - name: metabase-container
+          image: registry.cn-hangzhou.aliyuncs.com/banff/metabase:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MB_DB_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: metabase-config
+                  key: metabase.dbPlatform
+            - name: MB_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: metabase-config
+                  key: metabase.dbHost
+            - name: MB_DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: metabase-config
+                  key: metabase.dbPort
+            - name: MB_DB_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: metabase-config
+                  key: metabase.dbName
+            - name: MB_DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: metabase-config
+                  key: metabase.dbUser
+            - name: MB_DB_PASS
+              valueFrom:
+                configMapKeyRef:
+                  name: metabase-config
+                  key: metabase.dbPassword
+      imagePullSecrets:
+        - name: regcred
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dracula-deployment
+  labels:
+    k8s-app: dracula-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: dracula-app
+  template:
+    metadata:
+      labels:
+        k8s-app: dracula-app
+    spec:
+      containers:
+        - name: dracula-container
+          image: registry.cn-hangzhou.aliyuncs.com/banff/dracula:latest
+          ports:
+            - containerPort: 8080
+            - containerPort: 8443
+          volumeMounts:
+            - mountPath: "/root/.gradle"
+              name: gradle-pv-storage
+              subPath: dracula_gradle
+            - mountPath: "/root/ofbiz/runtime/logs"
+              name: gbms-pv-storage
+              subPath: dracula_logs
+          env:
+            - name: DB_PLAT_FORM
+              valueFrom:
+                configMapKeyRef:
+                  name: dracula-config
+                  key: dracula.entityEngine.dbPlatform
+            - name: DB_IP
+              valueFrom:
+                configMapKeyRef:
+                  name: dracula-config
+                  key: dracula.entityEngine.dbHost
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: dracula-config
+                  key: dracula.entityEngine.dbPort
+            - name: OFBIZ_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: dracula-config
+                  key: dracula.entityEngine.ofbizDbName
+            - name: OLAP_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: dracula-config
+                  key: dracula.entityEngine.olapDbName
+            - name: TENANT_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: dracula-config
+                  key: dracula.entityEngine.tenantDbName
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: dracula-config
+                  key: dracula.entityEngine.dbUser
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: dracula-config
+                  key: dracula.entityEngine.dbPassword
+            - name: HOST_HEADERS_ALLOWED
+              valueFrom:
+                configMapKeyRef:
+                  name: dracula-config
+                  key: dracula.security.hostHeadersAllowed
+            - name: JAVA_NAMING_PROVIDER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: dracula-config
+                  key: dracula.jndi.javaNamingProviderUrl
+      volumes:
+        - name: gradle-pv-storage
+          persistentVolumeClaim:
+            claimName: gradle-lib-claim
+        - name: gbms-pv-storage
+          persistentVolumeClaim:
+            claimName: gbms-pv-claim
+      imagePullSecrets:
+        - name: regcred
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: activemq-service
+  namespace: gbms
+spec:
+  ports:
+    - name: porta
+      protocol: TCP
+      port: 61616
+      targetPort: 61616
+    - name: portb
+      protocol: TCP
+      port: 1883
+      targetPort: 1883
+    - name: portc
+      protocol: TCP
+      port: 8161
+      targetPort: 8161
+  selector:
+    k8s-app: activemq-app
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gbms-service
+  namespace: gbms
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: https
+      protocol: TCP
+      port: 8443
+      targetPort: 8443
+  type: LoadBalancer
+  selector:
+    k8s-app: gbms-app
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gbmsclient-service
+  namespace: gbms
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    k8s-app: gbmsclient-app
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: metabase-service
+  namespace: gbms
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+  selector:
+    k8s-app: metabase-app

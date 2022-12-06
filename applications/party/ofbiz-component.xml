@@ -40,11 +40,11 @@ under the License.
     <test-suite loader="main" location="testdef/PartyTests.xml"/>
     <test-suite loader="main" location="testdef/PartyContactMechTests.xml"/>
 
-    <webapp name="party"
-        title="Party"
-        description="PartyComponentDescription"
-        server="default-server"
-        location="webapp/partymgr"
-        base-permission="OFBTOOLS,PARTYMGR"
-        mount-point="/partymgr"/>
+<!--    <webapp name="party"-->
+<!--        title="Party"-->
+<!--        description="PartyComponentDescription"-->
+<!--        server="default-server"-->
+<!--        location="webapp/partymgr"-->
+<!--        base-permission="OFBTOOLS,PARTYMGR"-->
+<!--        mount-point="/partymgr"/>-->
 </ofbiz-component>
