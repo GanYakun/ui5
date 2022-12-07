@@ -2,7 +2,6 @@ bin/
 build/
 applications/*/build
 framework/*/build
-/plugins/
 runtime/git-rebase/*
 runtime/SvnInfo.ftl
 runtime/GitInfo.ftl
@@ -27,6 +26,7 @@ changelog
 .groovy
 .pc
 .DS_Store
+node_modules/
 desktop.ini
 .idea
 *.iml
