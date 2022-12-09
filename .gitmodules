@@ -1,3 +1,6 @@
 [submodule "plugins/gbms"]
 	path = plugins/gbms
 	url = https://gitee.com/cloudlakenet/gbms.git
+[submodule "plugins/vanhelsing"]
+	path = plugins/vanhelsing
+	url = https://gitee.com/cloudlakenet/vanhelsing.git
