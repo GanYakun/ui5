@@ -70,8 +70,7 @@ public class OfbizOdataProcessor {
     protected String entityName = null; // targetEntityName
     protected EdmEntityType edmEntityType; // targetEdmEntityType
     protected Set<String> fieldsToSelect = null;
-    protected Set<String> groupBySet = null;
-    protected Set<String> aggregateSet = null;
+    protected Set<String> applySelect = null;
     protected int skipValue = 0;
     protected int topValue = MAX_ROWS;
     protected List<String> orderBy;
@@ -433,10 +432,10 @@ public class OfbizOdataProcessor {
                     if (path.size() == 1) {
                         String segmentValue = path.get(0).getSegmentValue();
                         //要把这个字段加到selectField里 否则ofbiz不会进行groupBy处理
-                        if (UtilValidate.isEmpty(groupBySet)) {
-                            groupBySet = new HashSet<>();
+                        if (UtilValidate.isEmpty(applySelect)) {
+                            applySelect = new HashSet<>();
                         }
-                        groupBySet.add(segmentValue);
+                        applySelect.add(segmentValue);
                         dynamicViewEntity.addAlias(ofbizCsdlEntityType.getOfbizEntity(), segmentValue, segmentValue, null, false, true, null);
                     } else if (path.size() == 2) {
                         //子对象字段
@@ -454,10 +453,10 @@ public class OfbizOdataProcessor {
                         String segmentValue = resourcePrimitiveProperty.getSegmentValue();
                         dynamicViewEntity.addAlias(navigationName, navigationName + segmentValue, segmentValue, null, false, true, null);
                         //要把这个字段加到selectField里 否则ofbiz不会进行groupBy处理
-                        if (UtilValidate.isEmpty(groupBySet)) {
-                            groupBySet = new HashSet<>();
+                        if (UtilValidate.isEmpty(applySelect)) {
+                            applySelect = new HashSet<>();
                         }
-                        groupBySet.add(navigationName + segmentValue);
+                        applySelect.add(navigationName + segmentValue);
                         //add ViewLink
                         if (!dynamicViewHolder.hasViewLink(ofbizCsdlEntityType.getOfbizEntity(), navigationName)) {
                             ModelRelation relation = currModelEntity.getRelation(resourceNavigation.getSegmentValue());
@@ -507,10 +506,10 @@ public class OfbizOdataProcessor {
                     }
                     dynamicViewEntity.addAlias(ofbizCsdlEntityType.getName(), expressionAlias, modelEntity.getFirstPkFieldName(), null, false, null, "count");
                 }
-                if (aggregateSet == null) {
-                    aggregateSet = new HashSet<>();
+                if (applySelect == null) {
+                    applySelect = new HashSet<>();
                 }
-                aggregateSet.add(expressionAlias);
+                applySelect.add(expressionAlias);
             }
 
         }
@@ -523,6 +522,12 @@ public class OfbizOdataProcessor {
         if (entityName == null) return;
         OfbizCsdlEntityType csdlEntityType = null;
         if (UtilValidate.isNotEmpty(queryOptions) && queryOptions.get("orderByOption") != null) {
+            OrderByOption orderByOption = (OrderByOption) queryOptions.get("orderByOption");
+            if (queryOptions.get("applyOption") != null) {
+                //apply的orderby不需要处理
+                orderBy = Util.retrieveSimpleOrderByOption(orderByOption);
+                return;
+            }
             if (orderBy == null) {
                 orderBy = new ArrayList<>();
             }
@@ -531,6 +536,12 @@ public class OfbizOdataProcessor {
             if (edmParams.get("edmNavigationProperty") != null) {
                 EdmNavigationProperty navigationProperty = (EdmNavigationProperty) edmParams.get("edmNavigationProperty");
                 csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(navigationProperty.getType().getFullQualifiedName());
+            }
+            //有BaseType的实体 需要使用dynamicView
+            if (UtilValidate.isNotEmpty(csdlEntityType.getBaseType())) {
+                if (dynamicViewHolder == null) {
+                    dynamicViewHolder = new DynamicViewHolder(csdlEntityType, edmProvider, delegator, dispatcher, userLogin);
+                }
             }
             List<OrderByItem> orderItemList = ((OrderByOption) queryOptions.get("orderByOption")).getOrders();
             for (OrderByItem orderByItem : orderItemList) {
@@ -548,6 +559,10 @@ public class OfbizOdataProcessor {
                     final String sortPropertyName = edmProperty.getName();
                     OfbizCsdlProperty csdlProperty = (OfbizCsdlProperty) csdlEntityType.getProperty(sortPropertyName);
                     String propertyAlias = sortPropertyName;
+                    if(UtilValidate.isEmpty(csdlProperty) && UtilValidate.isNotEmpty(csdlEntityType.getBaseType())) {
+                        //或许是BaseType字段
+                        csdlProperty = csdlEntityType.getBaseTypeProperty(sortPropertyName, edmProvider);
+                    }
                     if (csdlProperty.getRelAlias() != null || csdlProperty.isAttribute() || csdlProperty.isNumericAttribute() || csdlProperty.isDateAttribute()) {
                         //RelAlias或者Attribute字段，需要用DynamicView
                         if (dynamicViewHolder == null) {
