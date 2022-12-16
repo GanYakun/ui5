@@ -23,6 +23,13 @@ import org.asciidoctor.gradle.AsciidoctorTask
 /* ========================================================
  * Project setup
  * ======================================================== */
+allprojects {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        mavenLocal()
+        mavenCentral()
+    }
+}
 buildscript {
     repositories {
         mavenCentral()
