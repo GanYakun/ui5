@@ -14,6 +14,7 @@ import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericPK;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.entity.model.*;
+import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.entity.util.EntityUtil;
 import org.apache.ofbiz.service.*;
 import org.apache.olingo.commons.api.data.Entity;
@@ -280,15 +281,16 @@ public class ProcessorServices {
         Delegator delegator = dispatcher.getDelegator();
         Locale locale = (Locale) context.get("locale");
         GenericValue userLogin = (GenericValue) context.get("userLogin");
-        String entityName = (String) context.get("originEntityName");
-        ModelEntity modelEntity = delegator.getModelEntity(entityName);
-        String draftEntityName = (String) context.get("draftEntityName");
+        OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) context.get("csdlEntityType");
+        ModelEntity modelEntity = delegator.getModelEntity(csdlEntityType.getOfbizEntity());
+        String draftEntityName = csdlEntityType.getDraftEntityName();
+        List<String> keyPropertyNames = csdlEntityType.getKeyPropertyNames();
         String sapContextId = (String) context.get("sapContextId");
         GenericValue draftGenericValue = null;
         Map<String, Object> fieldMap = (Map<String, Object>) context.get("fieldMap");
         for (Map.Entry<String, Object> entry : fieldMap.entrySet()) {
-            //空字符串转换成null
-            if ("".equals(entry.getValue())) {
+            //如果不是主键 空字符串转换成null
+            if ("".equals(entry.getValue()) && !keyPropertyNames.contains(entry.getKey())) {
                 entry.setValue(null);
             }
             //如果传递过来的时间格式不对,根据字段类型转换格式
@@ -343,6 +345,18 @@ public class ProcessorServices {
                 if (subDraftUUIDs.contains(possibleDraftGenericValue.getString("draftUUID"))) {
                     draftGenericValue = possibleDraftGenericValue;
                     break;
+                }
+            }
+            //没有找到编辑的数据 或许是在编辑第二层子对象
+            if (UtilValidate.isEmpty(draftGenericValue)) {
+                GenericValue nextDraft = EntityQuery.use(delegator).from(draftEntityName).where(keyMap).queryFirst();
+                if (UtilValidate.isNotEmpty(nextDraft)) {
+                    GenericValue draftAdmin = EntityQuery.use(delegator).from("DraftAdministrativeData").where("draftUUID", nextDraft.getString("draftUUID")).queryFirst();
+                    GenericValue parentDraftAdmin = EntityQuery.use(delegator).from("DraftAdministrativeData").where("draftUUID", draftAdmin.getString("parentDraftUUID")).queryFirst();
+                    //上级数据的parentUUID应该是当前的sapContextId
+                    if (parentDraftAdmin.getString("parentDraftUUID").equals(sapContextId)) {
+                        draftGenericValue = nextDraft;
+                    }
                 }
             }
         } else {
