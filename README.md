@@ -8,6 +8,7 @@ ODataLab is an OData service built on Apache OFBiz
 + Load jindi data if you working on jindi project<br>./gradlew "ofbiz --load-data readers=jindi"
 + Load jingdong data if you working on jingdong project<br>./gradlew "ofbiz --load-data readers=jingdong"
 + Start OFBiz<br>./gradlew ofbiz
++ Create a default admin<br>./gradlew loadAdminUserLogin -PuserLoginId=admin
 + Open your browser to visit OData metadata<br>http://localhost:8080/gbms/control/odataAppSvc/gbms/$metadata
 
 ## K8s deployment
