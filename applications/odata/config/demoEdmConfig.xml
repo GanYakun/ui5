@@ -248,8 +248,8 @@
 	<EnumType Name="KeywordStatus" OfbizEntity="StatusItem" EntityCondition="statusTypeId=KEYWORD_STATUS" />
 	<EnumType Name="QuoteStatusEnum" OfbizEntity="StatusItem" EntityCondition="statusTypeId=QUOTE_STATUS" />
 	<EnumType Name="ProductTypeEnum" OfbizEntity="ProductType" EntityCondition="productTypeId in (DIGITAL_GOOD,FINDIG_GOOD,FINISHED_GOOD,MARKETING_PKG_PICK,SERVICE,SERVICE_PRODUCT,ASSET_USAGE,RAW_MATERIAL)" />
-	<EnumType Name="ProductPriceTypeEnum" OfbizEntity="ProductPriceType" />
-	<EnumType Name="ProductFeatureApplTypeEnum" OfbizEntity="ProductFeatureApplType" />
+<!--	<EnumType Name="ProductPriceTypeEnum" OfbizEntity="ProductPriceType" />-->
+<!--	<EnumType Name="ProductFeatureApplTypeEnum" OfbizEntity="ProductFeatureApplType" />-->
 	<EnumType Name="KeywordStatus" OfbizEntity="StatusItem" EntityCondition="statusTypeId=KEYWORD_STATUS" />
 	<EnumType Name="PartyStatus" OfbizEntity="StatusItem" EntityCondition="statusTypeId=PARTY_STATUS" />
 	
@@ -509,7 +509,7 @@
 	<EntityType Name="ProductFeatureGroup" AutoProperties="true"/>
 	<EntityType Name="ProductFeatureGroupAppl" AutoProperties="true"/>
 	<EntityType Name="ProductFeatureAppl" AutoProperties="true">
-        <Property Name="productFeatureApplTypeId" Type="ProductFeatureApplTypeEnum"/>
+<!--        <Property Name="productFeatureApplTypeId" Type="ProductFeatureApplTypeEnum"/>-->
 		<NavigationProperty Name="ProductFeature"/>
 		<NavigationProperty Name="ProductFeatureApplType"/>
     </EntityType>
