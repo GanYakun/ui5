@@ -2269,6 +2269,10 @@ public class Util {
                     Timestamp v1 = (Timestamp) e1.getProperty(ob).getValue();
                     Timestamp v2 = (Timestamp) e2.getProperty(ob).getValue();
                     compare = desc ? v2.compareTo(v1) : v1.compareTo(v2);
+                } else if (type.contains("Int")) {
+                    Integer v1 = (Integer) e1.getProperty(ob).getValue();
+                    Integer v2 = (Integer) e2.getProperty(ob).getValue();
+                    compare = desc ? v2.compareTo(v1) : v1.compareTo(v2);
                 } else {
                     String v1 = (String) e1.getProperty(ob).getValue();
                     String v2 = (String) e2.getProperty(ob).getValue();
@@ -2282,48 +2286,6 @@ public class Util {
             }
             return 0;
         });
-    }
-
-    public static Entity getEntityCollectionOne(List<Entity> entityList, Map<String, Object> primaryKey) {
-        for (Entity entity : entityList) {
-            OdataOfbizEntity ofbizEntity = (OdataOfbizEntity) entity;
-            Map<String, Object> currentPk = new HashMap<>();
-            for (Map.Entry<String, Object> entry : primaryKey.entrySet()) {
-                Object propertyValue = ofbizEntity.getPropertyValue(entry.getKey());
-                currentPk.put(entry.getKey(), propertyValue);
-            }
-            if (primaryKey.equals(currentPk)) {
-                return entity;
-            }
-        }
-        return null;
-    }
-
-    public static EntityCondition procApplyCondition(List<UriResource> uriResourceParts, Delegator delegator,
-                                                     OfbizAppEdmProvider edmProvider, ModelEntity modelEntity)
-            throws OfbizODataException {
-        EntityCondition returnCondition = null;
-        try {
-            UriResourceEntitySet resourceEntitySet = (UriResourceEntitySet) uriResourceParts.get(0);
-            Map<String, Object> keyMap = Util.uriParametersToMap(resourceEntitySet.getKeyPredicates(), resourceEntitySet.getEntityType());
-            OfbizCsdlEntityType ofbizCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(resourceEntitySet.getEntityType().getFullQualifiedName());
-            GenericValue mainGenericValue = delegator.findOne(ofbizCsdlEntityType.getOfbizEntity(), keyMap, true);
-            if (UtilValidate.isEmpty(mainGenericValue)) {
-                return null;
-            }
-            ModelRelation relation = modelEntity.getRelation(uriResourceParts.get(1).getSegmentValue());
-            for (ModelKeyMap relKeyMap : relation.getKeyMaps()) {
-                Object relValue = mainGenericValue.get(relKeyMap.getFieldName());
-                //缺少外键数据
-                if (UtilValidate.isEmpty(relValue)) {
-                    return null;
-                }
-                returnCondition = Util.appendCondition(returnCondition, EntityCondition.makeCondition(relKeyMap.getRelFieldName(), relValue));
-            }
-        } catch (GenericEntityException e) {
-            Debug.logError(e.getMessage(), module);
-        }
-        return returnCondition;
     }
 
     /**
