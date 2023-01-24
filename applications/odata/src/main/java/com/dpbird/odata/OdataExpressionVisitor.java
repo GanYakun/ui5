@@ -3,7 +3,6 @@ package com.dpbird.odata;
 import com.dpbird.odata.edm.EntityTypeRelAlias;
 import com.dpbird.odata.edm.OfbizCsdlEntityType;
 import com.dpbird.odata.edm.OfbizCsdlProperty;
-import org.apache.fop.util.ListUtil;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
@@ -377,16 +376,6 @@ public class OdataExpressionVisitor implements ExpressionVisitor<Object> {
         }
         UriResource firstUriResourcePart = uriResourceParts.get(0);
         if (firstUriResourcePart instanceof UriResourceLambdaVariable) {
-            if (uriResourceParts.size() > 2) {
-                //lambda表达式中的值是多段式
-                String lambdaLastEntityName = dynamicViewHolder.addLambdaMultiParts(uriResourceParts);
-                UriResource resourceProperty = ListUtil.getLast(uriResourceParts);
-                String propertyName = resourceProperty.getSegmentValue();
-                EdmProperty property = ((UriResourcePrimitivePropertyImpl) resourceProperty).getProperty();
-                String relPropertyName = dynamicViewHolder.addFilterProperty(lambdaLastEntityName, propertyName);
-                dynamicViewHolder.edmPropertyMap.put(relPropertyName, property);
-                return relPropertyName;
-            }
             UriResourceLambdaVariable lambdaVariable = (UriResourceLambdaVariable) firstUriResourcePart;
             String variableName = lambdaVariable.getSegmentValue();
             UriResource resourceProperty = uriResourceParts.get(1);

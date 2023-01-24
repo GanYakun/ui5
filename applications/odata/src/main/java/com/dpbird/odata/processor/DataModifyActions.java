@@ -26,7 +26,6 @@ import org.apache.olingo.commons.api.ex.ODataException;
 import org.apache.olingo.server.api.ODataRequest;
 import org.apache.olingo.server.api.ODataResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 // EditAction，会把要编辑的主对象copy到内存数据库，其关联对象也copy到内存数据库
@@ -78,7 +77,6 @@ public class DataModifyActions {
         OfbizAppEdmProvider edmProvider = (OfbizAppEdmProvider) oDataContext.get("edmProvider");
         Delegator delegator = (Delegator) oDataContext.get("delegator");
         LocalDispatcher dispatcher = (LocalDispatcher) oDataContext.get("dispatcher");
-        HttpServletRequest httpServletRequest = (HttpServletRequest) oDataContext.get("httpServletRequest");
         GenericValue userLogin = (GenericValue) oDataContext.get("userLogin");
         Locale locale = (Locale) oDataContext.get("locale");
         try {
@@ -128,7 +126,7 @@ public class DataModifyActions {
                 }
                 Entity draftEntity = OdataProcessorHelper.genericValueToEntity(dispatcher, edmProvider, csdlEntityType, draftGenericValue, locale);
                 if (genericValue == null) {
-                    keyMap = createMainEntityFromDraft(dispatcher, delegator, csdlEntityType, draftGenericValue, userLogin, locale, httpServletRequest, edmProvider, draftEntity);
+                    keyMap = createMainEntityFromDraft(dispatcher, delegator, csdlEntityType, draftGenericValue, userLogin, locale, draftEntity);
 //                    keyMap = createEntityWithService(dispatcher, delegator, entityName, draftGenericValue, userLogin);
                 } else if (draftChanged(modelEntity, genericValue, draftGenericValue)) {
                     updateEntityFromDraft(dispatcher, delegator, edmProvider, csdlEntityType, keyMap, draftGenericValue, userLogin, locale);
@@ -313,10 +311,8 @@ public class DataModifyActions {
 
     private static Map<String, Object> createMainEntityFromDraft(LocalDispatcher dispatcher, Delegator delegator,
                                                                  OfbizCsdlEntityType csdlEntityType,
-                                                                 GenericValue draftGenericValue,
-                                                                 GenericValue userLogin, Locale locale,
-                                                                 HttpServletRequest httpServletRequest, OfbizAppEdmProvider edmProvider, Entity entity)
-            throws GenericServiceException, ODataException, GenericEntityException {
+                                                                 GenericValue draftGenericValue, GenericValue userLogin, Locale locale, Entity entity)
+            throws GenericServiceException, ODataException {
         Map<String, Object> pkMap = null;
         if (csdlEntityType.getHandlerClass() != null) {
             try {
@@ -327,12 +323,6 @@ public class DataModifyActions {
         }
         if (UtilValidate.isEmpty(pkMap)) {
             pkMap = createEntityWithService(dispatcher, delegator, csdlEntityType.getOfbizEntity(), draftGenericValue, userLogin);
-
-            //create semantic fields
-            GenericValue genericValue = delegator.findOne(csdlEntityType.getOfbizEntity(), pkMap, false);
-            OdataOfbizEntity entityToWrite = OdataProcessorHelper.genericValueToEntity(delegator, edmProvider, csdlEntityType, draftGenericValue, locale);
-            OdataOfbizEntity entityCreated = OdataProcessorHelper.genericValueToEntity(delegator, edmProvider, csdlEntityType, genericValue, locale);
-            OdataProcessorHelper.createSemanticFields(delegator, dispatcher, edmProvider, entityToWrite, entityCreated, locale, userLogin);
         }
         return pkMap;
     }
