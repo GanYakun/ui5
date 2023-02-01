@@ -39,10 +39,7 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <group-map group-name="org.apache.ofbiz.tenant" datasource-name="local@dbPlatform@tenant"/>
         <group-map group-name="org.apache.ofbiz.memory" datasource-name="localderbymemory"/>
     </delegator>
-<<<<<<<< HEAD:framework/resources/templates/TemplateEntityengine.xml
-========
     <!-- May be used when you create a service that manages many data for massive imports, this for performance reason or to escape functional cases -->
->>>>>>>> master:framework/entity/config/entityengine.xml
     <delegator name="default-no-eca" entity-model-reader="main" entity-group-reader="main" entity-eca-reader="main" entity-eca-enabled="false" distributed-cache-clear-enabled="false">
         <group-map group-name="org.apache.ofbiz" datasource-name="localderby"/>
         <group-map group-name="org.apache.ofbiz.olap" datasource-name="localderbyolap"/>
@@ -311,23 +308,6 @@ access. For a detailed description see the core/docs/entityconfig.html file.
                 time-between-eviction-runs-millis="600000"/>
     </datasource>
 
-<<<<<<<< HEAD:framework/resources/templates/TemplateEntityengine.xml
-
-========
-    <!-- Also consider:
-    mysql.conf
-    [client]
-    default-character-set=utf8
-    [mysql]
-    default-character-set=utf8
-    [mysqld]
-    collation-server = utf8_unicode_ci
-    init-connect='SET NAMES utf8'
-    character-set-server = utf8
-
-    Mysql Version: > 5.6.4 (supports datetime milliseconds)
-     -->
->>>>>>>> master:framework/entity/config/entityengine.xml
     <datasource name="localmysql"
                 helper-class="org.apache.ofbiz.entity.datasource.GenericHelperDAO"
                 field-type-name="mysql"
@@ -815,11 +795,7 @@ access. For a detailed description see the core/docs/entityconfig.html file.
         <read-data reader-name="ext-test"/>
         <read-data reader-name="ext-demo"/>
 
-<<<<<<<< HEAD:framework/resources/templates/TemplateEntityengine.xml
         <!--   There is an open source version of the jdbc driver at sourceforge: http://sourceforge.net/projects/jt400/ -->
-========
-            <!--   There is an open source version of the jdbc driver at sourceforge: http://sourceforge.net/projects/jt400/ -->
->>>>>>>> master:framework/entity/config/entityengine.xml
         <inline-jdbc
                 jdbc-driver="com.ibm.as400.access.AS400JDBCDriver"
                 jdbc-uri="jdbc:as400:192.168.1.10;prompt=false;libraries=ofbiz;lazyclose=true;translate binary=true"
