@@ -109,7 +109,7 @@ public class DraftHandler {
         Map<String, Object> serviceParams = UtilMisc.toMap("originEntityName", entityName,
                 "fieldMap", fieldMap, "sapContextId", sapContextId,
                 "draftEntityName", draftEntityName, "entityType", csdlEntityType.getFullQualifiedNameString(),
-                "userLogin", userLogin);
+                "userLogin", userLogin, "edmProvider", edmProvider, "edmEntityType", edmEntityType);
         Map<String, Object> result;
         try {
             result = dispatcher.runSync("dpbird.createEntityToDraft", serviceParams);
@@ -123,21 +123,24 @@ public class DraftHandler {
         return createdEntity;
     }
 
-    public OdataOfbizEntity createRelatedEntityData(Map<String, Object> keyMap, Entity entityToWrite, String navigationPropertyName)
+    public OdataOfbizEntity createRelatedEntityData(Entity mainEntity, Entity entityToWrite, EdmNavigationProperty edmNavigationProperty)
             throws OfbizODataException {
         String entityName = csdlEntityType.getOfbizEntity();
+        OdataOfbizEntity mainOfbizEntity = (OdataOfbizEntity) mainEntity;
+        Map<String, Object> keyMap = new HashMap<>(mainOfbizEntity.getKeyMap());
+        String navigationPropertyName = edmNavigationProperty.getName();
         OfbizCsdlNavigationProperty csdlNavigationProperty = (OfbizCsdlNavigationProperty) csdlEntityType.getNavigationProperty(navigationPropertyName);
         OfbizCsdlEntityType nestedCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(csdlNavigationProperty.getTypeFQN());
         String nestedEntityName = nestedCsdlEntityType.getOfbizEntity();
         String nestedDraftEntityName = nestedCsdlEntityType.getDraftEntityName();
 
         Map<String, Object> fieldMap = Util.entityToMap(entityToWrite);
-        if (keyMap.size() == 1 && keyMap.get("id") != null){
+        if (keyMap.size() == 1 && (keyMap.get("id") != null || keyMap.get("draftUUID") != null)){
             //三段式创建draft数据，要拿第二段的id给第三段当parentUUID
-            fieldMap.put("parentDraftUUID", keyMap.get("id"));
+            String draftUUId = keyMap.get("draftUUID") != null ? (String) keyMap.get("draftUUID") : (String) keyMap.get("id");
             try {
                 //补全子对象的主键
-                GenericValue parentDraftGV = delegator.findOne(csdlEntityType.getDraftEntityName(), UtilMisc.toMap("draftUUID", keyMap.get("id")), false);
+                GenericValue parentDraftGV = delegator.findOne(csdlEntityType.getDraftEntityName(), UtilMisc.toMap("draftUUID", draftUUId), false);
                 Map<String, Object> relatedFieldMap = Util.getRelatedFieldMap(delegator, entityName, csdlNavigationProperty, parentDraftGV);
                 for (String relKey : relatedFieldMap.keySet()) {
                     if (!fieldMap.containsKey(relKey)) {
@@ -160,8 +163,8 @@ public class DraftHandler {
 
         Map<String, Object> serviceParams = UtilMisc.toMap("originEntityName", nestedEntityName,
                 "fieldMap", fieldMap, "sapContextId", this.sapContextId,
-                "draftEntityName", nestedDraftEntityName,
-                "entityType", nestedCsdlEntityType.getFullQualifiedNameString(),
+                "draftEntityName", nestedDraftEntityName, "edmProvider", edmProvider,
+                "entityType", nestedCsdlEntityType.getFullQualifiedNameString(), "edmEntityType", edmNavigationProperty.getType(),
                 "navigationProperty", navigationPropertyName, "userLogin", userLogin);
         Map<String, Object> result = null;
         try {
