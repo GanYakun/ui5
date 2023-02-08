@@ -594,16 +594,6 @@ public class EdmConfigLoader {
         if ("true".equals(filterByDateAttr)) {
             filterByDate = true;
         }
-        boolean autoId = false;
-        String autoIdAttr = entityTypeElement.getAttribute("AutoId");
-        if ("true".equals(autoIdAttr)) {
-            autoId = true;
-        }
-        boolean useAttribute = false;
-        String useAttributeAttr = entityTypeElement.getAttribute("UseAttribute");
-        if (UtilValidate.isNotEmpty(useAttributeAttr)) {
-            useAttribute = true;
-        }
         String labelPrefix = name;
         String labelPrefixAttr = entityTypeElement.getAttribute("LabelPrefix");
         if (UtilValidate.isNotEmpty(labelPrefixAttr)) {
@@ -692,7 +682,7 @@ public class EdmConfigLoader {
         }
         OfbizCsdlEntityType csdlEntityType = createEntityType(delegator, dispatcher, fullQualifiedName, ofbizEntity,
                 draftEntityName, attrEntityName, attrNumericEntityName, attrDateEntityName, handlerClass, autoProperties,
-                csdlProperties, csdlNavigationProperties, csdlPropertyRefs, autoId, filterByDate, baseType, hasDerivedEntity,
+                csdlProperties, csdlNavigationProperties, csdlPropertyRefs, filterByDate, baseType, hasDerivedEntity,
                 excludeProperties, entityCondition, entityConditionStr, labelPrefix, locale, searchOption, groupBy, hasStream);
         csdlEntityType.setAbstract(isAbstract);
         csdlEntityType.setAnnotations(csdlAnnotationList);
@@ -1180,7 +1170,6 @@ public class EdmConfigLoader {
                                                              Element propertyElement, Locale locale) {
         String name = propertyElement.getAttribute("Name");
         OfbizCsdlProperty property = null;
-        ModelField modelField;
         if (modelEntity != null) {
             String relAliasName = propertyElement.getAttribute("RelAlias");
             EntityTypeRelAlias entityTypeRelAlias = null;
@@ -1190,11 +1179,14 @@ public class EdmConfigLoader {
                 }
             }
             String field = propertyElement.getAttribute("Field");
-            if (UtilValidate.isNotEmpty(entityTypeRelAlias) && UtilValidate.isNotEmpty(field)) {
-                property = generatePropertyFromRelAlias(dispatcher.getDelegator(), dispatcher, modelEntity, entityTypeRelAlias, field, false);
+            if (UtilValidate.isNotEmpty(field)) {
+                if (UtilValidate.isNotEmpty(entityTypeRelAlias)) {
+                    property = generatePropertyFromRelAlias(dispatcher.getDelegator(), dispatcher, modelEntity, entityTypeRelAlias, field, false);
+                } else {
+                    property = generatePropertyFromField(dispatcher.getDelegator(), dispatcher, modelEntity.getField(field), false);
+                }
             } else {
-                modelField = modelEntity.getField(name);
-                property = generatePropertyFromField(dispatcher.getDelegator(), dispatcher, modelField, false);
+                property = generatePropertyFromField(dispatcher.getDelegator(), dispatcher, modelEntity.getField(name), false);
             }
         }
         if (property == null) {
@@ -2000,7 +1992,7 @@ public class EdmConfigLoader {
                                                         String handlerClass, boolean autoProperties,
                                                         List<CsdlProperty> csdlProperties,
                                                         List<CsdlNavigationProperty> csdlNavigationProperties,
-                                                        List<CsdlPropertyRef> csdlPropertyRefs, boolean autoId, boolean filterByDate,
+                                                        List<CsdlPropertyRef> csdlPropertyRefs, boolean filterByDate,
                                                         String baseType, boolean hadDerivedEntity, List<String> excludeProperties,
                                                         EntityCondition entityCondition, String entityConditionStr, String labelPrefix, Locale locale, String searchOption,
                                                         boolean groupBy, boolean hasStream) {
@@ -2061,7 +2053,7 @@ public class EdmConfigLoader {
             }
         }
         OfbizCsdlEntityType entityType = new OfbizCsdlEntityType(ofbizEntity, handlerClass, false,
-                false, autoId, filterByDate, draftEntityName, attrEntityName, attrNumericEntityName, attrDateEntityName,
+                false, filterByDate, draftEntityName, attrEntityName, attrNumericEntityName, attrDateEntityName,
                 hadDerivedEntity, entityCondition, entityConditionStr, labelPrefix, searchOption, groupBy, hasStream);
         if (UtilValidate.isNotEmpty(baseType)) {
             //有BaseType, Property里就不应该再有pk
