@@ -23,6 +23,7 @@ import org.apache.ofbiz.service.ServiceUtil;
 import org.apache.olingo.commons.api.Constants;
 import org.apache.olingo.commons.api.data.*;
 import org.apache.olingo.commons.api.edm.*;
+import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.commons.api.edm.provider.CsdlProperty;
 import org.apache.olingo.commons.api.ex.ODataException;
 import org.apache.olingo.server.api.OData;
@@ -230,7 +231,10 @@ public class OfbizOdataProcessor {
     protected EntityCondition parseFilterOption() throws OfbizODataException {
         if (UtilValidate.isNotEmpty(queryOptions) && queryOptions.get("filterOption") != null) {
             OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmEntityType.getFullQualifiedName());
-            String entityName = csdlEntityType.getOfbizEntity();
+            if (edmParams.get("edmNavigationProperty") != null) {
+                EdmNavigationProperty edmNavigationProperty = (EdmNavigationProperty) edmParams.get("edmNavigationProperty");
+                csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmNavigationProperty.getType().getFullQualifiedName());
+            }
             Expression filterExpression = ((FilterOption) queryOptions.get("filterOption")).getExpression();
             OdataExpressionVisitor expressionVisitor = new OdataExpressionVisitor(csdlEntityType, delegator, dispatcher, userLogin, edmProvider);
             EntityCondition entityCondition;
@@ -580,7 +584,7 @@ public class OfbizOdataProcessor {
                         orderBy.add(orderByItem.isDescending() ? "-" + orderByProperty : orderByProperty);
                     } else {
                         //普通字段
-                        propertyAlias = propertyAlias + " NULLS LAST";
+                        propertyAlias = csdlProperty.getOfbizFieldName() + " NULLS LAST";
                         orderBy.add(orderByItem.isDescending() ? "-" + propertyAlias : propertyAlias);
                     }
                 } else {
@@ -600,7 +604,7 @@ public class OfbizOdataProcessor {
                     OfbizCsdlProperty property = (OfbizCsdlProperty) lastCsdlEntityType.getProperty(uriResource.getSegmentValue());
                     if (property.isAttribute() || property.isNumericAttribute() || property.isDateAttribute() || property.getRelAlias() != null) {
                         OfbizCsdlEntityType newCsdlEntity = new OfbizCsdlEntityType(lastCsdlEntityType.getOfbizEntity(), lastCsdlEntityType.getHandlerClass(), lastCsdlEntityType.isAutoProperties(),
-                                false, false, lastCsdlEntityType.isFilterByDate(), lastCsdlEntityType.getDraftEntityName(), lastCsdlEntityType.getAttrEntityName(),
+                                false, lastCsdlEntityType.isFilterByDate(), lastCsdlEntityType.getDraftEntityName(), lastCsdlEntityType.getAttrEntityName(),
                                 lastCsdlEntityType.getAttrNumericEntityName(), lastCsdlEntityType.getAttrDateEntityName(), false, lastCsdlEntityType.getEntityCondition(),
                                 lastCsdlEntityType.getEntityConditionStr(), lastCsdlEntityType.getLabelPrefix(), null, lastCsdlEntityType.isGroupBy(), lastCsdlEntityType.hasStream());
                         newCsdlEntity.setName(lastEntityAlias);

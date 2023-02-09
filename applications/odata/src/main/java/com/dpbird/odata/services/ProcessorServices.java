@@ -471,8 +471,6 @@ public class ProcessorServices {
             String draftEntityName = draftAdminData.getString("draftEntityName");
             OdataOfbizEntity odataOfbizEntity = (OdataOfbizEntity) context.get("entity");
             Map<String, Object> entityMap = Util.entityToMap(odataOfbizEntity);
-            // id只有这个CsdlEntityType是AutoId对情况下才会出现
-            entityMap.remove("id");
             Map<String, Object> fieldMap = new HashMap<>();
             fieldMap.put("draftUUID", draftUUID);
             List<GenericValue> oldDraftGenericValues = delegator.findByAnd(draftEntityName, fieldMap, null, false);
@@ -516,7 +514,7 @@ public class ProcessorServices {
                 entityTypeFqn, keyMap, navigationProperty, userLogin);
     }
 
-    private static GenericValue createDraftAdminData(Delegator delegator, String draftUUID, String parentDraftUUID,
+    public static GenericValue createDraftAdminData(Delegator delegator, String draftUUID, String parentDraftUUID,
                                                      String originEntityName, String draftEntityName, String entityType,
                                                      Map<String, Object> keyMap, String navigationProperty,
                                                      GenericValue userLogin)
@@ -558,11 +556,10 @@ public class ProcessorServices {
         Map<String, Object> internalKeyMap = new HashMap<>();
         for (String pkFieldName : pkFieldNames) {
             Object pkFieldValue = actionParameters.get(pkFieldName);
-            if (pkFieldValue == null && pkFieldNames.size() == 1) { // i.e. productId
+            if (UtilValidate.isEmpty(pkFieldValue) && pkFieldNames.size() == 1) { // i.e. productId
                 ModelField modelField = modelEntity.getField(pkFieldName);
-                if (modelField.getType().equals("id")) {
-                    String idValue = "ID" + delegator.getNextSeqId(entityName);
-                    pkFieldValue = idValue;
+                if ("id".equals(modelField.getType())) {
+                    pkFieldValue = "ID" + delegator.getNextSeqId(entityName);
                 }
             }
             internalKeyMap.put(pkFieldName, pkFieldValue);
@@ -577,6 +574,7 @@ public class ProcessorServices {
         if (UtilValidate.isNotEmpty(entityTypeConditionMap)) {
             fieldMap.putAll(entityTypeConditionMap);
         }
+        fieldMap.putAll(internalKeyMap);
         Map<String, Object> serviceParams = UtilMisc.toMap("originEntityName", entityName,
                 "draftEntityName", draftEntityName, "entityType", csdlEntityType.getName(),
                 "fieldMap", fieldMap, "sapContextId", sapContextId, "edmProvider", edmProvider,
@@ -604,7 +602,7 @@ public class ProcessorServices {
         if (ofbizEntity == null) {
             throw new OfbizODataException("The entity to edit was not found.", String.valueOf(HttpStatus.SC_NOT_FOUND));
         }
-        Map<String, Object> keyMap = ofbizEntity.getKeyMap();
+        Map<String, Object> keyMap = new HashMap<>(ofbizEntity.getKeyMap());
         OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmBindingTarget.getEntityType().getFullQualifiedName());
         String entityName = csdlEntityType.getOfbizEntity();
         String draftEntityName = csdlEntityType.getDraftEntityName();

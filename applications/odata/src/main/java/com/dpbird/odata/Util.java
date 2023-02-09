@@ -1,6 +1,7 @@
 package com.dpbird.odata;
 
 import com.dpbird.odata.edm.*;
+import com.dpbird.odata.services.ProcessorServices;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.http.HttpEntity;
@@ -33,6 +34,7 @@ import org.apache.olingo.commons.api.Constants;
 import org.apache.olingo.commons.api.data.*;
 import org.apache.olingo.commons.api.edm.*;
 import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
+import org.apache.olingo.commons.api.edm.provider.CsdlNavigationProperty;
 import org.apache.olingo.commons.api.edm.provider.CsdlProperty;
 import org.apache.olingo.commons.api.edm.provider.CsdlPropertyRef;
 import org.apache.olingo.commons.api.ex.ODataException;
@@ -218,9 +220,6 @@ public class Util {
     }
 
     public static URI createId(String entitySetName, EdmEntityType edmEntityType, OfbizCsdlEntityType ofbizCsdlEntityType, GenericValue genericValue) {
-        if (ofbizCsdlEntityType.isAutoId()) {
-            return null;
-        }
         String entityId;
         List<String> entityTypeKeys = edmEntityType.getKeyPredicateNames();
         if (entityTypeKeys.size() == 1) {
@@ -280,16 +279,6 @@ public class Util {
             return (EdmEntitySet) edmBindingTarget;
         }
         return null;
-    }
-
-
-    public static Map<String, Object> getNavigationTargetKeyMap(EdmBindingTarget startEdmBindingTarget,
-                                                                EdmNavigationProperty edmNavigationProperty, List<UriParameter> nextKeyPredicates) throws OfbizODataException {
-        EdmEntitySet navigationTargetEntitySet = getNavigationTargetEntitySet(startEdmBindingTarget, edmNavigationProperty);
-        if (UtilValidate.isEmpty(navigationTargetEntitySet) || UtilValidate.isEmpty(nextKeyPredicates)) {
-            return null;
-        }
-        return uriParametersToMap(nextKeyPredicates, navigationTargetEntitySet.getEntityType());
     }
 
     public static java.sql.Date getSqlDate(String dateStr) {
@@ -754,12 +743,7 @@ public class Util {
     }
 
     public static Map<String, Object> retrieveKeyMapFromEntity(Delegator delegator, Entity entity, OfbizCsdlEntityType csdlEntityType) {
-        Map<String, Object> pkMap = new HashMap<String, Object>();
-        if (csdlEntityType.isAutoId()) {
-            Property idProperty = entity.getProperty("id");
-            String idValue = (String) idProperty.getValue();
-            return Util.keyMapFromId(delegator, csdlEntityType, idValue);
-        }
+        Map<String, Object> pkMap = new HashMap<>();
         List<String> keyNames = csdlEntityType.getKeyPropertyNames();
         for (String keyName : keyNames) {
             Property property = entity.getProperty(keyName);
@@ -904,7 +888,7 @@ public class Util {
                 throw new ODataApplicationException(bindingLink + " is not a valid entity-Id",
                         HttpStatusCode.BAD_REQUEST.getStatusCode(), Locale.ENGLISH);
             }
-            Map<String, Object> keyMap = Util.uriParametersToMap(entitySetResource.getKeyPredicates(), entitySetResource.getEntityType());
+            Map<String, Object> keyMap = Util.uriParametersToMap(entitySetResource.getKeyPredicates(), entitySetResource.getEntityType(), edmProvider);
             Iterator<Map.Entry<String, Object>> it = keyMap.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry<String, Object> entry = it.next();
@@ -1097,7 +1081,7 @@ public class Util {
         return paramMap;
     }
 
-    public static Map<String, Object> uriParametersToMap(List<UriParameter> keyParams, EdmEntityType edmEntityType)
+    public static Map<String, Object> uriParametersToMap(List<UriParameter> keyParams, EdmEntityType edmEntityType, OfbizAppEdmProvider edmProvider)
             throws OfbizODataException {
         Map<String, Object> pk = new HashMap<String, Object>();
         if (edmEntityType == null) { // 将来不会为null的，这种字符串处理参数的方式，要被封杀
@@ -1108,10 +1092,13 @@ public class Util {
                 pk.put(keyPredicate.getName(), keyText);
             }
         } else {
+            OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmEntityType.getFullQualifiedName());
             for (UriParameter keyPredicate : keyParams) {
                 EdmProperty edmProperty = edmEntityType.getStructuralProperty(keyPredicate.getName());
                 Object valueObj = Util.readPrimitiveValue(edmProperty, keyPredicate.getText());
-                pk.put(keyPredicate.getName(), valueObj);
+                OfbizCsdlProperty property = (OfbizCsdlProperty) csdlEntityType.getProperty(keyPredicate.getName());
+                String keyName = property.getOfbizFieldName() != null ? property.getOfbizFieldName() : property.getName();
+                pk.put(keyName, valueObj);
             }
         }
         return pk;
@@ -1120,7 +1107,7 @@ public class Util {
     public static Map<String, Object> getNavigationKey(EdmEntityType startEdmEntityType, List<UriParameter> keyParams, String navigationName, OfbizAppEdmProvider edmProvider, Delegator delegator)
             throws OfbizODataException {
         Map<String, Object> resultPK = new HashMap<>();
-        Map<String, Object> startEntityPK = uriParametersToMap(keyParams, startEdmEntityType);
+        Map<String, Object> startEntityPK = uriParametersToMap(keyParams, startEdmEntityType, edmProvider);
         OfbizCsdlEntityType startCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(startEdmEntityType.getFullQualifiedName());
         try {
             GenericValue startGen = delegator.findOne(startCsdlEntityType.getOfbizEntity(), startEntityPK, false);
@@ -1197,6 +1184,36 @@ public class Util {
                         if (uriResource instanceof UriResourcePrimitiveProperty) {
                             EdmProperty edmProperty = ((UriResourcePrimitiveProperty) uriResource).getProperty();
                             final String sortPropertyName = edmProperty.getName();
+                            if (orderByItem.isDescending()) {
+                                orderBy.add("-" + sortPropertyName + " NULLS LAST");
+                            } else {
+                                orderBy.add(sortPropertyName + " NULLS LAST");
+                            }
+                        }
+                    } else { // 暂时不支持三级navigation的orderby
+                        Debug.logInfo("orderByOption has more than 2 segments, will be ignored!", module);
+                        throw new OfbizODataException("Only support one segment order by");
+                    }
+                }
+            }
+        }
+        return orderBy;
+    }
+
+    public static List<String> retrieveSimpleOrderByOptionToField(OfbizCsdlEntityType csdlEntityType, OrderByOption orderByOption) throws OfbizODataException {
+        List<String> orderBy = new ArrayList<String>();
+        if (orderByOption != null) {
+            List<OrderByItem> orderItemList = orderByOption.getOrders();
+            for (OrderByItem orderByItem : orderItemList) {
+                Expression expression = orderByItem.getExpression();
+                if (expression instanceof Member) {
+                    UriInfoResource resourcePath = ((Member) expression).getResourcePath();
+                    if (resourcePath.getUriResourceParts().size() == 1) {
+                        UriResource uriResource = resourcePath.getUriResourceParts().get(0);
+                        if (uriResource instanceof UriResourcePrimitiveProperty) {
+                            EdmProperty edmProperty = ((UriResourcePrimitiveProperty) uriResource).getProperty();
+                            OfbizCsdlProperty property = (OfbizCsdlProperty) csdlEntityType.getProperty(edmProperty.getName());
+                            final String sortPropertyName = property.getOfbizFieldName();
                             if (orderByItem.isDescending()) {
                                 orderBy.add("-" + sortPropertyName + " NULLS LAST");
                             } else {
@@ -2329,6 +2346,7 @@ public class Util {
 
     /**
      * 判断是否是数据库不支持的orderby 比如语义化字段
+     *
      * @param orderByOption
      * @param csdlEntityType
      * @return
@@ -2345,6 +2363,9 @@ public class Util {
             if (uriResourceParts.size() > 1) continue;
             String segmentValue = uriResourceParts.get(0).getSegmentValue();
             OfbizCsdlProperty csdlProperty = (OfbizCsdlProperty) csdlEntityType.getProperty(segmentValue);
+            if (csdlProperty.getOfbizFieldName() != null) {
+                segmentValue = csdlProperty.getOfbizFieldName();
+            }
             //如果这个字段是语义化字段 需要自定义处理
             ModelEntity modelEntity = delegator.getModelEntity(csdlEntityType.getOfbizEntity());
             if (modelEntity != null) {
@@ -2368,6 +2389,64 @@ public class Util {
         } else {
             throw new OfbizODataException("getBoolean could not map the String '" + value + "' to Boolean type");
         }
+    }
+
+    /**
+     * 创建一条Draft数据
+     *
+     * @param parentDraftId 父级draftUUID
+     * @param primaryKey 当前要创建的主键
+     * @param navigationName Navigation Name
+     */
+    public static GenericValue createNavDraftData(Map<String, Object> oDataContext, String parentDraftId,
+                                                Map<String, Object> primaryKey, String navigationName,
+                                               Map<String, Object> fields) throws OfbizODataException {
+        Delegator delegator = (Delegator) oDataContext.get("delegator");
+        GenericValue userLogin = (GenericValue) oDataContext.get("userLogin");
+        OfbizAppEdmProvider edmProvider = (OfbizAppEdmProvider) oDataContext.get("edmProvider");
+        try {
+            //创建DraftAdmin
+            GenericValue parentDraftValue = delegator.findOne("DraftAdministrativeData", UtilMisc.toMap("draftUUID", parentDraftId), false);
+            OfbizCsdlEntityType parentCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(new FullQualifiedName(parentDraftValue.getString("entityType")));
+            CsdlNavigationProperty navigationProperty = parentCsdlEntityType.getNavigationProperty(navigationName);
+            OfbizCsdlEntityType currCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(navigationProperty.getTypeFQN());
+            String newDraftId = Util.generateDraftUUID();
+            ProcessorServices.createDraftAdminData(delegator, newDraftId, parentDraftId, currCsdlEntityType,
+                    primaryKey, navigationName, userLogin);
+
+            //创建Draft
+            fields.putAll(UtilMisc.toMap("isActiveEntity", "N", "hasActiveEntity", "N", "hasDraftEntity", "Y", "draftUUID", newDraftId));
+            return delegator.create(currCsdlEntityType.getDraftEntityName(), fields);
+        } catch (GenericEntityException e) {
+            e.printStackTrace();
+            throw new OfbizODataException(e.getMessage());
+        }
+    }
+
+    //将orderBy转换成对应的ofbizField
+    public static List<String> convertOrderbyToField(OfbizCsdlEntityType csdlEntityType, OrderByOption orderByOption) throws OfbizODataException {
+        List<String> orderByList = new ArrayList<>();
+        if (orderByOption == null) {
+            return orderByList;
+        }
+        for (OrderByItem orderByItem : orderByOption.getOrders()) {
+            Expression expression = orderByItem.getExpression();
+            if (expression instanceof Member) {
+                UriInfoResource resourcePath = ((Member) expression).getResourcePath();
+                if (resourcePath.getUriResourceParts().size() > 1) {
+                    throw new OfbizODataException("Only support one segment order by");
+                }
+                UriResource uriResource = resourcePath.getUriResourceParts().get(0);
+                EdmProperty edmProperty = ((UriResourcePrimitiveProperty) uriResource).getProperty();
+                OfbizCsdlProperty property = (OfbizCsdlProperty) csdlEntityType.getProperty(edmProperty.getName());
+                if (property.getOfbizFieldName() == null) {
+                    continue;
+                }
+                String orderby = property.getOfbizFieldName() + " NULLS LAST";
+                orderByList.add(orderByItem.isDescending() ? "-" + orderby : orderby);
+            }
+        }
+        return orderByList;
     }
 
 }
