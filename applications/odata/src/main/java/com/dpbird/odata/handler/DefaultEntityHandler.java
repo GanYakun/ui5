@@ -19,6 +19,7 @@ import org.apache.olingo.commons.api.data.Entity;
 import org.apache.olingo.commons.api.edm.EdmBindingTarget;
 import org.apache.olingo.commons.api.edm.EdmEntityType;
 import org.apache.olingo.commons.api.edm.EdmNavigationProperty;
+import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.server.api.uri.queryoption.ApplyOption;
 import org.apache.olingo.server.api.uri.queryoption.QueryOption;
 
@@ -110,7 +111,7 @@ public class DefaultEntityHandler implements EntityHandler {
             EdmNavigationProperty edmNavigationProperty = (EdmNavigationProperty) createParam.get("edmNavigationProperty");
             OfbizCsdlEntityType entityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmEntityType.getFullQualifiedName());
             OfbizCsdlNavigationProperty navigationProperty = (OfbizCsdlNavigationProperty) entityType.getNavigationProperty(edmNavigationProperty.getName());
-            genericValue = OdataProcessorHelper.createRelatedGenericValue(entityToWrite, entity, navigationProperty.getRelAlias(), dispatcher, delegator, userLogin);
+            genericValue = OdataProcessorHelper.createRelatedGenericValue(entityToWrite, entity, navigationProperty.getRelAlias(), edmProvider, dispatcher, delegator, userLogin);
         }
         return genericValue;
     }
@@ -137,7 +138,7 @@ public class DefaultEntityHandler implements EntityHandler {
             fieldMapToWrite.put("lastModifiedDate", UtilDateTime.nowTimestamp());
         }
         //更新实体
-        GenericValue genericValue = OdataProcessorHelper.updateGenericValue(dispatcher, delegator, csdlEntityType.getOfbizEntity(), primaryKey, fieldMapToWrite, userLogin);
+        GenericValue genericValue = OdataProcessorHelper.updateGenericValue(dispatcher, delegator, csdlEntityType.getOfbizEntity(), primaryKey, fieldMapToWrite, csdlEntityType, userLogin);
         OdataOfbizEntity updatedEntity = OdataProcessorHelper.genericValueToEntity(dispatcher, edmProvider, csdlEntityType, genericValue, locale);
         //更新Attribute
         if (UtilValidate.isNotEmpty(csdlEntityType.getAttrEntityName()) ||
@@ -162,8 +163,8 @@ public class DefaultEntityHandler implements EntityHandler {
         OfbizAppEdmProvider edmProvider = (OfbizAppEdmProvider) odataContext.get("edmProvider");
         if (UtilValidate.isEmpty(deleteParam)) {
             //delete
-            String entityName = edmBindingTarget.getEntityType().getName();
-            String serviceName = Util.getEntityActionService(entityName, "delete", delegator);
+            OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmBindingTarget.getEntityType().getFullQualifiedName());
+            String serviceName = Util.getEntityActionService(csdlEntityType, csdlEntityType.getOfbizEntity(), "delete", delegator);
             OdataOfbizEntity toDelEntity = (OdataOfbizEntity) entityToDelete;
             GenericValue entityGenericValue = toDelEntity.getGenericValue();
             Map<String, Object> serviceParam = new HashMap<>(entityGenericValue.getPrimaryKey());
@@ -191,7 +192,7 @@ public class DefaultEntityHandler implements EntityHandler {
                 List<String> relations = navigationProperty.getRelAlias().getRelations();
                 if (relations.size() == 1) {
                     ModelRelation modelRelation = modelEntity.getRelation(relations.get(0));
-                    OdataProcessorHelper.removeGenericValueFK(dispatcher, delegator, entityType.getOfbizEntity(), entity.getKeyMap(), modelRelation, userLogin);
+                    OdataProcessorHelper.removeGenericValueFK(dispatcher, delegator, entityType.getOfbizEntity(), entity.getKeyMap(), modelRelation, entityType, userLogin);
                 }
                 OdataProcessorHelper.clearNavigationLink(entity.getGenericValue(), navigationProperty.getRelAlias(), dispatcher, userLogin);
             }
