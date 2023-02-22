@@ -705,6 +705,9 @@ public class OdataProcessorHelper {
     public static GenericValue createGenericValue(LocalDispatcher dispatcher, String serviceName, String entityName, Map<String, Object> fieldMap)
             throws GenericServiceException, GenericEntityException, OfbizODataException {
         Map<String, Object> result = dispatcher.runSync(serviceName, fieldMap);
+        if (ServiceUtil.isError(result)) {
+            throw new OfbizODataException(result.get("errorMessageList").toString());
+        }
         // 光运行了创建entity的service，我们都还不知道是哪个具体的数据被创建了，所以需要获取新创建的entity的pk，然后从数据库获取这个新创建的GenericValue
         Map<String, Object> pkMap;
         if (result.containsKey("pkMap")) {
@@ -716,22 +719,23 @@ public class OdataProcessorHelper {
     }
 
     public static GenericValue createGenericValue(LocalDispatcher dispatcher, Delegator delegator,
-                                                  EdmEntityType edmEntityType, org.apache.olingo.commons.api.data.Entity entityToCreate,
+                                                  OfbizCsdlEntityType csdlEntityType, org.apache.olingo.commons.api.data.Entity entityToCreate,
                                                   OfbizAppEdmProvider edmProvider, GenericValue userLogin)
             throws OfbizODataException {
         GenericValue newGenericValue = null;
-        OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmEntityType.getFullQualifiedName());
         String entityName = csdlEntityType.getOfbizEntity();
         try {
             /********** 获取系统所有的service **************************************************/
             String serviceName = Util.getEntityActionService(csdlEntityType, entityName, "create", delegator);
             ModelService modelService = dispatcher.getDispatchContext().getModelService(serviceName);
-            Map<String, Object> fieldMap = Util.entityToMap(delegator, edmProvider, entityToCreate);
+            Map<String, Object> propertyMap = Util.entityToMap(delegator, edmProvider, entityToCreate);
             //添加DefaultValue
             for (Map.Entry<String, Object> entry : csdlEntityType.getDefaultValueProperties().entrySet()) {
-                fieldMap.putIfAbsent(entry.getKey(), entry.getValue());
+                propertyMap.putIfAbsent(entry.getKey(), entry.getValue());
             }
-            fieldMap = Util.prepareServiceParameters(modelService, Util.propertyToField(fieldMap, csdlEntityType));
+            //转成数据库字段
+            Map<String, Object> fieldMap = Util.propertyToField(propertyMap, csdlEntityType);
+            fieldMap = Util.prepareServiceParameters(modelService, fieldMap);
             if (serviceName != null) { // ofbiz存在创建这个对象的service，那就建议用户调用service，不要直接创建
                 if (userLogin == null) {
                     Debug.logInfo("------------- using system userlogin to create object", module);
