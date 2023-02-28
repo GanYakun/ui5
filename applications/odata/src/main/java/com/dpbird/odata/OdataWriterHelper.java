@@ -11,20 +11,15 @@ import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
-import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.olingo.commons.api.data.Entity;
 import org.apache.olingo.commons.api.data.Property;
 import org.apache.olingo.commons.api.data.ValueType;
-import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.server.api.uri.queryoption.QueryOption;
 import org.codehaus.groovy.runtime.metaclass.MissingMethodExceptionNoStack;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class OdataWriterHelper {
     public static final String module = OdataWriterHelper.class.getName();
@@ -105,6 +100,16 @@ public class OdataWriterHelper {
                     return null;
                 }
             }
+            //创建Derived
+            if (navCsdlEntityType.isHasDerivedEntity()) {
+                OfbizCsdlEntityType derivedType = OdataProcessorHelper.getDerivedType(edmProvider, delegator, (OdataOfbizEntity) entityToWrite, navCsdlEntityType);
+                if (UtilValidate.isNotEmpty(derivedType)) {
+                    OdataOfbizEntity ofbizEntity = (OdataOfbizEntity) entityToWrite;
+                    Entity derivedEntity = Util.mapToEntity(derivedType, ofbizEntity.getGenericValue());
+                    Util.addBasePrimaryKey(dispatcher, edmProvider, navCsdlEntityType, nestedGenericValue, derivedEntity);
+                    OdataProcessorHelper.createGenericValue(dispatcher, delegator, derivedType, derivedEntity, edmProvider, userLogin);
+                }
+            }
             OfbizCsdlEntityType nestedCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(csdlNavigationProperty.getTypeFQN());
             OdataOfbizEntity entityCreated = OdataProcessorHelper.genericValueToEntity(dispatcher, edmProvider, nestedCsdlEntityType, nestedGenericValue, locale);
 
@@ -128,7 +133,7 @@ public class OdataWriterHelper {
                                                     OfbizAppEdmProvider edmProvider,
                                                     OfbizCsdlEntityType csdlEntityType,
                                                     Map<String, Object> keyMap,
-                                                    Entity entityToWrite,
+                                                    OdataOfbizEntity entityToWrite,
                                                     GenericValue userLogin,
                                                     Locale locale) throws OfbizODataException {
         String entityName = csdlEntityType.getOfbizEntity();
@@ -157,9 +162,8 @@ public class OdataWriterHelper {
                 Map<String, Object> propertyMap = Util.entityToMap(delegator, edmProvider, entityToWrite);
                 Map<String, Object> fieldMap = Util.propertyToField(propertyMap, csdlEntityType);
                 //如果draft提交保存数据，保留值为null的字段
-                if (entityToWrite instanceof OdataOfbizEntity && ((OdataOfbizEntity) entityToWrite).isDraft()) {
-                    OdataOfbizEntity odataOfbizEntity = (OdataOfbizEntity) entityToWrite;
-                    GenericValue draftGenericValue = odataOfbizEntity.getGenericValue();
+                if (entityToWrite.isDraft()) {
+                    GenericValue draftGenericValue = entityToWrite.getGenericValue();
                     for (Map.Entry<String, Object> entry : draftGenericValue.getAllFields().entrySet()) {
                         if (entry.getValue() == null && !fieldMap.containsKey(entry.getKey())) {
                             fieldMap.put(entry.getKey(), null);
@@ -172,6 +176,14 @@ public class OdataWriterHelper {
                 }
                 updatedGenericValue = OdataProcessorHelper.updateGenericValue(dispatcher, delegator, csdlEntityType.getOfbizEntity(),
                         keyMap, fieldMap, csdlEntityType, userLogin);
+                //更新DerivedEntity
+                if (csdlEntityType.isHasDerivedEntity()) {
+                    OfbizCsdlEntityType derivedType = OdataProcessorHelper.getDerivedType(edmProvider, delegator, entityToWrite, csdlEntityType);
+                    if (UtilValidate.isNotEmpty(derivedType)) {
+                        OdataProcessorHelper.updateGenericValue(dispatcher, delegator, derivedType.getOfbizEntity(),
+                                keyMap, new HashMap<>(entityToWrite.getGenericValue()), derivedType, userLogin);
+                    }
+                }
                 if (UtilValidate.isNotEmpty(csdlEntityType.getAttrEntityName()) ||
                         UtilValidate.isNotEmpty(csdlEntityType.getAttrNumericEntityName()) ||
                         UtilValidate.isNotEmpty(csdlEntityType.getAttrDateEntityName())) {
