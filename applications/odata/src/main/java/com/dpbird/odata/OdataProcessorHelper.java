@@ -430,9 +430,8 @@ public class OdataProcessorHelper {
         }
     }
 
-    private static OfbizCsdlEntityType getDerivedType(OfbizAppEdmProvider edmProvider, Delegator delegator,
-                                                      OdataOfbizEntity ofbizEntity, OfbizCsdlEntityType csdlEntityType) throws GenericEntityException {
-        GenericValue genericValue = ofbizEntity.getGenericValue();
+    public static OfbizCsdlEntityType getDerivedType(OfbizAppEdmProvider edmProvider, Delegator delegator,
+                                                      GenericValue genericValue, OfbizCsdlEntityType csdlEntityType) throws OfbizODataException {
         if ("DynamicViewEntity".equals(genericValue.getEntityName())) {
             return null;
         }
@@ -440,24 +439,35 @@ public class OdataProcessorHelper {
         String typeIdName = typeModelEntity.getOnlyPk().getName();
         String typeIdValue = genericValue.getString(typeIdName);
         Map<String, Object> typePrimaryKey = UtilMisc.toMap(typeModelEntity.getOnlyPk().getName(), typeIdValue);
-        GenericValue typeGenericValue = delegator.findOne(typeModelEntity.getEntityName(), typePrimaryKey, true);
-        if (UtilValidate.isEmpty(typeGenericValue)) {
-            //没有衍生类型 保持原始类型
-            return null;
-        }
-        String derivedEntityName = null;
-        if (typeGenericValue.getBoolean("hasTable")) {
-            derivedEntityName = Util.underlineToUpperHump(typeIdValue);
-        }
-        for (CsdlEntityType csdlEntity : edmProvider.cachedSchema.getEntityTypes()) {
-            OfbizCsdlEntityType currET = (OfbizCsdlEntityType) csdlEntity;
-            if (currET.getBaseTypeFQN() != null &&
-                    csdlEntityType.getName().equals(currET.getBaseTypeFQN().getName()) &&
-                    currET.getOfbizEntity().equals(derivedEntityName)) {
-                return currET;
+        try {
+            GenericValue typeGenericValue = delegator.findOne(typeModelEntity.getEntityName(), typePrimaryKey, true);
+            if (UtilValidate.isEmpty(typeGenericValue)) {
+                //没有衍生类型 保持原始类型
+                return null;
             }
+            String derivedEntityName = null;
+            if (typeGenericValue.getBoolean("hasTable")) {
+                derivedEntityName = Util.underlineToUpperHump(typeIdValue);
+            }
+            for (CsdlEntityType csdlEntity : edmProvider.cachedSchema.getEntityTypes()) {
+                OfbizCsdlEntityType currET = (OfbizCsdlEntityType) csdlEntity;
+                if (currET.getBaseTypeFQN() != null &&
+                        csdlEntityType.getName().equals(currET.getBaseTypeFQN().getName()) &&
+                        currET.getOfbizEntity().equals(derivedEntityName)) {
+                    return currET;
+                }
+            }
+            return null;
+        } catch (GenericEntityException e) {
+            e.printStackTrace();
+            throw new OfbizODataException(e.getMessage());
         }
-        return null;
+
+    }
+
+    public static OfbizCsdlEntityType getDerivedType(OfbizAppEdmProvider edmProvider, Delegator delegator,
+                                                      OdataOfbizEntity ofbizEntity, OfbizCsdlEntityType csdlEntityType) throws OfbizODataException {
+        return getDerivedType(edmProvider, delegator, ofbizEntity.getGenericValue(), csdlEntityType);
 
     }
 
@@ -1019,18 +1029,15 @@ public class OdataProcessorHelper {
         OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(new FullQualifiedName(type));
         List<EntityTypeRelAlias> relAliases = csdlEntityType.getRelAliases();
         Iterator<EntityTypeRelAlias> it = relAliases.iterator();
-        try {
-            while (it.hasNext()) { // 轮询EntityType中所有的RelAlias
-                EntityTypeRelAlias relAlias = it.next();
-                if (!aliasPropertiesChanged(entityToWrite, entityUpdated, csdlEntityType, relAlias)) {
-                    continue;
-                }
-                removeRelAliasProperty(entityUpdated, relAlias, dispatcher, userLogin);
-                List<String> relations = relAlias.getRelations();
-                createRelAliasFields(entityToWrite, entityUpdated, csdlEntityType, relAlias, dispatcher, userLogin);
+        while (it.hasNext()) { // 轮询EntityType中所有的RelAlias
+            EntityTypeRelAlias relAlias = it.next();
+            if (!aliasPropertiesChanged(entityToWrite, entityUpdated, csdlEntityType, relAlias)) {
+                continue;
             }
-        } catch (GenericEntityException | GenericServiceException e) {
-            throw new OfbizODataException(e.getMessage());
+            updateRelAliasFields(entityToWrite, entityUpdated, csdlEntityType, relAlias, dispatcher, userLogin);
+//                removeRelAliasProperty(entityUpdated, relAlias, dispatcher, userLogin);
+//                List<String> relations = relAlias.getRelations();
+//                createRelAliasFields(entityToWrite, entityUpdated, csdlEntityType, relAlias, dispatcher, userLogin);
         }
     }
 
@@ -1512,6 +1519,56 @@ public class OdataProcessorHelper {
             nextModelRelation = modelRelation;
         }
         return destGenericValue;
+    }
+
+    /**
+     * 更新RelAlias字段
+     */
+    public static void updateRelAliasFields(Entity entityToWrite, OdataOfbizEntity entityCreated,
+                                            OfbizCsdlEntityType csdlEntityType, EntityTypeRelAlias relAlias,
+                                            LocalDispatcher dispatcher, GenericValue userLogin) throws OfbizODataException {
+        try {
+            Delegator delegator = dispatcher.getDelegator();
+            GenericValue genericValue = entityCreated.getGenericValue();
+            List<GenericValue> relAliasGenericValues = getGenericValuesFromRelations(dispatcher.getDelegator(), genericValue, relAlias, relAlias.getRelations(), false);
+            GenericValue relGenericValue = EntityUtil.getFirst(relAliasGenericValues);
+            if (UtilValidate.isNotEmpty(relGenericValue)) {
+                Map<String, Object> relAliasField = getEntityRelAliasField(entityToWrite, csdlEntityType, relAlias);
+                //更新
+                Map<String, Object> serviceParameter = new HashMap<>(relGenericValue);
+                serviceParameter.putAll(relAliasField);
+                String updateService = Util.getEntityActionService(null, relGenericValue.getEntityName(), "update", delegator);
+                ModelService modelService = dispatcher.getDispatchContext().getModelService(updateService);
+                Map<String, Object> serviceInMap = Util.prepareServiceParameters(modelService, serviceParameter);
+                serviceInMap.put("userLogin", userLogin);
+                dispatcher.runSync(updateService, serviceInMap);
+            } else {
+                //创建
+                createRelAliasFields(entityToWrite, entityCreated, csdlEntityType, relAlias, dispatcher, userLogin);
+            }
+        } catch (GenericEntityException | GenericServiceException e) {
+            e.printStackTrace();
+            throw new OfbizODataException(e.getMessage());
+        }
+    }
+
+    /**
+     * 获取一个Entity中某个RelAlias的所有字段
+     */
+    public static Map<String, Object> getEntityRelAliasField(Entity entity, OfbizCsdlEntityType csdlEntityType, EntityTypeRelAlias relAlias) {
+        String relAliasName = relAlias.getName();
+        Map<String, Object> fieldMap = new HashMap<>();
+        for (Property property : entity.getProperties()) {
+            OfbizCsdlProperty csdlProperty = (OfbizCsdlProperty) csdlEntityType.getProperty(property.getName());
+            if (UtilValidate.isEmpty(csdlProperty.getRelAlias())) {
+                continue;
+            }
+            EntityTypeRelAlias propertyRelAlias = csdlProperty.getRelAlias();
+            if (propertyRelAlias.getName().equals(relAliasName)) {
+                fieldMap.put(csdlProperty.getOfbizFieldName(), property.getValue());
+            }
+        }
+        return fieldMap;
     }
 
 
