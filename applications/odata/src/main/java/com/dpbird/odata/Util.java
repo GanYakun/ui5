@@ -2053,7 +2053,7 @@ public class Util {
         return new EntityConditionList<>(entityConditionList, operator);
     }
 
-    private static String parseVariable(String valueStr, GenericValue object) {
+    public static String parseVariable(String valueStr, GenericValue object) {
         if (valueStr.contains("${")) {
             if (object == null) {
                 return valueStr;
@@ -2538,6 +2538,30 @@ public class Util {
                 property.setValue(baseEntityProperty.getValueType(), baseEntityProperty.getValue());
             }
         }
+    }
+
+    /**
+     * 获取一个实体relation外键对应的RelFieldName条件
+     */
+    public static EntityCondition getEntityRelationCondition(Delegator delegator, Entity entity, OfbizCsdlEntityType csdlEntityType,
+                                                               OfbizCsdlNavigationProperty navigationProperty) {
+        OdataOfbizEntity ofbizEntity = (OdataOfbizEntity) entity;
+        EntityTypeRelAlias relAlias = navigationProperty.getRelAlias();
+        if (relAlias.getRelations().size() == 1) {
+            ModelEntity modelEntity = delegator.getModelEntity(csdlEntityType.getOfbizEntity());
+            ModelRelation relation = modelEntity.getRelation(relAlias.getRelations().get(0));
+            if (relation != null) {
+                Map<String, Object> fkMapping = new HashMap<>();
+                for (Map.Entry<String, Object> entry : ofbizEntity.getKeyMap().entrySet()) {
+                    ModelKeyMap currModelKey = relation.findKeyMap(entry.getKey());
+                    if (UtilValidate.isNotEmpty(currModelKey)) {
+                        fkMapping.put(currModelKey.getRelFieldName(), entry.getValue());
+                    }
+                }
+                return EntityCondition.makeCondition(fkMapping);
+            }
+        }
+        return null;
     }
 
 }

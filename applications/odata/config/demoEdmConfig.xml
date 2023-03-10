@@ -535,6 +535,7 @@
 <!--		<Property Name="brandName"/>-->
 <!--		<Property Name="productName"/>-->
 	</EntityType>
+	<EntityType Name="CurrentParty" OfbizEntity="Party" AutoProperties="true"/>
 	<EntityType Name="GlAccountOrganization" AutoProperties="true"/>
 	<EntityType Name="PartyAcctgPreference" AutoProperties="true"/>
 	<EntityType Name="GlAccount" AutoProperties="true"/>
@@ -655,7 +656,9 @@
 		<Property Name="workEffortId"/>
 		<Property Name="workEffortTypeId"/>
 		<Property Name="workEffortName"/>
+		<NavigationProperty Name="WorkEffortPartyAssignment"/>
 	</EntityType>
+	<EntityType Name="WorkEffortPartyAssignment" AutoProperties="true"/>
 	<EntityType Name="ContactMechAndAttr" OfbizEntity="ContactMech" AutoProperties="true">
 		<RelAlias Name="AttributeAlias" Relations="ContactMechAttribute"/>
 		<Property Name="attrName" RelAlias="AttributeAlias" Field="attrName" />
@@ -1169,7 +1172,10 @@
 		<NavigationPropertyBinding Path="ProductPrice" Target="ProductPrices"/>
 		</EntitySet>
 		<EntitySet Name="PartyInfos" EntityType="PartyInfo"/>
+		<EntitySet Name="WorkEfforts" EntityType="WorkEffort" EntityCondition="WorkEffortPartyAssignment/partyId=${userLogin.partyId}"/>
+		<EntitySet Name="WorkEffortPartyAssignments" EntityType="WorkEffortPartyAssignment"/>
 		<EntitySet Name="SimpleProducts" EntityType="SimpleProduct"/>
+		<EntitySet Name="CurrentParties" EntityType="CurrentParty" EntityCondition="partyId = ${userLogin.partyId}"/>
 		<EntitySet Name="OpenProducts" EntityType="OpenProduct"/>
 		<EntitySet Name="SimpleFacilities" EntityType="SimpleFacility"/>
 		<EntitySet Name="PartyTypes" EntityType="PartyType"/>
