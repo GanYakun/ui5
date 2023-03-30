@@ -12851,7 +12851,7 @@
         <value xml:lang="ru">Сортировка</value>
         <value xml:lang="th">เลือก</value>
         <value xml:lang="vi">Đã lấy ra (picked)</value>
-        <value xml:lang="zh">已分拣</value>
+        <value xml:lang="zh">已完成</value>
         <value xml:lang="zh-TW">已揀貨</value>
     </property>
     <property key="StatusItem.description.SHIPMENT_SCHEDULED">
