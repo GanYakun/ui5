@@ -323,7 +323,7 @@ public class DataModifyActions {
     private static Map<String, Object> createMainEntityFromDraft(LocalDispatcher dispatcher, Delegator delegator, HttpServletRequest httpServletRequest,
                                                                  OfbizCsdlEntityType csdlEntityType, OfbizAppEdmProvider edmProvider,
                                                                  GenericValue draftGenericValue, GenericValue userLogin, Locale locale, Entity entity)
-            throws GenericServiceException, ODataException {
+            throws GenericServiceException, ODataException, GenericEntityException {
         Map<String, Object> pkMap = null;
         if (csdlEntityType.getHandlerClass() != null) {
             try {
@@ -334,18 +334,25 @@ public class DataModifyActions {
         }
         if (UtilValidate.isEmpty(pkMap)) {
             pkMap = createEntityWithService(dispatcher, delegator, csdlEntityType, draftGenericValue, userLogin);
-           try {
-               //创建relAlias字段
-               GenericValue createdGenericValue = delegator.findOne(csdlEntityType.getOfbizEntity(), pkMap, false);
-               OdataOfbizEntity entityCreated = OdataProcessorHelper.genericValueToEntity(dispatcher, edmProvider, csdlEntityType, createdGenericValue, locale);
-               if (entityCreated != null) {
-                   OdataProcessorHelper.createSemanticFields(httpServletRequest, delegator, dispatcher, edmProvider,
-                           entity, entityCreated, locale, userLogin);
-               }
-           } catch (GenericEntityException e) {
-               e.printStackTrace();
-               throw new OfbizODataException(e.getMessage());
-           }
+            //创建DerivedEntity
+            if (csdlEntityType.isHasDerivedEntity()) {
+                OfbizCsdlEntityType derivedType = OdataProcessorHelper.getDerivedType(edmProvider, delegator, draftGenericValue, csdlEntityType);
+                if (UtilValidate.isNotEmpty(derivedType)) {
+                    createEntityWithService(dispatcher, delegator, derivedType, draftGenericValue, userLogin);
+                }
+            }
+            try {
+                //创建relAlias字段
+                GenericValue createdGenericValue = delegator.findOne(csdlEntityType.getOfbizEntity(), pkMap, false);
+                OdataOfbizEntity entityCreated = OdataProcessorHelper.genericValueToEntity(dispatcher, edmProvider, csdlEntityType, createdGenericValue, locale);
+                if (entityCreated != null) {
+                    OdataProcessorHelper.createSemanticFields(httpServletRequest, delegator, dispatcher, edmProvider,
+                            entity, entityCreated, locale, userLogin);
+                }
+            } catch (GenericEntityException e) {
+                e.printStackTrace();
+                throw new OfbizODataException(e.getMessage());
+            }
         }
         return pkMap;
     }
@@ -378,14 +385,20 @@ public class DataModifyActions {
         String serviceName;
         Map<String, Object> serviceParams;
         try {
-            Map<String, Object> allField = Util.propertyToField(genericValue.getAllFields(), csdlEntityType);
+            Map<String, Object> allFields = new HashMap<>(Util.propertyToField(genericValue.getAllFields(), csdlEntityType));
+            //添加EntityType condition字段
             Map<String, Object> entityTypeConditionMap = Util.parseConditionMap(csdlEntityType.getEntityConditionStr(), userLogin);
             if (UtilValidate.isNotEmpty(entityTypeConditionMap)) {
-                allField.putAll(entityTypeConditionMap);
+                allFields.putAll(entityTypeConditionMap);
+            }
+            //添加缺省字段
+            Map<String, Object> defaultFields = Util.propertyToField(csdlEntityType.getDefaultValueProperties(), csdlEntityType);
+            for (Map.Entry<String, Object> entry : defaultFields.entrySet()) {
+                allFields.putIfAbsent(entry.getKey(), entry.getValue());
             }
             serviceName = Util.getEntityActionService(csdlEntityType, entityName, "create", delegator);
             ModelService modelService = dispatcher.getDispatchContext().getModelService(serviceName);
-            serviceParams = Util.prepareServiceParameters(modelService, allField);
+            serviceParams = Util.prepareServiceParameters(modelService, allFields);
         } catch (OfbizODataException e) {
             if (!(delegator.getModelEntity(entityName) instanceof ModelViewEntity)) {
                 throw e;

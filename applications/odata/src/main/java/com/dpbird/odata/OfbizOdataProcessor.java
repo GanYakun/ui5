@@ -115,7 +115,7 @@ public class OfbizOdataProcessor {
         }
     }
 
-    private Map<String, Object> getOdataContext() {
+    public Map<String, Object> getOdataContext() {
         return UtilMisc.toMap("delegator", delegator, "dispatcher", dispatcher,
                 "edmProvider", edmProvider, "userLogin", userLogin, "locale", locale, "httpServletRequest", httpServletRequest);
     }
@@ -163,12 +163,20 @@ public class OfbizOdataProcessor {
                             String[] condition;
                             if (fieldCondition.contains("!=")) {
                                 condition = fieldCondition.split("!=");
-                                String filterProperty = dynamicViewHolder.addFilterProperty(lastRelEntityName, condition[0]);
-                                entitySetConditionList.add(EntityCondition.makeCondition(filterProperty, EntityOperator.NOT_EQUAL, condition[1]));
+                                String conValue = Util.parseVariable(condition[1].trim(), userLogin);
+                                if ("null".equals(conValue)) {
+                                    conValue = null;
+                                }
+                                String filterProperty = dynamicViewHolder.addFilterProperty(lastRelEntityName, condition[0].trim());
+                                entitySetConditionList.add(EntityCondition.makeCondition(filterProperty, EntityOperator.NOT_EQUAL, conValue));
                             } else if (fieldCondition.contains("=")) {
                                 condition = fieldCondition.split("=");
-                                String filterProperty = dynamicViewHolder.addFilterProperty(lastRelEntityName, condition[0]);
-                                entitySetConditionList.add(EntityCondition.makeCondition(filterProperty, EntityOperator.EQUALS, condition[1]));
+                                String conValue = Util.parseVariable(condition[1].trim(), userLogin);
+                                if ("null".equals(conValue)) {
+                                    conValue = null;
+                                }
+                                String filterProperty = dynamicViewHolder.addFilterProperty(lastRelEntityName, condition[0].trim());
+                                entitySetConditionList.add(EntityCondition.makeCondition(filterProperty, EntityOperator.EQUALS, conValue));
                             } else if (fieldCondition.contains(" in ")) {
                                 EntityComparisonOperator<?, ?> operator;
                                 //是not in
@@ -1031,7 +1039,7 @@ public class OfbizOdataProcessor {
     /**
      * 批量处理，如果Navigation是单纯的relation，所有实体只做一次查询
      */
-    protected void addExpandOption(ExpandOption expandOption, Collection<Entity> entityList, EdmEntityType edmEntityType)
+    protected void addExpandOption(ExpandOption expandOption, Collection<Entity> entityList,EdmBindingTarget edmBindingTarget, EdmEntityType edmEntityType)
             throws OfbizODataException {
         if (expandOption == null) {
             return;
@@ -1051,13 +1059,13 @@ public class OfbizOdataProcessor {
             }
         } else {
             for (ExpandItem expandItem : expandItems) {
-                addAllExpandItem(entityList, expandItem, edmEntityType);
+                addAllExpandItem(entityList, expandItem, edmBindingTarget, edmEntityType);
             }
         }
     }
 
 
-    private void addAllExpandItem(Collection<Entity> entityList, ExpandItem expandItem, EdmEntityType edmEntityType) throws OfbizODataException {
+    private void addAllExpandItem(Collection<Entity> entityList, ExpandItem expandItem, EdmBindingTarget edmBindingTarget, EdmEntityType edmEntityType) throws OfbizODataException {
         EdmNavigationProperty edmNavigationProperty = null;
         LevelsExpandOption levelsExpandOption = expandItem.getLevelsOption();
         int expandLevel = 1;
@@ -1073,7 +1081,7 @@ public class OfbizOdataProcessor {
         }
         //如果当前expand是缺省的ofbizRelation，直接向数据库做一次查询，否者通过Handler处理
         if (isDefaultQuery(edmEntityType, edmNavigationProperty, edmProvider)) {
-            Map<String, Object> embeddedEdmParams = UtilMisc.toMap("edmEntityType", edmEntityType, "edmNavigationProperty", edmNavigationProperty);
+            Map<String, Object> embeddedEdmParams = UtilMisc.toMap("edmBindingTarget", edmBindingTarget, "edmEntityType", edmEntityType, "edmNavigationProperty", edmNavigationProperty);
             Map<String, QueryOption> embeddedQueryOptions = UtilMisc.toMap("expandOption", expandItem.getExpandOption(),
                     "orderByOption", expandItem.getOrderByOption(), "selectOption", expandItem.getSelectOption(), "filterOption", expandItem.getFilterOption(),
                     "skipOption", expandItem.getSkipOption(), "topOption", expandItem.getTopOption());

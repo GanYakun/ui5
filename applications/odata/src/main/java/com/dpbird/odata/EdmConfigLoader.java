@@ -855,7 +855,8 @@ public class EdmConfigLoader {
         String type = navigationPropertyElement.getAttribute("Type");
         String autoBindingAttr = navigationPropertyElement.getAttribute("AutoBinding");
         String stickyReadOnlyAttr = navigationPropertyElement.getAttribute("ReadOnly");
-
+        String handlerNode = navigationPropertyElement.getAttribute("HandlerNode");
+        String preCreateAttr = navigationPropertyElement.getAttribute("PreCreate");
         boolean autoBinding = true;
         if (UtilValidate.isNotEmpty(autoBindingAttr)) {
             autoBinding = Boolean.valueOf(autoBindingAttr);
@@ -864,7 +865,10 @@ public class EdmConfigLoader {
         if (UtilValidate.isNotEmpty(stickyReadOnlyAttr)) {
             stickyReadOnly = Boolean.valueOf(stickyReadOnlyAttr);
         }
-
+        boolean preCreate = false;
+        if (UtilValidate.isNotEmpty(preCreateAttr)) {
+            preCreate = Boolean.valueOf(preCreateAttr);
+        }
         boolean filterByDate = false;
         String filterByDateAttr = navigationPropertyElement.getAttribute("FilterByDate");
         if (UtilValidate.isNotEmpty(filterByDateAttr)) {
@@ -923,6 +927,8 @@ public class EdmConfigLoader {
         navigationProperty.setContainsTarget(containsTarget);
         navigationProperty.setRelAlias(relAlias);
         navigationProperty.setReadOnly(stickyReadOnly);
+        navigationProperty.setPreCreate(preCreate);
+        navigationProperty.setHandlerNode(handlerNode);
         if (UtilValidate.isNotEmpty(midEntity)) {
             navigationProperty.setMidEntity(midEntity);
         }
@@ -2271,6 +2277,7 @@ public class EdmConfigLoader {
             modelEntity.setEntityName(draftEntityName);
             modelEntity.setTableName(draftEntityName);
             modelEntity.setPackageName("com.dpbird.draft");
+            modelEntity.setNoAutoStamp(true);
             //Draft固定字段
             modelEntity.addField(ModelField.create(modelEntity, "draftUUID", "id", true));
             modelEntity.addField(ModelField.create(modelEntity, "isActiveEntity", "id", false));
@@ -2287,7 +2294,10 @@ public class EdmConfigLoader {
                     modelEntity.addField(ModelField.create(modelEntity, property.getName(), ofbizPropertyType, false));
                 }
             }
-
+            //如果有Derived 把Derived的字段和relation也添加进去以支持编辑
+            if (entityType.isHasDerivedEntity()) {
+                addDerivedModelElement(entityType, edmWebConfig, delegator, modelEntity);
+            }
             //Draft固定的relation
             ModelRelation draftAdminRelation = ModelRelation.create(modelEntity, null, "one-nofk", null, "DraftAdministrativeData", null, ModelKeyMap.makeKeyMapList("draftUUID"), false);
             modelEntity.addRelation(draftAdminRelation);
@@ -2329,6 +2339,22 @@ public class EdmConfigLoader {
             entityCache.put(modelEntity.getEntityName(), modelEntity);
             Map<String, String> groupCache = delegator.getModelGroupReader().getGroupCache(delegator.getDelegatorBaseName());
             groupCache.put(modelEntity.getEntityName(), "org.apache.ofbiz.memory");
+        }
+    }
+
+    private static void addDerivedModelElement(OfbizCsdlEntityType baseCsdlEntityType, EdmWebConfig edmWebConfig, Delegator delegator, ModelEntity baseDraftModelEntity) {
+        for (OfbizCsdlEntityType csdlEntityType : edmWebConfig.getEntityTypes()) {
+            if (csdlEntityType.getBaseTypeFQN() != null && baseCsdlEntityType.getName().equals(csdlEntityType.getBaseTypeFQN().getName())) {
+                for (CsdlProperty property : csdlEntityType.getProperties()) {
+                    OfbizCsdlProperty ofbizCsdlProperty = (OfbizCsdlProperty) property;
+                    //忽略Complex字段
+                    if (!baseDraftModelEntity.isField(property.getName()) && !property.getType().contains(OfbizMapOdata.NAMESPACE)) {
+                        String ofbizPropertyType = getPropertyOfbizType(csdlEntityType, ofbizCsdlProperty, delegator);
+                        baseDraftModelEntity.addField(ModelField.create(baseDraftModelEntity, property.getName(), ofbizPropertyType, false));
+                    }
+                }
+                //TODO: add relation.
+            }
         }
     }
 

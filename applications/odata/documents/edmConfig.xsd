@@ -107,6 +107,7 @@
             <xs:attribute name="RemoveService" type="xs:NCName"/>
             <xs:attribute name="Type" type="xs:NCName"/>
             <xs:attribute name="ReadOnly" type="xs:boolean"/>
+            <xs:attribute name="HandlerNode" type="xs:anyURI"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="EnumType">
@@ -315,7 +316,7 @@
             <xs:attribute name="IsCollection" type="xs:boolean"/>
             <xs:attribute name="IsDateAttribute" type="xs:boolean"/>
             <xs:attribute name="IsNumericAttribute" type="xs:boolean"/>
-            <xs:attribute name="Label" type="xs:NCName"/>
+            <xs:attribute name="Label"/>
             <xs:attribute name="Computed" type="xs:boolean"/>
             <xs:attribute name="Immutable" type="xs:boolean"/>
             <xs:attribute name="IsImageURL" type="xs:boolean"/>

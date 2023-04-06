@@ -34,6 +34,9 @@ import org.apache.olingo.server.core.uri.queryoption.LevelsOptionImpl;
 
 import java.util.*;
 
+/**
+ * 弃用的Class，要删掉
+ */
 public class DraftHandler {
     public static final String module = DraftHandler.class.getName();
     protected Delegator delegator;
@@ -131,9 +134,10 @@ public class DraftHandler {
         String nestedDraftEntityName = nestedCsdlEntityType.getDraftEntityName();
 
         Map<String, Object> fieldMap = Util.entityToMap(entityToWrite);
-        if (keyMap.size() == 1 && (keyMap.get("id") != null || keyMap.get("draftUUID") != null)) {
+        if (keyMap.size() == 1 && keyMap.get("draftUUID") != null) {
             //三段式创建draft数据，要拿第二段的id给第三段当parentUUID
-            String draftUUId = keyMap.get("draftUUID") != null ? (String) keyMap.get("draftUUID") : (String) keyMap.get("id");
+            String draftUUId = (String) keyMap.get("draftUUID");
+            fieldMap.put("parentDraftUUID", draftUUId);
             try {
                 //补全子对象的主键
                 GenericValue parentDraftGV = delegator.findOne(csdlEntityType.getDraftEntityName(), UtilMisc.toMap("draftUUID", draftUUId), false);
@@ -150,6 +154,7 @@ public class DraftHandler {
             Map<String, Object> propertyKey = Util.propertyToField(keyMap, csdlEntityType);
             fieldMap.putAll(Util.getRelatedFieldMap(delegator, entityName, csdlNavigationProperty, propertyKey, edmProvider));
         }
+        //添加Navigation Condition
         Map<String, Object> relatedConditionMap = Util.getRelatedConditionMap(csdlNavigationProperty);
         if (UtilValidate.isNotEmpty(relatedConditionMap)) {
             fieldMap.putAll(relatedConditionMap);
@@ -157,7 +162,10 @@ public class DraftHandler {
         //补充seqId
         OfbizCsdlEntityType navOfbizCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(csdlNavigationProperty.getTypeFQN());
         addDraftNextSeqId(navOfbizCsdlEntityType, fieldMap);
-
+        //添加Entity DefaultProperty
+        for (Map.Entry<String, Object> entry : navOfbizCsdlEntityType.getDefaultValueProperties().entrySet()) {
+            fieldMap.putIfAbsent(entry.getKey(), entry.getValue());
+        }
         Map<String, Object> serviceParams = UtilMisc.toMap("originEntityName", nestedEntityName,
                 "fieldMap", fieldMap, "sapContextId", this.sapContextId,
                 "draftEntityName", nestedDraftEntityName, "edmProvider", edmProvider,
@@ -296,9 +304,14 @@ public class DraftHandler {
         List<GenericValue> draftAdminDataList;
         List<GenericValue> draftGenericValues;
         GenericValue draftGenericValue;
+        String draftUUId = sapContextId;
+        if (keyMap.containsKey("draftUUID")) {
+            //三段式查询
+            draftUUId = (String) keyMap.get("draftUUID");
+        }
         try {
             draftAdminDataList = delegator.findByAnd("DraftAdministrativeData",
-                    UtilMisc.toMap("parentDraftUUID", sapContextId, "navigationProperty", edmNavigationProperty.getName(), "entityType", navEntityType),
+                    UtilMisc.toMap("parentDraftUUID", draftUUId, "navigationProperty", edmNavigationProperty.getName(), "entityType", navEntityType),
                     null, false);
             List<String> draftUUIDs = EntityUtil.getFieldListFromEntityList(draftAdminDataList, "draftUUID", true);
             EntityCondition entityCondition = EntityCondition.makeCondition("draftUUID", EntityJoinOperator.IN, draftUUIDs);

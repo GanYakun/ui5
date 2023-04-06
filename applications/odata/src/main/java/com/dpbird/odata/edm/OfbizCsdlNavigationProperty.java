@@ -22,6 +22,8 @@ public class OfbizCsdlNavigationProperty extends CsdlNavigationProperty {
     private boolean readOnly;
     private EntityTypeRelAlias relAlias;
     private String handler;
+    private String handlerNode;
+    private boolean preCreate;
 
     public boolean isAutoBinding() {
         return autoBinding;
@@ -126,4 +128,21 @@ public class OfbizCsdlNavigationProperty extends CsdlNavigationProperty {
     public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
     }
+
+    public String getHandlerNode() {
+        return handlerNode;
+    }
+
+    public void setHandlerNode(String handlerNode) {
+        this.handlerNode = handlerNode;
+    }
+
+    public boolean preCreate() {
+        return preCreate;
+    }
+
+    public void setPreCreate(boolean preCreate) {
+        this.preCreate = preCreate;
+    }
+
 }
