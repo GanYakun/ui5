@@ -9,3 +9,6 @@
 	url = https://gitee.com/cloudlakenet/bfui5.git
 	
 	branch = master
+[submodule "plugins/bfcommon"]
+	path = plugins/bfcommon
+	url = https://gitee.com/cloudlakenet/bfcommon.git
