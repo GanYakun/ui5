@@ -7,3 +7,6 @@
 [submodule "plugins/ui5"]
 	path = plugins/ui5
 	url = https://gitee.com/cloudlakenet/bfui5.git
+[submodule "plugins/bfcommon"]
+	path = plugins/bfcommon
+	url = https://gitee.com/cloudlakenet/bfcommon.git
