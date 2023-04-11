@@ -12,3 +12,6 @@
 [submodule "plugins/bfcommon"]
 	path = plugins/bfcommon
 	url = https://gitee.com/cloudlakenet/bfcommon.git
+[submodule "plugins/drools"]
+	path = plugins/drools
+	url = https://gitee.com/cloudlakenet/drools.git
