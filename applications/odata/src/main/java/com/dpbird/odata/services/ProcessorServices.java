@@ -570,6 +570,10 @@ public class ProcessorServices {
         if (UtilValidate.isNotEmpty(entityTypeConditionMap)) {
             fieldMap.putAll(entityTypeConditionMap);
         }
+        //添加AutoValue
+        for (Map.Entry<String, Object> entry : csdlEntityType.getAutoValueProperties().entrySet()) {
+            fieldMap.put(entry.getKey(), Util.parseVariable((String) entry.getValue(), userLogin));
+        }
         //添加DefaultValue
         Map<String, Object> defaultValues = csdlEntityType.getDefaultValueProperties();
         for (Map.Entry<String, Object> entry : defaultValues.entrySet()) {
@@ -1129,7 +1133,7 @@ public class ProcessorServices {
     /**
      * 检查主键是否冲突
      */
-    private static boolean checkPrimaryKeyConflict(Delegator delegator, OfbizCsdlEntityType csdlEntityType, Map<String, Object> propertyMap) {
+    private static boolean checkPrimaryKeyConflict(Delegator delegator, OfbizCsdlEntityType csdlEntityType, Map<String, Object> propertyMap) throws OfbizODataException {
         Map<String, Object> primaryKey = new HashMap<>();
         for (String keyPropertyName : csdlEntityType.getKeyPropertyNames()) {
             Object pkValue = propertyMap.get(keyPropertyName);
@@ -1143,8 +1147,12 @@ public class ProcessorServices {
         if (primaryKey.size() != modelEntity.getPkFieldNames().size()) {
             return false;
         }
-        GenericPK genericPK = GenericPK.create(delegator, modelEntity, primaryKey);
-        return UtilValidate.isNotEmpty(delegator.getFromPrimaryKeyCache(genericPK));
+        try {
+            List<GenericValue> findResult = delegator.findByAnd(modelEntity.getEntityName(), primaryKey, null, true);
+            return UtilValidate.isNotEmpty(findResult);
+        } catch (GenericEntityException e) {
+            throw new OfbizODataException(e.getMessage());
+        }
     }
 
 }
