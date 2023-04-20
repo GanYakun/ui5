@@ -1,0 +1,3 @@
+[submodule "plugins/mdt"]
+	path = plugins/mdt
+	url = https://gitee.com/cloudlakenet/mdt.git
