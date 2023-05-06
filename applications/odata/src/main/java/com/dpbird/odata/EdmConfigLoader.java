@@ -221,6 +221,14 @@ public class EdmConfigLoader {
                 propertyValues.add(propertyValue);
                 propertyValue = createPropertyValueBool("Inline", dataFieldForAction.isInline());
                 propertyValues.add(propertyValue);
+                String hidden = dataFieldForAction.getHidden();
+                if ("true".equals(hidden) || "false".equals(hidden)) {
+                    propertyValue = createPropertyValueBool("Hidden", Boolean.valueOf(hidden));
+                    propertyValues.add(propertyValue);
+                } else {
+                    propertyValue = createPropertyValuePath("Hidden", hidden);
+                    propertyValues.add(propertyValue);
+                }
                 String recordType = "UI.DataFieldForAction";
                 csdlRecord.setType(recordType);
             } else if (dataFieldAbstract instanceof DataFieldForAnnotation) {
@@ -725,6 +733,7 @@ public class EdmConfigLoader {
                 String invocationGrouping = lineItemChild.getAttribute("InvocationGrouping");
                 String criticality = lineItemChild.getAttribute("Criticality");
                 String inline = lineItemChild.getAttribute("Inline");
+                String hidden = lineItemChild.getAttribute("Hidden");
                 String importance = lineItemChild.getAttribute("Importance");
                 DataFieldForAction dataFieldForAction = new DataFieldForAction();
                 dataFieldForAction.setLabel(label);
@@ -737,6 +746,9 @@ public class EdmConfigLoader {
                 }
                 if (UtilValidate.isNotEmpty(inline)) {
                     dataFieldForAction.setInline(Boolean.valueOf(inline));
+                }
+                if (UtilValidate.isNotEmpty(hidden)) {
+                    dataFieldForAction.setHidden(hidden);
                 }
                 if (UtilValidate.isNotEmpty(importance)) {
                     dataFieldForAction.setImportance(ImportanceType.valueOf(importance));
