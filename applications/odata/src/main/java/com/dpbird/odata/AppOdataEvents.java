@@ -72,7 +72,7 @@ public class AppOdataEvents {
             }
             OData odata = OData.newInstance();
             OfbizAppEdmProvider edmProvider =
-					new OfbizAppEdmProvider(delegator, dispatcher, odataApp, reload, userLogin, locale,componentName,componentPath);
+                    new OfbizAppEdmProvider(delegator, dispatcher, odataApp, reload, userLogin, locale,componentName,componentPath);
 
             List<EdmxReference> edmxReferences = new ArrayList<EdmxReference>();
 
@@ -130,7 +130,7 @@ public class AppOdataEvents {
     public static String odataAppSvc(HttpServletRequest req, HttpServletResponse resp) {
         LocalDispatcher dispatcher = (LocalDispatcher) req.getAttribute("dispatcher");
         final Delegator delegator = (Delegator) req.getAttribute("delegator");
-		ServletContext servletCtx = (ServletContext) req.getAttribute("servletContext");
+        ServletContext servletCtx = (ServletContext) req.getAttribute("servletContext");
         String componentName =  Util.getRequestComponentName(req);
         String componentPath =Util.getRequestComponentPath(req,componentName);
         GenericValue userLogin = (GenericValue) req.getAttribute("userLogin");
@@ -160,7 +160,7 @@ public class AppOdataEvents {
             }
             OData odata = OData.newInstance();
             OfbizAppEdmProvider edmProvider =
-					new OfbizAppEdmProvider(delegator, dispatcher, odataApp, reload, userLogin, locale,componentName,componentPath);
+                    new OfbizAppEdmProvider(delegator, dispatcher, odataApp, reload, userLogin, locale,componentName,componentPath);
 
             List<EdmxReference> edmxReferences = new ArrayList<EdmxReference>();
 
@@ -353,7 +353,7 @@ public class AppOdataEvents {
             // InputStream edmConfigInputStream = getFileInputStream(odataApp + "EdmConfig.xml");
             OData odata = OData.newInstance();
             OfbizAppEdmProvider edmProvider =
-					new OfbizAppEdmProvider(delegator, dispatcher, odataApp, reload, userLogin, locale,componentName,componentPath);
+                    new OfbizAppEdmProvider(delegator, dispatcher, odataApp, reload, userLogin, locale,componentName,componentPath);
 
 
             ServiceMetadataETagSupport eTagSupport = new ETagSupportImpl(edmProvider.getETag());
@@ -370,4 +370,5 @@ public class AppOdataEvents {
         }
         return "success";
     }
+
 }

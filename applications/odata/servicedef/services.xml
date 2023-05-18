@@ -19,7 +19,7 @@ under the License.
 -->
 
 <services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+          xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
     <description>Odata Services</description>
     <vendor></vendor>
     <version>1.0</version>
@@ -96,7 +96,7 @@ under the License.
         <attribute name="csdlEntityType" type="com.dpbird.odata.edm.OfbizCsdlEntityType" mode="IN"/>
         <attribute name="fieldMap" type="Map" mode="IN"/>
         <attribute name="sapContextId" type="String" mode="IN"/>
-<!--        <attribute name="parentDraftUUID" type="String" mode="IN" optional="true"/>-->
+        <!--        <attribute name="parentDraftUUID" type="String" mode="IN" optional="true"/>-->
         <attribute name="draftGenericValue" type="GenericValue" mode="OUT"/>
     </service>
 
@@ -120,7 +120,7 @@ under the License.
         <attribute name="request" type="javax.servlet.http.HttpServletRequest" mode="IN" optional="true"/>
         <attribute name="originEntityName" type="String" mode="IN"/>
         <attribute name="draftEntityName" type="String" mode="IN"/>
-<!--        <attribute name="entityCondition" type="org.apache.ofbiz.entity.condition.EntityCondition" mode="IN"/>-->
+        <!--        <attribute name="entityCondition" type="org.apache.ofbiz.entity.condition.EntityCondition" mode="IN"/>-->
         <attribute name="draftUUID" type="String" mode="IN" optional="true"/>
         <attribute name="parentDraftUUID" type="String" mode="IN" optional="true"/>
         <attribute name="originGenericValue" type="GenericValue" mode="IN"/>
@@ -211,32 +211,23 @@ under the License.
         <attribute name="bindPrimaryKey" type="Map" mode="IN"/>
     </service>
 
-    <service name="dpbird.uploadFile" engine="java"
-             location="com.dpbird.odata.services.ProcessorServices" invoke="uploadFile" auth="true">
-        <description>upload file</description>
-        <attribute name="multiFrom" mode="IN" type="Map"/>
-        <attribute name="key" type="Map" mode="IN"/>
-        <attribute name="relation" type="List" mode="IN"/>
-        <attribute name="relContentType" type="String" mode="IN" optional="true"/>
-    </service>
-
     <!-- end services for odata -->
 
-<!--    <service name="dpbird.loadDraftData" engine="java"-->
-<!--             location="com.dpbird.odata.services.OdataServices" invoke="loadDraftData" auth="true" transaction-timeout="7200">-->
-<!--        <description>在内存数据库创建一条数据副本</description>-->
-<!--        <attribute name="srcGenericValue" type="GenericValue" mode="IN"/>-->
-<!--    </service>-->
-<!--    <service name="dpbird.loadDraft" engine="java"-->
-<!--             location="com.dpbird.odata.services.OdataServices" invoke="loadDraft" auth="true"-->
-<!--             transaction-timeout="7200" require-new-transaction="true">-->
-<!--        <description>在内存数据库创建数据副本</description>-->
-<!--        <attribute name="srcEntity" type="String" mode="IN"/>-->
-<!--    </service>-->
-<!--    <service name="dpbird.clearDraft" engine="java"-->
-<!--             location="com.dpbird.odata.services.OdataServices" invoke="clearDraft" auth="true"-->
-<!--             transaction-timeout="7200" require-new-transaction="true">-->
-<!--        <description>在内存数据库创建数据副本</description>-->
-<!--        <attribute name="srcEntity" type="String" mode="IN"/>-->
-<!--    </service>-->
+    <!--    <service name="dpbird.loadDraftData" engine="java"-->
+    <!--             location="com.dpbird.odata.services.OdataServices" invoke="loadDraftData" auth="true" transaction-timeout="7200">-->
+    <!--        <description>在内存数据库创建一条数据副本</description>-->
+    <!--        <attribute name="srcGenericValue" type="GenericValue" mode="IN"/>-->
+    <!--    </service>-->
+    <!--    <service name="dpbird.loadDraft" engine="java"-->
+    <!--             location="com.dpbird.odata.services.OdataServices" invoke="loadDraft" auth="true"-->
+    <!--             transaction-timeout="7200" require-new-transaction="true">-->
+    <!--        <description>在内存数据库创建数据副本</description>-->
+    <!--        <attribute name="srcEntity" type="String" mode="IN"/>-->
+    <!--    </service>-->
+    <!--    <service name="dpbird.clearDraft" engine="java"-->
+    <!--             location="com.dpbird.odata.services.OdataServices" invoke="clearDraft" auth="true"-->
+    <!--             transaction-timeout="7200" require-new-transaction="true">-->
+    <!--        <description>在内存数据库创建数据副本</description>-->
+    <!--        <attribute name="srcEntity" type="String" mode="IN"/>-->
+    <!--    </service>-->
 </services>
