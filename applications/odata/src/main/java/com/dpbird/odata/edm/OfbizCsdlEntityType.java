@@ -20,7 +20,7 @@ import com.dpbird.odata.Util;
 import org.apache.olingo.commons.api.edm.provider.CsdlProperty;
 import org.apache.olingo.commons.api.edm.provider.CsdlPropertyRef;
 
-public class OfbizCsdlEntityType extends CsdlEntityType {
+public class OfbizCsdlEntityType extends CsdlEntityType implements Cloneable {
     private String ofbizEntity;
     private String entityConditionStr;
     private EntityCondition entityCondition;
@@ -46,12 +46,18 @@ public class OfbizCsdlEntityType extends CsdlEntityType {
     private String searchOption;
     private boolean groupBy;
     private final boolean autoLabel;
-    private final Map<String, Object> defaultValueProperties = new HashMap<>();;
-    private final Map<String, Object> autoValueProperties = new HashMap<>();;
+    private final boolean autoDraft;
+    private final boolean autoValueList;
+    private List<OfbizCsdlAction> actionList;
+    private List<OfbizCsdlFunction> functionList;
+    private final Map<String, Object> defaultValueProperties = new HashMap<>();
+    private final Map<String, Object> autoValueProperties = new HashMap<>();
+    private List<String> insertRequireProperties = new ArrayList<>();
 
     public OfbizCsdlEntityType(String ofbizEntity, String handlerClass, boolean autoProperties, boolean autoEnum,
                                boolean filterByDate, String draftEntityName, String attrEntityName, String attrNumericEntityName, String attrDateEntityName, boolean hasDerivedEntity,
-                               EntityCondition entityCondition, String entityConditionStr, String labelPrefix, String searchOption, boolean groupBy, boolean hasStream, boolean autoLabel) {
+                               EntityCondition entityCondition, String entityConditionStr, String labelPrefix, String searchOption, boolean groupBy, boolean hasStream,
+                               boolean autoLabel, boolean autoDraft, boolean autoValueList) {
         super();
         this.ofbizEntity = ofbizEntity;
         this.handlerClass = handlerClass;
@@ -73,6 +79,8 @@ public class OfbizCsdlEntityType extends CsdlEntityType {
         this.searchOption = searchOption;
         this.groupBy = groupBy;
         this.autoLabel = autoLabel;
+        this.autoDraft = autoDraft;
+        this.autoValueList = autoValueList;
         setHasStream(hasStream);
     }
 
@@ -326,5 +334,47 @@ public class OfbizCsdlEntityType extends CsdlEntityType {
 
     public boolean isAutoLabel() {
         return autoLabel;
+    }
+
+    public boolean isAutoDraft() {
+        return autoDraft;
+    }
+
+    public List<OfbizCsdlAction> getActionList() {
+        return actionList;
+    }
+
+    public void setActionList(List<OfbizCsdlAction> actionList) {
+        this.actionList = actionList;
+    }
+
+    public List<OfbizCsdlFunction> getFunctionList() {
+        return functionList;
+    }
+
+    public void setFunctionList(List<OfbizCsdlFunction> functionList) {
+        this.functionList = functionList;
+    }
+
+    public boolean isAutoValueList() {
+        return autoValueList;
+    }
+
+    public List<String> getInsertRequireProperties() {
+        return insertRequireProperties;
+    }
+
+    public void setInsertRequireProperties(List<String> insertRequireProperties) {
+        this.insertRequireProperties = insertRequireProperties;
+    }
+
+    @Override
+    public OfbizCsdlEntityType clone() {
+        try {
+            return (OfbizCsdlEntityType) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
