@@ -667,12 +667,12 @@ public class EdmConfigLoader {
             } else if (tagName.equals("EntityType")) {
                 OfbizCsdlEntityType csdlEntityType = loadEntityTypeFromElement(delegator, dispatcher, currentElt, locale);
                 //Default EntitySet
-                OfbizCsdlEntitySet csdlEntitySet = new OfbizCsdlEntitySet(null);
-                csdlEntitySet.setName(csdlEntityType.getName());
-                csdlEntitySet.setType(new FullQualifiedName(csdlEntityType.getFullQualifiedNameString()));
-                csdlEntityType.addReferencedEntitySet(csdlEntitySet.getName());
+//                OfbizCsdlEntitySet csdlEntitySet = new OfbizCsdlEntitySet(null);
+//                csdlEntitySet.setName(csdlEntityType.getName());
+//                csdlEntitySet.setType(new FullQualifiedName(csdlEntityType.getFullQualifiedNameString()));
+//                csdlEntityType.addReferencedEntitySet(csdlEntitySet.getName());
                 edmWebConfig.addEntityType(csdlEntityType);
-                edmWebConfig.addEntitySet(csdlEntitySet);
+//                edmWebConfig.addEntitySet(csdlEntitySet);
                 //Default StickySessionAction
                 if (csdlEntityType.isAutoDraft()) {
                     List<OfbizCsdlAction> actionList = generateStickySessionAction(csdlEntityType, locale);
@@ -2600,7 +2600,7 @@ public class EdmConfigLoader {
         ModelReader modelReader = delegator.getModelReader();
         Map<String, ModelEntity> entityCache = modelReader.getEntityCache();
         for (OfbizCsdlEntityType entityType : edmWebConfig.getEntityTypes()) {
-            String draftEntityName = entityType.getDraftEntityName();
+            String draftEntityName = entityType.getDraftEntityName(); //TODO: remove
             //没有定义Draft或者已经创建过了 跳过
             if (UtilValidate.isEmpty(draftEntityName) || UtilValidate.isNotEmpty(entityCache.get(draftEntityName))) {
                 continue;
