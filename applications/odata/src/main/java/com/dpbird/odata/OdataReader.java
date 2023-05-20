@@ -373,7 +373,7 @@ public class OdataReader extends OfbizOdataProcessor {
         FilterOption filterOption = (FilterOption) queryOptions.get("filterOption");
         OrderByOption orderbyOption = (OrderByOption) queryOptions.get("orderByOption");
         if (filterOption != null || orderbyOption != null) {
-            Util.filterEntityCollection(entityCollection, filterOption, orderbyOption, navCsdlEntityType,
+            Util.filterEntityCollection(entityCollection, filterOption, orderbyOption, edmNavigationProperty.getType(),
                     edmProvider, delegator, dispatcher, userLogin, locale, csdlNavigationProperty.isFilterByDate());
         }
         entityCollection.setCount(entityCollection.getEntities().size());
@@ -572,7 +572,8 @@ public class OdataReader extends OfbizOdataProcessor {
                 return null;
             }
             if (relations.size() == 1) {
-                if (UtilValidate.isNotEmpty(relAlias.getRelationsCondition())) {
+                Map<String, EntityCondition> relationsCondition = relAlias.getRelationsCondition();
+                if (UtilValidate.isNotEmpty(relationsCondition) && UtilValidate.isNotEmpty(relationsCondition.get(relations.get(0)))) {
                     EntityCondition entityCondition = relAlias.getRelationsCondition().get(relations.get(0));
                     return EntityUtil.filterByCondition(relGenericValues, entityCondition);
                 }

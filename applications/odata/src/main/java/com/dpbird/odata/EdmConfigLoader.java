@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class EdmConfigLoader {
@@ -84,6 +85,13 @@ public class EdmConfigLoader {
             Element globalRootElement = globalConfigDoc.getDocumentElement();
             addToEdmWebConfig(delegator, dispatcher, edmWebConfig, globalRootElement, locale);
         }
+        for (String importEdm : getImportEdm(rootElement)) {
+            URL importUrl = UtilURL.fromResource(importEdm + "EdmConfig.xml");
+            Document importDoc = UtilXml.readXmlDocument(importUrl, false);
+            if (UtilValidate.isNotEmpty(importDoc)) {
+                addToEdmWebConfig(delegator, dispatcher, edmWebConfig, importDoc.getDocumentElement(), locale);
+            }
+        }
         addToEdmWebConfig(delegator, dispatcher, edmWebConfig, rootElement, locale);
         createDraftTable(edmWebConfig, delegator);
         return edmWebConfig;
@@ -98,12 +106,29 @@ public class EdmConfigLoader {
         return importGlobal;
     }
 
+    /**
+     * 获取Import
+     */
+    private static List<String> getImportEdm(Element rootElement) {
+        List<String> importList = new ArrayList<>();
+        UtilXml.childElementList(rootElement).forEach(ele -> {
+            if ("ImportEdm".equals(ele.getTagName())) {
+                importList.add(ele.getAttribute("Path"));
+            }
+        });
+        return importList;
+    }
+
     public static void generateAnnotations(Delegator delegator, CsdlSchema csdlSchema, Locale locale) {
         // generate annotations for EntityType
         List<CsdlEntityType> entityTypes = csdlSchema.getEntityTypes();
+        List<CsdlEntityType> autoValueListEntities = new ArrayList<>();
+        List<CsdlAnnotations> csdlAnnotationsList = csdlSchema.getAnnotationGroups();
         for (CsdlEntityType entityType : entityTypes) {
             OfbizCsdlEntityType ofbizCsdlEntityType = (OfbizCsdlEntityType) entityType;
-            List<CsdlAnnotations> csdlAnnotationsList = csdlSchema.getAnnotationGroups();
+            if (ofbizCsdlEntityType.isAutoValueList()) {
+                autoValueListEntities.add(ofbizCsdlEntityType);
+            }
             CsdlAnnotations csdlAnnotations = generateEntityTypeAnnotations(ofbizCsdlEntityType, (OfbizCsdlSchema) csdlSchema, locale);
             if (csdlAnnotations != null) {
                 csdlAnnotationsList.add(csdlAnnotations);
@@ -114,6 +139,25 @@ public class EdmConfigLoader {
                         (OfbizCsdlProperty) property, locale);
                 if (csdlAnnotations != null) {
                     csdlAnnotationsList.add(csdlAnnotations);
+                }
+            }
+            if (ofbizCsdlEntityType.isAutoDraft()) {
+                //StickySessionSupported
+                CsdlAnnotations stickySessionAnnotations = generateStickySessionAnnotations(ofbizCsdlEntityType, (OfbizCsdlSchema) csdlSchema, locale);
+                csdlAnnotationsList.add(stickySessionAnnotations);
+            }
+        }
+
+        //generate AutoValueList
+        for (CsdlEntityType valueListEntityType : autoValueListEntities) {
+            OfbizCsdlEntityType autoValueListEntity = (OfbizCsdlEntityType) valueListEntityType;
+            for (CsdlEntityType csdlEntityType : entityTypes) {
+                OfbizCsdlEntityType ofbizCsdlEntityType = (OfbizCsdlEntityType) csdlEntityType;
+                for (CsdlNavigationProperty navigationProperty : csdlEntityType.getNavigationProperties()) {
+                    if (navigationProperty.getType().equals(autoValueListEntity.getFullQualifiedNameString()) && UtilValidate.isNotEmpty(navigationProperty.getReferentialConstraints())) {
+                        //生成ValueList
+                        csdlAnnotationsList.add(generateAutoValueList(ofbizCsdlEntityType, navigationProperty, csdlSchema, locale));
+                    }
                 }
             }
         }
@@ -196,19 +240,27 @@ public class EdmConfigLoader {
                 String recordType = "UI.DataField";
                 csdlRecord.setType(recordType);
                 // add Label
-                String label = dataField.getLabel();
-                if (label == null && withLabel) {
-                    CsdlProperty csdlProperty = csdlEntityType.getProperty((String) dataField.getValue());
-                    if (csdlProperty != null) {
-                        label = (String) Util.getUiLabelMap(locale).get(csdlEntityType.getLabelPrefix() + Util.firstUpperCase(csdlProperty.getName()));
-                    } else {
-                        label = (String) Util.getUiLabelMap(locale).get(csdlEntityType.getLabelPrefix() + Util.firstUpperCase((String) dataField.getValue()));
-                    }
-                }
-                if (label != null) {
-                    propertyValue = createPropertyValueString("Label", label);
-                    propertyValues.add(propertyValue);
-                }
+//                String label = dataField.getLabel();
+//                if (label == null && withLabel) {
+//                    CsdlProperty csdlProperty = csdlEntityType.getProperty((String) dataField.getValue());
+//                    if (csdlProperty != null) {
+//                        label = (String) Util.getUiLabelMap(locale).get(csdlEntityType.getLabelPrefix() + Util.firstUpperCase(csdlProperty.getName()));
+//                    } else {
+//                        String fieldValue = (String) dataField.getValue();
+//                        if (fieldValue.contains("/")) {
+//                            //多段式字段
+//                            String uiLabelKey = Arrays.stream(fieldValue.split("/")).map(s -> s.substring(0, 1).toUpperCase() + s.substring(1))
+//                                    .reduce("", String::concat);
+//                            label = (String) Util.getUiLabelMap(locale).get(csdlEntityType.getLabelPrefix() + uiLabelKey);
+//                        } else {
+//                            label = (String) Util.getUiLabelMap(locale).get(csdlEntityType.getLabelPrefix() + Util.firstUpperCase(fieldValue));
+//                        }
+//                    }
+//                }
+//                if (label != null) {
+//                    propertyValue = createPropertyValueString("Label", label);
+//                    propertyValues.add(propertyValue);
+//                }
             } else if (dataFieldAbstract instanceof DataFieldForAction) {
                 DataFieldForAction dataFieldForAction = (DataFieldForAction) dataFieldAbstract;
                 CsdlPropertyValue propertyValue = createPropertyValueString("Label", dataFieldForAction.getLabel());
@@ -237,10 +289,18 @@ public class EdmConfigLoader {
                 csdlRecord.setType(recordType);
             }
             csdlRecord.setPropertyValues(propertyValues);
+            List<CsdlAnnotation> annotationList = new ArrayList<>();
             if (dataFieldAbstract.getImportance() != null) {
                 CsdlAnnotation importanceAnnotation = createAnnotationEnum("UI.Importance", dataFieldAbstract.getImportance(), null);
-                csdlRecord.setAnnotations(UtilMisc.toList(importanceAnnotation));
+                annotationList.add(importanceAnnotation);
             }
+            String hidden = dataFieldAbstract.getHidden();
+            if (hidden != null) {
+                CsdlAnnotation hiddenAnnotation = "true".equals(hidden) || "false".equals(hidden) ?
+                        createAnnotationBool("UI.Hidden", hidden, null) : createAnnotationPath("UI.Hidden", hidden, null);
+                annotationList.add(hiddenAnnotation);
+            }
+            csdlRecord.setAnnotations(annotationList);
             collectionItems.add(csdlRecord);
         }
         csdlCollection.setItems(collectionItems);
@@ -278,34 +338,49 @@ public class EdmConfigLoader {
             parameterRecord.setPropertyValues(UtilMisc.toList(parameterPropertyValue));
             csdlExpressions.add(parameterRecord);
         }
-        // 从NavigationProperty里面找到ReferentialConstraint来生成ValueListParameterInOut
-        List<CsdlNavigationProperty> csdlNavigationProperties = csdlEntityType.getNavigationProperties();
-        if (csdlNavigationProperties != null) {
-            List<CsdlReferentialConstraint> csdlReferentialConstraints;
-            String propertyName = null;
-            String referencedPropertyName = null;
-            for (CsdlNavigationProperty csdlNavigationProperty : csdlNavigationProperties) {
-                csdlReferentialConstraints = csdlNavigationProperty.getReferentialConstraints();
-                if (UtilValidate.isEmpty(csdlReferentialConstraints) || csdlReferentialConstraints.size() != 1) { // 组合外键想不出怎么用valuelist
-                    continue;
-                }
-                CsdlReferentialConstraint csdlReferentialConstraint = csdlReferentialConstraints.get(0);
-                propertyName = csdlReferentialConstraint.getProperty();
-                if (!propertyName.equals(csdlProperty.getName())) {
-                    continue;
-                }
-                referencedPropertyName = csdlReferentialConstraint.getReferencedProperty();
-                break;
-            }
-            if (referencedPropertyName != null && propertyName != null) {
+        List<ValueList.Parameter> parameters = valueList.getParameters();
+        if (UtilValidate.isNotEmpty(parameters)) {
+            //指定了Parameter
+            for (ValueList.Parameter parameter : parameters) {
                 parameterRecord = new CsdlRecord();
-                parameterRecord.setType("Common.ValueListParameterInOut");
-                CsdlPropertyValue localDataProperty = createPropertyValuePropertyPath("LocalDataProperty", propertyName);
-                CsdlPropertyValue valueListProperty = createPropertyValueString("ValueListProperty", referencedPropertyName);
+                parameterRecord.setType(parameter.getParameterType());
+                CsdlPropertyValue localDataProperty = createPropertyValuePropertyPath("LocalDataProperty", parameter.getLocalDataProperty());
+                CsdlPropertyValue valueListProperty = createPropertyValueString("ValueListProperty", parameter.getValueListProperty());
                 parameterRecord.setPropertyValues(UtilMisc.toList(localDataProperty, valueListProperty));
                 csdlExpressions.add(parameterRecord);
             }
+        } else {
+            // 从NavigationProperty里面找到ReferentialConstraint来生成ValueListParameterInOut
+            List<CsdlNavigationProperty> csdlNavigationProperties = csdlEntityType.getNavigationProperties();
+            if (csdlNavigationProperties != null) {
+                List<CsdlReferentialConstraint> csdlReferentialConstraints;
+                String propertyName = null;
+                String referencedPropertyName = null;
+                for (CsdlNavigationProperty csdlNavigationProperty : csdlNavigationProperties) {
+                    csdlReferentialConstraints = csdlNavigationProperty.getReferentialConstraints();
+                    if (UtilValidate.isEmpty(csdlReferentialConstraints) || csdlReferentialConstraints.size() != 1) { // 组合外键想不出怎么用valuelist
+                        continue;
+                    }
+                    CsdlReferentialConstraint csdlReferentialConstraint = csdlReferentialConstraints.get(0);
+                    propertyName = csdlReferentialConstraint.getProperty();
+                    if (!propertyName.equals(csdlProperty.getName())) {
+                        continue;
+                    }
+                    referencedPropertyName = csdlReferentialConstraint.getReferencedProperty();
+                    break;
+                }
+                if (referencedPropertyName != null && propertyName != null) {
+                    parameterRecord = new CsdlRecord();
+                    parameterRecord.setType("Common.ValueListParameterInOut");
+                    CsdlPropertyValue localDataProperty = createPropertyValuePropertyPath("LocalDataProperty", propertyName);
+                    CsdlPropertyValue valueListProperty = createPropertyValueString("ValueListProperty", referencedPropertyName);
+                    parameterRecord.setPropertyValues(UtilMisc.toList(localDataProperty, valueListProperty));
+                    csdlExpressions.add(parameterRecord);
+                }
+            }
         }
+
+
         csdlCollection.setItems(csdlExpressions);
         propertyValue.setValue(csdlCollection);
         propertyValues.add(propertyValue);
@@ -313,6 +388,56 @@ public class EdmConfigLoader {
 
         valueListAnnotation.setExpression(csdlRecord);
         return valueListAnnotation;
+    }
+
+    private static CsdlAnnotations generateAutoValueList(OfbizCsdlEntityType csdlEntityType, CsdlNavigationProperty csdlNavigationProperty,
+                                                        CsdlSchema csdlSchema, Locale locale) {
+        List<CsdlReferentialConstraint> referentialConstraints = csdlNavigationProperty.getReferentialConstraints();
+        CsdlReferentialConstraint csdlReferentialConstraint = referentialConstraints.get(0);
+        String propertyName = csdlReferentialConstraint.getProperty();
+        String referencedPropertyName = csdlReferentialConstraint.getReferencedProperty();
+        CsdlProperty csdlProperty = csdlEntityType.getProperty(propertyName);
+
+        CsdlAnnotations csdlAnnotations = new CsdlAnnotations();
+        String annotationsTarget = csdlEntityType.getFullQualifiedNameString() + "/" + csdlProperty.getName();
+        csdlAnnotations.setTarget(annotationsTarget);
+
+        CsdlAnnotation valueListAnnotation = createAnnotation("Common.ValueList", null);
+        CsdlRecord csdlRecord = new CsdlRecord();
+        csdlRecord.setType("Common.ValueListType");
+        CsdlEntityType navCsdlEntityType = csdlSchema.getEntityType(csdlNavigationProperty.getTypeFQN().getName());
+        List<CsdlPropertyValue> propertyValues = new ArrayList<>();
+        CsdlPropertyValue propertyValue = createPropertyValueString("Label", navCsdlEntityType.getName());
+        propertyValues.add(propertyValue);
+        propertyValue = createPropertyValueString("CollectionPath", navCsdlEntityType.getName());
+        propertyValues.add(propertyValue);
+        // Parameters
+        propertyValue = new CsdlPropertyValue();
+        propertyValue.setProperty("Parameters");
+        CsdlCollection csdlCollection = new CsdlCollection();
+        List<CsdlExpression> csdlExpressions = new ArrayList<>();
+
+        //DisplayOnly
+//        CsdlRecord displayOnlyRecord = new CsdlRecord();
+//        displayOnlyRecord.setType("Common.ValueListParameterDisplayOnly");
+//        CsdlPropertyValue parameterPropertyValue = createPropertyValueString("ValueListProperty", "referencedPropertyName");
+//        displayOnlyRecord.setPropertyValues(UtilMisc.toList(parameterPropertyValue));
+//        csdlExpressions.add(displayOnlyRecord);
+
+        CsdlRecord parameterRecord = new CsdlRecord();
+        parameterRecord.setType("Common.ValueListParameterInOut");
+        CsdlPropertyValue localDataProperty = createPropertyValuePropertyPath("LocalDataProperty", propertyName);
+        CsdlPropertyValue valueListProperty = createPropertyValueString("ValueListProperty", referencedPropertyName);
+        parameterRecord.setPropertyValues(UtilMisc.toList(localDataProperty, valueListProperty));
+        csdlExpressions.add(parameterRecord);
+        csdlCollection.setItems(csdlExpressions);
+        propertyValue.setValue(csdlCollection);
+        propertyValues.add(propertyValue);
+        csdlRecord.setPropertyValues(propertyValues);
+        valueListAnnotation.setExpression(csdlRecord);
+
+        csdlAnnotations.setAnnotations(UtilMisc.toList(valueListAnnotation));
+        return csdlAnnotations;
     }
 
     private static CsdlAnnotation generateLineItem(OfbizCsdlEntityType csdlEntityType, LineItem lineItem, Locale locale) {
@@ -372,6 +497,69 @@ public class EdmConfigLoader {
         return csdlAnnotation;
     }
 
+    private static List<OfbizCsdlAction> generateStickySessionAction(OfbizCsdlEntityType csdlEntityType, Locale locale) {
+        List<OfbizCsdlAction> actionList = new ArrayList<>();
+        CsdlReturnType returnType = new CsdlReturnType();
+        returnType.setType(csdlEntityType.getFullQualifiedNameString());
+
+        //new Action
+        List<CsdlParameter> parameters = new ArrayList<>();
+        CsdlParameter boundParam = new CsdlParameter();
+        boundParam.setName(Util.firstLowerCase(csdlEntityType.getName()));
+        boundParam.setType(csdlEntityType.getFullQualifiedNameString());
+        boundParam.setCollection(true);
+        boundParam.setNullable(false);
+        parameters.add(boundParam);
+        List<String> insertProperties = csdlEntityType.getInsertRequireProperties();
+        csdlEntityType.getProperties().forEach(pro -> {
+            OfbizCsdlProperty csdlProperty = (OfbizCsdlProperty) pro;
+            if (csdlProperty.isImmutable() || insertProperties.contains(csdlProperty.getName())) {
+                CsdlParameter parameter = new CsdlParameter();
+                parameter.setName(csdlProperty.getName());
+                parameter.setType(csdlProperty.getTypeAsFQNObject());
+                parameter.setCollection(false);
+                parameter.setNullable(!csdlProperty.isImmutable());
+                //Label
+                String labelKey = "${uiLabelMap." + csdlEntityType.getLabelPrefix() + Util.firstUpperCase(csdlProperty.getName()) + "}";
+                CsdlAnnotation annotationString = createAnnotationString("Common.Label", parseValue(labelKey, locale), null);
+                parameter.setAnnotations(UtilMisc.toList(annotationString));
+                parameters.add(parameter);
+            }
+        });
+        String newActionPath = "com.dpbird.odata.services.ProcessorServices.stickySessionNewAction";
+        FullQualifiedName fullQualifiedName = new FullQualifiedName(OfbizMapOdata.NAMESPACE, csdlEntityType.getName() + "NewAction");
+        OfbizCsdlAction newAction = createAction(fullQualifiedName, parameters, returnType,
+                true, newActionPath, true, true, Util.firstLowerCase(csdlEntityType.getName()));
+        actionList.add(newAction);
+
+        //edit Action
+        CsdlParameter editParam = new CsdlParameter();
+        editParam.setName(Util.firstLowerCase(csdlEntityType.getName()));
+        editParam.setType(csdlEntityType.getFullQualifiedNameString());
+        editParam.setNullable(false);
+        editParam.setCollection(false);
+        String editActionPath = "com.dpbird.odata.services.ProcessorServices.stickySessionEditAction";
+        fullQualifiedName = new FullQualifiedName(OfbizMapOdata.NAMESPACE, csdlEntityType.getName() + "EditAction");
+        OfbizCsdlAction editAction =  createAction(fullQualifiedName, UtilMisc.toList(editParam), returnType,
+                true, editActionPath, true, true, editParam.getName());
+        actionList.add(editAction);
+
+        //save Action
+        String saveActionPath = "com.dpbird.odata.services.ProcessorServices.stickySessionSaveAction";
+        fullQualifiedName = new FullQualifiedName(OfbizMapOdata.NAMESPACE, csdlEntityType.getName() + "SaveAction");
+        OfbizCsdlAction saveAction = createAction(fullQualifiedName, UtilMisc.toList(editParam), returnType,
+                true, saveActionPath, true, true, editParam.getName());
+        actionList.add(saveAction);
+
+        //discard Action
+        OfbizCsdlAction discardAction = new OfbizCsdlAction();
+        discardAction.setName("DiscardAction").setBound(false);
+        discardAction.setOfbizMethod("DiscardAction");
+        actionList.add(discardAction);
+        return actionList;
+
+    }
+
     private static CsdlAnnotations generatePropertyAnnotations(OfbizCsdlEntityType csdlEntityType,
                                                                OfbizCsdlSchema csdlSchema,
                                                                OfbizCsdlProperty csdlProperty, Locale locale) {
@@ -425,6 +613,35 @@ public class EdmConfigLoader {
         return csdlAnnotations;
     }
 
+
+    private static CsdlAnnotations generateStickySessionAnnotations(OfbizCsdlEntityType csdlEntityType,
+                                                               OfbizCsdlSchema csdlSchema, Locale locale) {
+        CsdlAnnotations csdlAnnotations = new CsdlAnnotations();
+        String entityTypeFQN = csdlEntityType.getFullQualifiedNameString();
+        String annotationsTarget = csdlSchema.getNamespace() + "." + csdlSchema.getEntityContainer().getName() + "/" + csdlEntityType.getName() + "s";
+        csdlAnnotations.setTarget(annotationsTarget);
+        List<CsdlAnnotation> csdlAnnotationList = new ArrayList<CsdlAnnotation>();
+        CsdlAnnotation annotation = createAnnotation("Session.StickySessionSupported", null);
+        CsdlRecord record = new CsdlRecord();
+        CsdlPropertyValue newAction = createPropertyValueString("NewAction", entityTypeFQN + "NewAction");
+        CsdlPropertyValue editAction = createPropertyValueString("EditAction", entityTypeFQN + "EditAction");
+        CsdlPropertyValue saveAction = createPropertyValueString("SaveAction", entityTypeFQN + "SaveAction");
+        CsdlPropertyValue discardAction = createPropertyValueString("DiscardAction", "DiscardAction");
+        record.setPropertyValues(UtilMisc.toList(newAction, editAction, saveAction, discardAction));
+        List<CsdlExpression> csdlExpressions = new ArrayList<>();
+        csdlExpressions.add(record);
+        CsdlCollection csdlCollection = new CsdlCollection();
+        csdlCollection.setItems(csdlExpressions);
+        CsdlPropertyValue csdlPropertyValue = new CsdlPropertyValue();
+        csdlPropertyValue.setValue(csdlCollection);
+
+        annotation.setExpression(record);
+        annotation.setTerm("Session.StickySessionSupported");
+        csdlAnnotations.setAnnotations(UtilMisc.toList(annotation));
+
+        return csdlAnnotations;
+    }
+
     private static void addToEdmWebConfig(Delegator delegator, LocalDispatcher dispatcher, EdmWebConfig edmWebConfig,
                                           Element rootElement, Locale locale)
             throws GenericEntityException, GenericServiceException, OfbizODataException {
@@ -449,7 +666,25 @@ public class EdmConfigLoader {
                 edmWebConfig.addEnumType(csdlEnumType);
             } else if (tagName.equals("EntityType")) {
                 OfbizCsdlEntityType csdlEntityType = loadEntityTypeFromElement(delegator, dispatcher, currentElt, locale);
+                //Default EntitySet
+                OfbizCsdlEntitySet csdlEntitySet = new OfbizCsdlEntitySet(null);
+                csdlEntitySet.setName(csdlEntityType.getName());
+                csdlEntitySet.setType(new FullQualifiedName(csdlEntityType.getFullQualifiedNameString()));
+                csdlEntityType.addReferencedEntitySet(csdlEntitySet.getName());
                 edmWebConfig.addEntityType(csdlEntityType);
+                edmWebConfig.addEntitySet(csdlEntitySet);
+                //Default StickySessionAction
+                if (csdlEntityType.isAutoDraft()) {
+                    List<OfbizCsdlAction> actionList = generateStickySessionAction(csdlEntityType, locale);
+                    actionList.forEach(edmWebConfig::addAction);
+                    //DiscardActionImport
+                    CsdlActionImport csdlActionImport = new CsdlActionImport();
+                    FullQualifiedName fullQualifiedName = new FullQualifiedName(OfbizMapOdata.NAMESPACE, "DiscardAction");
+                    csdlActionImport.setName("DiscardAction").setAction(fullQualifiedName);
+                    edmWebConfig.addActionImport(csdlActionImport);
+                }
+                csdlEntityType.getActionList().forEach(edmWebConfig::addAction);
+                csdlEntityType.getFunctionList().forEach(edmWebConfig::addFunction);
             } else if (tagName.equals("Action")) {
                 OfbizCsdlAction csdlAction = loadActionFromElement(currentElt);
                 edmWebConfig.addAction(csdlAction);
@@ -632,15 +867,35 @@ public class EdmConfigLoader {
             autoProperties = true;
         }
         //是否自动生成所有Property的Label
-        boolean autoLabel = false;
-        if ("true".equals(entityTypeElement.getAttribute("AutoLabel"))) {
-            autoLabel = true;
+        boolean autoLabel = true;
+        if ("false".equals(entityTypeElement.getAttribute("AutoLabel"))) {
+            autoLabel = false;
+        }
+        //是否自动生成StickySessionAction
+        boolean autoDraft = false;
+        if ("true".equals(entityTypeElement.getAttribute("AutoDraft"))) {
+            autoDraft = true;
+        }
+        boolean autoValueList = false;
+        if ("true".equals(entityTypeElement.getAttribute("AutoValueList"))) {
+            autoValueList = true;
+        }
+        if (UtilValidate.isNotEmpty(entityTypeElement.getAttribute("Properties"))) {
+            List<OfbizCsdlProperty> propertyList = generatePropertiesFromAttribute(dispatcher, modelEntity, null, entityTypeElement.getAttribute("Properties"), locale, labelPrefix, autoLabel);
+            csdlProperties.addAll(propertyList);
+        }
+        List<String> insertRequireProperties = new ArrayList<>();
+        String insertRequireAttr = entityTypeElement.getAttribute("InsertRequireProperties");
+        if (UtilValidate.isNotEmpty(insertRequireAttr)) {
+            insertRequireProperties.addAll(Arrays.asList(insertRequireAttr.split(",")));
         }
         List<String> excludeProperties = new ArrayList<>();
         FullQualifiedName fullQualifiedName = new FullQualifiedName(OfbizMapOdata.NAMESPACE, name);
         List<? extends Element> entityTypeChildren = UtilXml.childElementList(entityTypeElement);
         List<CsdlAnnotation> csdlAnnotationList = new ArrayList<>();
         List<Term> terms = new ArrayList<>();
+        List<OfbizCsdlAction> actionList = new ArrayList<>();
+        List<OfbizCsdlFunction> functionList = new ArrayList<>();
         List<EntityTypeRelAlias> relAliases = new ArrayList<>();
         boolean hasRelField = false;
         for (Element inEntityElement : entityTypeChildren) {
@@ -648,9 +903,14 @@ public class EdmConfigLoader {
             if (inEntityTagName.equals("RelAlias")) {
                 EntityTypeRelAlias entityTypeRelAlias = loadRelAliasFromElement(dispatcher, modelEntity, inEntityElement, locale);
                 relAliases.add(entityTypeRelAlias);
+                if (UtilValidate.isNotEmpty(inEntityElement.getAttribute("Properties"))) {
+                    List<OfbizCsdlProperty> propertyList = generatePropertiesFromAttribute(dispatcher, modelEntity, entityTypeRelAlias,
+                            inEntityElement.getAttribute("Properties"), locale, labelPrefix, autoLabel);
+                    csdlProperties.addAll(propertyList);
+                }
                 hasRelField = true;
             } else if (inEntityTagName.equals("Property")) {
-                OfbizCsdlProperty csdlProperty = loadPropertyFromElement(dispatcher, modelEntity, relAliases, inEntityElement, locale, autoLabel);
+                OfbizCsdlProperty csdlProperty = loadPropertyFromElement(dispatcher, modelEntity, relAliases, inEntityElement, locale, labelPrefix, autoLabel);
                 csdlProperties.add(csdlProperty);
                 if (UtilValidate.isNotEmpty(csdlProperty.getRelAlias())) {
                     hasRelField = true;
@@ -685,17 +945,34 @@ public class EdmConfigLoader {
                 CsdlAnnotation csdlAnnotation = loadAnnotationFromElement(inEntityElement, locale);
                 csdlAnnotationList.add(csdlAnnotation);
             }
+            // manually added Annotation
+            if (inEntityTagName.equals("Annotation")) {
+                CsdlAnnotation csdlAnnotation = loadAnnotationFromElement(inEntityElement, locale);
+                csdlAnnotationList.add(csdlAnnotation);
+            }
+            // Action
+            if (inEntityTagName.equals("Action")) {
+                actionList.add(loadActionFromElement(inEntityElement));
+            }
+            // Function
+            if (inEntityTagName.equals("Function")) {
+                functionList.add(loadFunctionFromElement(inEntityElement));
+            }
         }
         OfbizCsdlEntityType csdlEntityType = createEntityType(delegator, dispatcher, fullQualifiedName, ofbizEntity,
                 draftEntityName, attrEntityName, attrNumericEntityName, attrDateEntityName, handlerClass, autoProperties,
                 csdlProperties, csdlNavigationProperties, csdlPropertyRefs, filterByDate, baseType, hasDerivedEntity,
-                excludeProperties, entityCondition, entityConditionStr, labelPrefix, locale, searchOption, groupBy, hasStream, autoLabel);
+                excludeProperties, entityCondition, entityConditionStr, labelPrefix, locale, searchOption, groupBy, hasStream,
+                autoLabel, autoDraft, autoValueList);
         csdlEntityType.setAbstract(isAbstract);
         csdlEntityType.setAnnotations(csdlAnnotationList);
         csdlEntityType.setTerms(terms);
         csdlEntityType.setHasRelField(hasRelField);
         csdlEntityType.setRelAliases(relAliases);
         csdlEntityType.setOpenType(openType);
+        csdlEntityType.setActionList(actionList);
+        csdlEntityType.setFunctionList(functionList);
+        csdlEntityType.setInsertRequireProperties(insertRequireProperties);
         return csdlEntityType;
     }
 
@@ -725,6 +1002,7 @@ public class EdmConfigLoader {
                 String invocationGrouping = lineItemChild.getAttribute("InvocationGrouping");
                 String criticality = lineItemChild.getAttribute("Criticality");
                 String inline = lineItemChild.getAttribute("Inline");
+                String hidden = lineItemChild.getAttribute("Hidden");
                 String importance = lineItemChild.getAttribute("Importance");
                 DataFieldForAction dataFieldForAction = new DataFieldForAction();
                 dataFieldForAction.setLabel(label);
@@ -737,6 +1015,9 @@ public class EdmConfigLoader {
                 }
                 if (UtilValidate.isNotEmpty(inline)) {
                     dataFieldForAction.setInline(Boolean.valueOf(inline));
+                }
+                if (UtilValidate.isNotEmpty(hidden)) {
+                    dataFieldForAction.setHidden(hidden);
                 }
                 if (UtilValidate.isNotEmpty(importance)) {
                     dataFieldForAction.setImportance(ImportanceType.valueOf(importance));
@@ -1122,7 +1403,7 @@ public class EdmConfigLoader {
         for (Element inComplexElement : complexTypeChildren) {
             String inComplexTagName = inComplexElement.getTagName();
             if (inComplexTagName.equals("Property")) {
-                CsdlProperty csdlProperty = loadPropertyFromElement(dispatcher, null, null, inComplexElement, locale, false);
+                CsdlProperty csdlProperty = loadPropertyFromElement(dispatcher, null, null, inComplexElement, locale, name, false);
                 if (csdlProperties == null) {
                     csdlProperties = new ArrayList<>();
                 }
@@ -1183,9 +1464,29 @@ public class EdmConfigLoader {
         return entityTypeRelAlias;
     }
 
+    private static List<OfbizCsdlProperty> generatePropertiesFromAttribute(LocalDispatcher dispatcher, ModelEntity modelEntity, EntityTypeRelAlias relAlias,
+                                                                           String propertiesAttribute, Locale locale, String labelPrefix, boolean autoLabel) {
+        List<OfbizCsdlProperty> propertyList = new ArrayList<>();
+        for (String property : propertiesAttribute.split(",")) {
+            OfbizCsdlProperty csdlProperty;
+            if (UtilValidate.isEmpty(relAlias)) {
+                csdlProperty = generatePropertyFromField(dispatcher.getDelegator(), dispatcher, modelEntity.getField(property), false);
+            } else {
+                csdlProperty = generatePropertyFromRelAlias(dispatcher.getDelegator(), dispatcher, modelEntity, relAlias, property, false);
+                csdlProperty.setNullable(true);
+            }
+            if (autoLabel) {
+                String labelKey = "${uiLabelMap." + labelPrefix + Util.firstUpperCase(csdlProperty.getName()) + "}";
+                csdlProperty.setLabel(parseValue(labelKey, locale));
+            }
+            propertyList.add(csdlProperty);
+        }
+        return propertyList;
+    }
+
     private static OfbizCsdlProperty loadPropertyFromElement(LocalDispatcher dispatcher, ModelEntity modelEntity,
                                                              List<EntityTypeRelAlias> relAliases,
-                                                             Element propertyElement, Locale locale, boolean autoLabel) {
+                                                             Element propertyElement, Locale locale, String labelPrefix, boolean autoLabel) {
         String name = propertyElement.getAttribute("Name");
         OfbizCsdlProperty property = null;
         if (modelEntity != null) {
@@ -1219,8 +1520,8 @@ public class EdmConfigLoader {
         String autoValue = propertyElement.getAttribute("AutoValue");
         // attribute for annotation
         String label = propertyElement.getAttribute("Label");
-        if (UtilValidate.isEmpty(label) && autoLabel && modelEntity != null) {
-            String labelKey = "${uiLabelMap." + modelEntity.getEntityName() + Util.firstUpperCase(name) + "}";
+        if (UtilValidate.isEmpty(label) && autoLabel) {
+            String labelKey = "${uiLabelMap." + labelPrefix + Util.firstUpperCase(name) + "}";
             label = parseValue(labelKey, locale);
         }
         String semanticObjectAttr = propertyElement.getAttribute("SemanticObject");
@@ -1385,6 +1686,28 @@ public class EdmConfigLoader {
             List<String> displayOnlyList = StringUtil.split(parameterDisplayOnly, ",");
             valueList.setParameterDisplayOnly(displayOnlyList);
         }
+        //ParameterInOut
+        List<? extends Element> childElementList = UtilXml.childElementList(valueListElement);
+        if (UtilValidate.isNotEmpty(childElementList)) {
+            List<ValueList.Parameter> parameterList = new ArrayList<>();
+            for (Element element : childElementList) {
+                String tagName = element.getTagName();
+                String valueParameterType = tagName;
+                if ("ParameterIn".equals(tagName)) {
+                    valueParameterType = "Common.ValueListParameterIn";
+                }
+                if ("ParameterOut".equals(tagName)) {
+                    valueParameterType = "Common.ValueListParameterOut";
+                }
+                if ("ParameterInOut".equals(tagName)) {
+                    valueParameterType = "Common.ValueListParameterInOut";
+                }
+                ValueList.Parameter parameter = new ValueList.Parameter(valueParameterType, element.getAttribute("ValueListProperty"), element.getAttribute("LocalDataProperty"));
+                parameterList.add(parameter);
+            }
+            valueList.setParameters(parameterList);
+        }
+
         // WithFixedValues
         String withFixedValues = valueListElement.getAttribute("WithFixedValues");
         if (UtilValidate.isNotEmpty(withFixedValues)) {
@@ -2020,7 +2343,7 @@ public class EdmConfigLoader {
                                                         List<CsdlPropertyRef> csdlPropertyRefs, boolean filterByDate,
                                                         String baseType, boolean hadDerivedEntity, List<String> excludeProperties,
                                                         EntityCondition entityCondition, String entityConditionStr, String labelPrefix, Locale locale, String searchOption,
-                                                        boolean groupBy, boolean hasStream, boolean autoLabel) {
+                                                        boolean groupBy, boolean hasStream, boolean autoLabel, boolean autoDraft, boolean autoValueList) {
         String entityName = entityTypeFqn.getName(); // Such as Invoice
         List<CsdlPropertyRef> propertyRefs = csdlPropertyRefs;
         ModelEntity modelEntity = null;
@@ -2092,7 +2415,7 @@ public class EdmConfigLoader {
         }
         OfbizCsdlEntityType entityType = new OfbizCsdlEntityType(ofbizEntity, handlerClass, false,
                 false, filterByDate, draftEntityName, attrEntityName, attrNumericEntityName, attrDateEntityName,
-                hadDerivedEntity, entityCondition, entityConditionStr, labelPrefix, searchOption, groupBy, hasStream, autoLabel);
+                hadDerivedEntity, entityCondition, entityConditionStr, labelPrefix, searchOption, groupBy, hasStream, autoLabel, autoDraft, autoValueList);
         if (UtilValidate.isNotEmpty(baseType)) {
             //有BaseType, Property里就不应该再有pk
             List<String> propertyRefNames = propertyRefs.stream().map(CsdlPropertyRef::getName).collect(Collectors.toList());
@@ -2277,7 +2600,7 @@ public class EdmConfigLoader {
         ModelReader modelReader = delegator.getModelReader();
         Map<String, ModelEntity> entityCache = modelReader.getEntityCache();
         for (OfbizCsdlEntityType entityType : edmWebConfig.getEntityTypes()) {
-            String draftEntityName = entityType.getDraftEntityName();
+            String draftEntityName = entityType.getDraftEntityName(); //TODO: remove
             //没有定义Draft或者已经创建过了 跳过
             if (UtilValidate.isEmpty(draftEntityName) || UtilValidate.isNotEmpty(entityCache.get(draftEntityName))) {
                 continue;

@@ -72,7 +72,7 @@ public class AppOdataEvents {
             }
             OData odata = OData.newInstance();
             OfbizAppEdmProvider edmProvider =
-					new OfbizAppEdmProvider(delegator, dispatcher, odataApp, reload, userLogin, locale,componentName,componentPath);
+                    new OfbizAppEdmProvider(delegator, dispatcher, odataApp, reload, userLogin, locale,componentName,componentPath);
 
             List<EdmxReference> edmxReferences = new ArrayList<EdmxReference>();
 
@@ -130,7 +130,7 @@ public class AppOdataEvents {
     public static String odataAppSvc(HttpServletRequest req, HttpServletResponse resp) {
         LocalDispatcher dispatcher = (LocalDispatcher) req.getAttribute("dispatcher");
         final Delegator delegator = (Delegator) req.getAttribute("delegator");
-		ServletContext servletCtx = (ServletContext) req.getAttribute("servletContext");
+        ServletContext servletCtx = (ServletContext) req.getAttribute("servletContext");
         String componentName =  Util.getRequestComponentName(req);
         String componentPath =Util.getRequestComponentPath(req,componentName);
         GenericValue userLogin = (GenericValue) req.getAttribute("userLogin");
@@ -160,7 +160,7 @@ public class AppOdataEvents {
             }
             OData odata = OData.newInstance();
             OfbizAppEdmProvider edmProvider =
-					new OfbizAppEdmProvider(delegator, dispatcher, odataApp, reload, userLogin, locale,componentName,componentPath);
+                    new OfbizAppEdmProvider(delegator, dispatcher, odataApp, reload, userLogin, locale,componentName,componentPath);
 
             List<EdmxReference> edmxReferences = new ArrayList<EdmxReference>();
 
@@ -190,6 +190,11 @@ public class AppOdataEvents {
 
             edmxReference = new EdmxReference(URI.create("/odata/vocabularies/Aggregation.xml"));
             referenceInclude = new EdmxReferenceInclude("Org.OData.Aggregation.V1", "Aggregation");
+            edmxReference.addInclude(referenceInclude);
+            edmxReferences.add(edmxReference);
+
+            edmxReference = new EdmxReference(URI.create("/odata/vocabularies/Session.xml"));
+            referenceInclude = new EdmxReferenceInclude("com.sap.vocabularies.Session.v1", "Session");
             edmxReference.addInclude(referenceInclude);
             edmxReferences.add(edmxReference);
 
@@ -348,7 +353,7 @@ public class AppOdataEvents {
             // InputStream edmConfigInputStream = getFileInputStream(odataApp + "EdmConfig.xml");
             OData odata = OData.newInstance();
             OfbizAppEdmProvider edmProvider =
-					new OfbizAppEdmProvider(delegator, dispatcher, odataApp, reload, userLogin, locale,componentName,componentPath);
+                    new OfbizAppEdmProvider(delegator, dispatcher, odataApp, reload, userLogin, locale,componentName,componentPath);
 
 
             ServiceMetadataETagSupport eTagSupport = new ETagSupportImpl(edmProvider.getETag());
@@ -365,29 +370,5 @@ public class AppOdataEvents {
         }
         return "success";
     }
-
-    public static String uploadFile(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
-            Delegator delegator = (Delegator) request.getAttribute("delegator");
-            GenericValue userLogin = (GenericValue) request.getAttribute("userLogin");
-            //获取文件表单全部内容
-            Map<String, Object> multiPartMap = UtilHttp.getMultiPartParameterMap(request);
-            //关联实体
-            List<String> relations =  Arrays.asList(request.getParameter("relation").split("/"));
-            Map<String, Object> keyMap = Util.odataIdToMap(delegator, relations.get(0), request.getParameter("key"));
-            //中间表的ContentType 可以为空
-            String contentTypeId = request.getParameter("relContentTypeId");
-            dispatcher.runSync("dpbird.uploadFile", UtilMisc.toMap("multiFrom", multiPartMap, "key", keyMap,
-                    "relContentType", contentTypeId, "relation", relations, "userLogin", userLogin));
-        } catch (GenericServiceException e) {
-            e.printStackTrace();
-            response.setStatus(500);
-            return "error";
-        }
-        response.setStatus(200);
-        return "success";
-    }
-
 
 }
