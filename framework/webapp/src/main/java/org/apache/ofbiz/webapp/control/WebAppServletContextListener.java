@@ -47,6 +47,7 @@ public class WebAppServletContextListener implements ServletContextListener {
         if (cookieDomain.length() > 0) sessionCookieConfig.setDomain(cookieDomain);
         sessionCookieConfig.setMaxAge(60 * 60 * 24 * 365);
         sessionCookieConfig.setPath(servletContext.getContextPath());
+        sessionCookieConfig.setName("BSESSIONID");
     }
 
     /* (non-Javadoc)
