@@ -25,7 +25,6 @@ under the License.
     <title>Entity of an Apache OFBiz Component</title>
     <description>None</description>
     <version>1.0</version>
-    <default-resource-name>ProductEntityLabels</default-resource-name>
 
     <!-- ========================================================= -->
     <!-- ======================== Data Model ===================== -->
@@ -52,7 +51,7 @@ under the License.
 
     <entity entity-name="ProdCatalog"
             package-name="org.apache.ofbiz.product.catalog"
-            title="Catalog Entity" default-resource-name="ProductEntityLabels">
+            title="Catalog Entity">
       <field name="prodCatalogId" type="id"></field>
       <field name="catalogName" type="name"></field>
       <field name="useQuickAdd" type="indicator"></field>
@@ -66,7 +65,6 @@ under the License.
     </entity>
     <entity entity-name="ProdCatalogCategory"
             package-name="org.apache.ofbiz.product.catalog"
-            default-resource-name="ProductEntityLabels"
             title="Catalog Category Association Entity">
       <field name="prodCatalogId" type="id"></field>
       <field name="productCategoryId" type="id"></field>
@@ -90,7 +88,6 @@ under the License.
     </entity>
     <entity entity-name="ProdCatalogCategoryType"
             package-name="org.apache.ofbiz.product.catalog"
-            default-resource-name="ProductEntityLabels"
             title="Catalog Category Association Type Entity">
       <field name="prodCatalogCategoryTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -307,7 +304,6 @@ under the License.
     </view-entity>
     <entity entity-name="ProductCategoryContentType"
             package-name="org.apache.ofbiz.product.category"
-            default-resource-name="ProductEntityLabels"
             title="Product Category Content Type Entity">
       <field name="prodCatContentTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -534,7 +530,6 @@ under the License.
     </view-entity>
     <entity entity-name="ProductCategoryType"
             package-name="org.apache.ofbiz.product.category"
-            default-resource-name="ProductEntityLabels"
             title="Product Category Type Entity">
       <field name="productCategoryTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -641,8 +636,7 @@ under the License.
     </entity>
     <entity entity-name="ProdConfItemContentType"
             package-name="org.apache.ofbiz.product.config"
-            title="Product Content Type Entity"
-            default-resource-name="ProductEntityLabels">
+            title="Product Content Type Entity">
         <field name="confItemContentTypeId" type="id"></field>
         <field name="parentTypeId" type="id"></field>
         <field name="hasTable" type="indicator"></field>
@@ -785,7 +779,6 @@ under the License.
 
     <entity entity-name="CostComponent"
             package-name="org.apache.ofbiz.product.cost"
-            default-resource-name="ProductEntityLabels"
             title="Cost Component Entity">
       <field name="costComponentId" type="id"></field>
       <field name="costComponentTypeId" type="id"></field>
@@ -850,7 +843,6 @@ under the License.
     </entity>
     <entity entity-name="CostComponentType"
             package-name="org.apache.ofbiz.product.cost"
-            default-resource-name="ProductEntityLabels"
             title="Cost Component Type Entity">
       <field name="costComponentTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -1251,8 +1243,7 @@ under the License.
             <key-map field-name="parentFacilityGroupId"/>
         </relation>
     </entity>
-    <entity entity-name="FacilityGroupType" package-name="org.apache.ofbiz.product.facility" title="Facility Group Type Entity"
-        default-resource-name="ProductEntityLabels">
+    <entity entity-name="FacilityGroupType" package-name="org.apache.ofbiz.product.facility" title="Facility Group Type Entity">
         <field name="facilityGroupTypeId" type="id"></field>
         <field name="description" type="description"></field>
         <prim-key field="facilityGroupTypeId"/>
@@ -1380,7 +1371,7 @@ under the License.
             <key-map field-name="contentTypeId"/>
         </relation>
     </view-entity>
-    <entity entity-name="FacilityType" package-name="org.apache.ofbiz.product.facility" default-resource-name="ProductEntityLabels"
+    <entity entity-name="FacilityType" package-name="org.apache.ofbiz.product.facility"
         title="Facility Type Entity">
         <field name="facilityTypeId" type="id"></field>
         <field name="parentTypeId" type="id"></field>
@@ -1529,7 +1520,6 @@ under the License.
 
     <entity entity-name="ProductFeature"
             package-name="org.apache.ofbiz.product.feature"
-            default-resource-name="ProductEntityLabels"
             title="Product Feature Entity">
       <field name="productFeatureId" type="id"></field>
       <field name="productFeatureTypeId" type="id"></field>
@@ -1624,7 +1614,6 @@ under the License.
     </entity>
     <entity entity-name="ProductFeatureApplType"
             package-name="org.apache.ofbiz.product.feature"
-            default-resource-name="ProductEntityLabels"
             title="Product Feature Applicability Type Entity">
       <field name="productFeatureApplTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -1661,7 +1650,6 @@ under the License.
     </entity>
     <entity entity-name="ProductFeatureCategory"
             package-name="org.apache.ofbiz.product.feature"
-            default-resource-name="ProductEntityLabels"
             title="Product Feature Category Entity">
       <field name="productFeatureCategoryId" type="id"></field>
       <field name="parentCategoryId" type="id"></field>
@@ -1808,7 +1796,6 @@ under the License.
     </entity>
     <entity entity-name="ProductFeatureType"
             package-name="org.apache.ofbiz.product.feature"
-            default-resource-name="ProductEntityLabels"
             title="Product Feature Type Entity">
       <field name="productFeatureTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -2213,7 +2200,6 @@ under the License.
     </entity>
     <entity entity-name="InventoryItemType"
             package-name="org.apache.ofbiz.product.inventory"
-            default-resource-name="ProductEntityLabels"
             title="Inventory Item Type Entity">
       <field name="inventoryItemTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -2405,7 +2391,6 @@ under the License.
     </view-entity>
     <entity entity-name="VarianceReason"
             package-name="org.apache.ofbiz.product.inventory"
-            default-resource-name="ProductEntityLabels"
             title="Variance Reason Entity">
       <field name="varianceReasonId" type="id"></field>
       <field name="description" type="description"></field>
@@ -2528,7 +2513,6 @@ under the License.
     </entity>
     <entity entity-name="ProductPriceActionType"
             package-name="org.apache.ofbiz.product.price"
-            default-resource-name="ProductEntityLabels"
             title="Product Price Type Entity">
       <field name="productPriceActionTypeId" type="id"></field>
       <field name="description" type="description"></field>
@@ -2594,7 +2578,6 @@ under the License.
     </entity>
     <entity entity-name="ProductPricePurpose"
             package-name="org.apache.ofbiz.product.price"
-            default-resource-name="ProductEntityLabels"
             title="Product Price Purpose Entity">
         <field name="productPricePurposeId" type="id"></field>
         <field name="description" type="description"></field>
@@ -2613,7 +2596,6 @@ under the License.
     </entity>
     <entity entity-name="ProductPriceType"
             package-name="org.apache.ofbiz.product.price"
-            default-resource-name="ProductEntityLabels"
             title="Product Price Type Entity">
       <field name="productPriceTypeId" type="id"></field>
       <field name="description" type="description"></field>
@@ -2633,7 +2615,6 @@ under the License.
     </entity>
     <entity entity-name="QuantityBreakType"
             package-name="org.apache.ofbiz.product.price"
-            default-resource-name="ProductEntityLabels"
             title="Quantity Break Type Entity">
       <field name="quantityBreakTypeId" type="id"></field>
       <field name="description" type="description"></field>
@@ -2721,7 +2702,6 @@ under the License.
     </view-entity>
     <entity entity-name="GoodIdentificationType"
             package-name="org.apache.ofbiz.product.product"
-            default-resource-name="ProductEntityLabels"
             title="Good Identification Type Entity">
       <field name="goodIdentificationTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -2924,7 +2904,6 @@ under the License.
     </view-entity>
     <entity entity-name="ProductAssocType"
             package-name="org.apache.ofbiz.product.product"
-            default-resource-name="ProductEntityLabels"
             title="Product Association Type Entity">
       <field name="productAssocTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -3060,7 +3039,6 @@ under the License.
     </view-entity>
     <entity entity-name="ProductContentType"
             package-name="org.apache.ofbiz.product.product"
-            default-resource-name="ProductEntityLabels"
             title="Product Content Type Entity">
       <field name="productContentTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -3073,7 +3051,6 @@ under the License.
     </entity>
     <entity entity-name="ProductGeo"
             package-name="org.apache.ofbiz.product.product"
-            default-resource-name="ProductEntityLabels"
             title="Product Geo Entity">
       <field name="productId" type="id"></field>
       <field name="geoId" type="id"></field>
@@ -3174,7 +3151,6 @@ under the License.
     </entity>
     <entity entity-name="ProductMeterType"
             package-name="org.apache.ofbiz.product.product"
-            default-resource-name="ProductEntityLabels"
             title="Product Meter Type Entity">
         <field name="productMeterTypeId" type="id"></field>
         <field name="description" type="description"></field>
@@ -3220,7 +3196,6 @@ under the License.
     </entity>
     <entity entity-name="ProductMaintType"
             package-name="org.apache.ofbiz.product.product"
-            default-resource-name="ProductEntityLabels"
             title="Product Maintenance Type Entity">
         <description>This is for both scheduled and unscheduled maintenance; use ProductMaint to track details for scheduled maintenance</description>
         <field name="productMaintTypeId" type="id"></field>
@@ -3290,7 +3265,6 @@ under the License.
     </entity>
     <entity entity-name="ProductType"
             package-name="org.apache.ofbiz.product.product"
-            default-resource-name="ProductEntityLabels"
             title="Product Type Entity">
       <field name="productTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -3734,8 +3708,7 @@ under the License.
 
     <entity entity-name="ProductStore"
             package-name="org.apache.ofbiz.product.store"
-            title="Product Store Entity"
-            default-resource-name="ProductEntityLabels">
+            title="Product Store Entity">
       <field name="productStoreId" type="id"></field>
       <field name="primaryStoreGroupId" type="id"></field>
       <field name="storeName" type="name"></field>
@@ -4020,7 +3993,6 @@ under the License.
     </view-entity>
     <entity entity-name="ProductStoreGroup"
             package-name="org.apache.ofbiz.product.store"
-            default-resource-name="ProductEntityLabels"
             title="ProductStore Group Entity">
       <field name="productStoreGroupId" type="id"></field>
       <field name="productStoreGroupTypeId" type="id"></field>
@@ -4644,7 +4616,6 @@ under the License.
     </entity>
     <entity entity-name="SubscriptionType"
             package-name="org.apache.ofbiz.product.subscription"
-            default-resource-name="ProductEntityLabels"
             title="Subscription Type Entity">
         <field name="subscriptionTypeId" type="id"></field>
         <field name="parentTypeId" type="id"></field>
