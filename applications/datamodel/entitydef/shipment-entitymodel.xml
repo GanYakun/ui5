@@ -215,7 +215,7 @@ under the License.
       <relation type="one" fk-name="PCKLST_BIN_PKLT" rel-entity-name="Picklist">
         <key-map field-name="picklistId"/>
       </relation>
-      <relation type="one" fk-name="PCKLST_BIN_OISG" title="Primary" rel-entity-name="OrderItemShipGroup">
+      <relation type="one-nofk" fk-name="PCKLST_BIN_OISG" title="Primary" rel-entity-name="OrderItemShipGroup">
         <key-map field-name="primaryOrderId" rel-field-name="orderId"/>
         <key-map field-name="primaryShipGroupSeqId" rel-field-name="shipGroupSeqId"/>
       </relation>
