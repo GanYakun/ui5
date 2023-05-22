@@ -227,6 +227,7 @@ under the License.
             package-name="org.apache.ofbiz.shipment.picklist"
             title="Picklist Entity">
       <field name="picklistBinId" type="id"></field>
+      <field name="picklistItemSeqId" type="id"></field>
       <field name="orderId" type="id"></field>
       <field name="orderItemSeqId" type="id"></field>
       <field name="shipGroupSeqId" type="id"></field>
@@ -234,18 +235,15 @@ under the License.
       <field name="itemStatusId" type="id"></field>
       <field name="quantity" type="fixed-point"></field>
       <prim-key field="picklistBinId"/>
-      <prim-key field="orderId"/>
-      <prim-key field="orderItemSeqId"/>
-      <prim-key field="shipGroupSeqId"/>
-      <prim-key field="inventoryItemId"/>
+      <prim-key field="picklistItemSeqId"/>
       <relation type="one" fk-name="PCKLST_ITM_BIN" rel-entity-name="PicklistBin">
         <key-map field-name="picklistBinId"/>
       </relation>
-      <relation type="one" fk-name="PCKLST_ITM_OISG" rel-entity-name="OrderItemShipGroup">
+      <relation type="one-nofk" rel-entity-name="OrderItemShipGroup">
         <key-map field-name="orderId"/>
         <key-map field-name="shipGroupSeqId"/>
       </relation>
-      <relation type="one" fk-name="PCKLST_ITM_ODIT" rel-entity-name="OrderItem">
+      <relation type="one-nofk" rel-entity-name="OrderItem">
         <key-map field-name="orderId"/>
         <key-map field-name="orderItemSeqId"/>
       </relation>
