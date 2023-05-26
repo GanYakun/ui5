@@ -111,12 +111,22 @@ under the License.
         <jms-service name="draculaPointsReq" send-mode="all">
             <server jndi-server-name="default"
                     client-id="gbmsSender"
-                    jndi-name="topicConnectionFactory"
+                    jndi-name="queueConnectionFactory"
                     topic-queue="mitra.services.points.req"
                     type="queue"
                     username=""
                     password=""
                     listen="false"/>
+        </jms-service>
+        <jms-service name="draculaPointsRes" send-mode="all">
+            <server jndi-server-name="default"
+                    client-id="gbmsReceiver"
+                    jndi-name="queueConnectionFactory"
+                    topic-queue="mitra.services.points.res"
+                    type="queue"
+                    username=""
+                    password=""
+                    listen="true"/>
         </jms-service>
     </service-engine>
 </service-config>
