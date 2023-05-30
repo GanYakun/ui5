@@ -112,7 +112,7 @@ under the License.
         <jms-service name="mitraPointsReq" send-mode="all">
             <server jndi-server-name="default"
                     client-id="gbmsSender"
-                    jndi-name="queueConnectionFactory"
+                    jndi-name="QueueConnectionFactory"
                     topic-queue="mitra.services.points.req"
                     type="queue"
                     username=""
@@ -120,10 +120,10 @@ under the License.
                     listen="false"/>
         </jms-service>
         <!--receiver GBMS Point -->
-        <jms-service name="mitraPointsReq" send-mode="all">
+        <jms-service name="mitraPointsRes" send-mode="all">
             <server jndi-server-name="default"
                     client-id="gbmsReceiver"
-                    jndi-name="queueConnectionFactory"
+                    jndi-name="QueueConnectionFactory"
                     topic-queue="mitra.services.points.res"
                     type="queue"
                     username=""
