@@ -40,6 +40,6 @@ rm -f $OFBIZ_LOG
 #(cd /root/ofbiz && exec ./gradlew generateConfigFile)
 #(cd /root/ofbiz && exec ./gradlew ofbiz -x test)
 ./gradlew generateConfigFile
-./gradlew build
+./gradlew build --refresh-dependencies
 ./gradlew -stop
 java -Xms128M -Xmx512M -Dfile.encoding=UTF-8 -Duser.country=CN -Duser.language=en -Duser.variant -cp ./build/libs/ofbiz.jar org.apache.ofbiz.base.start.Start
