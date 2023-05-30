@@ -11,6 +11,6 @@ ENV JAVA_HOME=/root/jdk1.8.0_351 \
 COPY ./ /root/ofbiz/
 WORKDIR /root/ofbiz
 
-RUN ["chmod", "+x", "/root/ofbiz/startofbiz.sh"]
+#RUN ["chmod", "+x", "/root/ofbiz/startofbiz.sh"]
 
-CMD /root/ofbiz/startofbiz.sh || echo "启动脚本失败，容器继续运行"
+CMD echo "启动脚本失败，容器继续运行"
