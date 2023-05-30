@@ -1,6 +1,8 @@
 FROM registry.cn-hangzhou.aliyuncs.com/banff/ubuntujava8:20.04
 # FROM ubuntujava8:latest
 
+
+
 ENV JAVA_HOME=/root/jdk1.8.0_351 \
     PATH=$PATH:$JAVA_HOME/bin \
     TZ=Asia/Shanghai  \
@@ -11,6 +13,6 @@ ENV JAVA_HOME=/root/jdk1.8.0_351 \
 COPY ./ /root/ofbiz/
 WORKDIR /root/ofbiz
 
-#RUN ["chmod", "+x", "/root/ofbiz/startofbiz.sh"]
+RUN ["chmod", "+x", "/root/ofbiz/startofbiz.sh"]
 
-CMD echo "启动脚本失败，容器继续运行"
+ENTRYPOINT ["/root/ofbiz/startofbiz.sh"]
