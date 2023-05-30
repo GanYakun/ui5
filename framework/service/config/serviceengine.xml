@@ -108,20 +108,22 @@ under the License.
                     password="admin"
                     listen="true"/>
         </jms-service>-->
-        <jms-service name="draculaPointsReq" send-mode="all">
+        <!--send GBMS point request-->
+        <jms-service name="mitraPointsReq" send-mode="all">
             <server jndi-server-name="default"
                     client-id="gbmsSender"
-                    jndi-name="queueConnectionFactory"
+                    jndi-name="QueueConnectionFactory"
                     topic-queue="mitra.services.points.req"
                     type="queue"
                     username=""
                     password=""
                     listen="false"/>
         </jms-service>
-        <jms-service name="draculaPointsRes" send-mode="all">
+        <!--receiver GBMS Point -->
+        <jms-service name="mitraPointsRes" send-mode="all">
             <server jndi-server-name="default"
                     client-id="gbmsReceiver"
-                    jndi-name="queueConnectionFactory"
+                    jndi-name="QueueConnectionFactory"
                     topic-queue="mitra.services.points.res"
                     type="queue"
                     username=""

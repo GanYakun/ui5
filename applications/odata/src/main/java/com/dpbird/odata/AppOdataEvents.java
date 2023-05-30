@@ -215,6 +215,7 @@ public class AppOdataEvents {
             // let the handler do the work
             handler.setSplit(2);
             handler.process(req, resp);
+            resp.setStatus(HttpStatusCode.OK.getStatusCode());
         } catch (Exception e) {
             e.printStackTrace();
         }

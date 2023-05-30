@@ -10,7 +10,7 @@ ODataLab是一个基于Apache OFBiz的OData服务
 + 启动OFBiz<br>./gradlew ofbiz
 + 启动浏览器访问OData服务的metadata<br>http://localhost:8080/gbms/control/odataAppSvc/gbms/$metadata
 + 根据环境变成生成配置文件
-  + gradlew generateConfigFile 
+  + `gradlew generateConfigFile`
 > 注意,如果指定的数据库不是derby,则需要配置环境变量,
 如果创建失败,可以通过 `gradlew getConfigFileEvn` 命令来查看环境变量中是否存在
 ```bash
