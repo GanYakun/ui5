@@ -178,7 +178,6 @@ under the License.
     </entity>
     <entity entity-name="OrderAdjustmentType"
             package-name="org.apache.ofbiz.order.order"
-            default-resource-name="OrderEntityLabels"
             title="Order Adjustment Type Entity">
       <field name="orderAdjustmentTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -258,7 +257,6 @@ under the License.
     </entity>
     <entity entity-name="OrderBlacklistType"
             package-name="org.apache.ofbiz.order.order"
-            default-resource-name="OrderEntityLabels"
             title="Order Blacklist Type Entity">
       <field name="orderBlacklistTypeId" type="id"></field>
       <field name="description" type="description"></field>
@@ -320,7 +318,7 @@ under the License.
             <key-map field-name="orderContentTypeId"/>
         </relation>
     </entity>
-    <entity entity-name="OrderContentType" package-name="org.apache.ofbiz.order.order" default-resource-name="OrderEntityLabels"
+    <entity entity-name="OrderContentType" package-name="org.apache.ofbiz.order.order"
         title="Order Content Type Entity">
         <field name="orderContentTypeId" type="id"></field>
         <field name="parentTypeId" type="id"></field>
@@ -983,7 +981,6 @@ under the License.
     </entity>
     <entity entity-name="OrderItemType"
             package-name="org.apache.ofbiz.order.order"
-            default-resource-name="OrderEntityLabels"
             title="Order Item Type Entity">
       <field name="orderItemTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -1287,7 +1284,6 @@ under the License.
     </entity>
     <entity entity-name="OrderType"
             package-name="org.apache.ofbiz.order.order"
-            default-resource-name="OrderEntityLabels"
             title="Order Type Entity">
       <field name="orderTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -1587,7 +1583,6 @@ under the License.
     </entity>
     <entity entity-name="QuoteType"
             package-name="org.apache.ofbiz.order.quote"
-            default-resource-name="OrderEntityLabels"
             title="Quote Type Entity">
       <field name="quoteTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -1940,7 +1935,6 @@ under the License.
     </entity>
     <entity entity-name="CustRequestResolution"
             package-name="org.apache.ofbiz.order.request"
-            default-resource-name="OrderEntityLabels"
             title="Customer Request Resolution Entity">
       <field name="custRequestResolutionId" type="id"></field>
       <field name="custRequestTypeId" type="id"></field>
@@ -2259,7 +2253,6 @@ under the License.
     </entity>
     <entity entity-name="RequirementType"
             package-name="org.apache.ofbiz.order.requirement"
-            default-resource-name="OrderEntityLabels"
             title="Requirement Type Entity">
       <field name="requirementTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -2290,7 +2283,6 @@ under the License.
     </entity>
     <entity entity-name="WorkReqFulfType"
             package-name="org.apache.ofbiz.order.requirement"
-            default-resource-name="OrderEntityLabels"
             title="Work Requirement Fulfillment Type Entity">
       <field name="workReqFulfTypeId" type="id"></field>
       <field name="description" type="description"></field>
@@ -2423,7 +2415,6 @@ under the License.
     </entity>
     <entity entity-name="ReturnAdjustmentType"
             package-name="org.apache.ofbiz.order.return"
-            default-resource-name="OrderEntityLabels"
             title="Return Adjustment Type Entity">
       <field name="returnAdjustmentTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -2633,7 +2624,6 @@ under the License.
     </entity>
     <entity entity-name="ReturnReason"
             package-name="org.apache.ofbiz.order.return"
-            default-resource-name="OrderEntityLabels"
             title="Return Reason Entity">
         <field name="returnReasonId" type="id"></field>
         <field name="description" type="description"></field>
@@ -2666,7 +2656,6 @@ under the License.
     </entity>
     <entity entity-name="ReturnType"
             package-name="org.apache.ofbiz.order.return"
-            default-resource-name="OrderEntityLabels"
             title="Return Type Entity">
         <field name="returnTypeId" type="id"></field>
         <field name="description" type="description"></field>
@@ -2901,7 +2890,6 @@ under the License.
     </entity>
     <entity entity-name="ShoppingListType"
             package-name="org.apache.ofbiz.order.shoppinglist"
-            default-resource-name="OrderEntityLabels"
             title="Shopping List Type Entity">
       <field name="shoppingListTypeId" type="id"></field>
       <field name="description" type="description"></field>
