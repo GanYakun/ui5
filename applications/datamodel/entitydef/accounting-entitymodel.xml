@@ -3340,7 +3340,7 @@ under the License.
     </view-entity>
     <entity entity-name="PaymentMethodType"
             package-name="org.apache.ofbiz.accounting.payment"
-            title="PaymentMethodType Entity" default-resource-name="AccountingEntityLabels">
+            title="PaymentMethodType Entity">
       <field name="paymentMethodTypeId" type="id"></field>
       <field name="description" type="description"></field>
       <field name="defaultGlAccountId" type="id"></field>
