@@ -1,0 +1,12 @@
+[submodule "plugins/dinstitute"]
+	path = plugins/dinstitute
+	url = https://gitee.com/cloudlakenet/dinstitute.git
+	branch = master
+[submodule "plugins/bfcommon"]
+	path = plugins/bfcommon
+	url = https://gitee.com/cloudlakenet/bfcommon.git
+	branch = master
+[submodule "plugins/bfui5"]
+	path = plugins/bfui5
+	url = https://gitee.com/cloudlakenet/bfui5.git
+	branch = dinstitute
