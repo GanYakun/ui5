@@ -1,0 +1,6 @@
+[submodule "plugins/ningbomat"]
+	path = plugins/ningbomat
+	url = https://gitee.com/cloudlakenet/ningbomat.git
+[submodule "plugins/bfcommon"]
+	path = plugins/bfcommon
+	url = https://gitee.com/cloudlakenet/bfcommon.git
