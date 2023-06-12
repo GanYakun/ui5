@@ -1423,7 +1423,6 @@ under the License.
     </entity>
     <entity entity-name="ShipmentType"
             package-name="org.apache.ofbiz.shipment.shipment"
-            default-resource-name="ProductEntityLabels"
             title="Shipment Type Entity">
       <field name="shipmentTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
