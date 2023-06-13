@@ -1375,6 +1375,18 @@ under the License.
         <relation type="one-nofk" rel-entity-name="TelecomNumber">
             <key-map field-name="contactMechId"/>
         </relation>
+      <relation type="one-nofk" rel-entity-name="Person">
+        <key-map field-name="partyId"/>
+      </relation>
+      <relation type="one-nofk" rel-entity-name="PartyGroup">
+        <key-map field-name="partyId"/>
+      </relation>
+      <relation type="many" rel-entity-name="PartyRole">
+        <key-map field-name="partyId"/>
+      </relation>
+      <relation type="many" rel-entity-name="UserLogin">
+        <key-map field-name="partyId"/>
+      </relation>
     </view-entity>
     <view-entity entity-name="PartyAndPostalAddress"
         package-name="org.apache.ofbiz.party.contact"
