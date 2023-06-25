@@ -17962,8 +17962,8 @@
         <value xml:lang="ro">Cina</value>
         <value xml:lang="ru">Китай</value>
         <value xml:lang="th">จีน</value>
-        <value xml:lang="zh">中国</value>
-        <value xml:lang="zh-TW">中國</value>
+        <value xml:lang="zh">元</value>
+        <value xml:lang="zh-TW">元</value>
     </property>
     <property key="Uom.description.COP">
         <value xml:lang="ar">بيزو كولومبي</value>
