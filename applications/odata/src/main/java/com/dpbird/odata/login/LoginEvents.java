@@ -1,8 +1,12 @@
 package com.dpbird.odata.login;
 
 import org.apache.ofbiz.base.util.UtilHttp;
+import org.apache.ofbiz.base.util.UtilMisc;
+import org.apache.ofbiz.base.util.UtilValidate;
+import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ServiceUtil;
@@ -33,6 +37,7 @@ public class LoginEvents {
     }
 
     public static String logInUser(HttpServletRequest request, HttpServletResponse response) throws GenericServiceException, GenericEntityException {
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
         GenericValue userLogin;
         Map<String, Object> serviceMap = WebDavUtil.getCredentialsFromRequest(request);
         HttpSession httpSession = request.getSession(true);
@@ -50,8 +55,25 @@ public class LoginEvents {
         userLogin = (GenericValue) result.get("userLogin");
         request.setAttribute("userLogin", userLogin);
         httpSession.setAttribute("userLogin", userLogin);
+        //添加组织机构信息到session
+        GenericValue organization = getOrganization(delegator, userLogin);
+        if (UtilValidate.isNotEmpty(organization)) {
+            request.setAttribute("company", organization);
+            httpSession.setAttribute("company", organization);
+        }
         return "success";
     }
+
+    private static GenericValue getOrganization(Delegator delegator, GenericValue userLogin) throws GenericEntityException {
+        String partyId = userLogin.getString("partyId");
+        GenericValue organizationRelation = EntityQuery.use(delegator).from("PartyRelationship")
+                .where("roleTypeIdFrom", "ORGANIZATION_UNIT", "partyIdTo", partyId).queryFirst();
+        if (UtilValidate.isNotEmpty(organizationRelation)) {
+            return organizationRelation.getRelatedOne("FromParty", false);
+        }
+        return null;
+    }
+
 
     public static String extensionCheckLogin(HttpServletRequest request, HttpServletResponse response) {
         return checkLogin(request, response);
