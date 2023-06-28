@@ -364,6 +364,7 @@ under the License.
     <entity entity-name="ProductCategoryMember"
         package-name="org.apache.ofbiz.product.category"
         title="Product Category Member Entity">
+        <field name="id" type="id"/>
         <field name="productCategoryId" type="id"></field>
         <field name="productId" type="id"></field>
         <field name="fromDate" type="date-time"></field>
@@ -371,9 +372,7 @@ under the License.
         <field name="comments" type="comment"></field>
         <field name="sequenceNum" type="numeric"></field>
         <field name="quantity" type="fixed-point"></field>
-        <prim-key field="productCategoryId"/>
-        <prim-key field="productId"/>
-        <prim-key field="fromDate"/>
+        <prim-key field="id"/>
         <relation type="one" fk-name="PROD_CMBR_PRODUCT" rel-entity-name="Product">
             <key-map field-name="productId"/>
         </relation>
