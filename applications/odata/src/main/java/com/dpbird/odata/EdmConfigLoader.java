@@ -3,6 +3,7 @@ package com.dpbird.odata;
 import com.dpbird.odata.annotation.*;
 import com.dpbird.odata.edm.*;
 import com.google.common.collect.Lists;
+import org.apache.ofbiz.base.location.FlexibleLocation;
 import org.apache.ofbiz.base.util.*;
 import org.apache.ofbiz.base.util.string.FlexibleStringExpander;
 import org.apache.ofbiz.entity.Delegator;
@@ -31,7 +32,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class EdmConfigLoader {
@@ -86,10 +86,13 @@ public class EdmConfigLoader {
             addToEdmWebConfig(delegator, dispatcher, edmWebConfig, globalRootElement, locale);
         }
         for (String importEdm : getImportEdm(rootElement)) {
-            URL importUrl = UtilURL.fromResource(importEdm + "EdmConfig.xml");
+            URL importUrl = FlexibleLocation.resolveLocation(importEdm);
             Document importDoc = UtilXml.readXmlDocument(importUrl, false);
             if (UtilValidate.isNotEmpty(importDoc)) {
                 addToEdmWebConfig(delegator, dispatcher, edmWebConfig, importDoc.getDocumentElement(), locale);
+            } else {
+                //无效的地址
+                Debug.logWarning("File not found: " + importEdm, module);
             }
         }
         addToEdmWebConfig(delegator, dispatcher, edmWebConfig, rootElement, locale);
@@ -573,8 +576,11 @@ public class EdmConfigLoader {
         if (csdlProperty.isComputed()) {
             csdlAnnotationList.add(createAnnotationBool("Core.Computed", "true", null));
         }
-        if (csdlProperty.isHidden()) {
-            csdlAnnotationList.add(createAnnotationBool("UI.Hidden", "true", null));
+        String hidden = csdlProperty.getHidden();
+        if (UtilValidate.isNotEmpty(hidden)) {
+            CsdlAnnotation hiddenAnnotation = "true".equals(hidden) || "false".equals(hidden) ?
+                    createAnnotationBool("UI.Hidden", hidden, null) : createAnnotationPath("UI.Hidden", hidden, null);
+            csdlAnnotationList.add(hiddenAnnotation);
         }
         if (csdlProperty.isHiddenFilter()) {
             csdlAnnotationList.add(createAnnotationBool("UI.HiddenFilter", "true", null));
@@ -928,9 +934,13 @@ public class EdmConfigLoader {
                 hasRelField = true;
             } else if (inEntityTagName.equals("Property")) {
                 OfbizCsdlProperty csdlProperty = loadPropertyFromElement(dispatcher, modelEntity, relAliases, inEntityElement, locale, labelPrefix, autoLabel);
-                csdlProperties.add(csdlProperty);
-                if (UtilValidate.isNotEmpty(csdlProperty.getRelAlias())) {
-                    hasRelField = true;
+                if (UtilValidate.isNotEmpty(csdlProperty)) {
+                    //如果重复定义 单独定义的Property覆盖Properties中的定义
+                    csdlProperties.removeIf(p -> p.getName().equals(csdlProperty.getName()));
+                    csdlProperties.add(csdlProperty);
+                    if (UtilValidate.isNotEmpty(csdlProperty.getRelAlias())) {
+                        hasRelField = true;
+                    }
                 }
             } else if (inEntityTagName.equals("NavigationProperty")) {
                 CsdlNavigationProperty csdlNavigationProperty = loadNavigationFromElement(delegator, modelEntity, inEntityElement);
@@ -1182,6 +1192,11 @@ public class EdmConfigLoader {
         if (UtilValidate.isNotEmpty(filterByDateAttr)) {
             filterByDate = Boolean.valueOf(filterByDateAttr);
         }
+        boolean cascade = false;
+        String cascadeAttr = navigationPropertyElement.getAttribute("Cascade");
+        if (UtilValidate.isNotEmpty(cascadeAttr)) {
+            cascade = Boolean.valueOf(cascadeAttr);
+        }
         String containsTargetStr = navigationPropertyElement.getAttribute("ContainsTarget");
         boolean containsTarget = containsTargetStr != null && containsTargetStr.equals("true");
         String midEntity = navigationPropertyElement.getAttribute("MidEntity");
@@ -1237,6 +1252,7 @@ public class EdmConfigLoader {
         navigationProperty.setReadOnly(stickyReadOnly);
         navigationProperty.setPreCreate(preCreate);
         navigationProperty.setHandlerNode(handlerNode);
+        navigationProperty.setCascade(cascade);
         if (UtilValidate.isNotEmpty(midEntity)) {
             navigationProperty.setMidEntity(midEntity);
         }
@@ -1613,7 +1629,7 @@ public class EdmConfigLoader {
             property.setFieldControl(FieldControlType.valueOf(fieldControl));
         }
         if (UtilValidate.isNotEmpty(hidden)) {
-            property.setHidden(Boolean.valueOf(hidden));
+            property.setHidden(hidden);
         }
         if (UtilValidate.isNotEmpty(hiddenFilter)) {
             property.setHiddenFilter(Boolean.valueOf(hiddenFilter));

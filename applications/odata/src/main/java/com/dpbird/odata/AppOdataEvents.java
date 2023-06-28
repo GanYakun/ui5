@@ -11,8 +11,10 @@ import org.apache.ofbiz.base.util.*;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.util.EntityQuery;
+import org.apache.ofbiz.entity.util.EntityUtil;
 import org.apache.ofbiz.entity.util.EntityUtilProperties;
-import org.apache.ofbiz.service.GenericServiceException;
+import org.apache.ofbiz.security.Security;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.olingo.commons.api.edmx.EdmxReference;
 import org.apache.olingo.commons.api.edmx.EdmxReferenceInclude;
@@ -23,11 +25,17 @@ import org.apache.olingo.server.api.ServiceMetadata;
 import org.apache.olingo.server.api.etag.ServiceMetadataETagSupport;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.PushBuilder;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class AppOdataEvents {
     public static final String module = AppOdataEvents.class.getName();
@@ -36,8 +44,6 @@ public class AppOdataEvents {
         LocalDispatcher dispatcher = (LocalDispatcher) req.getAttribute("dispatcher");
         final Delegator delegator = (Delegator) req.getAttribute("delegator");
         GenericValue userLogin = (GenericValue) req.getAttribute("userLogin");
-
-
         Map<String, Object> ctx = UtilHttp.getParameterMap(req);
         String odataApp = req.getParameter("app");
         boolean isAppParam = true;
@@ -63,9 +69,15 @@ public class AppOdataEvents {
                 isAppParam = false;
             }
             Debug.logInfo("------------------------------------ odataApp = " + odataApp, module);
-
-            Debug.logInfo("------------------------------------ odataApp = " + odataApp, module);
             Debug.logInfo("------------------------------------ componentName = " + componentName, module);
+            if (!hasOdataPermission(req, odataApp)) {
+                resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                try(ServletOutputStream outputStream = resp.getOutputStream()) {
+                    outputStream.print("The current user does not have access");
+                }
+                return "error";
+            }
+
             boolean reload = false; // always reload metadata from xml file and database
             if ("true".equals(reloadStr)) {
                 reload = true;
@@ -229,6 +241,28 @@ public class AppOdataEvents {
         return "success";
     }
 
+    /**
+     * 检查当前用户是否有权限访问当前的Edm
+     */
+    private static boolean hasOdataPermission(HttpServletRequest request, String odataApp) throws GenericEntityException {
+        Delegator delegator = (Delegator) request.getAttribute("delegator");
+        GenericValue userLogin = (GenericValue) request.getAttribute("userLogin");
+        //访问当前edm需要的权限
+        List<String> requiredPermissions = EntityQuery.use(delegator).from("OdataAppPermission")
+                .where("appId", odataApp).cache().getFieldList("permissionId");
+        if (UtilValidate.isEmpty(requiredPermissions)) {
+            //不需要权限
+            return true;
+        }
+        Security security = (Security) request.getAttribute("security");
+        for (String permission : requiredPermissions) {
+            if (!security.hasPermission(permission, userLogin)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static String changes(HttpServletRequest request, HttpServletResponse response) {
         Delegator delegator = (Delegator) request.getAttribute("delegator");
         LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
@@ -371,5 +405,32 @@ public class AppOdataEvents {
         }
         return "success";
     }
+
+    public static String testStream(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/event-stream");
+        response.setCharacterEncoding("UTF-8");
+        PushBuilder pushBuilder = request.newPushBuilder();
+        if (pushBuilder != null) {
+            // 发送首次响应，通知客户端建立持久连接
+            pushBuilder.path("/stream").push();
+        }
+        try (PrintWriter writer = response.getWriter()) {
+            // 模拟每秒发送一次响应
+            for (int i = 0; i < 30; i++) {
+                String message = "当前时间是: " + UtilDateTime.nowTimestamp() + "\n\n";
+                writer.write(message);
+                writer.flush();
+                // 等待1秒
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        Debug.log(">>>>>>>>>>>>>>>>>>>>>>> ok ");
+        return "success";
+    }
+
 
 }

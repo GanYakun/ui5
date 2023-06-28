@@ -5,10 +5,10 @@ import com.dpbird.odata.edm.OdataOfbizEntity;
 import com.dpbird.odata.edm.OfbizCsdlEntityType;
 import com.dpbird.odata.edm.OfbizCsdlNavigationProperty;
 import org.apache.ofbiz.base.util.UtilDateTime;
+import org.apache.ofbiz.base.util.UtilGenerics;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
-import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.entity.condition.EntityCondition;
 import org.apache.ofbiz.entity.model.ModelEntity;
@@ -16,13 +16,10 @@ import org.apache.ofbiz.entity.model.ModelRelation;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.olingo.commons.api.data.Entity;
-import org.apache.olingo.commons.api.data.Property;
 import org.apache.olingo.commons.api.edm.EdmBindingTarget;
 import org.apache.olingo.commons.api.edm.EdmEntityType;
 import org.apache.olingo.commons.api.edm.EdmNavigationProperty;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
-import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
-import org.apache.olingo.server.api.uri.queryoption.ApplyOption;
 import org.apache.olingo.server.api.uri.queryoption.QueryOption;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,23 +36,18 @@ import java.util.Map;
 public class DefaultEntityHandler implements EntityHandler {
 
     @Override
-    public Map<String, Object> findOne(Map<String, Object> odataContext, EdmBindingTarget edmBindingTarget, Map<String, Object> primaryKey) throws OfbizODataException {
-        return OdataProcessorHelper.readEntityData(odataContext, edmBindingTarget, primaryKey);
-    }
-
-    @Override
-    public HandlerResults findList(Map<String, Object> odataContext, EdmBindingTarget edmBindingTarget, Map<String, QueryOption> queryOptions,
-                                   Map<String, Object> navigationParam) throws OfbizODataException {
+    public HandlerResults findList(Map<String, Object> odataContext, EdmBindingTarget edmBindingTarget, Map<String, Object> primaryKey,
+                                   Map<String, QueryOption> queryOptions, Map<String, Object> navigationParam) throws OfbizODataException {
         //普通的查询
         if (UtilValidate.isEmpty(navigationParam)) {
             OdataReader reader = new OdataReader(odataContext, queryOptions, UtilMisc.toMap("edmBindingTarget", edmBindingTarget));
-            return reader.ofbizFindList(null);
+            EntityCondition entityCondition = UtilValidate.isNotEmpty(primaryKey) ? EntityCondition.makeCondition(primaryKey) : null;
+            return reader.ofbizFindList(entityCondition);
         }
         //Navigation查询 根据参数去做查询
         EntityCondition primaryKeyCond = null;
         if (navigationParam.get("primaryKey") != null) {
-            Map<String, Object> primaryKey = (Map<String, Object>) navigationParam.get("primaryKey");
-            primaryKeyCond = EntityCondition.makeCondition(primaryKey);
+            primaryKeyCond = EntityCondition.makeCondition(UtilGenerics.checkMap(navigationParam.get("primaryKey")));
         }
         HandlerResults handlerResults = new HandlerResults();
         if (navigationParam.containsKey("condition")) {
