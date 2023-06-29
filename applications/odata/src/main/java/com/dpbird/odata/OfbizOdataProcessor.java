@@ -2,6 +2,7 @@ package com.dpbird.odata;
 
 import com.dpbird.odata.edm.*;
 import com.dpbird.odata.handler.HandlerFactory;
+import org.apache.fop.util.ListUtil;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.StringUtil;
 import org.apache.ofbiz.base.util.UtilMisc;
@@ -23,7 +24,6 @@ import org.apache.ofbiz.service.ServiceUtil;
 import org.apache.olingo.commons.api.Constants;
 import org.apache.olingo.commons.api.data.*;
 import org.apache.olingo.commons.api.edm.*;
-import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.commons.api.edm.provider.CsdlProperty;
 import org.apache.olingo.commons.api.ex.ODataException;
 import org.apache.olingo.server.api.OData;
@@ -40,7 +40,6 @@ import org.apache.olingo.server.api.uri.queryoption.expression.ExpressionVisitEx
 import org.apache.olingo.server.api.uri.queryoption.expression.Member;
 import org.apache.olingo.server.core.uri.queryoption.ExpandItemImpl;
 import org.apache.olingo.server.core.uri.queryoption.ExpandOptionImpl;
-import org.apache.olingo.server.core.uri.queryoption.FilterOptionImpl;
 import org.apache.olingo.server.core.uri.queryoption.LevelsOptionImpl;
 import org.apache.olingo.server.core.uri.queryoption.apply.FilterImpl;
 import org.apache.olingo.server.core.uri.queryoption.apply.GroupByImpl;
@@ -51,6 +50,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.dpbird.odata.OdataExpressionVisitor.AGGREGATE_MAP;
 
@@ -128,6 +128,7 @@ public class OfbizOdataProcessor {
             entityCondition = Util.appendCondition(entityCondition, searchCondition);
         }
         EntityCondition entitySetCondition = null;
+        EntityCondition entityTypeCondition = null;
         //检查是否是多段式的apply查询 如果是就不添加主对象的EntitySetCondition
         List<UriResource> uriResourceParts = (List<UriResource>) odataContext.get("uriResourceParts");
         boolean isMultistageApply = Util.isMultistageApply(uriResourceParts, queryOptions);
@@ -137,91 +138,22 @@ public class OfbizOdataProcessor {
                 OfbizCsdlEntitySet csdlEntitySet = (OfbizCsdlEntitySet) this.edmProvider.getEntityContainer()
                         .getEntitySet(((EdmEntitySet) edmParams.get("edmBindingTarget")).getName());
                 String entitySetConditionStr = csdlEntitySet.getConditionStr();
-                if (UtilValidate.isNotEmpty(entitySetConditionStr) && entitySetConditionStr.contains("/")) {
-                    //entitySet的Condition是多段式的, 要使用dynamicView
-                    if (dynamicViewHolder == null) {
-                        OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) this.edmProvider.getEntityType(csdlEntitySet.getTypeFQN());
-                        dynamicViewHolder = new DynamicViewHolder(csdlEntityType, edmProvider, delegator, dispatcher, userLogin);
-                    }
-                    List<EntityCondition> entitySetConditionList = new ArrayList<>();
-                    String[] split;
-                    EntityJoinOperator conditionsOperator;
-                    if (entitySetConditionStr.contains(" or ")) {
-                        split = entitySetConditionStr.split(" or ");
-                        conditionsOperator = EntityOperator.OR;
-                    } else {
-                        split = entitySetConditionStr.split(" and ");
-                        conditionsOperator = EntityOperator.AND;
-                    }
-                    for (int i = 0; i < split.length; i++) {
-                        String relString = split[i];
-                        if (relString.contains("/")) {
-                            String r = relString.substring(0, relString.lastIndexOf("/"));
-                            EntityTypeRelAlias entityTypeRelAlias = EdmConfigLoader.loadRelAliasFromAttribute(dispatcher.getDelegator(), modelEntity, null, r);
-                            String lastRelEntityName = dynamicViewHolder.addRelAlias(null, entityTypeRelAlias);
-                            String fieldCondition = relString.substring(relString.lastIndexOf("/") + 1);
-                            String[] condition;
-                            if (fieldCondition.contains("!=")) {
-                                condition = fieldCondition.split("!=");
-                                String conValue = Util.parseVariable(condition[1].trim(), userLogin);
-                                if ("null".equals(conValue)) {
-                                    conValue = null;
-                                }
-                                String filterProperty = dynamicViewHolder.addFilterProperty(lastRelEntityName, condition[0].trim());
-                                entitySetConditionList.add(EntityCondition.makeCondition(filterProperty, EntityOperator.NOT_EQUAL, conValue));
-                            } else if (fieldCondition.contains("=")) {
-                                condition = fieldCondition.split("=");
-                                String conValue = Util.parseVariable(condition[1].trim(), userLogin);
-                                if ("null".equals(conValue)) {
-                                    conValue = null;
-                                }
-                                String filterProperty = dynamicViewHolder.addFilterProperty(lastRelEntityName, condition[0].trim());
-                                entitySetConditionList.add(EntityCondition.makeCondition(filterProperty, EntityOperator.EQUALS, conValue));
-                            } else if (fieldCondition.contains(" in ")) {
-                                EntityComparisonOperator<?, ?> operator;
-                                //是not in
-                                if (fieldCondition.contains(" not in ")) {
-                                    condition = fieldCondition.split(" not in ");
-                                    operator = EntityOperator.NOT_IN;
-                                } else {
-                                    condition = fieldCondition.split(" in ");
-                                    operator = EntityOperator.IN;
-                                }
-                                String valueStr = condition[1].trim();
-                                valueStr = valueStr.substring(1, valueStr.length() - 1);
-                                List<String> values = StringUtil.split(valueStr, ",");
-                                String filterProperty = dynamicViewHolder.addFilterProperty(lastRelEntityName, condition[0]);
-                                entitySetConditionList.add(EntityCondition.makeCondition(filterProperty, operator, values));
-                            }
-                        } else {
-                            entitySetConditionList.add(Util.parseEntityCondition(relString, userLogin));
-                        }
-                    }
-                    if (entitySetConditionList.size() > 0) {
-                        entitySetCondition = EntityCondition.makeCondition(entitySetConditionList, conditionsOperator);
-                    }
-                } else {
-                    entitySetCondition = Util.parseEntityCondition(csdlEntitySet.getConditionStr(), userLogin);
+                OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(csdlEntitySet.getTypeFQN());
+                if (UtilValidate.isNotEmpty(entitySetConditionStr)) {
+                    entitySetCondition = getStringCondition(entitySetConditionStr, csdlEntityType);
+                }
+                //EntityType的Condition
+                if (UtilValidate.isNotEmpty(csdlEntityType.getEntityConditionStr())) {
+                    entityTypeCondition = getStringCondition(csdlEntityType.getEntityConditionStr(), csdlEntityType);
                 }
             }
         }
-        if (entitySetCondition != null) {
-            if (entityCondition == null) {
-                entityCondition = entitySetCondition;
-            } else {
-                entityCondition = EntityCondition.makeCondition(entityCondition, EntityOperator.AND, entitySetCondition);
-            }
-        }
+        entityCondition = Util.appendCondition(entityCondition, entitySetCondition);
+        entityCondition = Util.appendCondition(entityCondition, entityTypeCondition);
+
         if (this.edmEntityType != null) {
             OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) this.edmProvider.getEntityType(edmEntityType.getFullQualifiedName());
             this.filterByDate = csdlEntityType.isFilterByDate();
-            if (csdlEntityType.getEntityCondition() != null) {
-                if (entityCondition == null) {
-                    entityCondition = csdlEntityType.getEntityCondition();
-                } else {
-                    entityCondition = EntityCondition.makeCondition(entityCondition, EntityOperator.AND, csdlEntityType.getEntityCondition());
-                }
-            }
             if (UtilValidate.isNotEmpty(sapContextId) && UtilValidate.isNotEmpty(csdlEntityType.getDraftEntityName())) {
                 List<EntityCondition> exprs = new ArrayList<EntityCondition>();
                 exprs.add(EntityCondition.makeCondition(UtilMisc.toMap("isActiveEntity", "Y")));
@@ -294,6 +226,77 @@ public class OfbizOdataProcessor {
         return null;
     }
 
+    //获取EntityType EntitySet定义的Condition
+    private EntityCondition getStringCondition(String conditionStr, OfbizCsdlEntityType csdlEntityType) {
+        EntityCondition entityCondition = null;
+        if (UtilValidate.isNotEmpty(conditionStr) && conditionStr.contains("/")) {
+            //entitySet的Condition是多段式的, 要使用dynamicView
+            if (dynamicViewHolder == null) {
+                dynamicViewHolder = new DynamicViewHolder(csdlEntityType, edmProvider, delegator, dispatcher, userLogin);
+            }
+            List<EntityCondition> entitySetConditionList = new ArrayList<>();
+            String[] split;
+            EntityJoinOperator conditionsOperator;
+            if (conditionStr.contains(" or ")) {
+                split = conditionStr.split(" or ");
+                conditionsOperator = EntityOperator.OR;
+            } else {
+                split = conditionStr.split(" and ");
+                conditionsOperator = EntityOperator.AND;
+            }
+            for (int i = 0; i < split.length; i++) {
+                String relString = split[i];
+                if (relString.contains("/")) {
+                    String r = relString.substring(0, relString.lastIndexOf("/"));
+                    EntityTypeRelAlias entityTypeRelAlias = EdmConfigLoader.loadRelAliasFromAttribute(dispatcher.getDelegator(), modelEntity, null, r);
+                    String lastRelEntityName = dynamicViewHolder.addRelAlias(null, entityTypeRelAlias, null);
+                    String fieldCondition = relString.substring(relString.lastIndexOf("/") + 1);
+                    String[] condition;
+                    if (fieldCondition.contains("!=")) {
+                        condition = fieldCondition.split("!=");
+                        String conValue = (String) Util.parseVariable(condition[1].trim(), httpServletRequest);
+                        if ("null".equals(conValue)) {
+                            conValue = null;
+                        }
+                        String filterProperty = dynamicViewHolder.addFilterProperty(lastRelEntityName, condition[0].trim());
+                        entitySetConditionList.add(EntityCondition.makeCondition(filterProperty, EntityOperator.NOT_EQUAL, conValue));
+                    } else if (fieldCondition.contains("=")) {
+                        condition = fieldCondition.split("=");
+                        String conValue = (String) Util.parseVariable(condition[1].trim(), httpServletRequest);
+                        if ("null".equals(conValue)) {
+                            conValue = null;
+                        }
+                        String filterProperty = dynamicViewHolder.addFilterProperty(lastRelEntityName, condition[0].trim());
+                        entitySetConditionList.add(EntityCondition.makeCondition(filterProperty, EntityOperator.EQUALS, conValue));
+                    } else if (fieldCondition.contains(" in ")) {
+                        EntityComparisonOperator<?, ?> operator;
+                        //是not in
+                        if (fieldCondition.contains(" not in ")) {
+                            condition = fieldCondition.split(" not in ");
+                            operator = EntityOperator.NOT_IN;
+                        } else {
+                            condition = fieldCondition.split(" in ");
+                            operator = EntityOperator.IN;
+                        }
+                        String valueStr = condition[1].trim();
+                        valueStr = valueStr.substring(1, valueStr.length() - 1);
+                        List<String> values = StringUtil.split(valueStr, ",");
+                        String filterProperty = dynamicViewHolder.addFilterProperty(lastRelEntityName, condition[0]);
+                        entitySetConditionList.add(EntityCondition.makeCondition(filterProperty, operator, values));
+                    }
+                } else {
+                    entitySetConditionList.add(Util.parseEntityCondition(relString, httpServletRequest));
+                }
+            }
+            if (entitySetConditionList.size() > 0) {
+                entityCondition = EntityCondition.makeCondition(entitySetConditionList, conditionsOperator);
+            }
+        } else {
+            entityCondition = Util.parseEntityCondition(conditionStr, httpServletRequest);
+        }
+        return entityCondition;
+    }
+
     private EntityCondition processSearchOption() throws OfbizODataException {
         if (UtilValidate.isEmpty(queryOptions) || UtilValidate.isEmpty(queryOptions.get("searchOption"))) {
             return null;
@@ -319,7 +322,7 @@ public class OfbizOdataProcessor {
                 }
                 String aliasEntityString = option.substring(0, option.lastIndexOf("/"));
                 EntityTypeRelAlias entityTypeRelAlias = EdmConfigLoader.loadRelAliasFromAttribute(dispatcher.getDelegator(), modelEntity, null, aliasEntityString);
-                String lastRelEntityName = dynamicViewHolder.addRelAlias(null, entityTypeRelAlias);
+                String lastRelEntityName = dynamicViewHolder.addRelAlias(null, entityTypeRelAlias, null);
 
                 String aliasPropertyName = option.substring(option.lastIndexOf("/") + 1);
                 aliasPropertyName = aliasPropertyName.replace("[", "").replace("]", "");
@@ -341,7 +344,7 @@ public class OfbizOdataProcessor {
                         searchProperties.add(option);
                     } else {
                         //relAlias字段 search
-                        String lastRelEntityName = dynamicViewHolder.addRelAlias(null, csdlProperty.getRelAlias());
+                        String lastRelEntityName = dynamicViewHolder.addRelAlias(null, csdlProperty.getRelAlias(), null);
                         String filterProperty = dynamicViewHolder.addFilterProperty(lastRelEntityName, csdlProperty.getOfbizFieldName());
                         searchProperties.add(filterProperty);
                     }
@@ -465,31 +468,18 @@ public class OfbizOdataProcessor {
                             }
                             applySelect.add(segmentValue);
                             dynamicViewEntity.addAlias(ofbizCsdlEntityType.getOfbizEntity(), segmentValue, segmentValue, null, false, true, null);
-                        } else if (path.size() == 2) {
-                            //子对象字段
+                        } else {
+                            //多段式的子对象字段
                             //add MemberEntity
-                            UriResourceNavigation resourceNavigation = (UriResourceNavigation) path.get(0);
-                            EdmNavigationProperty edmNavigationProperty = resourceNavigation.getProperty();
-                            OfbizCsdlEntityType navCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmNavigationProperty.getType().getFullQualifiedName());
-                            String navigationName = edmNavigationProperty.getName();
-                            String navigationEntityName = navCsdlEntityType.getOfbizEntity();
-                            if (!dynamicViewHolder.hasMemberEntity(navigationName, navigationEntityName)) {
-                                dynamicViewEntity.addMemberEntity(navigationName, navigationEntityName);
-                            }
-                            //add Alias
-                            UriResourcePrimitiveProperty resourcePrimitiveProperty = (UriResourcePrimitiveProperty) path.get(1);
-                            String segmentValue = resourcePrimitiveProperty.getSegmentValue();
-                            dynamicViewEntity.addAlias(navigationName, navigationName + segmentValue, segmentValue, null, false, true, null);
-                            //要把这个字段加到selectField里 否则ofbiz不会进行groupBy处理
+                            UriResource groupByProperty = ListUtil.getLast(path);
+                            path = path.subList(0, path.size() - 1);
+                            List<String> resourceParts = path.stream().map(UriResource::getSegmentValue).collect(Collectors.toList());
+                            String memberAlias = dynamicViewHolder.addMultiParts(resourceParts, null);
+                            dynamicViewEntity.addAlias(memberAlias, memberAlias + groupByProperty.getSegmentValue(), groupByProperty.getSegmentValue(), null, false, true, null);
                             if (UtilValidate.isEmpty(applySelect)) {
                                 applySelect = new HashSet<>();
                             }
-                            applySelect.add(navigationName + segmentValue);
-                            //add ViewLink
-                            if (!dynamicViewHolder.hasViewLink(ofbizCsdlEntityType.getOfbizEntity(), navigationName)) {
-                                ModelRelation relation = currModelEntity.getRelation(resourceNavigation.getSegmentValue());
-                                dynamicViewEntity.addViewLink(ofbizCsdlEntityType.getOfbizEntity(), navigationName, false, relation.getKeyMaps());
-                            }
+                            applySelect.add(memberAlias + groupByProperty.getSegmentValue());
                         }
                     }
                 }
@@ -514,26 +504,31 @@ public class OfbizOdataProcessor {
                 AggregateExpression.StandardMethod standardMethod = aggregateExpression.getStandardMethod();
                 //返回字段别名
                 String expressionAlias = aggregateExpression.getAlias();
-                if (UtilValidate.isNotEmpty(standardMethod)) {
-                    //expression 字段名称或者子对象名称
-                    String expression = aggregateExpression.getExpression().toString();
-                    expression = expression.substring(1, expression.length() - 1);
-                    if (standardMethod.equals(AggregateExpression.StandardMethod.COUNT_DISTINCT)) {
-                        List<String> relationKeyList = Util.getRelationKey(modelEntity, expression);
-                        if (relationKeyList.size() > 1) {
-                            throw new OfbizODataException("Multiple field association is not supported.");
-                        }
-                        dynamicViewEntity.addAlias(ofbizCsdlEntityType.getName(), expressionAlias, relationKeyList.get(0), null, false, null, AGGREGATE_MAP.get(standardMethod));
-                    } else {
-                        dynamicViewEntity.addAlias(ofbizCsdlEntityType.getName(), expressionAlias, expression, null, false, null, AGGREGATE_MAP.get(standardMethod));
-                    }
-                } else if (Util.isAggregateCount(aggregateExpression)) {
+                if (Util.isAggregateCount(aggregateExpression)) {
                     //这里处理aggregate的$count，使用统计主键数量的方式实现，多主键暂不支持
                     List<String> pkFieldNames = modelEntity.getPkFieldNames();
                     if (pkFieldNames.size() > 1) {
                         throw new OfbizODataException("Count queries with multiple primary keys are not supported.");
                     }
                     dynamicViewEntity.addAlias(ofbizCsdlEntityType.getName(), expressionAlias, modelEntity.getFirstPkFieldName(), null, false, null, "count");
+                } else {
+                    if (UtilValidate.isNotEmpty(standardMethod)) {
+                        //expression 字段名称或者子对象名称
+                        String expression = aggregateExpression.getExpression().toString();
+                        expression = expression.substring(1, expression.length() - 1);
+                        if (standardMethod.equals(AggregateExpression.StandardMethod.COUNT_DISTINCT)) {
+                            List<String> relationKeyList = Util.getRelationKey(modelEntity, expression);
+                            if (relationKeyList.size() > 1) {
+                                throw new OfbizODataException("Multiple field association is not supported.");
+                            }
+                            dynamicViewEntity.addAlias(ofbizCsdlEntityType.getName(), expressionAlias, relationKeyList.get(0), null, false, null, AGGREGATE_MAP.get(standardMethod));
+                        } else {
+                            dynamicViewEntity.addAlias(ofbizCsdlEntityType.getName(), expressionAlias, expression, null, false, null, AGGREGATE_MAP.get(standardMethod));
+                        }
+                    } else {
+                        //default sum
+                        dynamicViewEntity.addAlias(ofbizCsdlEntityType.getName(), expressionAlias, expressionAlias, null, false, null, "sum");
+                    }
                 }
                 if (applySelect == null) {
                     applySelect = new HashSet<>();
@@ -634,7 +629,7 @@ public class OfbizOdataProcessor {
                         //多段式的RelAlias字段排序
                         if (property.getRelAlias() != null) {
                             EntityTypeRelAlias relAlias = property.getRelAlias();
-                            dynamicViewHolder.addRelAlias(newCsdlEntity, relAlias);
+                            dynamicViewHolder.addRelAlias(newCsdlEntity, relAlias, null);
                             List<String> relations = relAlias.getRelations();
                             String relPropertyName = dynamicViewHolder.addFilterProperty(relations.get(relations.size() - 1), property.getOfbizFieldName());
                             relPropertyName = relPropertyName + " NULLS LAST";
@@ -819,7 +814,7 @@ public class OfbizOdataProcessor {
         Object newInstance = null;
         Map<String, Object> propertyFieldMap = new HashMap<>();
         for (Property property : properties) {
-            if (property.getValue() != null && property.getValue().getClass().equals(java.lang.Double.class)) {
+            if (property.getValue() != null && property.getValue().getClass().equals(Double.class)) {
                 propertyFieldMap.put(property.getName(), new BigDecimal((Double) property.getValue()));
             } else {
                 propertyFieldMap.put(property.getName(), property.getValue());
@@ -841,7 +836,7 @@ public class OfbizOdataProcessor {
                     if (Util.isBaseType(propertyFieldMap.get(field.getName()))) {
                         field.set(newInstance, propertyFieldMap.get(field.getName()));
                     } else {
-                        if (propertyFieldMap.get(field.getName()).getClass().equals(java.util.ArrayList.class)) {
+                        if (propertyFieldMap.get(field.getName()).getClass().equals(ArrayList.class)) {
                             List<ComplexValue> innerComplexValue = (List<ComplexValue>) propertyFieldMap.get(field.getName());
                             String ofbizTypeFullName = innerComplexValue.get(0).getTypeName();
                             // String innerClassName = edmWebConfig.getComplexTypeMap().get(ofbizTypeName).getOfbizClass();
