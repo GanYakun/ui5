@@ -84,6 +84,9 @@ under the License.
         <relation type="many" rel-entity-name="PartyContactMechPurpose">
             <key-map field-name="partyId" />
         </relation>
+        <relation type="one-nofk" rel-entity-name="PartyAndContact">
+            <key-map field-name="partyId" rel-field-name="partyId"/>
+        </relation>
         <relation type="many" rel-entity-name="UserLoginSecurityGroup">
             <key-map field-name="userLoginId"/>
         </relation>
