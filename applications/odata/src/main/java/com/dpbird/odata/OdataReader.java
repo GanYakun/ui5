@@ -21,6 +21,7 @@ import org.apache.olingo.commons.api.data.Entity;
 import org.apache.olingo.commons.api.data.EntityCollection;
 import org.apache.olingo.commons.api.data.Link;
 import org.apache.olingo.commons.api.edm.*;
+import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.server.api.ODataApplicationException;
 import org.apache.olingo.server.api.uri.queryoption.ExpandOption;
 import org.apache.olingo.server.api.uri.queryoption.FilterOption;
@@ -93,10 +94,11 @@ public class OdataReader extends OfbizOdataProcessor {
         //从接口实例中读取数据
         EdmEntitySet edmEntitySet = (EdmEntitySet) edmParams.get("edmBindingTarget");
         EntityHandler entityHandler = HandlerFactory.getEntityHandler(edmEntityType, edmProvider, delegator);
-        Map<String, Object> resultMap = entityHandler.findOne(odataContext, edmEntitySet, keyMap);
-        if (UtilValidate.isEmpty(resultMap)) {
+        HandlerResults results = entityHandler.findList(odataContext, edmEntitySet, keyMap, null, null);
+        if (UtilValidate.isEmpty(results) || UtilValidate.isEmpty(results.getResultData())) {
             throw new OfbizODataException(String.valueOf(HttpStatus.SC_NOT_FOUND), "Not found.");
         }
+        Map<String, Object> resultMap = results.getResultData().get(0);
         OdataOfbizEntity entity = (OdataOfbizEntity) findResultToEntity(edmEntitySet, edmEntityType, resultMap);
         entity.addOdataParts(new OdataParts(edmEntitySet, edmEntityType, null, entity));
         OdataProcessorHelper.appendNonEntityFields(httpServletRequest, delegator, dispatcher, edmProvider, queryOptions, UtilMisc.toList(entity), locale, userLogin);
@@ -127,7 +129,7 @@ public class OdataReader extends OfbizOdataProcessor {
         } else {
             //从接口实例获取数据
             EntityHandler entityHandler = HandlerFactory.getEntityHandler(edmEntityType, edmProvider, delegator);
-            HandlerResults results = entityHandler.findList(odataContext, edmEntitySet, queryOptions, null);
+            HandlerResults results = entityHandler.findList(odataContext, edmEntitySet, null, queryOptions, null);
             entityCollection.setCount(results.getResultCount());
             for (Map<String, Object> result : results.getResultData()) {
                 OdataOfbizEntity resultToEntity = (OdataOfbizEntity) findResultToEntity(edmEntitySet, edmEntityType, result);
@@ -305,7 +307,7 @@ public class OdataReader extends OfbizOdataProcessor {
         navigationParam.put("edmNavigationProperty", edmNavigationProperty);
         //根据调用参数从Handler获取数据
         EntityHandler entityHandler = HandlerFactory.getEntityHandler(edmNavigationProperty.getType(), edmProvider, delegator);
-        HandlerResults handlerList = entityHandler.findList(odataContext, null, queryOptions, navigationParam);
+        HandlerResults handlerList = entityHandler.findList(odataContext, null, null,  queryOptions, navigationParam);
         List<? extends Map<String, Object>> resultData = handlerList.getResultData();
         if (resultData == null) {
             return null;
@@ -345,7 +347,7 @@ public class OdataReader extends OfbizOdataProcessor {
         navigationParam.put("edmNavigationProperty", edmNavigationProperty);
         //根据调用参数从Handler获取数据
         EntityHandler navEntityHandler = HandlerFactory.getEntityHandler(edmNavigationProperty.getType(), edmProvider, delegator);
-        HandlerResults results = navEntityHandler.findList(odataContext, null, queryOptions, navigationParam);
+        HandlerResults results = navEntityHandler.findList(odataContext, null, null, queryOptions, navigationParam);
         if (UtilValidate.isEmpty(results) || UtilValidate.isEmpty(results.getResultData())) {
             return entityCollection;
         }
@@ -528,7 +530,8 @@ public class OdataReader extends OfbizOdataProcessor {
             if (navCsdlEntityType.getEntityCondition() != null) {
                 if(!navCsdlEntityType.getEntityConditionStr().contains("/")) {
                     //TODO: 暂不持支持expand查询嵌入EntityType的多段式条件
-                    condition = Util.appendCondition(condition, navCsdlEntityType.getEntityCondition());
+                    Map<String, Object> entityTypeCondition = Util.parseConditionMap(navCsdlEntityType.getEntityConditionStr(), httpServletRequest);
+                    condition = Util.appendCondition(condition, EntityCondition.makeCondition(entityTypeCondition));
                 } else {
                     Debug.logWarning("The EntityType condition is not supported", module);
                 }
@@ -610,6 +613,13 @@ public class OdataReader extends OfbizOdataProcessor {
         Map<String, Object> relFieldMap = relAlias.getRelationsFieldMap().get(relations.get(0));
         //所有的查询条件
         EntityCondition entityCondition = Util.appendCondition(condition, getRangeCondition(genericValueList, relAlias));
+        OfbizCsdlEntityType navCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(csdlNavigationProperty.getTypeFQN());
+        String entityConditionStr = navCsdlEntityType.getEntityConditionStr();
+        if (UtilValidate.isNotEmpty(entityConditionStr)) {
+            //添加navigation EntityType的Condition
+            Map<String, Object> conditionMap = Util.parseConditionMap(navCsdlEntityType.getEntityConditionStr(), httpServletRequest);
+            entityCondition = Util.appendCondition(entityCondition, EntityCondition.makeCondition(conditionMap));
+        }
         //添加数据的范围条件
         try {
             if (relations.size() > 1) {
