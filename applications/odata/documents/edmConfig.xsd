@@ -126,6 +126,7 @@
             <xs:attribute name="ReadOnly" type="xs:boolean"/>
             <xs:attribute name="HandlerNode" type="xs:anyURI"/>
             <xs:attribute name="PreCreate" type="xs:boolean"/>
+            <xs:attribute name="Cascade" type="xs:boolean"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="EnumType">
@@ -288,12 +289,12 @@
     </xs:element>
     <xs:element name="Title">
         <xs:complexType>
-            <xs:attribute name="Path" type="xs:NCName"/>
+            <xs:attribute name="Path" type="xs:anyURI"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="Description">
         <xs:complexType>
-            <xs:attribute name="Path" type="xs:NCName"/>
+            <xs:attribute name="Path" type="xs:anyURI"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="DataField">
@@ -384,6 +385,7 @@
             <xs:attribute name="MimeType" type="xs:anyURI"/>
             <xs:attribute name="DefaultValue" type="xs:anyURI"/>
             <xs:attribute name="AutoValue" type="xs:anyURI"/>
+            <xs:attribute name="FileNamePath" type="xs:anyURI"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="Text">
