@@ -45,6 +45,18 @@ public class LoginEvents {
             userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
             request.setAttribute("userLogin", userLogin);
             return "success";
+        } else if (UtilValidate.isNotEmpty(serviceMap.get("login.username"))) {
+            //externalId
+            String externalId = (String) serviceMap.get("login.username");
+            GenericValue party = EntityQuery.use(delegator).from("Party").where("externalId", externalId).queryFirst();
+            if (UtilValidate.isEmpty(party)) {
+                return "error";
+            }
+            userLogin = EntityQuery.use(delegator).from("UserLogin").where("partyId", party.getString("partyId")).queryFirst();
+            if (UtilValidate.isEmpty(userLogin)) {
+                return "error";
+            }
+            serviceMap.put("login.username", userLogin.getString("userLoginId"));
         }
         serviceMap.put("locale", UtilHttp.getLocale(request));
         LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
