@@ -2036,8 +2036,8 @@ under the License.
         title="Cust Request Work Effort Entity">
         <field name="custRequestId" type="id"></field>
         <field name="workEffortId" type="id"></field>
-        <prim-key field="custRequestId"/>
-        <prim-key field="workEffortId"/>
+        <field name="custRequestWorkEffortId" type="id"></field>
+        <prim-key field="custRequestWorkEffortId"/>
         <relation type="one" fk-name="CSTREQ_WF_CREQ" rel-entity-name="CustRequest">
             <key-map field-name="custRequestId"/>
         </relation>

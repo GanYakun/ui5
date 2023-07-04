@@ -9699,7 +9699,7 @@
         <value xml:lang="ru">Проект</value>
         <value xml:lang="vi">Nháp</value>
         <value xml:lang="zh">待提交</value>
-        <value xml:lang="zh-TW">初稿</value>
+        <value xml:lang="zh-TW">待提交</value>
     </property>
     <property key="StatusItem.description.CRQ_APPROVAL_EMP">
         <value xml:lang="ar">مسودة</value>
