@@ -6,6 +6,8 @@ import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.entity.GenericValue;
+import org.apache.ofbiz.entity.condition.EntityCondition;
+import org.apache.ofbiz.entity.condition.EntityOperator;
 import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.service.GenericServiceException;
 import org.apache.ofbiz.service.LocalDispatcher;
@@ -46,13 +48,14 @@ public class LoginEvents {
             request.setAttribute("userLogin", userLogin);
             return "success";
         } else if (UtilValidate.isNotEmpty(serviceMap.get("login.username"))) {
-            //externalId
-            String externalId = (String) serviceMap.get("login.username");
-            GenericValue party = EntityQuery.use(delegator).from("Party").where("externalId", externalId).queryFirst();
-            if (UtilValidate.isEmpty(party)) {
+            //Compatible with tel login and externalId login
+            EntityCondition findCondition = EntityCondition.makeCondition(UtilMisc.toList(EntityCondition.makeCondition("externalId", serviceMap.get("login.username")),
+                    EntityCondition.makeCondition("phoneMobile", serviceMap.get("login.username"))), EntityOperator.OR);
+            GenericValue partyAndContact = EntityQuery.use(delegator).from("PartyAndContact").where(findCondition).queryFirst();
+            if (UtilValidate.isEmpty(partyAndContact)) {
                 return "error";
             }
-            userLogin = EntityQuery.use(delegator).from("UserLogin").where("partyId", party.getString("partyId")).queryFirst();
+            userLogin = EntityQuery.use(delegator).from("UserLogin").where("partyId", partyAndContact.getString("partyId")).queryFirst();
             if (UtilValidate.isEmpty(userLogin)) {
                 return "error";
             }
