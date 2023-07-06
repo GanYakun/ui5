@@ -1248,9 +1248,8 @@ under the License.
         <prim-key field="facilityGroupTypeId"/>
     </entity>
     <entity entity-name="FacilityLocation" package-name="org.apache.ofbiz.product.facility" title="Facility Location Entity">
-        <field name="facilityLocationId" type="id"></field>
-        <field name="facilityId" type="id"></field>
         <field name="locationSeqId" type="id"></field>
+        <field name="facilityId" type="id"></field>
         <field name="locationTypeEnumId" type="id"></field>
         <field name="areaId" type="id"></field>
         <field name="aisleId" type="id"></field>
@@ -1258,9 +1257,7 @@ under the License.
         <field name="levelId" type="id"></field>
         <field name="positionId" type="id"></field>
         <field name="geoPointId" type="id"></field>      
-<!--        <prim-key field="facilityId"/>-->
-<!--        <prim-key field="locationSeqId"/>-->
-        <prim-key field="facilityLocationId"/>
+        <prim-key field="locationSeqId"/>
         <relation type="one" fk-name="FACILITY_LOC_FAC" rel-entity-name="Facility">
             <key-map field-name="facilityId"/>
         </relation>
