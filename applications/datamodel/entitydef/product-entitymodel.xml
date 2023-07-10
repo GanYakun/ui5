@@ -1248,6 +1248,7 @@ under the License.
         <prim-key field="facilityGroupTypeId"/>
     </entity>
     <entity entity-name="FacilityLocation" package-name="org.apache.ofbiz.product.facility" title="Facility Location Entity">
+        <field name="facilityLocationId" type="id"></field>
         <field name="locationSeqId" type="id"></field>
         <field name="facilityId" type="id"></field>
         <field name="locationTypeEnumId" type="id"></field>
@@ -1257,7 +1258,7 @@ under the License.
         <field name="levelId" type="id"></field>
         <field name="positionId" type="id"></field>
         <field name="geoPointId" type="id"></field>      
-        <prim-key field="locationSeqId"/>
+        <prim-key field="facilityLocationId"/>
         <relation type="one" fk-name="FACILITY_LOC_FAC" rel-entity-name="Facility">
             <key-map field-name="facilityId"/>
         </relation>
@@ -1269,18 +1270,22 @@ under the License.
       </relation>      
     </entity>
     <entity entity-name="FacilityLocationGeoPoint" package-name="org.apache.ofbiz.product.facility" title="Facility Location Geo Location with history">
-        <field name="facilityId" type="id"></field>
-        <field name="locationSeqId" type="id"></field>
+        <field name="facilityLocationGeoPointId" type="id"></field>
+        <field name="facilityLocationId" type="id"></field>
+<!--        <field name="facilityId" type="id"></field>-->
+<!--        <field name="locationSeqId" type="id"></field>-->
         <field name="geoPointId" type="id"></field>
         <field name="fromDate" type="date-time"></field>
         <field name="thruDate" type="date-time"></field>
-        <prim-key field="facilityId"/>
-        <prim-key field="locationSeqId"/>
-        <prim-key field="geoPointId"/>
-        <prim-key field="fromDate"/>
+<!--        <prim-key field="facilityId"/>-->
+<!--        <prim-key field="locationSeqId"/>-->
+<!--        <prim-key field="geoPointId"/>-->
+<!--        <prim-key field="fromDate"/>-->
+        <prim-key field="facilityLocationGeoPointId"/>
         <relation type="one" fk-name="FACLOCGEOPT_FACLOC" rel-entity-name="FacilityLocation">
-            <key-map field-name="facilityId"/>
-            <key-map field-name="locationSeqId"/>
+            <key-map field-name="facilityLocationId"/>
+<!--            <key-map field-name="facilityId"/>-->
+<!--            <key-map field-name="locationSeqId"/>-->
         </relation>
         <relation type="one" fk-name="FACLOCGEOPT_GEOPT" rel-entity-name="GeoPoint">
             <key-map field-name="geoPointId"/>
@@ -1434,14 +1439,13 @@ under the License.
     </view-link>
   </view-entity>
     <entity entity-name="ProductFacilityLocation" package-name="org.apache.ofbiz.product.facility" title="Product Facility Entity">
+        <field name="productFacilityLocationId" type="id"></field>
         <field name="productId" type="id"></field>
         <field name="facilityId" type="id"></field>
-        <field name="locationSeqId" type="id"></field>
+        <field name="facilityLocationId" type="id"></field>
         <field name="minimumStock" type="fixed-point"></field>
         <field name="moveQuantity" type="fixed-point"></field>
-        <prim-key field="productId"/>
-        <prim-key field="facilityId"/>
-        <prim-key field="locationSeqId"/>
+        <prim-key field="productFacilityLocationId"/>
         <relation type="one" fk-name="PROD_FCL_PROD" rel-entity-name="Product">
             <key-map field-name="productId"/>
         </relation>
@@ -1449,8 +1453,7 @@ under the License.
             <key-map field-name="facilityId"/>
         </relation>
         <relation type="one" fk-name="PROD_FCL_FCL" rel-entity-name="FacilityLocation">
-            <key-map field-name="facilityId"/>
-            <key-map field-name="locationSeqId"/>
+            <key-map field-name="facilityLocationId"/>
         </relation>
     </entity>
     <view-entity entity-name="ProductFacilityLocationQuantityTest" package-name="org.apache.ofbiz.product.facility" title="ProductFacilityLocation Quantity Test View Entity">
@@ -2849,6 +2852,7 @@ under the License.
     <entity entity-name="ProductAssoc"
             package-name="org.apache.ofbiz.product.product"
             title="Product Association Entity">
+      <field name="productAssocId" type="id"></field>
       <field name="productId" type="id"></field>
       <field name="productIdTo" type="id"></field>
       <field name="productAssocTypeId" type="id"></field>
@@ -2862,10 +2866,11 @@ under the License.
       <field name="routingWorkEffortId" type="id"></field>
       <field name="estimateCalcMethod" type="id"></field>
       <field name="recurrenceInfoId" type="id"></field>
-      <prim-key field="productId"/>
-      <prim-key field="productIdTo"/>
-      <prim-key field="productAssocTypeId"/>
-      <prim-key field="fromDate"/>
+<!--      <prim-key field="productId"/>-->
+<!--      <prim-key field="productIdTo"/>-->
+<!--      <prim-key field="productAssocTypeId"/>-->
+<!--      <prim-key field="fromDate"/>-->
+      <prim-key field="productAssocId"/>
       <relation type="one" fk-name="PROD_ASSOC_TYPE" rel-entity-name="ProductAssocType">
         <key-map field-name="productAssocTypeId"/>
       </relation>
