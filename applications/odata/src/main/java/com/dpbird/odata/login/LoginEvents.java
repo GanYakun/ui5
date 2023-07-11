@@ -46,6 +46,11 @@ public class LoginEvents {
         if (serviceMap == null) {
             userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
             request.setAttribute("userLogin", userLogin);
+            GenericValue organization = getOrganization(delegator, userLogin);
+            if (UtilValidate.isNotEmpty(organization)) {
+                request.setAttribute("company", organization);
+                httpSession.setAttribute("company", organization);
+            }
             return "success";
         } else if (UtilValidate.isNotEmpty(serviceMap.get("login.username"))) {
             //Compatible with tel login and externalId login
