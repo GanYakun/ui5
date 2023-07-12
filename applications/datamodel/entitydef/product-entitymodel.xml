@@ -1256,7 +1256,7 @@ under the License.
         <field name="aisleId" type="id"></field>
         <field name="sectionId" type="id"></field>
         <field name="levelId" type="id"></field>
-        <field name="positionId" type="id"></field>
+        <field name="positionId" type="numeric"></field>
         <field name="geoPointId" type="id"></field>      
         <prim-key field="facilityLocationId"/>
         <relation type="one" fk-name="FACILITY_LOC_FAC" rel-entity-name="Facility">
