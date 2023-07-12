@@ -928,12 +928,16 @@ under the License.
         <field name="containerTypeId" type="id"></field>
         <field name="facilityId" type="id"></field>
         <field name="description" type="description"></field>
+        <field name="facilityLocationId" type="id"></field>
         <prim-key field="containerId"/>
         <relation type="one" fk-name="CONTAINER_CTTYP" rel-entity-name="ContainerType">
             <key-map field-name="containerTypeId"/>
         </relation>
         <relation type="one" fk-name="CONTAINER_FACILITY" rel-entity-name="Facility">
             <key-map field-name="facilityId"/>
+        </relation>
+        <relation type="one" fk-name="CONTAINER_FACILITY_LOCATION" rel-entity-name="FacilityLocation">
+            <key-map field-name="facilityLocationId"/>
         </relation>
     </entity>
     <entity entity-name="ContainerType" package-name="org.apache.ofbiz.product.facility" title="Container Type Entity">
