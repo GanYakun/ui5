@@ -1406,14 +1406,14 @@ under the License.
         </relation>
     </entity>
     <entity entity-name="ProductFacility" package-name="org.apache.ofbiz.product.facility" title="Product Facility Entity">
+        <field name="productFacilityId" type="id"></field>
         <field name="productId" type="id"></field>
         <field name="facilityId" type="id"></field>
         <field name="minimumStock" type="fixed-point"></field>
         <field name="reorderQuantity" type="fixed-point"></field>
         <field name="daysToShip" type="numeric"></field>
         <field name="lastInventoryCount" type="fixed-point"><description>This field represents availableToPromiseTotal of a product at a certain point of time and is being updated regularly by a schedule service every hour</description></field>
-        <prim-key field="productId"/>
-        <prim-key field="facilityId"/>
+        <prim-key field="productFacilityId"/>
         <relation type="one" fk-name="PROD_FAC_PROD" rel-entity-name="Product">
             <key-map field-name="productId"/>
         </relation>
