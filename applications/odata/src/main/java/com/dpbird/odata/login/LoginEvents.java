@@ -85,11 +85,13 @@ public class LoginEvents {
     }
 
     private static GenericValue getOrganization(Delegator delegator, GenericValue userLogin) throws GenericEntityException {
-        String partyId = userLogin.getString("partyId");
-        GenericValue organizationRelation = EntityQuery.use(delegator).from("PartyRelationship")
-                .where("roleTypeIdFrom", "ORGANIZATION_UNIT", "partyIdTo", partyId).queryFirst();
-        if (UtilValidate.isNotEmpty(organizationRelation)) {
-            return organizationRelation.getRelatedOne("FromParty", false);
+        if (UtilValidate.isNotEmpty(userLogin)) {
+            String partyId = userLogin.getString("partyId");
+            GenericValue organizationRelation = EntityQuery.use(delegator).from("PartyRelationship")
+                    .where("roleTypeIdFrom", "ORGANIZATION_UNIT", "partyIdTo", partyId).queryFirst();
+            if (UtilValidate.isNotEmpty(organizationRelation)) {
+                return organizationRelation.getRelatedOne("FromParty", false);
+            }
         }
         return null;
     }
