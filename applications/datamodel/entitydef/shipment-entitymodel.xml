@@ -310,10 +310,10 @@ under the License.
       <relation type="one" fk-name="PCKLST_RLE_PKLT" rel-entity-name="Picklist">
         <key-map field-name="picklistId"/>
       </relation>
-      <relation type="one" fk-name="PCKLST_RLE_PRLE" rel-entity-name="PartyRole">
-        <key-map field-name="partyId"/>
-        <key-map field-name="roleTypeId"/>
-      </relation>
+<!--      <relation type="one" fk-name="PCKLST_RLE_PRLE" rel-entity-name="PartyRole">-->
+<!--        <key-map field-name="partyId"/>-->
+<!--        <key-map field-name="roleTypeId"/>-->
+<!--      </relation>-->
       <relation type="one-nofk" rel-entity-name="RoleType">
         <key-map field-name="roleTypeId"/>
       </relation>
