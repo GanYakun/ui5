@@ -9746,8 +9746,8 @@
         <value xml:lang="ru">Отклонен</value>
         <value xml:lang="th">ปฏิเสธ</value>
         <value xml:lang="vi">Từ chối</value>
-        <value xml:lang="zh">已拒绝</value>
-        <value xml:lang="zh-TW">已拒絕</value>
+        <value xml:lang="zh">审批不通过</value>
+        <value xml:lang="zh-TW">审批不通过</value>
     </property>
     <property key="StatusItem.description.CRQ_REVIEWED">
         <value xml:lang="ar">تم مراجعتها</value>
