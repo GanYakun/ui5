@@ -12379,8 +12379,8 @@
         <value xml:lang="ru">Получена</value>
         <value xml:lang="th">ยอมรับ</value>
         <value xml:lang="vi">Đã nhận</value>
-        <value xml:lang="zh">已收讫</value>
-        <value xml:lang="zh-TW">已收訖</value>
+        <value xml:lang="zh">已签收</value>
+        <value xml:lang="zh-TW">已签收</value>
     </property>
     <property key="StatusItem.description.PURCH_SHIP_SHIPPED">
         <value xml:lang="de">Versandt</value>
