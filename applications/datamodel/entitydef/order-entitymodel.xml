@@ -1947,15 +1947,17 @@ under the License.
     <entity entity-name="CustRequestParty"
             package-name="org.apache.ofbiz.order.request"
             title="Customer Request Role Entity">
+      <field name="custRequestPartyId" type="id"></field>
       <field name="custRequestId" type="id"></field>
       <field name="partyId" type="id"></field>
       <field name="roleTypeId" type="id"></field>
       <field name="fromDate" type="date-time"></field>
       <field name="thruDate" type="date-time"></field>
-      <prim-key field="custRequestId"/>
-      <prim-key field="partyId"/>
-      <prim-key field="roleTypeId"/>
-      <prim-key field="fromDate"/>
+      <prim-key field="custRequestPartyId"/>
+<!--      <prim-key field="custRequestId"/>-->
+<!--      <prim-key field="partyId"/>-->
+<!--      <prim-key field="roleTypeId"/>-->
+<!--      <prim-key field="fromDate"/>-->
       <relation type="one" fk-name="CREQ_RL_CRQST" rel-entity-name="CustRequest">
         <key-map field-name="custRequestId"/>
       </relation>
