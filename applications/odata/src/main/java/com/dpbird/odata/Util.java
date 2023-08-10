@@ -1982,9 +1982,9 @@ public class Util {
         return entityCondition;
     }
 
-    public static Entity addEntitySetConditionToEntity(Delegator delegator, OfbizCsdlEntitySet navigationBindingEntitySet, Entity entityToWrite, GenericValue userLogin) {
+    public static Entity addEntitySetConditionToEntity(Delegator delegator, OfbizCsdlEntitySet navigationBindingEntitySet, Entity entityToWrite, GenericValue userLogin, HttpServletRequest request) {
 //		Map<String, Object> conditionMap = navigationBindingEntitySet.getConditionMap();
-        Map<String, Object> conditionMap = parseConditionMap(navigationBindingEntitySet.getConditionStr(), userLogin);
+        Map<String, Object> conditionMap = parseConditionMap(navigationBindingEntitySet.getConditionStr(), request);
         if (UtilValidate.isEmpty(conditionMap)) {
             return entityToWrite;
         }
@@ -2000,7 +2000,7 @@ public class Util {
         return entityToWrite;
     }
 
-    public static EntityCondition parseEntityCondition(String conditionStr, GenericValue userLogin) {
+    public static EntityCondition parseEntityCondition(String conditionStr, HttpServletRequest request) {
         if (conditionStr == null) {
             return null;
         }
@@ -2026,7 +2026,7 @@ public class Util {
                     String key = keyValue[0].trim();
                     String valueStr = keyValue[1].trim();
                     String realValue = "null".equals(valueStr) ?
-                            null : (String) parseVariable(valueStr, userLogin);
+                            null : (String) parseVariable(valueStr, request);
                     entityCondition = EntityCondition.makeCondition(key, EntityOperator.NOT_EQUAL, realValue);
                 }
             } else if (expression.contains("=")) {
@@ -2035,7 +2035,7 @@ public class Util {
                     String key = keyValue[0].trim();
                     String valueStr = keyValue[1].trim();
                     String realValue = "null".equals(valueStr) ?
-                            null : (String) parseVariable(valueStr, userLogin);
+                            null : (String) parseVariable(valueStr, request);
                     entityCondition = EntityCondition.makeCondition(key, realValue);
                 }
             } else if (expression.contains(" not in ")) {
@@ -2062,20 +2062,21 @@ public class Util {
         return new EntityConditionList<>(entityConditionList, operator);
     }
 
-    public static Object parseVariable(Object valueObj, GenericValue object) {
+    public static Object parseVariable(Object valueObj, HttpServletRequest request) {
         if (valueObj.toString().contains("${")) {
-            if (object == null) {
+            String strValue = valueObj.toString();
+            GenericValue genericValue = (GenericValue) request.getAttribute(strValue.substring(2, strValue.indexOf('.')));
+            if (genericValue == null) {
                 return valueObj;
             }
-            String strValue = valueObj.toString();
             String valueField = strValue.substring(strValue.indexOf('.') + 1, strValue.length() - 1);
-            return object.get(valueField);
+            return genericValue.get(valueField);
         } else {
             return valueObj;
         }
     }
 
-    public static Map<String, Object> parseConditionMap(String conditionStr, GenericValue userLogin) {
+    public static Map<String, Object> parseConditionMap(String conditionStr, HttpServletRequest request) {
         Map<String, Object> conditionMap = new HashMap<>();
         if (conditionStr == null) {
             return conditionMap;
@@ -2093,7 +2094,7 @@ public class Util {
                 if (UtilValidate.isNotEmpty(keyValue)) {
                     String key = keyValue[0].trim();
                     String valueStr = keyValue[1].trim();
-                    String realValue = (String) parseVariable(valueStr, userLogin);
+                    String realValue = (String) parseVariable(valueStr, request);
                     conditionMap.put(key, realValue);
                 }
             } else {
@@ -2694,22 +2695,49 @@ public class Util {
      *
      * @param packageName 要扫描的包名
      * @param annotation 要扫描的注解
-     * @param implInterface 实现接口
      * @return 所有匹配的Class
      */
-    public static List<Class<?>> getClassesWithAnnotation(String packageName, Class<? extends Annotation> annotation, Class<?> implInterface) {
+    public static Set<Class<?>> getClassesWithAnnotation(String packageName, Class<? extends Annotation> annotation) {
         List<Class<?>> result = new ArrayList<>();
         Reflections reflections = new Reflections(packageName);
-        Set<Class<?>> typesAnnotatedWith = reflections.getTypesAnnotatedWith(annotation);
-        for (Class<?> aClass : typesAnnotatedWith) {
-            if (UtilValidate.isNotEmpty(implInterface)) {
-                boolean assignableFrom = implInterface.isAssignableFrom(aClass);
-                if (assignableFrom) {
-                    result.add(aClass);
-                }
-            }
+        return reflections.getTypesAnnotatedWith(annotation);
+//        for (Class<?> aClass : typesAnnotatedWith) {
+//            if (UtilValidate.isNotEmpty(implInterface)) {
+//                boolean assignableFrom = implInterface.isAssignableFrom(aClass);
+//                if (assignableFrom) {
+//                    result.add(aClass);
+//                }
+//            }
+//        }
+//        return result;
+    }
+
+    /**
+     * 解析异常
+     */
+    public static Throwable getOriginalException(Throwable throwable) {
+        if (throwable.getCause() != null) {
+            return getOriginalException(throwable.getCause());
         }
-        return result;
+        return throwable;
+    }
+
+    public static int getTopOption(Map<String, QueryOption> queryOptions) {
+        if (UtilValidate.isNotEmpty(queryOptions)
+                && queryOptions.get("topOption") != null
+                && ((TopOption) queryOptions.get("topOption")).getValue() > 0) {
+            return ((TopOption) queryOptions.get("topOption")).getValue();
+        }
+        return OfbizOdataProcessor.MAX_ROWS;
+    }
+
+    public static int getSkipOption(Map<String, QueryOption> queryOptions) {
+        if (UtilValidate.isNotEmpty(queryOptions)
+                && queryOptions.get("skipOption") != null
+                && ((SkipOption) queryOptions.get("skipOption")).getValue() > 0) {
+            return ((SkipOption) queryOptions.get("skipOption")).getValue();
+        }
+        return 0;
     }
 
 }

@@ -20,6 +20,7 @@ import org.apache.olingo.commons.api.edm.EdmBindingTarget;
 import org.apache.olingo.commons.api.edm.EdmEntityType;
 import org.apache.olingo.commons.api.edm.EdmNavigationProperty;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
+import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.server.api.uri.queryoption.QueryOption;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,11 +62,15 @@ public class DefaultEntityHandler implements EntityHandler {
             EdmEntityType edmEntityType = (EdmEntityType) navigationParam.get("edmEntityType");
             EdmNavigationProperty edmNavigationProperty = (EdmNavigationProperty) navigationParam.get("edmNavigationProperty");
             Map<String, Object> edmParam = UtilMisc.toMap("edmEntityType", edmEntityType);
-            OdataReader reader = new OdataReader(odataContext, new HashMap<>(), edmParam);
-            List<GenericValue> relatedList = reader.findRelatedGenericValue(entity, edmNavigationProperty, primaryKeyCond);
-            if (UtilValidate.isNotEmpty(relatedList)) {
-                handlerResults = new HandlerResults(relatedList.size(), relatedList);
+            //先根据relations查询
+            OdataReader odataReader = new OdataReader(odataContext, new HashMap<>(), edmParam);
+            List<GenericValue> relatedList = odataReader.findRelatedGenericValue(entity, edmNavigationProperty, primaryKeyCond);
+            if (UtilValidate.isEmpty(relatedList)) {
+                return new HandlerResults();
             }
+            //根据odata Options查询
+            OdataReader optionReader = new OdataReader(odataContext, queryOptions, UtilMisc.toMap("edmEntityType", edmNavigationProperty.getType()));
+            handlerResults = optionReader.ofbizFindList(Util.getGenericValuesQueryCond(relatedList));
         }
         return handlerResults;
     }
@@ -92,20 +97,20 @@ public class DefaultEntityHandler implements EntityHandler {
             if (UtilValidate.isNotEmpty(csdlEntityType.getBaseType())) {
                 OfbizCsdlEntityType baseCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(csdlEntityType.getBaseTypeFQN());
                 GenericValue baseGenericValue = OdataProcessorHelper.createGenericValue(dispatcher, delegator, baseCsdlEntityType,
-                        entityToWrite, edmProvider, userLogin);
+                        entityToWrite, edmProvider, userLogin, httpServletRequest);
                 //创建之后把主键传递给Derived
                 Util.addBasePrimaryKey(dispatcher, edmProvider, baseCsdlEntityType, baseGenericValue, entityToWrite);
             }
             //创建
             genericValue = OdataProcessorHelper.createGenericValue(dispatcher, delegator, csdlEntityType,
-                    entityToWrite, edmProvider, userLogin);
+                    entityToWrite, edmProvider, userLogin, httpServletRequest);
             if (csdlEntityType.isHasDerivedEntity()) {
                 Util.addBasePrimaryKey(dispatcher, edmProvider, csdlEntityType, genericValue, entityToWrite);
                 //如果有Derived创建DerivedType.
                 FullQualifiedName qualifiedName = new FullQualifiedName(entityToWrite.getType());
                 OfbizCsdlEntityType derivedCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(qualifiedName);
                 OdataProcessorHelper.createGenericValue(dispatcher, delegator, derivedCsdlEntityType,
-                        entityToWrite, edmProvider, userLogin);
+                        entityToWrite, edmProvider, userLogin, httpServletRequest);
             }
 
             OdataOfbizEntity entityCreated = OdataProcessorHelper.genericValueToEntity(dispatcher, edmProvider, edmBindingTarget, edmBindingTarget.getEntityType(), genericValue, locale);
@@ -123,13 +128,13 @@ public class DefaultEntityHandler implements EntityHandler {
             OfbizCsdlEntityType entityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmEntityType.getFullQualifiedName());
             OfbizCsdlNavigationProperty navigationProperty = (OfbizCsdlNavigationProperty) entityType.getNavigationProperty(edmNavigationProperty.getName());
             OfbizCsdlEntityType navCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(navigationProperty.getTypeFQN());
-            genericValue = OdataProcessorHelper.createRelatedGenericValue(entityToWrite, entity, navigationProperty.getRelAlias(), navCsdlEntityType, edmProvider, dispatcher, delegator, userLogin);
+            genericValue = OdataProcessorHelper.createRelatedGenericValue(entityToWrite, entity, navigationProperty.getRelAlias(), navCsdlEntityType, edmProvider, dispatcher, delegator, userLogin, httpServletRequest);
             if (navCsdlEntityType.isHasDerivedEntity()) {
                 //创建DerivedEntity
                 FullQualifiedName qualifiedName = new FullQualifiedName(entityToWrite.getType());
                 Util.addBasePrimaryKey(dispatcher, edmProvider, navCsdlEntityType, genericValue, entityToWrite);
                 OfbizCsdlEntityType derivedCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(qualifiedName);
-                OdataProcessorHelper.createGenericValue(dispatcher, delegator, derivedCsdlEntityType, entityToWrite, edmProvider, userLogin);
+                OdataProcessorHelper.createGenericValue(dispatcher, delegator, derivedCsdlEntityType, entityToWrite, edmProvider, userLogin,httpServletRequest);
             }
             //创建Attribute
             if (navCsdlEntityType.getAttrEntityName() != null || navCsdlEntityType.getAttrNumericEntityName() != null || navCsdlEntityType.getAttrDateEntityName() != null) {
