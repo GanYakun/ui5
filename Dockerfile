@@ -15,6 +15,5 @@ WORKDIR /root/ofbiz
 
 RUN ["chmod", "+x", "/root/ofbiz/startofbiz.sh"]
 
-RUN ["/root/ofbiz/startofbiz.sh"]
+ENTRYPOINT ["/root/ofbiz/startofbiz.sh"]
 
-ENTRYPOINT ["java -Xms128M -Xmx512M -Dfile.encoding=UTF-8 -Duser.country=CN -Duser.language=en -Duser.variant -cp ./build/libs/ofbiz.jar org.apache.ofbiz.base.start.Start"]
