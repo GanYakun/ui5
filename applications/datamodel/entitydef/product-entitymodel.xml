@@ -1941,11 +1941,11 @@ under the License.
         <key-map field-name="facilityId"/>
         <key-map field-name="locationSeqId"/>
       </relation>
-      <relation type="one-nofk" rel-entity-name="ProductFacilityLocation">
-        <key-map field-name="productId"/>
-        <key-map field-name="facilityId"/>
-        <key-map field-name="locationSeqId"/>
-      </relation>
+<!--      <relation type="one-nofk" rel-entity-name="ProductFacilityLocation">-->
+<!--        <key-map field-name="productId"/>-->
+<!--        <key-map field-name="facilityId"/>-->
+<!--        <key-map field-name="locationSeqId"/>-->
+<!--      </relation>-->
       <relation type="one" fk-name="INV_ITEM_UOM" rel-entity-name="Uom">
         <key-map field-name="uomId"/>
       </relation>
