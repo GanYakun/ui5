@@ -13,6 +13,10 @@ ENV JAVA_HOME=/root/jdk1.8.0_351 \
 COPY ./ /root/ofbiz/
 WORKDIR /root/ofbiz
 
+RUN find /root/ofbiz/applications  -type d -name "src" -exec rm -r {} +
+
+RUN find /root/ofbiz/framework  -type d -name "src" -exec rm -r {} +
+
 RUN ["chmod", "+x", "/root/ofbiz/startofbiz.sh"]
 
 ENTRYPOINT ["/root/ofbiz/startofbiz.sh"]
