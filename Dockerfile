@@ -1,4 +1,4 @@
-FROM registry.cn-hangzhou.aliyuncs.com/banff/ubuntujava8:20.04
+FROM registry.cn-hangzhou.aliyuncs.com/banff/ubuntujava8:20.04-ningbomat
 # FROM ubuntujava8:latest
 
 
