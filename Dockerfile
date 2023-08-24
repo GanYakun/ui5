@@ -16,3 +16,4 @@ WORKDIR /root/ofbiz
 RUN ["chmod", "+x", "/root/ofbiz/startofbiz.sh"]
 
 ENTRYPOINT ["/root/ofbiz/startofbiz.sh"]
+
