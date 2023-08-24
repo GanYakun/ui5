@@ -335,13 +335,6 @@ public class EdmConfigLoader {
         List<CsdlExpression> csdlExpressions = new ArrayList<>();
         List<String> displayOnlyParameters = valueList.getParameterDisplayOnly();
         CsdlRecord parameterRecord;
-        for (String displayOnlyParameter : displayOnlyParameters) {
-            parameterRecord = new CsdlRecord();
-            parameterRecord.setType("Common.ValueListParameterDisplayOnly");
-            CsdlPropertyValue parameterPropertyValue = createPropertyValueString("ValueListProperty", displayOnlyParameter);
-            parameterRecord.setPropertyValues(UtilMisc.toList(parameterPropertyValue));
-            csdlExpressions.add(parameterRecord);
-        }
         List<ValueList.Parameter> parameters = valueList.getParameters();
         if (UtilValidate.isNotEmpty(parameters)) {
             //指定了Parameter
@@ -383,8 +376,13 @@ public class EdmConfigLoader {
                 }
             }
         }
-
-
+        for (String displayOnlyParameter : displayOnlyParameters) {
+            parameterRecord = new CsdlRecord();
+            parameterRecord.setType("Common.ValueListParameterDisplayOnly");
+            CsdlPropertyValue parameterPropertyValue = createPropertyValueString("ValueListProperty", displayOnlyParameter);
+            parameterRecord.setPropertyValues(UtilMisc.toList(parameterPropertyValue));
+            csdlExpressions.add(parameterRecord);
+        }
         csdlCollection.setItems(csdlExpressions);
         propertyValue.setValue(csdlCollection);
         propertyValues.add(propertyValue);
@@ -912,6 +910,13 @@ public class EdmConfigLoader {
         if (UtilValidate.isNotEmpty(insertRequireAttr)) {
             insertRequireProperties.addAll(Arrays.asList(insertRequireAttr.split(",")));
         }
+        List<String> defaultOrderByProperties = new ArrayList<>();
+        String orderby = entityTypeElement.getAttribute("Orderby");
+        if (UtilValidate.isNotEmpty(orderby)) {
+            List<String> orderbyProperties = Arrays.stream(orderby.split(","))
+                    .map(element -> element + " NULLS LAST").collect(Collectors.toList());
+            defaultOrderByProperties.addAll(orderbyProperties);
+        }
         List<String> excludeProperties = new ArrayList<>();
         FullQualifiedName fullQualifiedName = new FullQualifiedName(OfbizMapOdata.NAMESPACE, name);
         List<? extends Element> entityTypeChildren = UtilXml.childElementList(entityTypeElement);
@@ -1005,6 +1010,7 @@ public class EdmConfigLoader {
         csdlEntityType.setActionList(actionList);
         csdlEntityType.setFunctionList(functionList);
         csdlEntityType.setInsertRequireProperties(insertRequireProperties);
+        csdlEntityType.setDefaultOrderByProperties(defaultOrderByProperties);
         return csdlEntityType;
     }
 
@@ -1557,6 +1563,8 @@ public class EdmConfigLoader {
         String defaultValue = propertyElement.getAttribute("DefaultValue");
         String autoValue = propertyElement.getAttribute("AutoValue");
         String fileNamePath = propertyElement.getAttribute("FileNamePath");
+        String only = propertyElement.getAttribute("Only");
+        String required = propertyElement.getAttribute("Required");
         // attribute for annotation
         String label = propertyElement.getAttribute("Label");
         if (UtilValidate.isNotEmpty(label) && label.startsWith("${uiLabelMap.")) {
@@ -1669,6 +1677,12 @@ public class EdmConfigLoader {
         }
         if (UtilValidate.isNotEmpty(fileNamePath)) {
             property.setFileNamePath(fileNamePath);
+        }
+        if (UtilValidate.isNotEmpty(only)) {
+            property.setOnly(Boolean.valueOf(only));
+        }
+        if (UtilValidate.isNotEmpty(required)) {
+            property.setRequired(Boolean.valueOf(required));
         }
         List<? extends Element> propertyChildren = UtilXml.childElementList(propertyElement);
         List<CsdlAnnotation> annotations = new ArrayList<>();
@@ -1890,6 +1904,7 @@ public class EdmConfigLoader {
         String name = parameterElement.getAttribute("Name");
         String type = parameterElement.getAttribute("Type");
         String precision = parameterElement.getAttribute("Precision");
+        String scale = parameterElement.getAttribute("Scale");
         String nullable = parameterElement.getAttribute("Nullable");
         String isCollection = parameterElement.getAttribute("IsCollection");
         FullQualifiedName paramFullQualifiedName;
@@ -1904,6 +1919,9 @@ public class EdmConfigLoader {
         parameter.setName(name);
         if (UtilValidate.isNotEmpty(precision)) {
             parameter.setPrecision(Integer.valueOf(precision));
+        }
+        if (UtilValidate.isNotEmpty(scale)) {
+            parameter.setScale(Integer.valueOf(scale));
         }
         parameter.setNullable(!"false".equals(nullable));
         parameter.setCollection("true".equals(isCollection));
