@@ -4,6 +4,7 @@ import com.dpbird.odata.*;
 import com.dpbird.odata.edm.OdataOfbizEntity;
 import com.dpbird.odata.edm.OfbizCsdlEntityType;
 import com.dpbird.odata.edm.OfbizCsdlNavigationProperty;
+import com.dpbird.odata.validation.CheckEntityPermission;
 import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilGenerics;
 import org.apache.ofbiz.base.util.UtilMisc;
@@ -40,6 +41,7 @@ public class DefaultEntityHandler implements EntityHandler {
                                    Map<String, QueryOption> queryOptions, Map<String, Object> navigationParam) throws OfbizODataException {
         //普通的查询
         if (UtilValidate.isEmpty(navigationParam)) {
+            CheckEntityPermission.checkPermission(odataContext, edmBindingTarget);
             OdataReader reader = new OdataReader(odataContext, queryOptions, UtilMisc.toMap("edmBindingTarget", edmBindingTarget));
             EntityCondition entityCondition = UtilValidate.isNotEmpty(primaryKey) ? EntityCondition.makeCondition(primaryKey) : null;
             return reader.ofbizFindList(entityCondition);

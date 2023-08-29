@@ -762,5 +762,18 @@ under the License.
         </relation>
     </entity>
 
+    <entity entity-name="EntitySetPermission"
+            package-name="com.dpbird.odata"
+            title="EntitySet permissions">
+        <field name="appId" type="id"/>
+        <field name="entitySetName" type="id"/>
+        <field name="permissionId" type="id"/>
+        <prim-key field="appId"/>
+        <prim-key field="entitySetName"/>
+        <relation type="one" fk-name="ENTITY_SET_PERMISSION_PER" rel-entity-name="SecurityPermission">
+            <key-map field-name="permissionId"/>
+        </relation>
+    </entity>
+
 
 </entitymodel>
