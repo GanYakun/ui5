@@ -153,16 +153,6 @@ public class AppOdataEvents {
         String componentName =  Util.getRequestComponentName(req);
         String componentPath =Util.getRequestComponentPath(req,componentName);
         GenericValue userLogin = (GenericValue) req.getAttribute("userLogin");
-        String propertyValue = EntityUtilProperties.getPropertyValue("odata.properties", "service.WorkEffort.create", delegator);
-        if (userLogin == null) {
-            try {
-                userLogin = delegator.findOne("UserLogin", true, UtilMisc.toMap("userLoginId", "admin"));
-                req.setAttribute("userLogin", userLogin);
-            } catch (GenericEntityException e) {
-                e.printStackTrace();
-                return "error";
-            }
-        }
         String reloadStr = req.getParameter("reload");
         try {
             Locale locale = Util.getLocale(req);

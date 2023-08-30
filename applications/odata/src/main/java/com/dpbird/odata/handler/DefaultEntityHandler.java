@@ -99,6 +99,7 @@ public class DefaultEntityHandler implements EntityHandler {
         OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmBindingTarget.getEntityType().getFullQualifiedName());
         GenericValue genericValue;
         if (UtilValidate.isEmpty(createParam)) {
+            CheckEntityPermission.checkPermission(odataContext, edmBindingTarget);
             //如果是有BaseType先创建BaseType.
             if (UtilValidate.isNotEmpty(csdlEntityType.getBaseType())) {
                 OfbizCsdlEntityType baseCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(csdlEntityType.getBaseTypeFQN());
@@ -169,6 +170,7 @@ public class DefaultEntityHandler implements EntityHandler {
             EdmNavigationProperty edmNavigationProperty = (EdmNavigationProperty) updateParam.get("edmNavigationProperty");
             csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmNavigationProperty.getType().getFullQualifiedName());
         } else {
+            CheckEntityPermission.checkPermission(odataContext, edmBindingTarget);
             csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmBindingTarget.getEntityType().getFullQualifiedName());
         }
         if (delegator.getModelEntity(csdlEntityType.getOfbizEntity()).isField("lastModifiedDate")) {
