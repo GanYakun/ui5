@@ -54,6 +54,11 @@ under the License.
         <value xml:lang="zh">草稿丢失或已经被保存</value>
         <value xml:lang="zh-TW">草稿丢失或已经被保存</value>
     </property>
+    <property key="verifyMsg.auth.NO_ACCESS">
+        <value xml:lang="en">No access</value>
+        <value xml:lang="zh">没有访问权限</value>
+        <value xml:lang="zh-TW">没有访问权限</value>
+    </property>
 
 	<!-- Order -->
     <property key="OrderCreatedBy">
