@@ -137,7 +137,7 @@ under the License.
       <field name="fromDate" type="date-time"></field>
       <field name="runtimeDataId" type="id"></field>
       <prim-key field="applicationId"/>
-      <relation type="one" fk-name="APP_SNDBX_WEPA" rel-entity-name="WorkEffortPartyAssignment">
+      <relation type="one-nofk" fk-name="APP_SNDBX_WEPA" rel-entity-name="WorkEffortPartyAssignment">
         <key-map field-name="workEffortId"/>
         <key-map field-name="partyId"/>
         <key-map field-name="roleTypeId"/>
@@ -679,6 +679,7 @@ under the License.
       </relation>
     </entity>
     <entity entity-name="WorkEffortPartyAssignment" package-name="org.apache.ofbiz.workeffort.workeffort" title="Work Effort Party Assignment Entity">
+      <field name="workEffortPartyAssignmentId" type="id"></field>
       <field name="workEffortId" type="id"></field>
       <field name="partyId" type="id"></field>
       <field name="roleTypeId" type="id"></field>
@@ -693,20 +694,17 @@ under the License.
       <field name="comments" type="comment"></field>
       <field name="mustRsvp" type="indicator"></field>
       <field name="availabilityStatusId" type="id"><description>Points to StatusItem value with statusTypeId="WEPA_AVAILABILITY"</description></field>
-      <prim-key field="workEffortId"/>
-      <prim-key field="partyId"/>
-      <prim-key field="roleTypeId"/>
-      <prim-key field="fromDate"/>
+      <prim-key field="workEffortPartyAssignmentId"/>
       <relation type="one" fk-name="WKEFF_PA_WE" rel-entity-name="WorkEffort">
         <key-map field-name="workEffortId"/>
       </relation>
       <relation type="one-nofk" rel-entity-name="Party">
         <key-map field-name="partyId"/>
       </relation>
-      <relation type="one" fk-name="WKEFF_PA_PRTY_ROLE" rel-entity-name="PartyRole">
-        <key-map field-name="partyId"/>
-        <key-map field-name="roleTypeId"/>
-      </relation>
+<!--      <relation type="one" fk-name="WKEFF_PA_PRTY_ROLE" rel-entity-name="PartyRole">-->
+<!--        <key-map field-name="partyId"/>-->
+<!--        <key-map field-name="roleTypeId"/>-->
+<!--      </relation>-->
       <relation type="one-nofk" rel-entity-name="RoleType">
         <key-map field-name="roleTypeId"/>
       </relation>
@@ -841,7 +839,6 @@ under the License.
     </entity>
     <entity entity-name="WorkEffortType"
             package-name="org.apache.ofbiz.workeffort.workeffort"
-            default-resource-name="WorkEffortEntityLabels"
             title="Work Effort Type Entity">
       <field name="workEffortTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>

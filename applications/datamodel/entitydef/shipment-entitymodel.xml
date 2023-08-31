@@ -175,69 +175,71 @@ under the License.
         <key-map field-name="statusId"/>
       </relation>
     </entity>
-    <view-entity entity-name="PicklistAndBinAndItem"
-            package-name="org.apache.ofbiz.shipment.picklist"
-            title="Picklist and PicklistBin and PicklistItem View Entity">
-      <member-entity entity-alias="PL" entity-name="Picklist"/>
-      <member-entity entity-alias="PLB" entity-name="PicklistBin"/>
-      <member-entity entity-alias="PLI" entity-name="PicklistItem"/>
-      <alias-all entity-alias="PL"/>
-      <alias-all entity-alias="PLB"/>
-      <alias-all entity-alias="PLI"/>
-      <view-link entity-alias="PL" rel-entity-alias="PLB">
-        <key-map field-name="picklistId"/>
-      </view-link>
-      <view-link entity-alias="PLB" rel-entity-alias="PLI">
-        <key-map field-name="picklistBinId"/>
-      </view-link>
-    </view-entity>
-    <view-entity entity-name="PicklistAndBin"
-                 package-name="org.apache.ofbiz.shipment.picklist"
-                 title="Picklist and PicklistBin View">
-      <member-entity entity-alias="PL" entity-name="Picklist"/>
-      <member-entity entity-alias="PLB" entity-name="PicklistBin"/>
-      <alias-all entity-alias="PL"/>
-      <alias-all entity-alias="PLB"/>
-      <view-link entity-alias="PL" rel-entity-alias="PLB">
-        <key-map field-name="picklistId"/>
-      </view-link>
-    </view-entity>
-    <entity entity-name="PicklistBin"
-            package-name="org.apache.ofbiz.shipment.picklist"
-            title="Picklist Entity">
-      <!-- The PicklistBin has its own ID to make it easy to put on the pack sheet of the picklist as a barcode, also so it can be moved to another picklist or bin location if necessary -->
-      <field name="picklistBinId" type="id"></field>
-      <field name="picklistId" type="id"></field>
-      <field name="binLocationNumber" type="numeric"></field>
-      <field name="primaryOrderId" type="id"></field>
-      <field name="primaryShipGroupSeqId" type="id"></field>
-      <prim-key field="picklistBinId"/>
-      <relation type="one" fk-name="PCKLST_BIN_PKLT" rel-entity-name="Picklist">
-        <key-map field-name="picklistId"/>
-      </relation>
-      <relation type="one-nofk" fk-name="PCKLST_BIN_OISG" title="Primary" rel-entity-name="OrderItemShipGroup">
-        <key-map field-name="primaryOrderId" rel-field-name="orderId"/>
-        <key-map field-name="primaryShipGroupSeqId" rel-field-name="shipGroupSeqId"/>
-      </relation>
-      <relation type="one-nofk" title="Primary" rel-entity-name="OrderHeader">
-        <key-map field-name="primaryOrderId" rel-field-name="orderId"/>
-      </relation>
-    </entity>
+<!--    <view-entity entity-name="PicklistAndBinAndItem"-->
+<!--            package-name="org.apache.ofbiz.shipment.picklist"-->
+<!--            title="Picklist and PicklistBin and PicklistItem View Entity">-->
+<!--      <member-entity entity-alias="PL" entity-name="Picklist"/>-->
+<!--      <member-entity entity-alias="PLB" entity-name="PicklistBin"/>-->
+<!--      <member-entity entity-alias="PLI" entity-name="PicklistItem"/>-->
+<!--      <alias-all entity-alias="PL"/>-->
+<!--      <alias-all entity-alias="PLB"/>-->
+<!--      <alias-all entity-alias="PLI"/>-->
+<!--      <view-link entity-alias="PL" rel-entity-alias="PLB">-->
+<!--        <key-map field-name="picklistId"/>-->
+<!--      </view-link>-->
+<!--      <view-link entity-alias="PLB" rel-entity-alias="PLI">-->
+<!--        <key-map field-name="picklistBinId"/>-->
+<!--      </view-link>-->
+<!--    </view-entity>-->
+<!--    <view-entity entity-name="PicklistAndBin"-->
+<!--                 package-name="org.apache.ofbiz.shipment.picklist"-->
+<!--                 title="Picklist and PicklistBin View">-->
+<!--      <member-entity entity-alias="PL" entity-name="Picklist"/>-->
+<!--      <member-entity entity-alias="PLB" entity-name="PicklistBin"/>-->
+<!--      <alias-all entity-alias="PL"/>-->
+<!--      <alias-all entity-alias="PLB"/>-->
+<!--      <view-link entity-alias="PL" rel-entity-alias="PLB">-->
+<!--        <key-map field-name="picklistId"/>-->
+<!--      </view-link>-->
+<!--    </view-entity>-->
+<!--    <entity entity-name="PicklistBin"-->
+<!--            package-name="org.apache.ofbiz.shipment.picklist"-->
+<!--            title="Picklist Entity">-->
+<!--      &lt;!&ndash; The PicklistBin has its own ID to make it easy to put on the pack sheet of the picklist as a barcode, also so it can be moved to another picklist or bin location if necessary &ndash;&gt;-->
+<!--      <field name="picklistBinId" type="id"></field>-->
+<!--      <field name="picklistId" type="id"></field>-->
+<!--      <field name="binLocationNumber" type="numeric"></field>-->
+<!--      <field name="primaryOrderId" type="id"></field>-->
+<!--      <field name="primaryShipGroupSeqId" type="id"></field>-->
+<!--      <prim-key field="picklistBinId"/>-->
+<!--      <relation type="one" fk-name="PCKLST_BIN_PKLT" rel-entity-name="Picklist">-->
+<!--        <key-map field-name="picklistId"/>-->
+<!--      </relation>-->
+<!--      <relation type="one-nofk" fk-name="PCKLST_BIN_OISG" title="Primary" rel-entity-name="OrderItemShipGroup">-->
+<!--        <key-map field-name="primaryOrderId" rel-field-name="orderId"/>-->
+<!--        <key-map field-name="primaryShipGroupSeqId" rel-field-name="shipGroupSeqId"/>-->
+<!--      </relation>-->
+<!--      <relation type="one-nofk" title="Primary" rel-entity-name="OrderHeader">-->
+<!--        <key-map field-name="primaryOrderId" rel-field-name="orderId"/>-->
+<!--      </relation>-->
+<!--    </entity>-->
     <entity entity-name="PicklistItem"
             package-name="org.apache.ofbiz.shipment.picklist"
             title="Picklist Entity">
-      <field name="picklistBinId" type="id"></field>
+      <field name="picklistId" type="id"></field>
       <field name="picklistItemSeqId" type="id"></field>
       <field name="orderId" type="id"></field>
       <field name="orderItemSeqId" type="id"></field>
+      <field name="custRequestId" type="id"></field>
+      <field name="custRequestItemSeqId" type="id"></field>
       <field name="shipGroupSeqId" type="id"></field>
       <field name="inventoryItemId" type="id"></field>
       <field name="itemStatusId" type="id"></field>
       <field name="quantity" type="fixed-point"></field>
-      <prim-key field="picklistBinId"/>
+      <prim-key field="picklistId"/>
       <prim-key field="picklistItemSeqId"/>
-      <relation type="one" fk-name="PCKLST_ITM_BIN" rel-entity-name="PicklistBin">
-        <key-map field-name="picklistBinId"/>
+      <relation type="one" fk-name="PCKLST_ITM_PCKLST" rel-entity-name="Picklist">
+        <key-map field-name="picklistId"/>
       </relation>
       <relation type="one-nofk" rel-entity-name="OrderItemShipGroup">
         <key-map field-name="orderId"/>
@@ -249,6 +251,13 @@ under the License.
       </relation>
       <relation type="one-nofk" rel-entity-name="OrderHeader">
         <key-map field-name="orderId"/>
+      </relation>
+      <relation type="one-nofk" rel-entity-name="CustRequestItem">
+        <key-map field-name="custRequestId"/>
+        <key-map field-name="custRequestItemSeqId"/>
+      </relation>
+      <relation type="one-nofk" rel-entity-name="CustRequest">
+        <key-map field-name="custRequestId"/>
       </relation>
       <relation type="one" fk-name="PICKLST_ITM_STTS" rel-entity-name="StatusItem">
         <key-map field-name="itemStatusId" rel-field-name="statusId"/>
@@ -273,17 +282,17 @@ under the License.
         <key-map field-name="inventoryItemId"/>
       </relation>
     </entity>
-    <view-entity entity-name="PicklistItemAndBin"
-                 package-name="org.apache.ofbiz.shipment.picklist"
-                 title="Picklist Item and Bin View Entity">
-      <member-entity entity-alias="PB" entity-name="PicklistBin"/>
-      <member-entity entity-alias="PIM" entity-name="PicklistItem"/>
-      <alias-all entity-alias="PB"/>
-      <alias-all entity-alias="PIM"/>
-      <view-link entity-alias="PB" rel-entity-alias="PIM">
-        <key-map field-name="picklistBinId"/>
-      </view-link>
-    </view-entity>
+<!--    <view-entity entity-name="PicklistItemAndBin"-->
+<!--                 package-name="org.apache.ofbiz.shipment.picklist"-->
+<!--                 title="Picklist Item and Bin View Entity">-->
+<!--      <member-entity entity-alias="PB" entity-name="PicklistBin"/>-->
+<!--      <member-entity entity-alias="PIM" entity-name="PicklistItem"/>-->
+<!--      <alias-all entity-alias="PB"/>-->
+<!--      <alias-all entity-alias="PIM"/>-->
+<!--      <view-link entity-alias="PB" rel-entity-alias="PIM">-->
+<!--        <key-map field-name="picklistBinId"/>-->
+<!--      </view-link>-->
+<!--    </view-entity>-->
     <entity entity-name="PicklistRole"
             package-name="org.apache.ofbiz.shipment.picklist"
             title="Picklist Role Entity">
@@ -301,10 +310,10 @@ under the License.
       <relation type="one" fk-name="PCKLST_RLE_PKLT" rel-entity-name="Picklist">
         <key-map field-name="picklistId"/>
       </relation>
-      <relation type="one" fk-name="PCKLST_RLE_PRLE" rel-entity-name="PartyRole">
-        <key-map field-name="partyId"/>
-        <key-map field-name="roleTypeId"/>
-      </relation>
+<!--      <relation type="one" fk-name="PCKLST_RLE_PRLE" rel-entity-name="PartyRole">-->
+<!--        <key-map field-name="partyId"/>-->
+<!--        <key-map field-name="roleTypeId"/>-->
+<!--      </relation>-->
       <relation type="one-nofk" rel-entity-name="RoleType">
         <key-map field-name="roleTypeId"/>
       </relation>
@@ -570,7 +579,7 @@ under the License.
       <field name="primaryOrderId" type="id"></field>
       <field name="primaryReturnId" type="id"></field>
       <field name="primaryShipGroupSeqId" type="id"></field>
-      <field name="picklistBinId" type="id"></field>
+<!--      <field name="picklistBinId" type="id"></field>-->
       <field name="estimatedReadyDate" type="date-time"></field>
       <field name="estimatedShipDate" type="date-time"></field>
       <field name="estimatedShipWorkEffId" type="id"></field>
@@ -640,9 +649,9 @@ under the License.
       <relation type="one" fk-name="SHPMNT_PRTNHDR" title="Primary" rel-entity-name="ReturnHeader">
         <key-map field-name="primaryReturnId" rel-field-name="returnId"/>
       </relation>
-      <relation type="one" fk-name="SHPMNT_PKLSTBIN" rel-entity-name="PicklistBin">
-          <key-map field-name="picklistBinId"/>
-      </relation>
+<!--      <relation type="one" fk-name="SHPMNT_PKLSTBIN" rel-entity-name="PicklistBin">-->
+<!--          <key-map field-name="picklistBinId"/>-->
+<!--      </relation>-->
       <relation type="one-nofk" title="Primary" rel-entity-name="OrderItemShipGroup">
         <key-map field-name="primaryOrderId" rel-field-name="orderId"/>
         <key-map field-name="primaryShipGroupSeqId" rel-field-name="shipGroupSeqId"/>

@@ -1947,15 +1947,17 @@ under the License.
     <entity entity-name="CustRequestParty"
             package-name="org.apache.ofbiz.order.request"
             title="Customer Request Role Entity">
+      <field name="custRequestPartyId" type="id"></field>
       <field name="custRequestId" type="id"></field>
       <field name="partyId" type="id"></field>
       <field name="roleTypeId" type="id"></field>
       <field name="fromDate" type="date-time"></field>
       <field name="thruDate" type="date-time"></field>
-      <prim-key field="custRequestId"/>
-      <prim-key field="partyId"/>
-      <prim-key field="roleTypeId"/>
-      <prim-key field="fromDate"/>
+      <prim-key field="custRequestPartyId"/>
+<!--      <prim-key field="custRequestId"/>-->
+<!--      <prim-key field="partyId"/>-->
+<!--      <prim-key field="roleTypeId"/>-->
+<!--      <prim-key field="fromDate"/>-->
       <relation type="one" fk-name="CREQ_RL_CRQST" rel-entity-name="CustRequest">
         <key-map field-name="custRequestId"/>
       </relation>
@@ -1965,10 +1967,10 @@ under the License.
       <relation type="one-nofk" rel-entity-name="RoleType">
         <key-map field-name="roleTypeId"/>
       </relation>
-      <relation type="one" fk-name="CREQ_RL_PROLE" rel-entity-name="PartyRole">
-        <key-map field-name="partyId"/>
-        <key-map field-name="roleTypeId"/>
-      </relation>
+<!--      <relation type="one" fk-name="CREQ_RL_PROLE" rel-entity-name="PartyRole">-->
+<!--        <key-map field-name="partyId"/>-->
+<!--        <key-map field-name="roleTypeId"/>-->
+<!--      </relation>-->
     </entity>
     <entity entity-name="CustRequestStatus"
             package-name="org.apache.ofbiz.order.request"
@@ -2036,8 +2038,8 @@ under the License.
         title="Cust Request Work Effort Entity">
         <field name="custRequestId" type="id"></field>
         <field name="workEffortId" type="id"></field>
-        <prim-key field="custRequestId"/>
-        <prim-key field="workEffortId"/>
+        <field name="custRequestWorkEffortId" type="id"></field>
+        <prim-key field="custRequestWorkEffortId"/>
         <relation type="one" fk-name="CSTREQ_WF_CREQ" rel-entity-name="CustRequest">
             <key-map field-name="custRequestId"/>
         </relation>

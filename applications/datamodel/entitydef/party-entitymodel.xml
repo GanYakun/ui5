@@ -2252,6 +2252,7 @@ under the License.
     <entity entity-name="PartyRelationship"
             package-name="org.apache.ofbiz.party.party"
             title="Party Relationship Entity">
+      <field name="partyRelationshipId" type="id"></field>
       <field name="partyIdFrom" type="id"></field>
       <field name="partyIdTo" type="id"></field>
       <field name="roleTypeIdFrom" type="id"></field>
@@ -2268,11 +2269,12 @@ under the License.
       <field name="permissionsEnumId" type="id"></field>
       <field name="positionTitle" type="name"><description>The exact word used within the company</description></field>
       <field name="comments" type="comment"></field>
-      <prim-key field="partyIdFrom"/>
-      <prim-key field="partyIdTo"/>
-      <prim-key field="roleTypeIdFrom"/>
-      <prim-key field="roleTypeIdTo"/>
-      <prim-key field="fromDate"/>
+<!--      <prim-key field="partyIdFrom"/>-->
+<!--      <prim-key field="partyIdTo"/>-->
+<!--      <prim-key field="roleTypeIdFrom"/>-->
+<!--      <prim-key field="roleTypeIdTo"/>-->
+<!--      <prim-key field="fromDate"/>-->
+      <prim-key field="partyRelationshipId"/>
       <relation type="one-nofk" title="From" rel-entity-name="Party">
         <key-map field-name="partyIdFrom" rel-field-name="partyId"/>
       </relation>
