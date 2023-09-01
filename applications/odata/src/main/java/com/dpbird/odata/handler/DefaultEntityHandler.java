@@ -212,6 +212,7 @@ public class DefaultEntityHandler implements EntityHandler {
         GenericValue userLogin = (GenericValue) odataContext.get("userLogin");
         OfbizAppEdmProvider edmProvider = (OfbizAppEdmProvider) odataContext.get("edmProvider");
         if (UtilValidate.isEmpty(deleteParam)) {
+            CheckEntityPermission.checkPermission(odataContext, edmBindingTarget);
             //delete
             OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmBindingTarget.getEntityType().getFullQualifiedName());
             String serviceName = Util.getEntityActionService(csdlEntityType, csdlEntityType.getOfbizEntity(), "delete", delegator);
