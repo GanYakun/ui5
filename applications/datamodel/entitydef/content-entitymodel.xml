@@ -148,7 +148,6 @@ under the License.
 
     <entity entity-name="Content"
             package-name="org.apache.ofbiz.content.content"
-            default-resource-name="ContentEntityLabels"
             title="Content Entity">
       <field name="contentId" type="id"></field>
       <field name="contentTypeId" type="id"></field>
@@ -653,7 +652,6 @@ under the License.
     </entity>
     <entity entity-name="ContentType"
             package-name="org.apache.ofbiz.content.content"
-            default-resource-name="ContentEntityLabels"
             title="Content Type Entity">
       <field name="contentTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
