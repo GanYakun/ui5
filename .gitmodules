@@ -6,3 +6,7 @@
 	path = plugins/bfcommon
 	url = https://gitee.com/cloudlakenet/bfcommon.git
 	branch = master
+[submodule "plugins/bfui5"]
+	path = plugins/bfui5
+	url = https://gitee.com/cloudlakenet/gongsconfigbfui5.git
+	branch = master
