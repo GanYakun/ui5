@@ -1,0 +1,12 @@
+[submodule "plugins/gongsconfig"]
+	path = plugins/gongsconfig
+	url = https://gitee.com/cloudlakenet/gongsconfig.git
+	branch = master
+[submodule "plugins/bfui5"]
+	path = plugins/bfui5
+	url = https://gitee.com/cloudlakenet/bfui5.git
+	branch = gongsconfig
+[submodule "plugins/bfcommon"]
+	path = plugins/bfcommon
+	url = https://gitee.com/cloudlakenet/bfcommon.git
+	branch = master
