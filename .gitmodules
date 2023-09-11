@@ -10,3 +10,7 @@
 	path = plugins/bfui5
 	url = https://gitee.com/cloudlakenet/gongsconfigbfui5.git
 	branch = master
+[submodule "plugins/approvalflow"]
+	path = plugins/approvalflow
+	url = https://gitee.com/cloudlakenet/approvalflow.git
+	branch = master
