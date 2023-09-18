@@ -20,7 +20,6 @@ import org.apache.olingo.commons.api.edm.EdmBindingTarget;
 import org.apache.olingo.commons.api.edm.EdmEntityType;
 import org.apache.olingo.commons.api.edm.EdmNavigationProperty;
 import org.apache.olingo.commons.api.edm.FullQualifiedName;
-import org.apache.olingo.commons.api.edm.provider.CsdlEntityType;
 import org.apache.olingo.server.api.uri.queryoption.QueryOption;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,6 +59,7 @@ public class DefaultEntityHandler implements EntityHandler {
         } else if (navigationParam.containsKey("entity")) {
             OdataOfbizEntity entity = (OdataOfbizEntity) navigationParam.get("entity");
             EdmEntityType edmEntityType = (EdmEntityType) navigationParam.get("edmEntityType");
+            EdmBindingTarget mainEdmBindingTarget = (EdmBindingTarget) navigationParam.get("edmBindingTarget");
             EdmNavigationProperty edmNavigationProperty = (EdmNavigationProperty) navigationParam.get("edmNavigationProperty");
             Map<String, Object> edmParam = UtilMisc.toMap("edmEntityType", edmEntityType);
             //先根据relations查询
@@ -69,7 +69,11 @@ public class DefaultEntityHandler implements EntityHandler {
                 return new HandlerResults();
             }
             //根据odata Options查询
-            OdataReader optionReader = new OdataReader(odataContext, queryOptions, UtilMisc.toMap("edmEntityType", edmNavigationProperty.getType()));
+            EdmBindingTarget navEdmBindingTarget = null;
+            if (UtilValidate.isNotEmpty(mainEdmBindingTarget)) {
+                navEdmBindingTarget = Util.getNavigationTargetEntitySet(mainEdmBindingTarget, edmNavigationProperty);
+            }
+            OdataReader optionReader = new OdataReader(odataContext, queryOptions, UtilMisc.toMap("edmEntityType", edmNavigationProperty.getType(), "edmBindingTarget", navEdmBindingTarget));
             handlerResults = optionReader.ofbizFindList(Util.getGenericValuesQueryCond(relatedList));
         }
         return handlerResults;
@@ -171,16 +175,16 @@ public class DefaultEntityHandler implements EntityHandler {
         if (UtilValidate.isNotEmpty(csdlEntityType.getBaseType())) {
             //更新BaseType
             OfbizCsdlEntityType baseCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(csdlEntityType.getBaseTypeFQN());
-            OdataProcessorHelper.updateGenericValue(dispatcher, delegator, baseCsdlEntityType.getOfbizEntity(), primaryKey, fieldMapToWrite, baseCsdlEntityType, userLogin);
+            OdataProcessorHelper.updateGenericValue(dispatcher, delegator, baseCsdlEntityType.getOfbizEntity(), primaryKey, fieldMapToWrite, baseCsdlEntityType, userLogin, locale);
         }
         //更新实体
-        GenericValue genericValue = OdataProcessorHelper.updateGenericValue(dispatcher, delegator, csdlEntityType.getOfbizEntity(), primaryKey, fieldMapToWrite, csdlEntityType, userLogin);
+        GenericValue genericValue = OdataProcessorHelper.updateGenericValue(dispatcher, delegator, csdlEntityType.getOfbizEntity(), primaryKey, fieldMapToWrite, csdlEntityType, userLogin, locale);
         OdataOfbizEntity updatedEntity = OdataProcessorHelper.genericValueToEntity(dispatcher, edmProvider, csdlEntityType, genericValue, locale);
         if (csdlEntityType.isHasDerivedEntity()) {
             //更新DerivedType
             FullQualifiedName qualifiedName = new FullQualifiedName(entityToWrite.getType());
             OfbizCsdlEntityType derivedCsdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(qualifiedName);
-            OdataProcessorHelper.updateGenericValue(dispatcher, delegator, derivedCsdlEntityType.getOfbizEntity(), primaryKey, fieldMapToWrite, derivedCsdlEntityType, userLogin);
+            OdataProcessorHelper.updateGenericValue(dispatcher, delegator, derivedCsdlEntityType.getOfbizEntity(), primaryKey, fieldMapToWrite, derivedCsdlEntityType, userLogin, locale);
         }
         //更新Attribute
         if (UtilValidate.isNotEmpty(csdlEntityType.getAttrEntityName()) ||
@@ -202,6 +206,7 @@ public class DefaultEntityHandler implements EntityHandler {
         Delegator delegator = (Delegator) odataContext.get("delegator");
         LocalDispatcher dispatcher = (LocalDispatcher) odataContext.get("dispatcher");
         GenericValue userLogin = (GenericValue) odataContext.get("userLogin");
+        Locale locale = (Locale) odataContext.get("locale");
         OfbizAppEdmProvider edmProvider = (OfbizAppEdmProvider) odataContext.get("edmProvider");
         if (UtilValidate.isEmpty(deleteParam)) {
             //delete
@@ -216,7 +221,7 @@ public class DefaultEntityHandler implements EntityHandler {
                 dispatcher.runSync(serviceName, serviceParam);
             } catch (GenericServiceException e) {
                 e.printStackTrace();
-                throw new OfbizODataException(e.getMessage());
+                throw new OfbizODataException(Util.getExceptionMsg(e, locale));
             }
         } else {
             //多段式delete
@@ -227,14 +232,14 @@ public class DefaultEntityHandler implements EntityHandler {
             OfbizCsdlNavigationProperty navigationProperty = (OfbizCsdlNavigationProperty) entityType.getNavigationProperty(edmNavigationProperty.getName());
             if (navigationProperty.isCollection()) {
                 OdataOfbizEntity delEntity = (OdataOfbizEntity) entityToDelete;
-                OdataProcessorHelper.unbindNavigationLink(entity.getGenericValue(), delEntity.getGenericValue(), navigationProperty, dispatcher, userLogin);
+                OdataProcessorHelper.unbindNavigationLink(entity.getGenericValue(), delEntity.getGenericValue(), navigationProperty, dispatcher, userLogin, locale);
             } else {
                 //noCollection 如果主对象中存在外键 要先删除主对象的外键
                 ModelEntity modelEntity = delegator.getModelEntity(entityType.getOfbizEntity());
                 List<String> relations = navigationProperty.getRelAlias().getRelations();
                 if (relations.size() == 1) {
                     ModelRelation modelRelation = modelEntity.getRelation(relations.get(0));
-                    OdataProcessorHelper.removeGenericValueFK(dispatcher, delegator, entityType.getOfbizEntity(), entity.getKeyMap(), modelRelation, entityType, userLogin);
+                    OdataProcessorHelper.removeGenericValueFK(dispatcher, delegator, entityType.getOfbizEntity(), entity.getKeyMap(), modelRelation, entityType, userLogin, locale);
                 }
                 OdataProcessorHelper.clearNavigationLink(entity.getGenericValue(), navigationProperty.getRelAlias(), dispatcher, userLogin);
             }
