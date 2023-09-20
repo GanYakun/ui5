@@ -1061,7 +1061,10 @@ public class OfbizOdataProcessor {
             }
         } else {
             for (ExpandItem expandItem : expandItems) {
-                addAllExpandItem(entityList, expandItem, edmBindingTarget, edmEntityType);
+                for (Entity entity : entityList) {
+                    addExpandItem((OdataOfbizEntity) entity, expandItem, edmEntityType);
+                }
+//                addAllExpandItem(entityList, expandItem, edmBindingTarget, edmEntityType);
             }
         }
     }
