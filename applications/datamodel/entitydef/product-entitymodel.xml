@@ -4739,6 +4739,7 @@ under the License.
     <entity entity-name="SupplierProduct"
             package-name="org.apache.ofbiz.product.supplier"
             title="Supplier Product Entity">
+      <field name="supplierProductId" type="id"></field>
       <field name="productId" type="id"></field>
       <field name="partyId" type="id"></field>
       <field name="availableFromDate" type="date-time"></field>
@@ -4756,15 +4757,16 @@ under the License.
       <field name="shippingPrice" type="currency-precise"></field>
       <field name="currencyUomId" type="id"></field>
       <field name="supplierProductName" type="name"></field>
-      <field name="supplierProductId" type="id-long"></field>
+<!--      <field name="supplierProductId" type="id-long"></field>-->
       <field name="canDropShip" type="indicator"></field>
       <!-- field name="supplierCommissionPerc" type="fixed-point"><description>Unused field, better use commission run using agreements in accounting</description></field-->
       <field name="comments" type="comment"></field>
-      <prim-key field="productId"/>
-      <prim-key field="partyId"/>
-      <prim-key field="currencyUomId"/>
-      <prim-key field="minimumOrderQuantity"/>
-      <prim-key field="availableFromDate"/>
+      <prim-key field="supplierProductId"/>
+<!--      <prim-key field="productId"/>-->
+<!--      <prim-key field="partyId"/>-->
+<!--      <prim-key field="currencyUomId"/>-->
+<!--      <prim-key field="minimumOrderQuantity"/>-->
+<!--      <prim-key field="availableFromDate"/>-->
       <relation type="one" fk-name="SUPPL_PROD_PROD" rel-entity-name="Product">
         <key-map field-name="productId"/>
       </relation>
