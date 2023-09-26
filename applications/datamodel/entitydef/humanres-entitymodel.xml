@@ -443,6 +443,7 @@ under the License.
         <field name="fromDate" type="date-time"/>
         <field name="thruDate" type="date-time"/>
         <field name="approverPartyId" type="id"/>
+        <field name="statusId" type="id"/>
         <field name="leaveStatus" type="id"/>
         <field name="description" type="description"/>
         <prim-key field="emplLeaveId"/>
@@ -460,6 +461,9 @@ under the License.
         </relation>
         <relation type="one" fk-name="EMPL_LEAVE_STS" rel-entity-name="StatusItem">
             <key-map field-name="leaveStatus" rel-field-name="statusId"/>
+        </relation>
+        <relation type="one" fk-name="EMPL_STS" title="Current" rel-entity-name="StatusItem">
+            <key-map field-name="statusId"/>
         </relation>
     </entity>
     <entity entity-name="EmplLeaveType"
