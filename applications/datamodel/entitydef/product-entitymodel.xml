@@ -2126,9 +2126,6 @@ under the License.
       <alias entity-alias="IID" name="availableToPromiseTotal" field="availableToPromiseDiff" function="sum"/>
       <alias entity-alias="IID" name="quantityOnHandTotal" field="quantityOnHandDiff" function="sum"/>
       <alias entity-alias="IID" name="accountingQuantityTotal" field="accountingQuantityDiff" function="sum"/>
-      <alias entity-alias="IID" name="privateQuantityTotal" field="privateQuantityTotalDiff" function="sum"/>
-      <alias entity-alias="IID" name="averageUnitPrice" field="unitPrice" function="avg"/>
-      <alias entity-alias="IID" name="averageUnitPriceIncludeTax" field="unitPriceIncludeTax" function="avg"/>
     </view-entity>
     <view-entity entity-name="InventoryItemDetailForSum" package-name="org.apache.ofbiz.product.inventory"
         title="Inventory Item And Inventory Item Detail for Summation View Entity">
