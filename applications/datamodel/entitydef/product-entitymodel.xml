@@ -4178,15 +4178,17 @@ under the License.
             package-name="org.apache.ofbiz.product.store"
             title="Product Store Role Association Entity">
       <field name="partyId" type="id"></field>
+      <field name="productStoreRoleId" type="id"></field>
       <field name="roleTypeId" type="id"></field>
       <field name="productStoreId" type="id"></field>
       <field name="fromDate" type="date-time"></field>
       <field name="thruDate" type="date-time"></field>
       <field name="sequenceNum" type="numeric"></field>
-      <prim-key field="partyId"/>
-      <prim-key field="roleTypeId"/>
-      <prim-key field="productStoreId"/>
-      <prim-key field="fromDate"/>
+      <prim-key field="productStoreRoleId"/>
+<!--      <prim-key field="partyId"/>-->
+<!--      <prim-key field="roleTypeId"/>-->
+<!--      <prim-key field="productStoreId"/>-->
+<!--      <prim-key field="fromDate"/>-->
       <relation type="one-nofk" rel-entity-name="Party">
         <key-map field-name="partyId"/>
       </relation>
