@@ -10,3 +10,7 @@
 [submodule "plugins/drools"]
 	path = plugins/drools
 	url = https://gitee.com/cloudlakenet/drools.git
+[submodule "plugins/gongsconfig"]
+	path = plugins/gongsconfig
+	url = https://gitee.com/cloudlakenet/gongsconfig.git
+	branch = master
