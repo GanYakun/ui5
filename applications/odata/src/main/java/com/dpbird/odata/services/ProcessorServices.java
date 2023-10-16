@@ -18,10 +18,7 @@ import org.apache.ofbiz.entity.GenericPK;
 import org.apache.ofbiz.entity.GenericValue;
 import org.apache.ofbiz.entity.datasource.GenericHelperInfo;
 import org.apache.ofbiz.entity.jdbc.DatabaseUtil;
-import org.apache.ofbiz.entity.model.ModelEntity;
-import org.apache.ofbiz.entity.model.ModelField;
-import org.apache.ofbiz.entity.model.ModelKeyMap;
-import org.apache.ofbiz.entity.model.ModelViewEntity;
+import org.apache.ofbiz.entity.model.*;
 import org.apache.ofbiz.entity.util.EntityQuery;
 import org.apache.ofbiz.entity.util.EntityUtil;
 import org.apache.ofbiz.entity.util.EntityUtilProperties;
@@ -523,7 +520,7 @@ public class ProcessorServices {
                 OfbizCsdlProperty csdlProperty = (OfbizCsdlProperty) csdlEntityType.getProperty(csdlPropertyRef.getName());
                 String ofbizFieldName = csdlProperty.getOfbizFieldName();
                 ModelField modelField = modelEntity.getField(ofbizFieldName);
-                if ("id".equals(modelField.getType())) {
+                if (modelField.getType().contains("id")) {
                     pkFieldValue = "ID" + delegator.getNextSeqId(DataModifyActions.NEXT_ID_KEY);
                 }
             }
@@ -1037,5 +1034,62 @@ public class ProcessorServices {
             groupCache.remove(modelEntity.getEntityName());
         }
         return ServiceUtil.returnSuccess();
+    }
+
+    public static Map<String, Object> writeOfbizEntity(DispatchContext dctx, Map<String, Object> context) throws GenericEntityException {
+        Delegator delegator = dctx.getDelegator();
+        Map<String, ModelEntity> entityCache = delegator.getModelReader().getEntityCache();
+        for (ModelEntity modelEntity : entityCache.values()) {
+            String entityName = modelEntity.getEntityName();
+            ModelEntity typeModel = delegator.getModelReader().getModelEntityNoCheck(entityName + "Type");
+
+            GenericValue genericValue = EntityQuery.use(delegator).from("DBEntity").where("dbEntityName", entityName, "dbEntityTypeId", null).queryFirst();
+            if (UtilValidate.isEmpty(genericValue)) {
+                createDBEntity(delegator, modelEntity, null, null);
+            }
+            if (UtilValidate.isNotEmpty(typeModel)) {
+                List<GenericValue> entityTypeList = delegator.findAll(typeModel.getEntityName(), false);
+                String typeIdField = typeModel.getFirstPkFieldName();
+                for (GenericValue entityType : entityTypeList) {
+                    GenericValue currentType = EntityQuery.use(delegator).from("DBEntity")
+                            .where("dbEntityName", entityName, "dbEntityTypeId", entityType.getString(typeIdField)).queryFirst();
+                    if (UtilValidate.isEmpty(currentType)) {
+                        createDBEntity(delegator, modelEntity, typeIdField, entityType.getString(typeIdField));
+                    }
+                }
+            }
+        }
+        return ServiceUtil.returnSuccess();
+    }
+
+    private static void createDBEntity(Delegator delegator, ModelEntity modelEntity, String typeId, String typeValue) throws GenericEntityException {
+        String entityName = modelEntity.getEntityName();
+        String dbEntityId = "DB" + delegator.getNextSeqId("DBEntity");
+        //create Entity
+        delegator.create("DBEntity", UtilMisc.toMap("dbEntityId", dbEntityId, "dbEntityName", entityName,
+                "dbEntityTypeField", typeId, "dbEntityTypeId", typeValue));
+        //create Field
+        Iterator<ModelField> fieldsIterator = modelEntity.getFieldsIterator();
+        List<String> pkFieldNames = modelEntity.getPkFieldNames();
+        while (fieldsIterator.hasNext()) {
+            ModelField field = fieldsIterator.next();
+            String dbFieldId = "DB" + delegator.getNextSeqId("DBField");
+            delegator.create("DBField", UtilMisc.toMap("dbFieldId", dbFieldId, "dbEntityId", dbEntityId,
+                    "dbFieldName", field.getName(), "isPrimaryKey", pkFieldNames.contains(field.getName()) ? "Y" : "N"));
+        }
+        //create Relation
+        Iterator<ModelRelation> relationsIterator = modelEntity.getRelationsIterator();
+        while (relationsIterator.hasNext()) {
+            ModelRelation relation = relationsIterator.next();
+            String title = relation.getTitle();
+            String relEntityName = relation.getRelEntityName();
+            String combinedName = relation.getCombinedName();
+            String type = relation.getType();
+            String dbRelationId = "DB" + delegator.getNextSeqId("DBRelation");
+            delegator.create("DBRelation", UtilMisc.toMap("dbRelationId", dbRelationId, "dbEntityId", dbEntityId,
+                    "dbRelationTitle", title, "dbRelationEntity", relEntityName, "dbRelationName", combinedName, "dbRelationType", type));
+        }
+
+
     }
 }
