@@ -1,0 +1,28 @@
+version: '3'
+services:
+  web:
+    image: registry.cn-hangzhou.aliyuncs.com/banff/ningbomat_uilab:latest
+    container_name: uilab
+    ports:
+      - "80:80"
+    environment:
+      - DOMAIN_NAME=localhost
+    volumes:
+      - ./nginx.conf:/opt/runtime/nginx/etc/nginx/nginx.conf
+  ofbiz:
+    image: registry.cn-hangzhou.aliyuncs.com/banff/ningbomat:latest
+    container_name: odata-lab
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      - DB_PLAT_FORM=mysql
+      - DB_IP=192.168.50.173
+      - DB_PORT=3306
+      - OFBIZ_DB_NAME=ningbomat_ofbiz
+      - OLAP_DB_NAME=ningbomat_olap
+      - TENANT_DB_NAME=ningbomat_tenant
+      - DB_USER=root
+      - DB_PASSWORD=ofbiz
+      - HOST_HEADERS_ALLOWED=192.168.50.173
+      - DISTRIBUTION_URL=file:///opt/gradle-4.5.1-bin.zip
