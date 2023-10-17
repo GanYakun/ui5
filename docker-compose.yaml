@@ -9,6 +9,7 @@ services:
       - DOMAIN_NAME=localhost
     volumes:
       - ./nginx.conf:/opt/runtime/nginx/etc/nginx/nginx.conf
+    restart: always
   ofbiz:
     image: registry.cn-hangzhou.aliyuncs.com/banff/ningbomat:latest
     container_name: odata-lab
@@ -26,3 +27,20 @@ services:
       - DB_PASSWORD=ofbiz
       - HOST_HEADERS_ALLOWED=192.168.50.173
       - DISTRIBUTION_URL=file:///opt/gradle-4.5.1-bin.zip
+    volumes:
+      - ./gradle-wrapper.properties:/root/ofbiz/gradle/wrapper/gradle-wrapper.properties
+    restart: always
+
+
+#  db:
+#    image: registry.cn-hangzhou.aliyuncs.com/banff/mysql:5.7
+#    container_name: mysql
+#    ports:
+#      - "3309:3306"
+#    environment:
+#      MYSQL_ROOT_PASSWORD: mKD2egevDOmFwMNkgbms
+#    volumes:
+#      - ./init_mysql.sql:/docker-entrypoint-initdb.d/init_mysql.sql  # 初始化数据库脚本
+#      # TODO 这里挂载数据库的数据目录 否则容器重启后数据会丢失
+#    restart: always
+#    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
