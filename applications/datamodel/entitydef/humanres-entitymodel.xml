@@ -430,6 +430,7 @@ under the License.
     <entity entity-name="EmplLeave"
             package-name="org.apache.ofbiz.humanres.employment"
             title="Employee Leave Entity">
+        <field name="emplLeaveId" type="id"/>
         <field name="partyId" type="id"/>
         <field name="leaveTypeId" type="id"/>
         <field name="emplLeaveReasonTypeId" type="id"/>
@@ -438,9 +439,7 @@ under the License.
         <field name="approverPartyId" type="id"/>
         <field name="leaveStatus" type="id"/>
         <field name="description" type="description"/>
-        <prim-key field="partyId"/>
-        <prim-key field="leaveTypeId"/>
-        <prim-key field="fromDate"/>
+        <prim-key field="emplLeaveId"/>
         <relation type="one" fk-name="EMPL_LEAVE_PRTY" rel-entity-name="Party">
             <key-map field-name="partyId"/>
         </relation>
