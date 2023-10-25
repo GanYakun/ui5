@@ -330,6 +330,7 @@ under the License.
     <entity entity-name="Employment"
             package-name="org.apache.ofbiz.humanres.employment"
             title="Employment Entity">
+      <field name="employmentId" type="id"></field>
       <field name="roleTypeIdFrom" type="id"></field>
       <field name="roleTypeIdTo" type="id"></field>
       <field name="partyIdFrom" type="id"></field>
@@ -338,11 +339,7 @@ under the License.
       <field name="thruDate" type="date-time"></field>
       <field name="terminationReasonId" type="id"></field>
       <field name="terminationTypeId" type="id"></field>
-      <prim-key field="roleTypeIdFrom"/>
-      <prim-key field="roleTypeIdTo"/>
-      <prim-key field="partyIdFrom"/>
-      <prim-key field="partyIdTo"/>
-      <prim-key field="fromDate"/>
+      <prim-key field="employmentId"></prim-key>
       <relation type="one" fk-name="EMPLMNT_TPTY" title="To" rel-entity-name="Party">
         <key-map field-name="partyIdTo" rel-field-name="partyId"/>
       </relation>
@@ -707,14 +704,13 @@ under the License.
     <entity entity-name="EmplPositionFulfillment"
             package-name="org.apache.ofbiz.humanres.position"
             title="EmplPosition Fulfillment Entity">
+      <field name="emplPositionFulfillmentId" type="id"></field>
       <field name="emplPositionId" type="id"></field>
       <field name="partyId" type="id"></field>
       <field name="fromDate" type="date-time"></field>
       <field name="thruDate" type="date-time"></field>
       <field name="comments" type="comment"></field>
-      <prim-key field="emplPositionId"/>
-      <prim-key field="partyId"/>
-      <prim-key field="fromDate"/>
+      <prim-key field="emplPositionFulfillmentId"/>
       <relation type="one" fk-name="EMPL_PSFLMT_EMPS" rel-entity-name="EmplPosition">
         <key-map field-name="emplPositionId"/>
       </relation>
