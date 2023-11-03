@@ -30,3 +30,10 @@ services:
     volumes:
       - ./gradle-wrapper.properties:/root/ofbiz/gradle/wrapper/gradle-wrapper.properties
     restart: always
+  camel:
+    image: registry.cn-hangzhou.aliyuncs.com/banff/ningbomat-camel:1103-1
+    container_name: camel
+    ports:
+      - "8082:8082"
+    environment:
+      - NINGBOMAT_SERVICE_BASE_URL=http://ofbiz:8080/ningbomat/control/odataAppSvc/syncData
