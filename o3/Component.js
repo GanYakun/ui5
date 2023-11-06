@@ -24,7 +24,7 @@ sap.ui.define([
         var checkIsLogin = $.ajax({
           type: 'POST',
           async: false,
-          url: '/dinstitute/control/checkIsLogin'
+          url: '/officeauto/control/checkIsLogin'
         });
 
         checkIsLogin.done(function (rsp) {

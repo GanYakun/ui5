@@ -212,7 +212,7 @@ sap.ui.define([
         _onLogout() {
             $.ajax({
                 type: 'POST',
-                url: '/dinstitute/control/logout',
+                url: '/officeauto/control/logout',
                 complete: function () {
                     o3Tool.removeCookie('userLoginId');
                     o3Tool.removeCookie('lastVisit');

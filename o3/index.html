@@ -89,7 +89,7 @@
     var checkIsLogin = $.ajax({
       type: 'POST',
       async: false,
-      url: '/dinstitute/control/checkIsLogin'
+      url: '/officeauto/control/checkIsLogin'
     });
 
     checkIsLogin.done(function (rsp) {
@@ -107,7 +107,7 @@
     sap.ui.getCore().attachInit(function () {
       sap.ui.getCore().getConfiguration().setFlexibilityServices([{
         connector: "LrepConnector",
-        url: "/dinstitute/control",
+        url: "/officeauto/control",
         layers: ["CUSTOMER", "USER"]
       }]);
 
@@ -147,7 +147,7 @@
         sap.ushell.Container.attachLogoutEvent(function () {
           $.ajax({
             type: 'POST',
-            url: '/dinstitute/control/logout',
+            url: '/officeauto/control/logout',
             complete: function () {
               o3Tool.removeCookie('userLoginId');
               o3Tool.removeCookie('lastVisit');
@@ -186,7 +186,7 @@
       $.ajax({
         type: 'get',
         async: false,
-        url: "/dinstitute/control/odatasvc/Me?app=launchpadManage"
+        url: "/officeauto/control/odatasvc/Me?app=launchpadManage"
       }).done(function (rsp) {
         user.id = rsp.userLoginId;
         user.fullName = rsp.userLoginId;

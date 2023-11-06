@@ -25,7 +25,7 @@ sap.ui.define([
 
             $.ajax({
                 type: 'POST',
-                url: '/dinstitute/control/login',
+                url: '/officeauto/control/login',
                 data: loginData,
                 success: function (rsp) {
                     if (rsp._LOGIN_PASSED_) {
@@ -37,7 +37,7 @@ sap.ui.define([
                         $.ajax({
                             type: 'get',
                             async: false,
-                            url: "/dinstitute/control/odatasvc/Me?app=launchpadManage",
+                            url: "/officeauto/control/odatasvc/Me?app=launchpadManage",
                             beforeSend: function (req) {
                                 req.setRequestHeader('Authorization', header);
                             }

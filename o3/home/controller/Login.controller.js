@@ -21,7 +21,7 @@ sap.ui.define([
 
             $.ajax({
                 type: 'POST',
-                url: '/dinstitute/control/login',
+                url: '/officeauto/control/login',
                 data: loginData,
                 success: function (rsp) {
                     if (rsp._LOGIN_PASSED_) {
@@ -29,7 +29,7 @@ sap.ui.define([
                         $.ajax({
                             type: 'get',
                             async: false,
-                            url: "dinstitute/control/odatasvc/Visitors('" + o3Tool.cookie('OFBiz.Visitor') + "')?app=launchpadManage"
+                            url: "officeauto/control/odatasvc/Visitors('" + o3Tool.cookie('OFBiz.Visitor') + "')?app=launchpadManage"
                         }).done(function (party) {
                             if (party.userLoginId) {
                                 o3Tool.cookie('userLoginId', party.userLoginId);
