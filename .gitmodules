@@ -7,6 +7,3 @@
 [submodule "plugins/bfui5"]
 	path = plugins/bfui5
 	url = https://gitee.com/cloudlakenet/bfui5.git
-[submodule "plugins/drools"]
-	path = plugins/drools
-	url = https://gitee.com/cloudlakenet/drools.git
