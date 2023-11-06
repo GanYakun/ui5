@@ -1,0 +1,41 @@
+<mvc:View
+  controllerName="o3.home.controller.Launchpad"
+  xmlns="sap.m"
+  xmlns:l="sap.ui.layout"
+  xmlns:uxap="sap.uxap"
+  xmlns:mvc="sap.ui.core.mvc">
+  <uxap:ObjectPageLayout
+    class="O3Launchpad"
+    alwaysShowContentHeader="true"
+    sections="{
+      path: 'launchpad>/Tiles',
+      templateShareable: true
+    }">
+    <uxap:ObjectPageSection title="{launchpad>groupName}">
+      <uxap:ObjectPageSubSection>
+        <uxap:blocks>
+          <l:HorizontalLayout
+            allowWrapping="true"
+            content="{
+              path: 'launchpad>contents',
+              templateShareable: true
+            }">
+            <GenericTile
+              visible="{launchpad>visible}"
+              backgroundImage="{launchpad>backgroundImage}"
+              header="{launchpad>title}"
+              subheader="{launchpad>subtitle}"
+              frameType="{launchpad>frameType}"
+              press="onTilePress"
+              class="sapUiTinyMarginBegin sapUiTinyMarginTop"
+              sizeBehavior="Responsive">
+              <TileContent unit="{launchpad>unit}" footer="{launchpad>footer}">
+                <ImageContent src="{launchpad>icon}"/>
+              </TileContent>
+            </GenericTile>
+          </l:HorizontalLayout>
+        </uxap:blocks>
+      </uxap:ObjectPageSubSection>
+    </uxap:ObjectPageSection>
+  </uxap:ObjectPageLayout>
+</mvc:View>

@@ -1,0 +1,69 @@
+{
+  "Tiles": [
+    {
+      "groupName": "我的应用",
+      "contents": [
+        {
+          "icon": "sap-icon://sales-order",
+          "title": "销售",
+          "subtitle": "",
+          "footer": "",
+          "target": "/sales"
+        },
+        {
+          "icon": "sap-icon://receipt",
+          "title": "开具发票",
+          "subtitle": "",
+          "footer": "",
+          "target": ""
+        },
+        {
+          "icon": "sap-icon://iphone",
+          "title": "微信小程序",
+          "subtitle": "",
+          "footer": "",
+          "target": ""
+        },
+        {
+          "icon": "sap-icon://crm-sales",
+          "title": "CRM",
+          "subtitle": "",
+          "footer": "",
+          "target": ""
+        },
+        {
+          "icon": "sap-icon://action-settings",
+          "title": "配置",
+          "subtitle": "",
+          "footer": "",
+          "target": ""
+        },
+        {
+          "icon": "sap-icon://action-settings",
+          "title": "TEST",
+          "subtitle": "",
+          "footer": "",
+          "target": "/test"
+        }
+      ]
+    },{
+      "groupName": "产品",
+      "contents":[
+        {
+          "icon": "sap-icon://sales-order",
+          "title": "产品",
+          "subtitle": "",
+          "footer": "",
+          "target": "/product"
+        },
+        {
+          "icon": "sap-icon://sales-order",
+          "title": "产品",
+          "subtitle": "without comptainer",
+          "footer": "",
+          "target": "/pmd/product"
+        }
+      ]
+    }
+  ]
+}

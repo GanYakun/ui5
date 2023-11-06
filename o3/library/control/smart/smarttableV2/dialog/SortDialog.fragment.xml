@@ -1,0 +1,12 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="handleSortDialogConfirm"
+		sortItems="{path: 'sm4rtM0d3l>/oSortable'}"
+		>
+		<sortItems>
+			<ViewSettingsItem text="{sm4rtM0d3l>text}" key="{sm4rtM0d3l>key}" />
+		</sortItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

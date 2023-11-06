@@ -1,0 +1,71 @@
+{
+  "dpbird.app": {
+    "name": "o3",
+    "layout": "APP",
+    "appTitle": "首页"
+  },
+  "sap.app": {
+    "id": "o3",
+    "dataSources": {
+      "ofbizData": {
+        "uri": "/o3/test/AppOdataService.svc/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "o3.home.view.OneColumn",
+      "type": "XML",
+      "async": true,
+      "id": "app"
+    }, 
+    "models": {
+      "i18n": {
+        "type": "o3.library.model.ResourceModel",
+        "settings": {
+          "bundleName": "o3.library.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "ofbizData",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "synchronizationMode": "None"
+        }
+      }
+    },
+    "resources": {
+
+    },
+    "config": {
+      "fullWidth": true
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlId": "mainContents",
+        "viewType": "XML",
+        "controlAggregation": "pages",
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "launchpad",
+          "target": "launchpad"
+        }
+      ],
+      "targets": {
+        "launchpad": {
+          "viewId": "launchpadView",
+          "viewName": "o3.home.view.Launchpad"
+        }
+      }
+    }
+  }
+}

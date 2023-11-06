@@ -1,0 +1,394 @@
+{
+  "services": {
+    "LaunchPage": {
+      "adapter": {
+        "config": {
+          "groups": [
+            {
+              "id": "group_locked_O3",
+              "title": "Locked Group O3",
+              "isPreset": true,
+              "isVisible": true,
+              "isGroupLocked": true,
+              "tiles": [
+                {
+                  "id": "party_manage",
+                  "chipId": "partyManage",
+                  "size": "1x1",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "isLinkPersonalizationSupportedype": true,
+                  "keywords": [
+                    "party",
+                    "person",
+                    "partygroup",
+                    "公司",
+                    "人员"
+                  ],
+                  "semanticObject": "Party",
+                  "semanticAction": "manage",
+                  "properties": {
+                    "title": "管理成员",
+                    "numberValue": 21.599,
+                    "info": "人员、公司或其它组织的管理",
+                    "infoState": "Positive",
+                    "numberFactor": "%",
+                    "numberUnit": "Relative Improvement",
+                    "numberDigits": 1,
+                    "numberState": "Positive",
+                    "stateArrow": "Up",
+                    "targetURL": "#Party-manage"
+                  }
+                },
+                {
+                  "id": "productcategory_manage",
+                  "chipId": "productCategoryManage",
+                  "size": "1x1",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "isLinkPersonalizationSupportedype": true,
+                  "keywords": [
+                    "category",
+                    "productcategory",
+                    "product",
+                    "分类",
+                    "目录",
+                    "产品"
+                  ],
+                  "semanticObject": "ProductCategory",
+                  "semanticAction": "manage",
+                  "properties": {
+                    "title": "管理产品分类new",
+                    "numberValue": 21.599,
+                    "info": "产品分类的创建及管理",
+                    "infoState": "Positive",
+                    "numberFactor": "%",
+                    "numberUnit": "Relative Improvement",
+                    "numberDigits": 1,
+                    "numberState": "Positive",
+                    "stateArrow": "Up",
+                    "targetURL": "#ProductCategory-manage"
+                  }
+                },
+                {
+                  "id": "person_manage",
+                  "chipId": "personManage",
+                  "size": "1x1",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "isLinkPersonalizationSupportedype": true,
+                  "keywords": [
+                    "party",
+                    "person",
+                    "人员"
+                  ],
+                  "semanticObject": "Person",
+                  "semanticAction": "manage",
+                  "properties": {
+                    "title": "管理人员",
+                    "numberValue": 21.599,
+                    "info": "个人顾客、员工或其它人员的管理",
+                    "infoState": "Positive",
+                    "numberFactor": "%",
+                    "numberUnit": "Relative Improvement",
+                    "numberDigits": 1,
+                    "numberState": "Positive",
+                    "stateArrow": "Up",
+                    "targetURL": "#Person-manage"
+                  }
+                },
+                {
+                  "id": "partygroup_manage",
+                  "chipId": "partyGroupManage",
+                  "size": "1x1",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "isLinkPersonalizationSupportedype": true,
+                  "keywords": [
+                    "party",
+                    "group",
+                    "company",
+                    "partygroup"
+                  ],
+                  "semanticObject": "PartyGroup",
+                  "semanticAction": "manage",
+                  "properties": {
+                    "title": "管理成员组",
+                    "numberValue": 21.599,
+                    "info": "公司、组织或团队的管理",
+                    "infoState": "Positive",
+                    "numberFactor": "%",
+                    "numberUnit": "Relative Improvement",
+                    "numberDigits": 1,
+                    "numberState": "Positive",
+                    "stateArrow": "Up",
+                    "targetURL": "#PartyGroup-manage"
+                  }
+                },
+                {
+                  "id": "facility_manage",
+                  "chipId": "facilityManage",
+                  "size": "1x1",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "isLinkPersonalizationSupportedype": true,
+                  "keywords": [
+                    "party",
+                    "group",
+                    "company",
+                    "partygroup"
+                  ],
+                  "semanticObject": "Facility",
+                  "semanticAction": "manage",
+                  "properties": {
+                    "title": "管理场所",
+                    "numberValue": 21.599,
+                    "info": "仓库、工厂、实体店及办公室管理",
+                    "infoState": "Positive",
+                    "numberFactor": "%",
+                    "numberUnit": "Relative Improvement",
+                    "numberDigits": 1,
+                    "numberState": "Positive",
+                    "stateArrow": "Up",
+                    "targetURL": "#Facility-manage"
+                  }
+                },
+                {
+                  "id": "manage_product_image",
+                  "chipId": "ProductManage",
+                  "size": "1x1",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "isLinkPersonalizationSupportedype": true,
+                  "keywords": [
+                    "image",
+                    "product",
+                    "sales"
+                  ],
+                  "semanticObject": "Product",
+                  "semanticAction": "manageProductImage",
+                  "properties": {
+                    "title": "管理产品",
+                    "subtitle": "产品图片",
+                    "numberValue": 21.599,
+                    "info": "上传及更新产品图片",
+                    "infoState": "Positive",
+                    "numberFactor": "%",
+                    "numberUnit": "Relative Improvement",
+                    "numberDigits": 1,
+                    "numberState": "Positive",
+                    "stateArrow": "Up",
+                    "targetURL": "#Product-manageProductImage"
+                  }
+                },
+                {
+                  "id": "sales_order_manage",
+                  "chipId": "catalogTile_demo2",
+                  "size": "1x1",
+                  "tileType": "sap.ushell.ui.tile.DynamicTile",
+                  "isLinkPersonalizationSupportedype": true,
+                  "keywords": [
+                    "profit",
+                    "profit margin",
+                    "sales"
+                  ],
+                  "semanticObject": "SalesOrder",
+                  "semanticAction": "manage",
+                  "properties": {
+                    "title": "管理销售订单",
+                    "numberValue": 21.599,
+                    "info": "销售订单的通用管理",
+                    "infoState": "Positive",
+                    "numberFactor": "%",
+                    "numberUnit": "CNY",
+                    "numberDigits": 1,
+                    "numberState": "Positive",
+                    "stateArrow": "Up",
+                    "targetURL": "#SalesOrder-manage"
+                  }
+                },
+
+                {
+                  "id": "modelPerson_manage",
+                  "chipId": "catalogTile_35",
+                  "size": "1x1",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "isLinkPersonalizationSupportedype": true,
+                  "semanticObject": "ModelPerson",
+                  "semanticAction": "manage",
+                  "properties": {
+                    "title": "管理模特",
+                    "subtitle": "管理模特主数据",
+                    "info": "模特的通用管理",
+                    "targetURL": "#ModelPerson-manage"
+                  }
+                },
+                {
+                  "id": "supplierParty_manage",
+                  "chipId": "catalogTile_35",
+                  "size": "1x1",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "isLinkPersonalizationSupportedype": true,
+                  "semanticObject": "Supplier",
+                  "semanticAction": "Manage",
+                  "properties": {
+                    "title": "管理供应商",
+                    "subtitle": "供应商主数据",
+                    "info": "供应商的通用管理",
+                    "targetURL": "#SupplierParty-manage"
+                  }
+                },
+                {
+                  "id": "product_manage",
+                  "chipId": "catalogTile_35",
+                  "size": "1x1",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "isLinkPersonalizationSupportedype": true,
+                  "semanticObject": "Product",
+                  "semanticAction": "Manage",
+                  "properties": {
+                    "title": "管理产品",
+                    "subtitle": "产品主数据",
+                    "info": "销售订单的通用管理",
+                    "targetURL": "#Product-manage"
+                  }
+                },
+                {
+                  "id": "quote_manage",
+                  "chipId": "catalogTile_35",
+                  "size": "1x1",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "isLinkPersonalizationSupportedype": true,
+                  "semanticObject": "Quote",
+                  "semanticAction": "Manage",
+                  "properties": {
+                    "title": "管理询价",
+                    "subtitle": "",
+                    "info": "",
+                    "targetURL": "#Quote-manage"
+                  }
+                },
+                {
+                  "id": "orderheader_analysis",
+                  "chipId": "catalogTile_35",
+                  "size": "1x1",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "isLinkPersonalizationSupportedype": true,
+                  "semanticObject": "OrderHeader",
+                  "semanticAction": "Analysis",
+                  "properties": {
+                    "title": "订单分析",
+                    "subtitle": "测试",
+                    "info": "",
+                    "targetURL": "#Orderheader-analysis"
+                  }
+                },
+                {
+                  "id": "contentrole_manage",
+                  "chipId": "catalogTile_35",
+                  "size": "1x1",
+                  "tileType": "sap.ushell.ui.tile.StaticTile",
+                  "isLinkPersonalizationSupportedype": true,
+                  "semanticObject": "Quote",
+                  "semanticAction": "Manage",
+                  "properties": {
+                    "title": "管理人员内容",
+                    "subtitle": "",
+                    "info": "",
+                    "targetURL": "#Contentrole-manage"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "NavTargetResolution": {
+      "adapter": {
+        "config": {
+          "applications": {
+            "Party-manage": {
+              "additionalInformation": "SAPUI5.Component=o3.apps.partyManage",
+              "applicationType": "URL",
+              "url": "/o3/apps/Party-manage",
+              "description": "管理成员"
+            },
+            "Person-manage": {
+              "additionalInformation": "SAPUI5.Component=o3.apps.personManage",
+              "applicationType": "URL",
+              "url": "/o3/apps/Person-manage",
+              "description": "管理人员"
+            },
+            "PartyGroup-manage": {
+              "additionalInformation": "SAPUI5.Component=o3.apps.partyGroupManage",
+              "applicationType": "URL",
+              "url": "/o3/apps/PartyGroup-manage",
+              "description": "管理成员组"
+            },
+            "Facility-manage": {
+              "additionalInformation": "SAPUI5.Component=o3.apps.facilityManage",
+              "applicationType": "URL",
+              "url": "/o3/apps/Facility-manage",
+              "description": "管理场所"
+            },
+            "Product-manageProductImage": {
+              "additionalInformation": "SAPUI5.Component=o3.apps.productManageProductImage",
+              "applicationType": "URL",
+              "url": "/o3/apps/Product-manageProductImage",
+              "description": "管理产品图片"
+            },
+            "SalesOrder-manage": {
+              "additionalInformation": "SAPUI5.Component=o3.apps.salesOrderManage",
+              "applicationType": "URL",
+              "url": "/o3/apps/SalesOrder-manage",
+              "description": "管理销售订单"
+            },
+
+            "ProductCategory-manage": {
+              "additionalInformation": "SAPUI5.Component=com.o3.productcategorymanage",
+              "applicationType": "URL",
+              "url": "/o3/apps/productcategory-manage/webapp",
+              "description": "管理产品分类"
+            },
+            "ModelPerson-manage": {
+              "additionalInformation": "SAPUI5.Component=com.o3.modelmanage",
+              "applicationType": "URL",
+              "url": "/o3/apps/modelstaff-manage/webapp",
+              "description": "管理模特"
+            },
+            "SupplierParty-manage": {
+              "additionalInformation": "SAPUI5.Component=com.o3.suppliermanage",
+              "applicationType": "URL",
+              "url": "/o3/apps/supplier-manage/webapp",
+              "description": "管理供应商"
+            },
+            "ProductCategoryAttribute-manage": {
+              "additionalInformation": "SAPUI5.Component=com.o3.suppliermanage",
+              "applicationType": "URL",
+              "url": "/o3/apps/productcategoryattrebute-manage/webapp",
+              "description": "管理供应商"
+            },
+            "Product-manage": {
+              "additionalInformation": "SAPUI5.Component=com.o3.productManage",
+              "applicationType": "URL",
+              "url": "/o3/apps/product-manage/webapp",
+              "description": "管理产品"
+            },
+            "Quote-manage": {
+              "additionalInformation": "SAPUI5.Component=com.o3.quotemanage",
+              "applicationType": "URL",
+              "url": "/o3/apps/quote-manage/webapp",
+              "description": "询价管理"
+          },
+            "Orderheader-analysis": {
+              "additionalInformation": "SAPUI5.Component=com.o3.orderheaderanalysis",
+              "applicationType": "URL",
+              "url": "/o3/apps/orderheader-analysis/webapp",
+              "description": "询价管理"
+            },
+            "Contentrole-manage": {
+              "additionalInformation": "SAPUI5.Component=com.o3.contentrolemanage",
+              "applicationType": "URL",
+              "url": "/o3/apps/contentrole-manage/webapp",
+              "description": "内容人员管理"
+            }
+        }
+      }
+    }
+  }
+}

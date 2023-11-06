@@ -1,0 +1,26 @@
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:tnt="sap.tnt"
+  xmlns:core="sap.ui.core">
+  <tnt:ToolHeader id="header">
+    <Button visible="{rootData>/showMenu}" icon="sap-icon://grid" type="Transparent" press="onAppMenuPress"/>
+    <Image
+      visible="{= !${rootData>/showMenu}}"
+      class="sapUiTinyMarginEnd"
+      height="2rem"
+      width="2rem"
+      src="https://openui5.oss-accelerate.aliyuncs.com/1.73.1/resources/sap/ui/documentation/sdk/images/logo_ui5.png"/>
+    <Title id="appTitle"  class="sapUiSmallMarginEnd" text="{rootData>/appTitle}"/>
+    <ToolbarSpacer>
+      <layoutData>
+        <OverflowToolbarLayoutData minWidth="20px"/>
+      </layoutData>
+    </ToolbarSpacer>
+    <Button icon="sap-icon://search" type="Transparent"/>
+    <Button icon="sap-icon://bell" type="Transparent" press="onNotificationsPress"/>
+    <Button text="{rootData>/companyDisplayName}" type="Transparent" press="onCompanyPress"/>
+    <Button text="{rootData>/userDisplayName}" type="Transparent" press="onUserBtnPress"/>
+    <!-- <Button icon="sap-icon://building" type="Transparent" press="onCompanyPress"/>
+    <Button icon="sap-icon://person-placeholder" type="Transparent" press="onUserBtnPress"/> -->
+  </tnt:ToolHeader>
+</core:FragmentDefinition>

@@ -1,0 +1,56 @@
+<mvc:View xmlns="sap.m"
+        xmlns:uxap="sap.uxap"
+        xmlns:l="sap.ui.layout"
+        xmlns:f="sap.ui.layout.form"
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns:core="sap.ui.core"
+        xmlns:smart="o3.library.control.smart"
+        controllerName="o3.library.control.smart.smarttable.SmartTable">
+        <VBox>
+            <Table headerText="产品列表"
+                items="{ path:'', length: 5, 
+                    parameters : {$$updateGroupId : 'update'},
+                    factory: '.Factory'
+                }"
+                columns="{path: 'columns>/columnItems'}"
+                growingScrollToLoad="true"
+                growing="true" 
+                growingThreshold="10"
+                >
+                <!-- factory: 'o3.library.control.smart.smarttable.FactoryDefinition.factory' -->
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title text="Products" level="H2"/>
+                        <ToolbarSpacer/>
+                        <Button icon="sap-icon://edit" text="编辑" press="onEditBtnPress" tooltip="编辑" visible="{= !${stateModel>/visible}}"/>
+                        <Button icon="sap-icon://save" text="保存" press="onSaveBtnPress" tooltip="保存" visible="{stateModel>/visible}"/>
+                        <Button icon="sap-icon://cancel" text="取消" press="onCancelBtnPress" tooltip="取消" visible="{stateModel>/visible}"/>
+                        <!-- <CheckBox text="Enable Personalization Grouping" select="onTableGrouping" /> -->
+                        <Button icon="sap-icon://action-settings" text="设置" press="onPersonalizationDialogPress" class="sapUiLargeMarginEnd">
+                            <layoutData>
+                                <OverflowToolbarLayoutData priority="NeverOverflow" />
+                            </layoutData>
+                        </Button>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column visible="{=${columns>show}}">
+                        <Label text="{columns>text}"/>
+                    </Column>
+                </columns>
+                <!-- <ColumnListItem>
+                    <cells>
+                        <Text text="{productId}"/>
+                        <Text text="{productTypeId}"/>
+                        <Text text="{productName}"/>
+                        <Text text="{internalName}"/>
+                        <Text text="{description}"/>
+                        <Text text="{createdDate}"/>
+                    </cells>
+                </ColumnListItem> -->
+            </Table>
+        </VBox>
+</mvc:View>
+
+
+

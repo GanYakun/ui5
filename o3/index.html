@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+  <title>O3 ERP</title>
+  <link type="image/x-icon" href="favicon.ico" rel="shortcut icon">
+  <link type="image/x-icon" href="favicon.ico" rel="icon">
+  <link rel="stylesheet" type="text/css" href="./assets/css/style.css"/>
+  <style>
+    .como-hide {
+      position: absolute !important;
+      width: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+  </style>
+  <script src="shellConfig.js"></script>
+  <script>
+    // (function(){
+    //   //不缓存metadata
+    //   var DBOpenRequest = window.indexedDB.open('ui5-cachemanager-db', 1);
+    //   DBOpenRequest.onsuccess=function(){
+    //     var objectStoreNames = DBOpenRequest.result.objectStoreNames
+    //     for(var i=0;i<objectStoreNames.length;i++){
+    //       var tablename = objectStoreNames.item(i);
+    //       DBOpenRequest.result.transaction(tablename,'readwrite').objectStore(tablename).clear();
+    //     }
+    //   }
+    // })()
+
+    (function () {
+      "use strict";
+      /*global jQuery, sap, window */
+      window['sap-ui-config'] = {
+        "xx-bootTask": function (fnCallback) {
+          var oUi5ComponentLoaderConfig;
+
+          jQuery.sap.registerModulePath("o3", ".");
+
+          // TODO: quick fix for search adapter test data
+          // jQuery.sap.registerModulePath("sap.ushell.adapters.local.searchResults", "./searchResults");
+
+          //Load configuration for fiori demo
+          jQuery.sap.require("o3.LaunchpadConfig");
+
+          // by default we disable the core-ext-light loading for the sandbox
+          oUi5ComponentLoaderConfig = jQuery.sap.getObject("services.Ui5ComponentLoader.config",
+            0, window["sap-ushell-config"]);
+          if (!oUi5ComponentLoaderConfig.hasOwnProperty("amendedLoading")) {
+            oUi5ComponentLoaderConfig.amendedLoading = false;
+          }
+
+          // tell SAPUI5 that this boot task is done once the container has loaded
+          sap.ui.require(["sap/ushell/services/Container"], function () {
+            sap.ushell.bootstrap("local").done(fnCallback);
+          });
+        }
+      };
+    }());
+  </script>
+  <script id="sap-ui-bootstrap"
+          src="https://sapui5.oss-accelerate.aliyuncs.com/1.105.0/resources/sap-ui-core.js"
+          _src="./resources/sap-ui-core.js"
+          data-sap-ui-libs="sap.m, sap.ushell, sap.collaboration, sap.ui.layout, sap.fe.core, sap.fe.macros, sap.fe.navigation, sap.fe.templates,sap.uxap, sap.ui.fl, sap.ui.table"
+          data-sap-ui-xx-supportedLanguages="en,zh_CN"
+          data-sap-ui-theme="sap_fiori_3"
+          data-sap-ui-evt-oninit="main();"
+          data-sap-ui-compatVersion="1.16"
+          data-sap-ui-debug="false"
+          data-sap-ui-xx-bindingSyntax="complex">
+  </script>
+  <!--    <script src="/o3/control/getGlobalConfig?callback=globalConfig"></script>-->
+  <script src="./assets/js/jquery.cookie.js"></script>
+  <script src="./assets/js/common_fun.js"></script>
+  <script src="./assets/js/plupload/plupload.full.min.js"></script>
+  <script src="./assets/js/plupload/moxie.min.js"></script>
+  <script src="./assets/js/plupload/plupload.dev.js"></script>
+  <script src="./assets/js/ckeditor/ckeditor.js"></script>
+  <script>
+    if (!location.hash) {
+      location.hash = '#Shell-home';
+    }
+    //获取前缀的url，比如在ofbiz里面是localhost/o3/html/login/   如果部署则是localhost/login/
+    window.setting = {
+      prefixUrl: "/o3"
+    }
+
+    var checkIsLogin = $.ajax({
+      type: 'POST',
+      async: false,
+      url: '/dinstitute/control/checkIsLogin'
+    });
+
+    checkIsLogin.done(function (rsp) {
+      if (!rsp.login) {
+        o3Tool.cookie('lastVisit', location.href);
+        location.replace(window.setting.prefixUrl + '/login/index.html');
+      }
+    });
+
+    var o3Tool = o3Tool || {};
+    // o3Tool.sServiceUrl = "/o3/productManage/AppOdataService.svc/";
+    o3Tool.sModuleName = "";
+    o3Tool.sAppName = "";
+
+    sap.ui.getCore().attachInit(function () {
+      sap.ui.getCore().getConfiguration().setFlexibilityServices([{
+        connector: "LrepConnector",
+        url: "/dinstitute/control",
+        layers: ["CUSTOMER", "USER"]
+      }]);
+
+      // {
+      //     connector: "LocalStorageConnector",
+      //       layers: ["CUSTOMER", "USER"]
+      //   }
+    });
+  </script>
+  <script type="module" async>
+    // import Request from './assets/js/request.js';
+    // import * as o3Common from './assets/o3-common/index.js';
+    //
+    // window.o3Odata = new o3Common.O3(Request.request);
+    // window.ProductFun = new o3Common.Product(Request.request);
+    // window.PartyFun = new o3Common.Party(Request.request);
+    // window.ReturnFun = new o3Common.Return(Request.request);
+    // window.OrderFun = new o3Common.Order(Request.request);
+  </script>
+  <script>
+    var como = {};
+    como.refreshView = false;
+    // $.ajaxSetup({
+    //   beforeSend: function (xhr, settings) {
+    //     xhr.setRequestHeader("Authorization", o3Tool.cookie('Authorization'));
+    //     settings.url += settings.url.match(/\?/) ? "&" : "?";
+    //     settings.url += "app=productManage";
+    //   }
+    // });
+
+    function main() {
+      "use strict";
+      sap.ushell.Container.createRenderer("fiori2", true).then(function (oContent) {
+        oContent.placeAt("canvas");
+
+        //注册登出事件
+        sap.ushell.Container.attachLogoutEvent(function () {
+          $.ajax({
+            type: 'POST',
+            url: '/dinstitute/control/logout',
+            complete: function () {
+              o3Tool.removeCookie('userLoginId');
+              o3Tool.removeCookie('lastVisit');
+              var pathArr = location.pathname.split('/');
+              location.replace('/' + pathArr[1] + '/login/index.html');
+            }
+          });
+        });
+      });
+    }
+  </script>
+
+  <script type="text/javascript">
+    $().ready(function () {
+      $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+          xhr.setRequestHeader("Authorization", o3Tool.cookie('Authorization'));
+        }
+      });
+    })
+
+    window.o3LoadUser = function (callback) {
+      var user = {
+        "email": "",
+        "firstName": "",
+        "lastName": "",
+        "fullName": "",
+        "id": "",
+        "language": "",
+        "languageBcp47": "",
+        "sapDateFormat": "",
+        "numberFormat": "",
+        "sapTimeFormat": "",
+        "timeZone": ""
+      };
+      $.ajax({
+        type: 'get',
+        async: false,
+        url: "/dinstitute/control/odatasvc/Me?app=launchpadManage"
+      }).done(function (rsp) {
+        user.id = rsp.userLoginId;
+        user.fullName = rsp.userLoginId;
+        user.timeZone = rsp.lastTimeZone;
+        callback.resolve(user);
+      });
+    }
+  </script>
+
+</head>
+
+<body class="sapUiBody sapUShellFullHeight">
+<div id="canvas" class="sapUShellFullHeight sapMShellBG sapUshellShellBG sapUiGlobalBackgroundImage"></div>
+</body>
+</html>

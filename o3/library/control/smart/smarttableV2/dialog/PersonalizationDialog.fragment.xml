@@ -1,0 +1,65 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" 
+    xmlns:localCore="sap.ui.core" xmlns:cpfp="o3.library.control.smart.smarttableV2">
+
+    <P13nDialog showReset="true" showResetEnabled="{path: 'columns>/ShowResetEnabled'}" ok="onOK" cancel="onCancel"
+                reset="onReset" class="sapUiSizeCompact">
+        <panels>
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <P13nSortPanel 
+                    type="sort"
+                    addSortItem="onAddSortItem"
+                    removeSortItem="onRemoveSortItem"
+                    items="{columns>/allSortItem}"
+                    sortItems="{columns>/sortItems}">
+                <P13nItem columnKey="{columns>columnKey}" text="{columns>text}" /> <!--此处绑定的是 allSortItem-->
+                <sortItems>
+                    <P13nSortItem columnKey="{columns>columnKey}" operation="{columns>operation}"/> <!-- 此处绑定的是 sortItems -->
+                </sortItems>
+            </P13nSortPanel>
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <!-- <P13nFilterPanel 
+                    type="filter"
+                    addFilterItem="onAddFilterItem"
+                    removeFilterItem="onRemoveFilterItem"
+                    items="{columns>/allFilterItem}"
+                    filterItems="{columns>/filterItems}" > -->
+                <!-- <P13nItem columnKey="{columns>columnKey}" text="{columns>text}" type="{columns>type}" /> 此处绑定的是 allFilterItem
+                <filterItems>
+                    <P13nFilterItem columnKey="{columns>columnKey}" operation="{columns>operation}" value1="{columns>value1}" value2="{columns>value2}"/>
+                </filterItems>
+            </P13nFilterPanel> -->
+            
+            <cpfp:CustomP13nFilterPanel
+                type="filter"
+                addFilterItem="onAddFilterItem"
+                removeFilterItem="onRemoveFilterItem"
+                items="{columns>/allFilterItem}"
+                filterItems="{columns>/filterItems}" >
+                <P13nItem columnKey="{columns>columnKey}" text="{columns>text}" type="{columns>type}" values="{columns>values}"/>
+                <cpfp:filterItems>
+                    <P13nFilterItem columnKey="{columns>columnKey}" operation="{columns>operation}" value1="{columns>value1}" value2="{columns>value2}"/>
+                </cpfp:filterItems>
+            </cpfp:CustomP13nFilterPanel>
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <P13nGroupPanel
+                    type="group"
+                    maxGroups="1"
+                    containerQuery="true"
+                    addGroupItem="onAddGroupItem"
+                    removeGroupItem="onRemoveGroupItem"
+                    items="{columns>/allGroupItems}"
+                    groupItems="{columns>/groupItems}" >
+                <P13nItem columnKey="{columns>columnKey}" text="{columns>text}"/>
+                <groupItems>
+                    <P13nGroupItem columnKey="{columns>columnKey}" operation="{columns>operation}" showIfGrouped="{columns>showIfGrouped}"/>
+                </groupItems>
+            </P13nGroupPanel>
+
+            
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        </panels>
+    </P13nDialog>
+</core:FragmentDefinition>
+
+
+

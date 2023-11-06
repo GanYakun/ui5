@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+  <title>O3 ERP Launchpad</title>
+  <link rel="stylesheet" type="text/css" href="/o3/assets/css/style.css"/>
+  <script
+    src="https://openui5.oss-accelerate.aliyuncs.com/1.92.0/resources/sap-ui-core.js"
+    data-sap-ui-libs="sap.ui.core,sap.ui.layout,sap.ui.unified,sap.ui.commons,sap.ui.table,sap.m,sap.uxap,sap.f"
+    data-sap-ui-xx-supportedLanguages="en,zh_CN"
+    data-sap-ui-theme="sap_fiori_3"
+
+    data-sap-ui-debug="false"
+    data-sap-ui-xx-bindingSyntax="complex"
+    data-sap-ui-compatVersion="edge"
+    data-sap-ui-async="true"
+    data-sap-ui-resourceroots='{"o3": "/o3"}'>
+  </script>
+
+<!--  <script src="/o3/control/getGlobalConfig?callback=globalConfig"></script>-->
+  <script src="/o3/assets/js/jquery.cookie.js"></script>
+  <script src="/o3/assets/js/common_fun.js"></script>
+  <script src="/o3/assets/js/plupload/plupload.full.min.js"></script>
+  <script src="/o3/assets/js/ckeditor/ckeditor.js"></script>
+  <script>
+    //鑾峰彇鍓嶇紑鐨剈rl锛屾瘮濡傚湪ofbiz閲岄潰鏄痩ocalhost/o3/html/login/   濡傛灉閮ㄧ讲鍒欐槸localhost/login/
+    window.setting = {
+      prefixUrl: "/o3"
+    }
+    var o3Tool = o3Tool || {};
+    o3Tool.sServiceUrl = "/o3/test/AppOdataService.svc/";
+    o3Tool.sModuleName = "";
+    o3Tool.sAppName = "";
+  </script>
+  <script type="module" async>
+    import Request from '/o3/assets/js/request.js';
+    // import * as o3Common from '/o3/assets/o3-common/index.js';
+    //
+    // window.o3Odata = new o3Common.O3(Request.request);
+    // window.ProductFun = new o3Common.Product(Request.request);
+    // window.PartyFun = new o3Common.Party(Request.request);
+    // window.ReturnFun = new o3Common.Return(Request.request);
+    // window.OrderFun = new o3Common.Order(Request.request);
+  </script>
+  <script>
+    var como = {};
+    como.refreshView = false;
+    /* var g_widget_list = {{ widgetList|json_encode|raw }}; */
+    $.ajaxSetup({
+      beforeSend: function (xhr) {
+      }
+    });
+
+    sap.ui.getCore().attachInit(function () {
+      sap.ui.require([
+        "sap/m/Page",
+        "sap/ui/core/ComponentContainer"
+      ], function (Page, ComponentContainer) {
+        new Page({
+          showHeader: false,
+          content: new ComponentContainer({
+            height: "100%",
+            name: "o3.login"
+          })
+        }).placeAt("content");
+      });
+    });
+  </script>
+</head>
+<body class="sapUiBody sapUiSizeCompact sapMShellGlobalOuterBackground" id="content">
+</body>
+</html>
+

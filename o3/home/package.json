@@ -1,0 +1,18 @@
+{
+        "name": "home",
+        "version": "0.0.1",
+        "engines": {
+                "node": "12.x.x"
+        },
+        "scripts": {
+                "start": "ui5 serve -o index.html",
+                "serve": "ui5 serve",
+                "test": "npm run lint && npm run karma",
+                "karma-ci": "karma start karma-ci.conf.js",
+                "karma": "rimraf coverage && npm run karma-ci",
+                "lint": "eslint webapp",
+                "build:ui": "ui5 build --clean-dest --dest dist"
+        },
+        "dependencies": {},
+        "devDependencies": {}
+}

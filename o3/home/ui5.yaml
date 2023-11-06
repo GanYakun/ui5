@@ -1,0 +1,12 @@
+specVersion: '1.0'
+metadata:
+  name: home
+  version: 0.01
+  copyright: |-
+   O3 ERP System
+    * (c) Copyright 2019-${currentYear} DPBIRD inc.
+type: application
+resources:
+  configuration:
+    paths:
+      webapp: /

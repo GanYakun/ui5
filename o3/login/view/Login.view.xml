@@ -1,0 +1,99 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+          controllerName="o3.login.controller.Login" xmlns="sap.m"
+          xmlns:form="sap.ui.layout.form"
+          xmlns:core="sap.ui.core" xmlns:layout="sap.ui.commons.layout">
+    <App>
+        <Page showHeader="false" title="" showFooter="false" showNavButton="false" enableScrolling="false">
+            <content>
+                <layout:AbsoluteLayout horizontalScrolling="Hidden" verticalScrolling="Auto">
+                    <layout:positions>
+                        <layout:PositionContainer left="0px" top="0px">
+                            <layout:control>
+                                <HBox alignItems="Center" direction="Row" fitContainer="false" width="100%"
+                                      height="100%" justifyContent="SpaceAround"
+                                      renderType="Div" visible="true" displayInline="false">
+                                    <items>
+                                        <form:Form width="320px" editable="true" visible="true">
+                                            <form:title>
+                                                <core:Title text="用户登录" level="Auto"/>
+                                            </form:title>
+                                            <form:formContainers>
+                                                <form:FormContainer visible="true">
+                                                    <form:formElements>
+                                                        <form:FormElement visible="true">
+                                                            <form:label>
+                                                                <Label text="用户名" design="Standard" width="100%"
+                                                                       required="false" textAlign="Begin"
+                                                                       textDirection="Inherit" visible="true"/>
+                                                            </form:label>
+                                                            <form:fields>
+                                                                <Input type="Text" showValueHelp="false" id="username"
+                                                                       enabled="true" visible="true"
+                                                                       width="auto"
+                                                                       valueHelpOnly="false" maxLength="0"
+                                                                       submit="onLogin"/>
+                                                            </form:fields>
+                                                        </form:FormElement>
+                                                        <form:FormElement visible="true">
+                                                            <form:label>
+                                                                <Label text="密码" design="Standard" width="100%"
+                                                                       required="false" textAlign="Begin"
+                                                                       textDirection="Inherit" visible="true"/>
+                                                            </form:label>
+                                                            <form:fields>
+                                                                <Input type="Password" showValueHelp="false"
+                                                                       id="password" enabled="true" visible="true"
+                                                                       width="auto"
+                                                                       valueHelpOnly="false" maxLength="0"
+                                                                       submit="onLogin"/>
+                                                            </form:fields>
+                                                        </form:FormElement>
+                                                        <!--
+                                                        <form:FormElement visible="true">
+                                                            <form:label>
+                                                                <Label text="Tenant ID" design="Standard" width="100%" required="false" textAlign="Begin"
+                                                                       textDirection="Inherit" visible="true"/>
+                                                            </form:label>
+                                                            <form:fields>
+                                                                <Input type="Text" showValueHelp="false" id="tenantid" enabled="true" visible="true" width="auto"
+                                                                       valueHelpOnly="false" maxLength="0" submit="onLogin"/>
+                                                            </form:fields>
+                                                        </form:FormElement>
+                                                        -->
+                                                        <form:FormElement visible="true">
+                                                            <form:label>
+                                                                <Label text="" design="Standard" width="100%"
+                                                                       required="false" textAlign="Begin"
+                                                                       textDirection="Inherit" visible="true"/>
+                                                            </form:label>
+                                                            <form:fields>
+                                                                <Button text="登录" type="Emphasized" iconFirst="true"
+                                                                        width="auto" enabled="true" visible="true"
+                                                                        iconDensityAware="false" press="onLogin"/>
+                                                            </form:fields>
+                                                        </form:FormElement>
+                                                    </form:formElements>
+                                                    <form:title/>
+                                                </form:FormContainer>
+                                            </form:formContainers>
+                                            <form:layout>
+                                                <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2"
+                                                                           labelSpanL="3" columnsM="1" labelSpanM="2"
+                                                                           labelSpanS="12"/>
+                                            </form:layout>
+                                        </form:Form>
+                                    </items>
+                                    <layoutData/>
+                                </HBox>
+                            </layout:control>
+                        </layout:PositionContainer>
+                    </layout:positions>
+                </layout:AbsoluteLayout>
+            </content>
+            <footer/>
+            <headerContent/>
+            <subHeader/>
+            <customHeader/>
+        </Page>
+    </App>
+</mvc:View>

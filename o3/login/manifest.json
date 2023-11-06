@@ -1,0 +1,21 @@
+{
+  "sap.app": {
+    "id": "o3.login"
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "o3.login.view.Login",
+      "type": "XML",
+      "async": true,
+      "id": "app"
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "o3.library.i18n.i18n"
+        }
+      }
+    }
+  }
+}
