@@ -1,0 +1,16 @@
+[submodule "plugins/officeauto"]
+	path = plugins/officeauto
+	url = https://gitee.com/cloudlakenet/officeauto.git
+	branch = master
+[submodule "plugins/bfcommon"]
+	path = plugins/bfcommon
+	url = https://gitee.com/cloudlakenet/bfcommon.git
+	branch = master
+[submodule "plugins/gongsconfig"]
+	path = plugins/gongsconfig
+	url = https://gitee.com/cloudlakenet/gongsconfig.git
+	branch = master
+[submodule "plugins/bfui5"]
+	path = plugins/bfui5
+	url = https://gitee.com/cloudlakenet/officeautobfui5.git
+	branch = master
