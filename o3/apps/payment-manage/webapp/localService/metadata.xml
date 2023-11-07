@@ -1,0 +1,2534 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Measures.V1.xml">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Core.xml">
+        <edmx:Include Namespace="Org.OData.Core.V1" Alias="Core"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Capabilities.xml">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Aggregation.xml">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Session.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Session.v1" Alias="Session"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.dpbird">
+            <EntityType Name="InventoryItem">
+                <Key>
+                    <PropertyRef Name="inventoryItemId"/>
+                </Key>
+                <Property Name="productId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="ownerPartyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="inventoryItemId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="inventoryItemTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="datetimeReceived" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="datetimeManufactured" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="expireDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="facilityId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="containerId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="lotId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="uomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="binNumber" Type="Edm.String" MaxLength="60"/>
+                <Property Name="locationSeqId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="comments" Type="Edm.String" MaxLength="255"/>
+                <Property Name="quantityOnHandTotal" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="availableToPromiseTotal" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="accountingQuantityTotal" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="oldQuantityOnHand" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="oldAvailableToPromise" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="serialNumber" Type="Edm.String" MaxLength="255"/>
+                <Property Name="softIdentifier" Type="Edm.String" MaxLength="255"/>
+                <Property Name="activationNumber" Type="Edm.String" MaxLength="255"/>
+                <Property Name="activationValidThru" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="unitCost" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="currencyUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="fixedAssetId" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="Product" Type="com.dpbird.Product">
+                    <ReferentialConstraint Property="productId" ReferencedProperty="productId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="OwnerParty" Type="com.dpbird.Party">
+                    <ReferentialConstraint Property="ownerPartyId" ReferencedProperty="partyId"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="PaymentApplication">
+                <Key>
+                    <PropertyRef Name="paymentApplicationId"/>
+                </Key>
+                <Property Name="paymentApplicationId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="paymentId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="invoiceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="invoiceItemSeqId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="billingAccountId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="overrideGlAccountId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="toPaymentId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="taxAuthGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="amountApplied" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <NavigationProperty Name="Payment" Type="com.dpbird.Payment">
+                    <ReferentialConstraint Property="paymentId" ReferencedProperty="paymentId"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="PaymentMethodType">
+                <Key>
+                    <PropertyRef Name="paymentMethodTypeId"/>
+                </Key>
+                <Property Name="paymentMethodTypeId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="defaultGlAccountId" Type="Edm.String" MaxLength="60"/>
+            </EntityType>
+            <EntityType Name="OrderHeader">
+                <Key>
+                    <PropertyRef Name="orderId"/>
+                </Key>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="orderId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="orderTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="orderName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="externalId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="salesChannelEnumId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="orderDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="priority" Type="Edm.String" MaxLength="1"/>
+                <Property Name="entryDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="pickSheetPrintedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="visitId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="320"/>
+                <Property Name="firstAttemptOrderId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="currencyUom" Type="Edm.String" MaxLength="60"/>
+                <Property Name="syncStatusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="billingAccountId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="originFacilityId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="webSiteId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productStoreId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="terminalId" Type="Edm.String" MaxLength="255"/>
+                <Property Name="transactionId" Type="Edm.String" MaxLength="255"/>
+                <Property Name="autoOrderShoppingListId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="needsInventoryIssuance" Type="Edm.String" MaxLength="1"/>
+                <Property Name="isRushOrder" Type="Edm.String" MaxLength="1"/>
+                <Property Name="internalCode" Type="Edm.String" MaxLength="255"/>
+                <Property Name="remainingSubTotal" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <Property Name="grandTotal" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <Property Name="isViewed" Type="Edm.String" MaxLength="1"/>
+                <Property Name="invoicePerShipment" Type="Edm.String" MaxLength="1"/>
+                <NavigationProperty Name="StatusItem" Type="com.dpbird.StatusItem">
+                    <ReferentialConstraint Property="statusId" ReferencedProperty="statusId"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="InvoiceItem">
+                <Key>
+                    <PropertyRef Name="invoiceId"/>
+                    <PropertyRef Name="invoiceItemSeqId"/>
+                </Key>
+                <Property Name="productId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="invoiceId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="invoiceItemSeqId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="invoiceItemTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="overrideGlAccountId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="overrideOrgPartyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="inventoryItemId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productFeatureId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="parentInvoiceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="parentInvoiceItemSeqId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="uomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="taxableFlag" Type="Edm.String" MaxLength="1"/>
+                <Property Name="quantity" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="amount" Type="Edm.Decimal" Precision="18" Scale="3"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="taxAuthPartyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="taxAuthGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="taxAuthorityRateSeqId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="salesOpportunityId" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="InventoryItem" Type="com.dpbird.InventoryItem">
+                    <ReferentialConstraint Property="inventoryItemId" ReferencedProperty="inventoryItemId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="Product" Type="com.dpbird.Product">
+                    <ReferentialConstraint Property="productId" ReferencedProperty="productId"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="PaymentAttribute">
+                <Key>
+                    <PropertyRef Name="paymentId"/>
+                    <PropertyRef Name="attrName"/>
+                </Key>
+                <Property Name="paymentId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="attrName" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="attrValue" Type="Edm.String" MaxLength="255"/>
+                <Property Name="attrDescription" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="AcctgTransEntry">
+                <Key>
+                    <PropertyRef Name="acctgTransId"/>
+                    <PropertyRef Name="acctgTransEntrySeqId"/>
+                </Key>
+                <Property Name="currencyUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="glAccountTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="acctgTransId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="acctgTransEntrySeqId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="acctgTransEntryTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="voucherRef" Type="Edm.String" MaxLength="60"/>
+                <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="roleTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="theirPartyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="theirProductId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="inventoryItemId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="glAccountId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="organizationPartyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="amount" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <Property Name="origAmount" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <Property Name="origCurrencyUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="debitCreditFlag" Type="Edm.String" MaxLength="1"/>
+                <Property Name="dueDate" Type="Edm.Date"/>
+                <Property Name="groupId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="taxId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="reconcileStatusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="settlementTermId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="isSummary" Type="Edm.String" MaxLength="1"/>
+                <NavigationProperty Name="AcctgTrans" Type="com.dpbird.AcctgTrans">
+                    <ReferentialConstraint Property="acctgTransId" ReferencedProperty="acctgTransId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="GlAccountType" Type="com.dpbird.GlAccountType">
+                    <ReferentialConstraint Property="glAccountTypeId" ReferencedProperty="glAccountTypeId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="CurrencyUom" Type="com.dpbird.Uom">
+                    <ReferentialConstraint Property="currencyUomId" ReferencedProperty="uomId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="GlAccount" Type="com.dpbird.GlAccount">
+                    <ReferentialConstraint Property="glAccountId" ReferencedProperty="glAccountId"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="AcctgTrans">
+                <Key>
+                    <PropertyRef Name="acctgTransId"/>
+                </Key>
+                <Property Name="acctgTransTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="acctgTransId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="transactionDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="isPosted" Type="Edm.String" MaxLength="1"/>
+                <Property Name="postedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="scheduledPostingDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="glJournalId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="glFiscalTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="voucherRef" Type="Edm.String" MaxLength="60"/>
+                <Property Name="voucherDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="groupStatusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="fixedAssetId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="inventoryItemId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="physicalInventoryId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="roleTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="invoiceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="paymentId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="finAccountTransId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="shipmentId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="receiptId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="workEffortId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="theirAcctgTransId" Type="Edm.String" MaxLength="255"/>
+                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="lastModifiedByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <NavigationProperty Name="AcctgTransType" Type="com.dpbird.AcctgTransType">
+                    <ReferentialConstraint Property="acctgTransTypeId" ReferencedProperty="acctgTransTypeId"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Product">
+                <Key>
+                    <PropertyRef Name="productId"/>
+                </Key>
+                <Property Name="productId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="productTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="primaryProductCategoryId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="facilityId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="introductionDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="releaseDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="supportDiscontinuationDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="salesDiscontinuationDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="salesDiscWhenNotAvail" Type="Edm.String" MaxLength="1"/>
+                <Property Name="internalName" Type="Edm.String" MaxLength="255"/>
+                <Property Name="brandName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="comments" Type="Edm.String" MaxLength="255"/>
+                <Property Name="productName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="longDescription" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="priceDetailText" Type="Edm.String" MaxLength="255"/>
+                <Property Name="smallImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="mediumImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="largeImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="detailImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="originalImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="detailScreen" Type="Edm.String" MaxLength="255"/>
+                <Property Name="inventoryMessage" Type="Edm.String" MaxLength="255"/>
+                <Property Name="inventoryItemTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="requireInventory" Type="Edm.String" MaxLength="1"/>
+                <Property Name="quantityUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="quantityIncluded" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="piecesIncluded" Type="Edm.Int64"/>
+                <Property Name="requireAmount" Type="Edm.String" MaxLength="1"/>
+                <Property Name="fixedAmount" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <Property Name="amountUomTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="weightUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="shippingWeight" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="productWeight" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="heightUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productHeight" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="shippingHeight" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="widthUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productWidth" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="shippingWidth" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="depthUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productDepth" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="shippingDepth" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="diameterUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productDiameter" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="productRating" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="ratingTypeEnum" Type="Edm.String" MaxLength="60"/>
+                <Property Name="returnable" Type="Edm.String" MaxLength="1"/>
+                <Property Name="taxable" Type="Edm.String" MaxLength="1"/>
+                <Property Name="chargeShipping" Type="Edm.String" MaxLength="1"/>
+                <Property Name="autoCreateKeywords" Type="Edm.String" MaxLength="1"/>
+                <Property Name="includeInPromotions" Type="Edm.String" MaxLength="1"/>
+                <Property Name="isVirtual" Type="Edm.String" MaxLength="1"/>
+                <Property Name="isVariant" Type="Edm.String" MaxLength="1"/>
+                <Property Name="virtualVariantMethodEnum" Type="Edm.String" MaxLength="60"/>
+                <Property Name="originGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="requirementMethodEnumId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="billOfMaterialLevel" Type="Edm.Int64"/>
+                <Property Name="reservMaxPersons" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="reserv2ndPPPerc" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="reservNthPPPerc" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="configId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="lastModifiedByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="inShippingBox" Type="Edm.String" MaxLength="1"/>
+                <Property Name="defaultShipmentBoxTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="lotIdFilledIn" Type="Edm.String" MaxLength="255"/>
+                <Property Name="orderDecimalQuantity" Type="Edm.String" MaxLength="1"/>
+                <Property Name="primaryImageContentId" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="QuantityUom" Type="com.dpbird.Uom">
+                    <ReferentialConstraint Property="quantityUomId" ReferencedProperty="uomId"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="AcctgTransType">
+                <Key>
+                    <PropertyRef Name="acctgTransTypeId"/>
+                </Key>
+                <Property Name="acctgTransTypeId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="parentTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="hasTable" Type="Edm.String" MaxLength="1"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="GlAccount">
+                <Key>
+                    <PropertyRef Name="glAccountId"/>
+                </Key>
+                <Property Name="glAccountId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="glAccountTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="glAccountClassId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="glResourceTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="glXbrlClassId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="parentGlAccountId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="accountCode" Type="Edm.String" MaxLength="100"/>
+                <Property Name="accountName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="productId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="externalId" Type="Edm.String" MaxLength="60"/>
+            </EntityType>
+            <EntityType Name="OrderPaymentPreference">
+                <Key>
+                    <PropertyRef Name="orderPaymentPreferenceId"/>
+                </Key>
+                <Property Name="orderPaymentStatus" Type="Edm.Int64"/>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="orderPaymentPreferenceId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="orderId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="orderItemSeqId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="shipGroupSeqId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productPricePurposeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="paymentMethodTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="paymentMethodId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="finAccountId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="securityCode" Type="Edm.String" MaxLength="255"/>
+                <Property Name="track2" Type="Edm.String" MaxLength="255"/>
+                <Property Name="presentFlag" Type="Edm.String" MaxLength="1"/>
+                <Property Name="swipedFlag" Type="Edm.String" MaxLength="1"/>
+                <Property Name="overflowFlag" Type="Edm.String" MaxLength="1"/>
+                <Property Name="maxAmount" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <Property Name="processAttempt" Type="Edm.Int64"/>
+                <Property Name="billingPostalCode" Type="Edm.String" MaxLength="60"/>
+                <Property Name="manualAuthCode" Type="Edm.String" MaxLength="60"/>
+                <Property Name="manualRefNum" Type="Edm.String" MaxLength="60"/>
+                <Property Name="needsNsfRetry" Type="Edm.String" MaxLength="1"/>
+                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="lastModifiedByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <NavigationProperty Name="OrderHeader" Type="com.dpbird.OrderHeader">
+                    <ReferentialConstraint Property="orderId" ReferencedProperty="orderId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="FinAccount" Type="com.dpbird.FinAccount">
+                    <ReferentialConstraint Property="finAccountId" ReferencedProperty="finAccountId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="PaymentStatusItem" Type="com.dpbird.PaymentStatusItem">
+                    <ReferentialConstraint Property="statusId" ReferencedProperty="statusId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="Uom" Type="com.dpbird.Uom"/>
+            </EntityType>
+            <EntityType Name="PaymentStatusItem">
+                <Key>
+                    <PropertyRef Name="statusId"/>
+                </Key>
+                <Property Name="statusId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="statusTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="statusCode" Type="Edm.String" MaxLength="60"/>
+                <Property Name="sequenceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="StatusItem">
+                <Key>
+                    <PropertyRef Name="statusId"/>
+                </Key>
+                <Property Name="statusId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="statusTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="statusCode" Type="Edm.String" MaxLength="60"/>
+                <Property Name="sequenceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="GlAccountType">
+                <Key>
+                    <PropertyRef Name="glAccountTypeId"/>
+                </Key>
+                <Property Name="glAccountTypeId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="parentTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="hasTable" Type="Edm.String" MaxLength="1"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="FinAccount">
+                <Key>
+                    <PropertyRef Name="finAccountId"/>
+                </Key>
+                <Property Name="accountName" Type="Edm.String"/>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="finAccountId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="finAccountTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="finAccountName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="finAccountCode" Type="Edm.String" MaxLength="255"/>
+                <Property Name="finAccountPin" Type="Edm.String" MaxLength="255"/>
+                <Property Name="currencyUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="organizationPartyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="ownerPartyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="postToGlAccountId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="fromDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="thruDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="isRefundable" Type="Edm.String" MaxLength="1"/>
+                <Property Name="replenishPaymentId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="replenishLevel" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <Property Name="actualBalance" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <Property Name="availableBalance" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <NavigationProperty Name="StatusItem" Type="com.dpbird.StatusItem">
+                    <ReferentialConstraint Property="statusId" ReferencedProperty="statusId"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Payment">
+                <Key>
+                    <PropertyRef Name="paymentId"/>
+                </Key>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="paymentTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="paymentMethodTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="partyIdFrom" Type="Edm.String" MaxLength="60"/>
+                <Property Name="partyIdTo" Type="Edm.String" MaxLength="60"/>
+                <Property Name="currencyUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="statusColor" Type="Edm.Int64"/>
+                <Property Name="paymentId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="paymentMethodId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="paymentGatewayResponseId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="paymentPreferenceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="roleTypeIdTo" Type="Edm.String" MaxLength="60"/>
+                <Property Name="effectiveDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="paymentRefNum" Type="Edm.String" MaxLength="60"/>
+                <Property Name="amount" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <Property Name="comments" Type="Edm.String" MaxLength="255"/>
+                <Property Name="finAccountTransId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="overrideGlAccountId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="actualCurrencyAmount" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <Property Name="actualCurrencyUomId" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="CurrencyUom" Type="com.dpbird.Uom">
+                    <ReferentialConstraint Property="currencyUomId" ReferencedProperty="uomId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="StatusItem" Type="com.dpbird.StatusItem">
+                    <ReferentialConstraint Property="statusId" ReferencedProperty="statusId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="PaymentType" Type="com.dpbird.PaymentType">
+                    <ReferentialConstraint Property="paymentTypeId" ReferencedProperty="paymentTypeId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="FromParty" Type="com.dpbird.Party">
+                    <ReferentialConstraint Property="partyIdFrom" ReferencedProperty="partyId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="ToParty" Type="com.dpbird.Party">
+                    <ReferentialConstraint Property="partyIdTo" ReferencedProperty="partyId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="PaymentMethodType" Type="com.dpbird.PaymentMethodType">
+                    <ReferentialConstraint Property="paymentMethodTypeId" ReferencedProperty="paymentMethodTypeId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="OrderPaymentPreference" Type="Collection(com.dpbird.OrderPaymentPreference)">
+                    <ReferentialConstraint Property="paymentPreferenceId" ReferencedProperty="orderPaymentPreferenceId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="InvoiceItem" Type="Collection(com.dpbird.InvoiceItem)"/>
+                <NavigationProperty Name="PaymentApplication" Type="Collection(com.dpbird.PaymentApplication)"/>
+                <NavigationProperty Name="AcctgTrans" Type="Collection(com.dpbird.AcctgTrans)"/>
+                <NavigationProperty Name="PaymentAttribute" Type="Collection(com.dpbird.PaymentAttribute)"/>
+                <NavigationProperty Name="AcctgTransEntry" Type="Collection(com.dpbird.AcctgTransEntry)"/>
+            </EntityType>
+            <EntityType Name="PartyAndContact">
+                <Key>
+                    <PropertyRef Name="partyId"/>
+                </Key>
+                <Property Name="primaryPhone" Type="Edm.String" MaxLength="60"/>
+                <Property Name="phoneMobile" Type="Edm.String" MaxLength="60"/>
+                <Property Name="primaryEmail" Type="Edm.String" MaxLength="255"/>
+                <Property Name="address1" Type="Edm.String" MaxLength="255"/>
+                <Property Name="address2" Type="Edm.String" MaxLength="255"/>
+                <Property Name="city" Type="Edm.String" MaxLength="100"/>
+                <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="externalId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="isUnread" Type="Edm.String" MaxLength="1"/>
+                <Property Name="partyTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="lastModifiedByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="dataSourceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="preferredCurrencyUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="partyName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
+            </EntityType>
+            <EntityType Name="Uom">
+                <Key>
+                    <PropertyRef Name="uomId"/>
+                </Key>
+                <Property Name="uomId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="uomTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="abbreviation" Type="Edm.String" MaxLength="60"/>
+                <Property Name="numericCode" Type="Edm.Int64"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="Party">
+                <Key>
+                    <PropertyRef Name="partyId"/>
+                </Key>
+                <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="partyTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="externalId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="preferredCurrencyUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="lastModifiedByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="dataSourceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="isUnread" Type="Edm.String" MaxLength="1"/>
+                <Property Name="partyName" Type="Edm.String" MaxLength="100"/>
+                <NavigationProperty Name="PartyAndContact" Type="com.dpbird.PartyAndContact">
+                    <ReferentialConstraint Property="partyId" ReferencedProperty="partyId"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="PaymentType">
+                <Key>
+                    <PropertyRef Name="paymentTypeId"/>
+                </Key>
+                <Property Name="paymentTypeId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="parentTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="hasTable" Type="Edm.String" MaxLength="1"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
+            <EntityContainer Name="O3Container">
+                <EntitySet Name="PaymentTypes" EntityType="com.dpbird.PaymentType"/>
+                <EntitySet Name="Products" EntityType="com.dpbird.Product">
+                    <NavigationPropertyBinding Path="QuantityUom" Target="Unm"/>
+                </EntitySet>
+                <EntitySet Name="PaymentApplications" EntityType="com.dpbird.PaymentApplication">
+                    <NavigationPropertyBinding Path="Payment" Target="Payments"/>
+                </EntitySet>
+                <EntitySet Name="OrderHeaders" EntityType="com.dpbird.OrderHeader">
+                    <NavigationPropertyBinding Path="StatusItem" Target="StatusItems"/>
+                </EntitySet>
+                <EntitySet Name="AcctgTrans" EntityType="com.dpbird.AcctgTrans">
+                    <NavigationPropertyBinding Path="AcctgTransType" Target="AcctgTransTypes"/>
+                </EntitySet>
+                <EntitySet Name="Payments" EntityType="com.dpbird.Payment">
+                    <NavigationPropertyBinding Path="CurrencyUom" Target="Unm"/>
+                    <NavigationPropertyBinding Path="StatusItem" Target="StatusItems"/>
+                    <NavigationPropertyBinding Path="PaymentType" Target="PaymentTypes"/>
+                    <NavigationPropertyBinding Path="FromParty" Target="Parties"/>
+                    <NavigationPropertyBinding Path="ToParty" Target="Parties"/>
+                    <NavigationPropertyBinding Path="PaymentMethodType" Target="PaymentMethodTypes"/>
+                    <NavigationPropertyBinding Path="OrderPaymentPreference" Target="OrderPaymentPreferences"/>
+                    <NavigationPropertyBinding Path="InvoiceItem" Target="InvoiceItems"/>
+                    <NavigationPropertyBinding Path="PaymentApplication" Target="PaymentApplications"/>
+                    <NavigationPropertyBinding Path="AcctgTrans" Target="AcctgTrans"/>
+                    <NavigationPropertyBinding Path="PaymentAttribute" Target="PaymentAttributes"/>
+                    <NavigationPropertyBinding Path="AcctgTransEntry" Target="AcctgTransEntrys"/>
+                </EntitySet>
+                <EntitySet Name="AcctgTransEntrys" EntityType="com.dpbird.AcctgTransEntry">
+                    <NavigationPropertyBinding Path="AcctgTrans" Target="AcctgTrans"/>
+                    <NavigationPropertyBinding Path="GlAccountType" Target="GlAccountTypes"/>
+                    <NavigationPropertyBinding Path="CurrencyUom" Target="Unm"/>
+                    <NavigationPropertyBinding Path="GlAccount" Target="GlAccounts"/>
+                </EntitySet>
+                <EntitySet Name="Parties" EntityType="com.dpbird.Party">
+                    <NavigationPropertyBinding Path="PartyAndContact" Target="PartyAndContacts"/>
+                </EntitySet>
+                <EntitySet Name="PartyAndContacts" EntityType="com.dpbird.PartyAndContact"/>
+                <EntitySet Name="InventoryItems" EntityType="com.dpbird.InventoryItem">
+                    <NavigationPropertyBinding Path="Product" Target="Products"/>
+                    <NavigationPropertyBinding Path="OwnerParty" Target="Parties"/>
+                </EntitySet>
+                <EntitySet Name="AcctgTransTypes" EntityType="com.dpbird.AcctgTransType"/>
+                <EntitySet Name="Unm" EntityType="com.dpbird.Uom"/>
+                <EntitySet Name="OrderPaymentPreferences" EntityType="com.dpbird.OrderPaymentPreference">
+                    <NavigationPropertyBinding Path="OrderHeader" Target="OrderHeaders"/>
+                    <NavigationPropertyBinding Path="FinAccount" Target="FinAccounts"/>
+                    <NavigationPropertyBinding Path="PaymentStatusItem" Target="PaymentStatusItems"/>
+                    <NavigationPropertyBinding Path="Uom" Target="Unm"/>
+                </EntitySet>
+                <EntitySet Name="InvoiceItems" EntityType="com.dpbird.InvoiceItem">
+                    <NavigationPropertyBinding Path="InventoryItem" Target="InventoryItems"/>
+                    <NavigationPropertyBinding Path="Product" Target="Products"/>
+                </EntitySet>
+                <EntitySet Name="PaymentAttributes" EntityType="com.dpbird.PaymentAttribute"/>
+                <EntitySet Name="FinAccounts" EntityType="com.dpbird.FinAccount">
+                    <NavigationPropertyBinding Path="StatusItem" Target="StatusItems"/>
+                </EntitySet>
+                <EntitySet Name="StatusItems" EntityType="com.dpbird.StatusItem"/>
+                <EntitySet Name="PaymentStatusItems" EntityType="com.dpbird.StatusItem"/>
+                <EntitySet Name="GlAccountTypes" EntityType="com.dpbird.GlAccountType"/>
+                <EntitySet Name="PaymentMethodTypes" EntityType="com.dpbird.PaymentMethodType"/>
+                <EntitySet Name="GlAccounts" EntityType="com.dpbird.GlAccount"/>
+            </EntityContainer>
+            <Annotations Target="com.dpbird.InventoryItem/productId">
+                <Annotation Term="Common.Label">
+                    <String>产品名称</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>Product/productName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/ownerPartyId">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemOwnerPartyId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>OwnerParty/partyName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/inventoryItemId">
+                <Annotation Term="Common.Label">
+                    <String>库存项标识</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/inventoryItemTypeId">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemInventoryItemTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/partyId">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemPartyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/statusId">
+                <Annotation Term="Common.Label">
+                    <String>库存项状态</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/datetimeReceived">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemDatetimeReceived</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/datetimeManufactured">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemDatetimeManufactured</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/expireDate">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemExpireDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/facilityId">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemFacilityId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/containerId">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemContainerId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/lotId">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemLotId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/uomId">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/binNumber">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemBinNumber</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/locationSeqId">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemLocationSeqId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/comments">
+                <Annotation Term="Common.Label">
+                    <String>说明</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/quantityOnHandTotal">
+                <Annotation Term="Common.Label">
+                    <String>实际库存量</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/availableToPromiseTotal">
+                <Annotation Term="Common.Label">
+                    <String>可用库存量</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/accountingQuantityTotal">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemAccountingQuantityTotal</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/oldQuantityOnHand">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemOldQuantityOnHand</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/oldAvailableToPromise">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemOldAvailableToPromise</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/serialNumber">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemSerialNumber</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/softIdentifier">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemSoftIdentifier</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/activationNumber">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemActivationNumber</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/activationValidThru">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemActivationValidThru</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/unitCost">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemUnitCost</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/currencyUomId">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemCurrencyUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InventoryItem/fixedAssetId">
+                <Annotation Term="Common.Label">
+                    <String>InventoryItemFixedAssetId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentApplication/paymentApplicationId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentApplicationPaymentApplicationId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentApplication/paymentId">
+                <Annotation Term="Common.Label">
+                    <String>支付ID</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentApplication/invoiceId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentApplicationInvoiceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentApplication/invoiceItemSeqId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentApplicationInvoiceItemSeqId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentApplication/billingAccountId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentApplicationBillingAccountId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentApplication/overrideGlAccountId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentApplicationOverrideGlAccountId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentApplication/toPaymentId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentApplicationToPaymentId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentApplication/taxAuthGeoId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentApplicationTaxAuthGeoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentApplication/amountApplied">
+                <Annotation Term="Common.Label">
+                    <String>PaymentApplicationAmountApplied</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentMethodType/paymentMethodTypeId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentMethodTypePaymentMethodTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentMethodType/description">
+                <Annotation Term="Common.Label">
+                    <String>PaymentMethodTypeDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentMethodType/defaultGlAccountId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentMethodTypeDefaultGlAccountId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/statusId">
+                <Annotation Term="Common.Label">
+                    <String>订单状态</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>StatusItem/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/orderId">
+                <Annotation Term="Common.Label">
+                    <String>订单ID</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/orderTypeId">
+                <Annotation Term="Common.Label">
+                    <String>订单类型</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/orderName">
+                <Annotation Term="Common.Label">
+                    <String>订单备注</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/externalId">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderExternalId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/salesChannelEnumId">
+                <Annotation Term="Common.Label">
+                    <String>订单渠道</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/orderDate">
+                <Annotation Term="Common.Label">
+                    <String>订单日期</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/priority">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderPriority</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/entryDate">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderEntryDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/pickSheetPrintedDate">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderPickSheetPrintedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/visitId">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderVisitId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/createdBy">
+                <Annotation Term="Common.Label">
+                    <String>创建人</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/firstAttemptOrderId">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderFirstAttemptOrderId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/currencyUom">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderCurrencyUom</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/syncStatusId">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderSyncStatusId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/billingAccountId">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderBillingAccountId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/originFacilityId">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderOriginFacilityId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/webSiteId">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderWebSiteId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/productStoreId">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderProductStoreId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/terminalId">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderTerminalId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/transactionId">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderTransactionId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/autoOrderShoppingListId">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderAutoOrderShoppingListId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/needsInventoryIssuance">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderNeedsInventoryIssuance</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/isRushOrder">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderIsRushOrder</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/internalCode">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderInternalCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/remainingSubTotal">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderRemainingSubTotal</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/grandTotal">
+                <Annotation Term="Common.Label">
+                    <String>总计金额</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/isViewed">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderIsViewed</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderHeader/invoicePerShipment">
+                <Annotation Term="Common.Label">
+                    <String>OrderHeaderInvoicePerShipment</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/productId">
+                <Annotation Term="Common.Label">
+                    <String>产品名称</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>Product/productName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/invoiceId">
+                <Annotation Term="Common.Label">
+                    <String>发票ID</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/invoiceItemSeqId">
+                <Annotation Term="Common.Label">
+                    <String>序号</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/invoiceItemTypeId">
+                <Annotation Term="Common.Label">
+                    <String>InvoiceItemInvoiceItemTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/overrideGlAccountId">
+                <Annotation Term="Common.Label">
+                    <String>InvoiceItemOverrideGlAccountId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/overrideOrgPartyId">
+                <Annotation Term="Common.Label">
+                    <String>InvoiceItemOverrideOrgPartyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/inventoryItemId">
+                <Annotation Term="Common.Label">
+                    <String>库存项ID</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/productFeatureId">
+                <Annotation Term="Common.Label">
+                    <String>InvoiceItemProductFeatureId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/parentInvoiceId">
+                <Annotation Term="Common.Label">
+                    <String>InvoiceItemParentInvoiceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/parentInvoiceItemSeqId">
+                <Annotation Term="Common.Label">
+                    <String>InvoiceItemParentInvoiceItemSeqId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/uomId">
+                <Annotation Term="Common.Label">
+                    <String>InvoiceItemUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/taxableFlag">
+                <Annotation Term="Common.Label">
+                    <String>InvoiceItemTaxableFlag</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/quantity">
+                <Annotation Term="Common.Label">
+                    <String>数量</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/amount">
+                <Annotation Term="Common.Label">
+                    <String>金额</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/description">
+                <Annotation Term="Common.Label">
+                    <String>InvoiceItemDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/taxAuthPartyId">
+                <Annotation Term="Common.Label">
+                    <String>InvoiceItemTaxAuthPartyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/taxAuthGeoId">
+                <Annotation Term="Common.Label">
+                    <String>InvoiceItemTaxAuthGeoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/taxAuthorityRateSeqId">
+                <Annotation Term="Common.Label">
+                    <String>InvoiceItemTaxAuthorityRateSeqId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.InvoiceItem/salesOpportunityId">
+                <Annotation Term="Common.Label">
+                    <String>InvoiceItemSalesOpportunityId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentAttribute/paymentId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentAttributePaymentId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentAttribute/attrName">
+                <Annotation Term="Common.Label">
+                    <String>PaymentAttributeAttrName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentAttribute/attrValue">
+                <Annotation Term="Common.Label">
+                    <String>PaymentAttributeAttrValue</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentAttribute/attrDescription">
+                <Annotation Term="Common.Label">
+                    <String>PaymentAttributeAttrDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/currencyUomId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryCurrencyUomId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>CurrencyUom/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextFirst</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/glAccountTypeId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryGlAccountTypeId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>GlAccountType/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/acctgTransId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryAcctgTransId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/acctgTransEntrySeqId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryAcctgTransEntrySeqId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/acctgTransEntryTypeId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryAcctgTransEntryTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/description">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/voucherRef">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryVoucherRef</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/partyId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryPartyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/roleTypeId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryRoleTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/theirPartyId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryTheirPartyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/productId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryProductId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/theirProductId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryTheirProductId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/inventoryItemId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryInventoryItemId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/glAccountId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryGlAccountId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/organizationPartyId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryOrganizationPartyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/amount">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryAmount</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/origAmount">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryOrigAmount</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/origCurrencyUomId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryOrigCurrencyUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/debitCreditFlag">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryDebitCreditFlag</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/dueDate">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryDueDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/groupId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryGroupId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/taxId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryTaxId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/reconcileStatusId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryReconcileStatusId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/settlementTermId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntrySettlementTermId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransEntry/isSummary">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransEntryIsSummary</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/acctgTransTypeId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransAcctgTransTypeId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>AcctgTransType/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/acctgTransId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransAcctgTransId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/description">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/transactionDate">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransTransactionDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/isPosted">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransIsPosted</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/postedDate">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransPostedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/scheduledPostingDate">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransScheduledPostingDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/glJournalId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransGlJournalId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/glFiscalTypeId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransGlFiscalTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/voucherRef">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransVoucherRef</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/voucherDate">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransVoucherDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/groupStatusId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransGroupStatusId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/fixedAssetId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransFixedAssetId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/inventoryItemId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransInventoryItemId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/physicalInventoryId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransPhysicalInventoryId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/partyId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransPartyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/roleTypeId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransRoleTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/invoiceId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransInvoiceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/paymentId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransPaymentId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/finAccountTransId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransFinAccountTransId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/shipmentId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransShipmentId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/receiptId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransReceiptId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/workEffortId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransWorkEffortId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/theirAcctgTransId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransTheirAcctgTransId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/createdDate">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransCreatedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/createdByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransCreatedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/lastModifiedDate">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransLastModifiedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTrans/lastModifiedByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransLastModifiedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productId">
+                <Annotation Term="Common.Label">
+                    <String>ProductProductId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productTypeId">
+                <Annotation Term="Common.Label">
+                    <String>产品类型</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/primaryProductCategoryId">
+                <Annotation Term="Common.Label">
+                    <String>主要分类</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/facilityId">
+                <Annotation Term="Common.Label">
+                    <String>ProductFacilityId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/introductionDate">
+                <Annotation Term="Common.Label">
+                    <String>ProductIntroductionDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/releaseDate">
+                <Annotation Term="Common.Label">
+                    <String>ProductReleaseDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/supportDiscontinuationDate">
+                <Annotation Term="Common.Label">
+                    <String>ProductSupportDiscontinuationDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/salesDiscontinuationDate">
+                <Annotation Term="Common.Label">
+                    <String>ProductSalesDiscontinuationDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/salesDiscWhenNotAvail">
+                <Annotation Term="Common.Label">
+                    <String>ProductSalesDiscWhenNotAvail</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/internalName">
+                <Annotation Term="Common.Label">
+                    <String>ProductInternalName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/brandName">
+                <Annotation Term="Common.Label">
+                    <String>ProductBrandName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/comments">
+                <Annotation Term="Common.Label">
+                    <String>ProductComments</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productName">
+                <Annotation Term="Common.Label">
+                    <String>新零件名称</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/description">
+                <Annotation Term="Common.Label">
+                    <String>ProductDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/longDescription">
+                <Annotation Term="Common.Label">
+                    <String>ProductLongDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/priceDetailText">
+                <Annotation Term="Common.Label">
+                    <String>ProductPriceDetailText</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/smallImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>ProductSmallImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/mediumImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>ProductMediumImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/largeImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>ProductLargeImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/detailImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>ProductDetailImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/originalImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>ProductOriginalImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/detailScreen">
+                <Annotation Term="Common.Label">
+                    <String>ProductDetailScreen</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/inventoryMessage">
+                <Annotation Term="Common.Label">
+                    <String>ProductInventoryMessage</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/inventoryItemTypeId">
+                <Annotation Term="Common.Label">
+                    <String>ProductInventoryItemTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/requireInventory">
+                <Annotation Term="Common.Label">
+                    <String>ProductRequireInventory</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/quantityUomId">
+                <Annotation Term="Common.Label">
+                    <String>是否包含零件</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/quantityIncluded">
+                <Annotation Term="Common.Label">
+                    <String>是否包含零件</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/piecesIncluded">
+                <Annotation Term="Common.Label">
+                    <String>是否包含零件</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/requireAmount">
+                <Annotation Term="Common.Label">
+                    <String>ProductRequireAmount</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/fixedAmount">
+                <Annotation Term="Common.Label">
+                    <String>ProductFixedAmount</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/amountUomTypeId">
+                <Annotation Term="Common.Label">
+                    <String>ProductAmountUomTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/weightUomId">
+                <Annotation Term="Common.Label">
+                    <String>重量单位</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/shippingWeight">
+                <Annotation Term="Common.Label">
+                    <String>货运时重量</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productWeight">
+                <Annotation Term="Common.Label">
+                    <String>产品重量</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/heightUomId">
+                <Annotation Term="Common.Label">
+                    <String>高度单位</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productHeight">
+                <Annotation Term="Common.Label">
+                    <String>产品高度</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/shippingHeight">
+                <Annotation Term="Common.Label">
+                    <String>货运时高度</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/widthUomId">
+                <Annotation Term="Common.Label">
+                    <String>宽度单位</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productWidth">
+                <Annotation Term="Common.Label">
+                    <String>产品宽度</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/shippingWidth">
+                <Annotation Term="Common.Label">
+                    <String>货运时宽度</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/depthUomId">
+                <Annotation Term="Common.Label">
+                    <String>ProductDepthUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productDepth">
+                <Annotation Term="Common.Label">
+                    <String>ProductProductDepth</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/shippingDepth">
+                <Annotation Term="Common.Label">
+                    <String>ProductShippingDepth</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/diameterUomId">
+                <Annotation Term="Common.Label">
+                    <String>ProductDiameterUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productDiameter">
+                <Annotation Term="Common.Label">
+                    <String>ProductProductDiameter</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productRating">
+                <Annotation Term="Common.Label">
+                    <String>ProductProductRating</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/ratingTypeEnum">
+                <Annotation Term="Common.Label">
+                    <String>ProductRatingTypeEnum</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/returnable">
+                <Annotation Term="Common.Label">
+                    <String>ProductReturnable</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/taxable">
+                <Annotation Term="Common.Label">
+                    <String>ProductTaxable</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/chargeShipping">
+                <Annotation Term="Common.Label">
+                    <String>是否负责运输</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/autoCreateKeywords">
+                <Annotation Term="Common.Label">
+                    <String>ProductAutoCreateKeywords</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/includeInPromotions">
+                <Annotation Term="Common.Label">
+                    <String>ProductIncludeInPromotions</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/isVirtual">
+                <Annotation Term="Common.Label">
+                    <String>ProductIsVirtual</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/isVariant">
+                <Annotation Term="Common.Label">
+                    <String>ProductIsVariant</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/virtualVariantMethodEnum">
+                <Annotation Term="Common.Label">
+                    <String>ProductVirtualVariantMethodEnum</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/originGeoId">
+                <Annotation Term="Common.Label">
+                    <String>ProductOriginGeoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/requirementMethodEnumId">
+                <Annotation Term="Common.Label">
+                    <String>ProductRequirementMethodEnumId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/billOfMaterialLevel">
+                <Annotation Term="Common.Label">
+                    <String>ProductBillOfMaterialLevel</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/reservMaxPersons">
+                <Annotation Term="Common.Label">
+                    <String>ProductReservMaxPersons</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/reserv2ndPPPerc">
+                <Annotation Term="Common.Label">
+                    <String>ProductReserv2ndPPPerc</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/reservNthPPPerc">
+                <Annotation Term="Common.Label">
+                    <String>ProductReservNthPPPerc</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/configId">
+                <Annotation Term="Common.Label">
+                    <String>ProductConfigId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/createdDate">
+                <Annotation Term="Common.Label">
+                    <String>ProductCreatedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/createdByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>ProductCreatedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/lastModifiedDate">
+                <Annotation Term="Common.Label">
+                    <String>ProductLastModifiedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/lastModifiedByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>ProductLastModifiedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/inShippingBox">
+                <Annotation Term="Common.Label">
+                    <String>是否在运输区</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/defaultShipmentBoxTypeId">
+                <Annotation Term="Common.Label">
+                    <String>默认运输区类型</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/lotIdFilledIn">
+                <Annotation Term="Common.Label">
+                    <String>ProductLotIdFilledIn</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/orderDecimalQuantity">
+                <Annotation Term="Common.Label">
+                    <String>ProductOrderDecimalQuantity</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/primaryImageContentId">
+                <Annotation Term="Common.Label">
+                    <String>ProductPrimaryImageContentId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransType/acctgTransTypeId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransTypeAcctgTransTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransType/parentTypeId">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransTypeParentTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransType/hasTable">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransTypeHasTable</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AcctgTransType/description">
+                <Annotation Term="Common.Label">
+                    <String>AcctgTransTypeDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccount/glAccountId">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountGlAccountId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccount/glAccountTypeId">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountGlAccountTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccount/glAccountClassId">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountGlAccountClassId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccount/glResourceTypeId">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountGlResourceTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccount/glXbrlClassId">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountGlXbrlClassId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccount/parentGlAccountId">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountParentGlAccountId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccount/accountCode">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountAccountCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccount/accountName">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountAccountName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccount/description">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccount/productId">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountProductId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccount/externalId">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountExternalId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/orderPaymentStatus">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceOrderPaymentStatus</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/statusId">
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>支付状态</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>PaymentStatusItem/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/orderPaymentPreferenceId">
+                <Annotation Term="Common.Label">
+                    <String>订单支付ID</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/orderId">
+                <Annotation Term="Common.Label">
+                    <String>订单ID</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/orderItemSeqId">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceOrderItemSeqId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/shipGroupSeqId">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceShipGroupSeqId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/productPricePurposeId">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceProductPricePurposeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/paymentMethodTypeId">
+                <Annotation Term="Common.Label">
+                    <String>支付类型</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/paymentMethodId">
+                <Annotation Term="Common.Label">
+                    <String>支付方式</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/finAccountId">
+                <Annotation Term="Common.Label">
+                    <String>账户ID</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/securityCode">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceSecurityCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/track2">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceTrack2</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/presentFlag">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferencePresentFlag</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/swipedFlag">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceSwipedFlag</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/overflowFlag">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceOverflowFlag</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/maxAmount">
+                <Annotation Term="Common.Label">
+                    <String>支付总金额</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/processAttempt">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceProcessAttempt</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/billingPostalCode">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceBillingPostalCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/manualAuthCode">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceManualAuthCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/manualRefNum">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceManualRefNum</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/needsNsfRetry">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceNeedsNsfRetry</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/createdDate">
+                <Annotation Term="Common.Label">
+                    <String>支付时间</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/createdByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceCreatedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/lastModifiedDate">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceLastModifiedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OrderPaymentPreference/lastModifiedByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>OrderPaymentPreferenceLastModifiedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentStatusItem/statusId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentStatusItemStatusId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentStatusItem/statusTypeId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentStatusItemStatusTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentStatusItem/statusCode">
+                <Annotation Term="Common.Label">
+                    <String>PaymentStatusItemStatusCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentStatusItem/sequenceId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentStatusItemSequenceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentStatusItem/description">
+                <Annotation Term="Common.Label">
+                    <String>PaymentStatusItemDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.StatusItem/statusId">
+                <Annotation Term="Common.Label">
+                    <String>StatusItemStatusId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.StatusItem/statusTypeId">
+                <Annotation Term="Common.Label">
+                    <String>StatusItemStatusTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.StatusItem/statusCode">
+                <Annotation Term="Common.Label">
+                    <String>StatusItemStatusCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.StatusItem/sequenceId">
+                <Annotation Term="Common.Label">
+                    <String>StatusItemSequenceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.StatusItem/description">
+                <Annotation Term="Common.Label">
+                    <String>StatusItemDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccountType/glAccountTypeId">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountTypeGlAccountTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccountType/parentTypeId">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountTypeParentTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccountType/hasTable">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountTypeHasTable</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GlAccountType/description">
+                <Annotation Term="Common.Label">
+                    <String>GlAccountTypeDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/accountName">
+                <Annotation Term="Common.Label">
+                    <String>户名</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/statusId">
+                <Annotation Term="Common.Label">
+                    <String>账户状态</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>StatusItem/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/finAccountId">
+                <Annotation Term="Common.Label">
+                    <String>账户</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/finAccountTypeId">
+                <Annotation Term="Common.Label">
+                    <String>账户类型</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/finAccountName">
+                <Annotation Term="Common.Label">
+                    <String>开户行</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/finAccountCode">
+                <Annotation Term="Common.Label">
+                    <String>卡号</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/finAccountPin">
+                <Annotation Term="Common.Label">
+                    <String>FinAccountFinAccountPin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/currencyUomId">
+                <Annotation Term="Common.Label">
+                    <String>币种</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/organizationPartyId">
+                <Annotation Term="Common.Label">
+                    <String>FinAccountOrganizationPartyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/ownerPartyId">
+                <Annotation Term="Common.Label">
+                    <String>FinAccountOwnerPartyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/postToGlAccountId">
+                <Annotation Term="Common.Label">
+                    <String>FinAccountPostToGlAccountId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/fromDate">
+                <Annotation Term="Common.Label">
+                    <String>FinAccountFromDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/thruDate">
+                <Annotation Term="Common.Label">
+                    <String>FinAccountThruDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/isRefundable">
+                <Annotation Term="Common.Label">
+                    <String>FinAccountIsRefundable</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/replenishPaymentId">
+                <Annotation Term="Common.Label">
+                    <String>FinAccountReplenishPaymentId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/replenishLevel">
+                <Annotation Term="Common.Label">
+                    <String>FinAccountReplenishLevel</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/actualBalance">
+                <Annotation Term="Common.Label">
+                    <String>FinAccountActualBalance</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinAccount/availableBalance">
+                <Annotation Term="Common.Label">
+                    <String>余额</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName">
+                            <String>支付</String>
+                        </PropertyValue>
+                        <PropertyValue Property="TypeNamePlural">
+                            <String>支付列表</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>paymentId</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>comments</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/statusId">
+                <Annotation Term="Common.Label">
+                    <String>状态</String>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>状态</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>PaymentStatusItems</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>statusId</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>statusId</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>StatusItem/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/paymentTypeId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentPaymentTypeId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>PaymentType/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/paymentMethodTypeId">
+                <Annotation Term="Common.Label">
+                    <String>支付方式</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>PaymentMethodType/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/partyIdFrom">
+                <Annotation Term="Common.Label">
+                    <String>付款方</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>FromParty/partyName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/partyIdTo">
+                <Annotation Term="Common.Label">
+                    <String>收款方</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>ToParty/partyName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/currencyUomId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentCurrencyUomId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>CurrencyUom/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/statusColor">
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.HiddenFilter">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>PaymentStatusColor</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/paymentId">
+                <Annotation Term="Common.Label">
+                    <String>支付ID</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/paymentMethodId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentPaymentMethodId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/paymentGatewayResponseId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentPaymentGatewayResponseId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/paymentPreferenceId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentPaymentPreferenceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/roleTypeIdTo">
+                <Annotation Term="Common.Label">
+                    <String>PaymentRoleTypeIdTo</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/effectiveDate">
+                <Annotation Term="Common.Label">
+                    <String>支付日期</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/paymentRefNum">
+                <Annotation Term="Common.Label">
+                    <String>PaymentPaymentRefNum</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/amount">
+                <Annotation Term="Common.Label">
+                    <String>待支付金额</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/comments">
+                <Annotation Term="Common.Label">
+                    <String>支付描述</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/finAccountTransId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentFinAccountTransId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/overrideGlAccountId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentOverrideGlAccountId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/actualCurrencyAmount">
+                <Annotation Term="Common.Label">
+                    <String>实际支付金额</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Payment/actualCurrencyUomId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentActualCurrencyUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/primaryPhone">
+                <Annotation Term="Common.Label">
+                    <String>其他联系方式</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/phoneMobile">
+                <Annotation Term="Common.Label">
+                    <String>联系电话</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/primaryEmail">
+                <Annotation Term="Common.Label">
+                    <String>邮箱</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/address1">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactAddress1</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/address2">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactAddress2</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/city">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactCity</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/lastModifiedDate">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactLastModifiedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/externalId">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactExternalId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/description">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/isUnread">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactIsUnread</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/partyTypeId">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactPartyTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/lastModifiedByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactLastModifiedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/dataSourceId">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactDataSourceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/createdDate">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactCreatedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/statusId">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactStatusId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/preferredCurrencyUomId">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactPreferredCurrencyUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/partyName">
+                <Annotation Term="Common.Label">
+                    <String>姓名</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/partyId">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactPartyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyAndContact/createdByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>PartyAndContactCreatedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Uom/uomId">
+                <Annotation Term="Common.Label">
+                    <String>UomUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Uom/uomTypeId">
+                <Annotation Term="Common.Label">
+                    <String>UomUomTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Uom/abbreviation">
+                <Annotation Term="Common.Label">
+                    <String>UomAbbreviation</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Uom/numericCode">
+                <Annotation Term="Common.Label">
+                    <String>UomNumericCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Uom/description">
+                <Annotation Term="Common.Label">
+                    <String>UomDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Party/partyId">
+                <Annotation Term="Common.Label">
+                    <String>客户名称</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Party/partyTypeId">
+                <Annotation Term="Common.Label">
+                    <String>PartyPartyTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Party/externalId">
+                <Annotation Term="Common.Label">
+                    <String>PartyExternalId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Party/preferredCurrencyUomId">
+                <Annotation Term="Common.Label">
+                    <String>PartyPreferredCurrencyUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Party/description">
+                <Annotation Term="Common.Label">
+                    <String>描述</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Party/statusId">
+                <Annotation Term="Common.Label">
+                    <String>PartyStatusId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Party/createdDate">
+                <Annotation Term="Common.Label">
+                    <String>PartyCreatedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Party/createdByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>PartyCreatedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Party/lastModifiedDate">
+                <Annotation Term="Common.Label">
+                    <String>PartyLastModifiedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Party/lastModifiedByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>PartyLastModifiedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Party/dataSourceId">
+                <Annotation Term="Common.Label">
+                    <String>PartyDataSourceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Party/isUnread">
+                <Annotation Term="Common.Label">
+                    <String>PartyIsUnread</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Party/partyName">
+                <Annotation Term="Common.Label">
+                    <String>人员名称</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentType/paymentTypeId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentTypePaymentTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentType/parentTypeId">
+                <Annotation Term="Common.Label">
+                    <String>PaymentTypeParentTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentType/hasTable">
+                <Annotation Term="Common.Label">
+                    <String>PaymentTypeHasTable</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PaymentType/description">
+                <Annotation Term="Common.Label">
+                    <String>PaymentTypeDescription</String>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

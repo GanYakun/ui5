@@ -1,0 +1,770 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Measures.V1.xml">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Session.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Session.v1" Alias="Session"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Communication.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/bf-demo/control/odataAppSvc/partyManage/$metadata">
+        <edmx:Include Namespace="com.dpbird"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
+            <!-- 国际化标签配置Begin -->
+            <Annotations Target="com.dpbird.SupplierParty/partyId">
+                <Annotation Term="Common.Label" String="供应商名称"/>
+            </Annotations>
+            
+            <Annotations Target="com.dpbird.SupplierParty/partyName">
+                <Annotation Term="Common.Label" String="供应商名称"/>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.O3Container/SupplierProducts">
+                <Annotation Term="UI.DeleteHidden" Bool="true" />
+            </Annotations>
+
+             <Annotations Target="com.dpbird.PartyGroup/annualRevenue">
+             <Annotation Term="Common.IsCurrency" ></Annotation>
+              <Annotation Term="Measures.ISOCurrency" String="￥" ></Annotation>
+             </Annotations>
+
+              <Annotations Target="com.dpbird.PartyGroup/numEmployees">
+              <Annotation Term="Measures.Unit" String="人" ></Annotation>
+             </Annotations>
+
+              <Annotations Target="com.dpbird.SupplierParty/totalAmount">
+              <Annotation Term="Measures.Unit" String="CNY" ></Annotation>
+             </Annotations>
+
+            <Annotations Target="com.dpbird.RawMaterialProduct">
+            <Annotation Term="UI.SelectionFields">
+            <Collection >
+            <PropertyPath >productId</PropertyPath>
+             <PropertyPath >productName</PropertyPath>
+                <PropertyPath >quantityUomId</PropertyPath>
+            </Collection>
+            </Annotation>
+            
+            </Annotations>
+
+            <!-- 国际化标签配置End -->
+
+            <!-- 选择框配置Begin-->
+            <Annotations Target="com.dpbird.SupplierProduct/productId">
+            
+             
+                <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="选择所属产品"/>
+                        <PropertyValue Property="CollectionPath" String="RawMaterialProducts" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="productId"/>
+                                    <PropertyValue Property="ValueListProperty" String="productId"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="QuantityUom/description"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <!-- 选择框配置End -->
+
+            <!-- 对象编辑配置Begin -->
+             <Annotations Target="com.dpbird.O3Container/SupplierProducts">
+                <Annotation Term="Org.OData.Capabilities.V1.InsertRestrictions">
+                    <Record Type="Org.OData.Capabilities.V1.InsertRestrictionsType">
+                        <PropertyValue Property="RequiredProperties">
+                            <Collection>
+                                <PropertyPath>productId</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.O3Container/SupplierParties">
+                <Annotation Term="com.sap.vocabularies.Session.v1.StickySessionSupported">
+                    <Record>
+                        <PropertyValue Property="NewAction" String="com.dpbird.SupplierNewAction"/>
+                        <PropertyValue Property="EditAction" String="com.dpbird.SupplierPartyEditAction"/>
+                        <PropertyValue Property="DiscardAction" String="DiscardAction"/>
+                        <PropertyValue Property="SaveAction" String="com.dpbird.SupplierPartySaveAction"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.O3Container/SupplierProducts">
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false" />
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.O3Container/Shipments">
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false" />
+                    </Record>
+                </Annotation>
+            </Annotations>
+              <Annotations Target="com.dpbird.O3Container/ShipmentRouteSegments">
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false" />
+                    </Record>
+                </Annotation>
+            </Annotations>
+         
+            <Annotations Target="com.dpbird.O3Container/Shipments">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false" />
+                    </Record>
+                </Annotation>
+            </Annotations>
+             <Annotations Target="com.dpbird.O3Container/ShipmentRouteSegments">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false" />
+                    </Record>
+                </Annotation>
+            </Annotations>
+            
+            <Annotations Target="com.dpbird.O3Container/Shipments">
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false" />
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.O3Container/ShipmentRouteSegments">
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false" />
+                    </Record>
+                </Annotation>
+            </Annotations>
+             
+            <Annotations Target="com.dpbird.SupplierNewAction/partyName">
+                <Annotation Term="Common.Label" String="{@i18n>partyName}" />
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <!-- 对象编辑配置End -->
+    
+            <Annotations Target="com.dpbird.SupplierParty">
+                <Annotation Term="UI.SelectionPresentationVariant" Qualifier="table">
+                    <Record Type="UI.SelectionPresentationVariantType">
+                        <PropertyValue Property="PresentationVariant">
+                            <Record Type="UI.PresentationVariantType">
+                                <PropertyValue Property="Visualizations">
+                                    <Collection>
+                                        <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                    </Collection>
+                                </PropertyValue>
+                                <PropertyValue Property="SortOrder">
+                                    <Collection>
+                                        <Record Type="Common.SortOrderType">
+                                            <PropertyValue Property="Property" PropertyPath="createdDate"/>
+                                            <PropertyValue Property="Descending" Bool="true"/>
+                                        </Record>
+                                    </Collection>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="SelectionVariant">
+                            <Record Type="UI.SelectionVariantType">
+                                <PropertyValue Property="SelectOptions">
+                                    <Collection/>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <Annotation Term="UI.LineItem">
+                <Annotation Term="UI.Criticality" Path="criticalityValue"/>
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="logoImageUrl"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="statusId"/>
+                              <PropertyValue Property="Criticality" Path="criticalityValue">
+                             <!-- <If>
+                                <Eq>
+                                    <Path>statusId</Path>
+                                    <String>PARTY_DISABLED</String>
+                                </Eq>
+                                 <Int>1</Int>
+                                <Int>3</Int>
+                            </If> -->
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                             
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="partyId"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="SupplierPartyAndContact/primaryEmail"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                          <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="SupplierPartyAndContact/address1"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                          <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="SupplierPartyAndContact/primaryPhone"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+          
+             <Annotation Term="UI.Identification" >
+                    <Collection > 
+                         <Record Type="UI.DataFieldForAction" >
+                            <PropertyValue Property="Action" String="com.dpbird.ChangeSupplierStatusToEnable"/>
+                            <PropertyValue Property="Label"  String="禁用供应商" />
+                            <Annotation Term="UI.Hidden">
+                                <If>
+                                        <Eq>
+                                            <Path>statusId</Path>
+                                            <String>PARTY_DISABLED</String>
+                                        </Eq>
+                                    <Bool>true</Bool>
+                                    <Bool>false</Bool>
+                                </If>
+                            </Annotation>
+                        </Record>                                                                                                                                                          
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="PartyBaseInfo"/>
+                            <PropertyValue Property="Label" String="供应商基本信息"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyBaseInfo"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="TimeInfo"/>
+                            <PropertyValue Property="Label" String="时间信息"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#TimeInfo"/>
+                        </Record>
+                         <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="statusId"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
+                        </Record>
+                         <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="TotalAmount"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#TotalAmount"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#IdentificationCode"/>
+                            <PropertyValue Property="Label" String="身份识别"/>
+                            <PropertyValue Property="ID" String="Identification"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
+                 <Annotation Term="UI.FieldGroup" Qualifier="PartyBaseInfo">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="SupplierPartyAndContact/primaryEmail" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="SupplierPartyAndContact/address1" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="SupplierPartyAndContact/primaryPhone" />
+                                </Record>
+                                  <Record Type="UI.DataFieldForAnnotation">
+                            <PropertyValue Property="Label" String="公司主要联系人"/>
+                            <PropertyValue Property="Target" AnnotationPath="@Communication.Contact"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High" />
+                        </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <Annotation Term="UI.FieldGroup" Qualifier="TimeInfo">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="创建日期" />
+                                    <PropertyValue Property="Value" Path="createdDate" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="最近更新日期" />
+                                    <PropertyValue Property="Value" Path="lastModifiedDate" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="首订单日期" />
+                                    <PropertyValue Property="Value" Path="firstOrderDate" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="加入日期" />
+                                    <PropertyValue Property="Value" Path="collectionDate" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                
+                <Annotation Term="Communication.Contact">
+                    <Record Type="Communication.ContactType">
+                        <PropertyValue Property="fn" Path="partyNamePrimary"/>
+                        <PropertyValue Property="tel"  >
+                            <Collection>
+                                <Record Type="Communication.PhoneNumberType">
+                                    <PropertyValue Property="type" EnumMember="Communication.PhoneType/cell"/>
+                                    <PropertyValue Property="uri" Path="phoneMobilePrimary"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="email" >
+                            <Collection>
+                                <Record Type="Communication.EmailAddressType">
+                                    <PropertyValue Property="type" EnumMember="Communication.ContactInformationType/work"/>
+                                    <PropertyValue Property="address" Path="emailPrimary"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                 <Annotation Term="UI.DataPoint" Qualifier="statusId">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="statusId"/>
+                        <PropertyValue Property="Title" String="使用状态"/>
+                        <PropertyValue Property="Criticality" Path="criticalityValue" >
+                           
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <Annotation Term="UI.DataPoint" Qualifier="TotalAmount">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="totalAmount"/>
+                        <PropertyValue Property="Title" String="订单总金额"/>
+                        <PropertyValue Property="Criticality" Int="3" >
+                           
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="公司基本信息"/>
+                            <PropertyValue Property="ID" String="BaseInfo"/>
+                            <PropertyValue Property="Target" AnnotationPath="PartyGroup/@UI.FieldGroup#PartyGroupFieldGroup"/>
+                            <!-- <Annotation Term="UI.PartOfPreview" Bool="false"/> -->
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="公司综合评级"/>
+                            <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
+                            <PropertyValue Property="Target" AnnotationPath="PartyClassificationGroup/@UI.LineItem#PartyClassificationGroupLineItem"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="售后服务记录"/>
+                            <PropertyValue Property="ID" String="AfterSalesService"/>
+                            <PropertyValue Property="Target" AnnotationPath="AfterSalesService/@UI.LineItem#AfterSalesServiceLine"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="PostalAddressSelect"/>
+                            <PropertyValue Property="Label" String="联系人"/>
+                            <PropertyValue Property="Target"  AnnotationPath="PartyAndContact/@UI.LineItem#PartyRelationshipLineItem"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="NoteDataLineItem"/>
+                            <PropertyValue Property="Label" String="备注信息"/>
+                            <PropertyValue Property="Target"  AnnotationPath="NoteData/@UI.LineItem#NoteDataLineItem"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="SupplierProductLineItem"/>
+                            <PropertyValue Property="Label" String="供应产品信息"/>
+                            <PropertyValue Property="Target"  AnnotationPath="SupplierProduct/@UI.LineItem#SupplierProductLineItem"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="PurchaseAgreementLineItem"/>
+                            <PropertyValue Property="Label" String="供应合同信息"/>
+                            <PropertyValue Property="Target"  AnnotationPath="PurchaseAgreement/@UI.LineItem#PurchaseAgreementLineItem"/>
+                        </Record>
+                         <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="银行账号"/>
+                            <PropertyValue Property="ID" String="BankAccount"/>
+                            <PropertyValue Property="Target" AnnotationPath="OwnerFinAccount/@UI.LineItem#FinAccountLineItem" />
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="订单信息"/>
+                            <PropertyValue Property="ID" String="OrderInfo"/>
+                            <PropertyValue Property="Target" AnnotationPath="PurchaseOrder/@UI.LineItem" />
+                        </Record>
+                         <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="报价记录"/>
+                            <PropertyValue Property="ID" String="PurchaseQuote"/>
+                            <PropertyValue Property="Target" AnnotationPath="PurchaseQuote/@UI.LineItem" />
+                        </Record>
+                         <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="发票信息"/>
+                            <PropertyValue Property="ID" String="InvoiceInfo"/>
+                            <PropertyValue Property="Target" AnnotationPath="Invoice/@UI.LineItem" />
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="ShipmentLineItem"/>
+                            <PropertyValue Property="Label" String="货运信息"/>
+                            <PropertyValue Property="Target"  AnnotationPath="FromShipment/@UI.LineItem#ShipmentLineItem"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.Invoice">
+                <Annotation Term="UI.LineItem">
+                <Annotation Term="UI.Criticality" Path="statusColor"></Annotation>
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="invoiceId" />
+                            <PropertyValue Property="Label" String="发票ID"/>
+                        </Record>
+                          <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="statusId" />
+                            <PropertyValue Property="Label" String="状态"/>
+                            <PropertyValue Property="Criticality" Path="statusColor"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="partyIdFrom" />
+                            <PropertyValue Property="Label" String="开据方"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="invoiceDate" />
+                            <PropertyValue Property="Label" String="开据时间"/>
+                        </Record> 
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="description" />
+                            <PropertyValue Property="Label" String="描述"/>
+                        </Record> 
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="orderId" />
+                            <PropertyValue Property="Label" String="订单ID"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
+                        </Record> 
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.PurchaseOrder">
+                <Annotation Term="UI.LineItem">
+                    <Annotation Term="UI.Criticality" Path="orderHeaderStatus"/>
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="订单ID"/>
+                            <PropertyValue Property="Value" Path="orderId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="订单备注"/>
+                            <PropertyValue Property="Value" Path="orderName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="statusId"/>
+                            <PropertyValue Property="Label" String="状态"/>
+                            <PropertyValue Property="Criticality" Path="orderHeaderStatus"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="销售渠道"/>
+                            <PropertyValue Property="Value" Path="salesChannelEnumId"/>
+                        </Record>
+                        <Record Type="UI.DataFieldForAnnotation">
+                        <PropertyValue Property="Label" String="支付金额"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.Chart#chart1"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="合计"/>
+                            <PropertyValue Property="Value" Path="grandTotal"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="订单日期"/>
+                            <PropertyValue Property="Value" Path="orderDate"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
+                <Annotation Term="UI.Chart" Qualifier="chart1">
+                    <Record Type="UI.ChartDefinitionType" >
+                      <PropertyValue Property="Title" String="预付金额"/>
+                      <PropertyValue Property="ChartType" EnumMember="UI.ChartType/Donut" />
+                      <PropertyValue Property="Measures" >
+                        <Collection>
+                          <PropertyPath>grandTotal</PropertyPath>
+                        </Collection>
+                      </PropertyValue>
+                      <PropertyValue Property="MeasureAttributes">
+                        <Collection>
+                          <Record Type="UI.ChartMeasureAttributeType" >
+                            <PropertyValue Property="Measure" PropertyPath="grandTotal" />
+                            <PropertyValue Property="DataPoint" AnnotationPath="@UI.DataPoint#grandTotal_Pie" />
+                          </Record>
+                        </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation> 
+
+                <Annotation Term="UI.DataPoint"  Qualifier="grandTotal_Pie">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="amountPaid" />
+                        <PropertyValue Path="orderId" Property="Title" />
+                        <PropertyValue Property="TargetValue"  Path="grandTotal" />  
+                           <PropertyValue Property="Criticality"  Path="donutChartCriticalValue" />  
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.PurchaseAgreement">
+                <Annotation Term="UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="BaseInfo"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BaseInfo"/>
+                            <PropertyValue Property="Label" String="基本信息"/>
+                        </Record>
+                         <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="TimeInfo"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#AgreementTime"/>
+                            <PropertyValue Property="Label" String="合同时间"/>
+                        </Record>
+                        
+                    </Collection>
+                </Annotation>
+
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <!-- <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="AgreementItemLineItem"/>
+                            <PropertyValue Property="Target" AnnotationPath="AgreementItem/@UI.LineItem#AgreementItemLineItem" />
+                            <PropertyValue Property="Label" String="合同项目"/>
+                        </Record> -->
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="AgreementTermLineItem"/>
+                            <PropertyValue Property="Target" AnnotationPath="AgreementTerm/@UI.LineItem#AgreementTermLineItem" />
+                            <PropertyValue Property="Label" String="合同条款"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.ChangeSupplierStatusToEnable">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+             <Annotations Target="com.dpbird.O3Container/SupplierParties">
+                <Annotation Term="UI.UpdateHidden">
+                    <If>
+                            <Eq>
+                                <Path>statusId</Path>
+                                <String>PARTY_DISABLED</String>
+                            </Eq>
+                      
+                        <Bool>true</Bool>
+                        <Bool>false</Bool>
+                    </If>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.O3Container/SupplierParties">
+                <Annotation Term="UI.DeleteHidden" Bool="true"/>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.Shipment">
+            <Annotation Term="UI.LineItem" Qualifier="ShipmentLineItem">
+            <Annotation Term="UI.Criticality" Path="shipmentStatus"></Annotation>
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="trackingIdNumber"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="shipmentId"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                          <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ShipmentItem/productId"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ShipmentRouteSegment/carrierPartyId"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="primaryOrderId"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                         <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="estimatedShipDate"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                          <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ShipmentRouteSegment/actualArrivalDate"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                         <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="SupplierPartyAndContactForShip/address1"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                          <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="CustomerPartyAndContactForShip/address1"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="statusId"/>
+                            <PropertyValue Property="Criticality" Path="shipmentStatus">
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.FinAccount">
+                <Annotation Term="UI.LineItem" Qualifier="FinAccountLineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="finAccountName"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="finAccountCode"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                          <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="currencyUomId"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="accountName"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="statusId"/>
+                            <PropertyValue Property="Criticality">
+                             <If>
+                                <Or>
+                                <Eq>
+                                    <Path>statusId</Path>
+                                    <String>FNACT_MANFROZEN</String>
+                                </Eq>
+                                 <Eq>
+                                    <Path>statusId</Path>
+                                    <String>FNACT_CANCELLED</String>
+                                </Eq>
+                                </Or>
+                                 <Int>1</Int>
+                                <Int>3</Int>
+                            </If>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.SupplierPartyAndContactFroShip/address1">
+            <Annotation Term="Common.Label" String="发货地址"></Annotation>
+            </Annotations>
+           
+            <Annotations Target="com.dpbird.PartyAndContact">
+                <Annotation Term="UI.LineItem" Qualifier="PartyRelationshipLineItem">
+                    <Collection>
+                       
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="姓名"/>
+                            <PropertyValue Property="Value" Path="partyName"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="phoneMobile"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="primaryEmail"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                         <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="primaryPhone"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                          <PropertyValue Property="Label" String="职位"/>
+                            <PropertyValue Property="Value" Path="position"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.Party">
+            <Annotation Term="UI.QuickViewFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="quickviewfieldgroup"/>
+                            <PropertyValue Property="Label" String="承运公司信息"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#quickviewfieldgroup"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="quickviewfieldgroup">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="公司名称"/>
+                                    <PropertyValue Property="Value" Path="partyName"/>
+                                </Record>
+                                 <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="联系电话"/>
+                                    <PropertyValue Property="Value" Path="PartyAndContact/primaryPhone"/>
+                                </Record>
+                                 <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="邮箱"/>
+                                    <PropertyValue Property="Value" Path="PartyAndContact/primaryEmail"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

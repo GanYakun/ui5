@@ -1,0 +1,672 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+     <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Measures.V1.xml">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/bf-demo/control/odataAppSvc/paymentManage/$metadata">
+        <edmx:Include Namespace="com.dpbird"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
+         
+
+            <Annotations Target="com.dpbird.Payment/amount">
+                <Annotation Term="Measures.Unit" Path="currencyUomId"/>
+            </Annotations>
+
+              <Annotations Target="com.dpbird.Payment/actualCurrencyAmount">
+                <Annotation Term="Measures.Unit" Path="actualCurrencyUomId"/>
+            </Annotations>
+
+             <Annotations Target="com.dpbird.OrderHeader/grandTotal">
+                <Annotation Term="Measures.Unit" String="CNY"/>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.OrderPaymentPreference/maxAmount">
+                <Annotation Term="Measures.Unit" String="CNY"/>
+            </Annotations>
+
+             <Annotations Target="com.dpbird.InvoiceItem/quantity">
+                <Annotation Term="Measures.Unit" Path="Product/QuantityUom/description"/>
+            </Annotations>
+
+             <Annotations Target="com.dpbird.InvoiceItem/amount">
+                <Annotation Term="Measures.Unit" String="CNY"/>
+            </Annotations>
+
+             <Annotations Target="com.dpbird.AcctgTransEntry/amount">
+                <Annotation Term="Measures.Unit" String="CNY"/>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.Payment">
+
+                <Annotation Term="UI.SelectionFields" >
+                    <Collection>
+                        <PropertyPath>paymentId</PropertyPath>
+                        <PropertyPath>statusId</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                <Annotation Term="UI.Criticality" Path="statusColor"/>
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="paymentId"/>
+                        </Record>
+                        
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="statusId"/>
+                            <PropertyValue Property="Criticality" Path="statusColor"/>
+                            <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithIcon"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="comments"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="partyIdFrom"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="partyIdTo"/>
+                        </Record>
+                       
+                         <!-- <Record Type="UI.DataFieldForAnnotation">
+                            <PropertyValue Property="Label" String="已结清金额"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.Chart#Bullet"/>
+                        </Record> -->
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="amount"/>
+                             <PropertyValue Property="Label" String="支付金额"/>
+                        </Record>
+                         <!-- <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="actualCurrencyAmount"/>
+                        </Record> -->
+                         <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="effectiveDate"/>
+                              <PropertyValue Property="Label" String="创建日期"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
+                  <Annotation Term="UI.Chart" Qualifier="Bullet">
+                    <Record Type="UI.ChartDefinitionType" >
+                      <PropertyValue Property="Title" String="支付进度"/>
+                      <PropertyValue Property="ChartType" EnumMember="UI.ChartType/Bullet" />
+                      <PropertyValue Property="Measures">
+                        <Collection>
+                          <PropertyPath>actualCurrencyAmount</PropertyPath>
+                        </Collection>
+                      </PropertyValue>
+                      <PropertyValue Property="MeasureAttributes">
+                        <Collection>
+                          <Record Type="UI.ChartMeasureAttributeType" >
+                            <PropertyValue Property="Measure" PropertyPath="actualCurrencyAmount" />
+                            <PropertyValue Property="DataPoint" AnnotationPath="@UI.DataPoint#Bullet" />
+                          </Record>
+                        </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation> 
+
+                 <Annotation Term="UI.DataPoint"  Qualifier="Bullet">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="actualCurrencyAmount" />  
+                        <PropertyValue Property="TargetValue" Path="amount" />                     
+                      <PropertyValue Property="MaximumValue" Path="amount" /> 
+                      <PropertyValue Property="MinimumValue" Decimal="0" /> 
+                      <PropertyValue Property="Criticality" Path="chartCriticalValue" /> 
+                    </Record>
+                </Annotation>
+
+                <Annotation Term="UI.Chart" Qualifier="Donut">
+                    <Record Type="UI.ChartDefinitionType" >
+                      <PropertyValue Property="Title" String="支付进度图"/>
+                       <PropertyValue Property="Description" String="已支付金额——待支付金额"/>
+                      <PropertyValue Property="ChartType" EnumMember="UI.ChartType/Donut" />
+                      <PropertyValue Property="Measures">
+                        <Collection>
+                          <PropertyPath>actualCurrencyAmount</PropertyPath>
+                        </Collection>
+                      </PropertyValue>
+                      <PropertyValue Property="MeasureAttributes">
+                        <Collection>
+                          <Record Type="UI.ChartMeasureAttributeType" >
+                            <PropertyValue Property="Measure" PropertyPath="actualCurrencyAmount" />
+                            <PropertyValue Property="DataPoint" AnnotationPath="@UI.DataPoint#Donut" />
+                          </Record>
+                        </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation> 
+
+                 <Annotation Term="UI.DataPoint"  Qualifier="Donut">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Value" Path="actualCurrencyAmount" />  
+                        <PropertyValue Property="TargetValue" Path="amount" />                     
+                      <PropertyValue Property="Criticality" Path="chartCriticalValue" /> 
+                    </Record>
+                </Annotation>
+
+                <Annotation Term="UI.PresentationVariant" Qualifier="AllPayment">
+                    <Record Type="UI.PresentationVariantType">
+                      <PropertyValue Property="Text" String="全部支付" />
+                      <PropertyValue Property="Visualizations">
+                        <Collection>
+                          <AnnotationPath>@UI.LineItem</AnnotationPath>
+                        </Collection>
+                      </PropertyValue>
+                      <PropertyValue Property="SortOrder">
+                        <Collection>
+                          <Record>
+                            <PropertyValue Property="Property" PropertyPath="paymentId" />
+                            <PropertyValue Property="Descending" Bool="true"/>
+                          </Record>
+                        </Collection>
+                      </PropertyValue>
+                    </Record>
+                </Annotation>
+
+
+
+                <Annotation Term="UI.FieldGroup" Qualifier="BaseInfo">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="paymentId"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="paymentTypeId"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="statusId"/>
+                                    <PropertyValue Property="Criticality" Path="statusColor"/>
+                                    <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="paymentMethodTypeId"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="paymentMethodId"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="partyIdFrom"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="partyIdTo"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="effectiveDate"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="comments"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <Annotation Term="UI.DataPoint" Qualifier="Status">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Title" String="支付状态"/>
+                        <PropertyValue Property="Value" Path="statusId"/>
+                        <PropertyValue Property="Criticality" Path="statusColor"/>
+                    </Record>
+                </Annotation>
+
+                <Annotation Term="UI.FieldGroup" Qualifier="SalesArea">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                  <PropertyValue Property="Value" Path="paymentMethodTypeId" />
+                                </Record>
+                                 <Record Type="UI.DataField">
+                                  <PropertyValue Property="Value" Path="effectiveDate" />
+                                   <PropertyValue Property="Label" String="创建日期" />
+                                </Record>
+                              <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="partyIdFrom" />
+                              </Record>
+                              <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="partyIdTo" />
+                              </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <Annotation Term="UI.FieldGroup" Qualifier="Amount">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                              <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="amount" />
+                              </Record>
+                              <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="currencyUomId" />
+                              </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                 <Annotation Term="UI.DataPoint" Qualifier="Amount">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Title" String="支付金额"/>
+                        <PropertyValue Property="Value" Path="amount"/>
+                    </Record>
+                </Annotation>
+
+                 <Annotation Term="UI.DataPoint" Qualifier="ActualCurrencyAmount">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Title" String="实际支付金额"/>
+                        <PropertyValue Property="Value" Path="actualCurrencyAmount"/>
+                    </Record>
+                </Annotation>
+
+                <Annotation Term="UI.HeaderFacets" >
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                             <PropertyValue Property="Label" String="基本信息"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#SalesArea"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#Status"/>
+                        </Record>        
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#Amount"/>
+                        </Record>
+                         <!-- <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@UI.Chart#Donut"/>
+                        </Record> -->
+                    </Collection>
+                </Annotation>
+
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <!-- <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="BaseInfo"/>
+                            <PropertyValue Property="Label" String="基本信息"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BaseInfo"/>
+                        </Record> -->
+                        <!-- <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="PaymentApplication"/>
+                            <PropertyValue Property="Label" String="已应用的支付"/>
+                            <PropertyValue Property="Target" AnnotationPath="PaymentApplication/@UI.LineItem"/>
+                        </Record> -->
+                         <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="OrderPaymentPreference"/>
+                            <PropertyValue Property="Label" String="订单支付"/>
+                            <PropertyValue Property="Target" AnnotationPath="OrderPaymentPreference/@UI.LineItem#OrderPaymentPreference"/>
+                        </Record>
+                         <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="GeneratedFacet4"/>
+                            <PropertyValue Property="Label" String="发票项目"/>
+                            <PropertyValue Property="Target" AnnotationPath="InvoiceItem/@UI.LineItem"/>
+                        </Record>
+                           <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="AcctgTrans"/>
+                            <PropertyValue Property="Label" String="交易"/>
+                            <PropertyValue Property="Target" AnnotationPath="AcctgTransEntry/@UI.LineItem"/>
+                        </Record>
+                        <!-- <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="PaymentAttribute"/>
+                            <PropertyValue Property="Label" String="属性"/>
+                            <PropertyValue Property="Target" AnnotationPath="PaymentAttribute/@UI.LineItem"/>
+                        </Record> -->
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.PaymentApplication">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="invoiceId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="billingAccountId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="amountApplied"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Payment/currencyUomId"/>
+                        </Record>
+
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            
+
+            <Annotations Target="com.dpbird.PaymentAttribute">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="attrName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="attrValue"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="paymentId" />
+                            <PropertyValue Property="Label" String="支付标识" />
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="attrDescription" />
+                            <PropertyValue Property="Label" String="描述" />
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.AcctgTrans">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="acctgTransId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="acctgTransTypeId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="transactionDate"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.AcctgTransEntry">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="序号"/>
+                            <PropertyValue Property="Value" Path="acctgTransEntrySeqId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="交易ID"/>
+                            <PropertyValue Property="Value" Path="acctgTransId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="交易日期"/>
+                            <PropertyValue Property="Value" Path="AcctgTrans/transactionDate"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="借贷标识符"/>
+                            <PropertyValue Property="Value" Path="debitCreditFlag"/>
+                        </Record>
+                         <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="总账科目类型"/>
+                            <PropertyValue Property="Value" Path="glAccountTypeId"/>
+                        </Record>
+                         <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="总账ID"/>
+                            <PropertyValue Property="Value" Path="glAccountId"/>
+                        </Record>
+                          <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="户名"/>
+                            <PropertyValue Property="Value" Path="GlAccount/accountName"/>
+                        </Record>
+                         <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="账号"/>
+                            <PropertyValue Property="Value" Path="GlAccount/accountCode"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="总账科目"/>
+                            <PropertyValue Property="Value" Path="GlAccount/glAccountClassId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="交易金额"/>
+                            <PropertyValue Property="Value" Path="amount"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.OrderPaymentPreference">
+                <Annotation Term="UI.LineItem" Qualifier="OrderPaymentPreference">
+                    <Annotation Term="UI.Criticality" Path="orderPaymentStatus"/>
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="orderPaymentPreferenceId"/>
+                        </Record>
+                         <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="orderId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="finAccountId"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="statusId"/>
+                            <PropertyValue Property="Criticality" Path="orderPaymentStatus"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="maxAmount"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.Party">
+                <Annotation Term="UI.QuickViewFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="quickviewfieldgroup"/>
+                            <PropertyValue Property="Label" String="承运公司信息"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#quickviewfieldgroup"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="quickviewfieldgroup">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="公司名称"/>
+                                    <PropertyValue Property="Value" Path="partyName"/>
+                                </Record>
+                                 <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="联系电话"/>
+                                    <PropertyValue Property="Value" Path="PartyAndContact/primaryPhone"/>
+                                </Record>
+                                 <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="邮箱"/>
+                                    <PropertyValue Property="Value" Path="PartyAndContact/primaryEmail"/>
+                                </Record>
+                                 <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="地址"/>
+                                    <PropertyValue Property="Value" Path="PartyAndContact/address1"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.OrderHeader">
+                <Annotation Term="UI.QuickViewFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="quickviewfieldgroup"/>
+                            <PropertyValue Property="Label" String="订单信息"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#quickviewfieldgroup"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="quickviewfieldgroup">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="订单ID"/>
+                                    <PropertyValue Property="Value" Path="orderId"/>
+                                </Record>
+                                 <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="订单备注"/>
+                                    <PropertyValue Property="Value" Path="orderName"/>
+                                </Record>
+                                 <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="状态"/>
+                                    <PropertyValue Property="Value" Path="statusId"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="合计"/>
+                                    <PropertyValue Property="Value" Path="grandTotal"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+             <Annotations Target="com.dpbird.InventoryItem">
+                <Annotation Term="UI.QuickViewFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="quickviewfieldgroup"/>
+                            <PropertyValue Property="Label" String="库存项信息"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#quickviewfieldgroup"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="quickviewfieldgroup">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="库存项ID"/>
+                                    <PropertyValue Property="Value" Path="inventoryItemId"/>
+                                </Record>
+                                 <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="产品名称"/>
+                                    <PropertyValue Property="Value" Path="productId"/>
+                                </Record>
+                                 <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="仓库ID"/>
+                                    <PropertyValue Property="Value" Path="facilityId"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="仓库拥有者"/>
+                                    <PropertyValue Property="Value" Path="ownerPartyId"/>
+                                </Record>
+                                  <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="实际库存数量"/>
+                                    <PropertyValue Property="Value" Path="quantityOnHandTotal"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.Product">
+                <Annotation Term="UI.QuickViewFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="quickviewfieldgroup"/>
+                            <PropertyValue Property="Label" String="产品"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#quickviewfieldgroup"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="quickviewfieldgroup">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="产品类型"/>
+                                    <PropertyValue Property="Value" Path="productTypeId"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="产品名称"/>
+                                    <PropertyValue Property="Value" Path="productName"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.FinAccount">
+                <Annotation Term="UI.QuickViewFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="quickviewfieldgroup"/>
+                            <PropertyValue Property="Label" String="账户信息"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#quickviewfieldgroup"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="quickviewfieldgroup">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="finAccountName"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="finAccountCode"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="currencyUomId"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                         <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="accountName"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="statusId"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.InvoiceItem">
+                <Annotation Term="UI.LineItem" >
+                        <Collection>
+                           <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="invoiceItemSeqId" />
+                                <PropertyValue Property="Label" String="序号" />
+                                <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="invoiceId" />
+                                <PropertyValue Property="Label" String="发票ID" />
+                                <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="inventoryItemId" />
+                                 <PropertyValue Property="Label" String="库存项ID" />
+                                    <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="productId" />
+                                <PropertyValue Property="Label" String="产品名称" />                                
+                                <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="quantity" />
+                                 <PropertyValue Property="Label" String="数量" />
+                                <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="amount" />
+                                <PropertyValue Property="Label" String="单价金额" />
+                                    <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                            </Record>
+                        </Collection>
+                    </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

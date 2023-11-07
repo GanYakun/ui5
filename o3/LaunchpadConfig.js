@@ -33,6 +33,66 @@
         isGroupLocked: false,
         tiles: [
           {
+            id: "purchaseorder_Manage",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "PurchaseOrder",
+            "semanticAction": "Manage",
+            properties: {
+              title: "采购单",
+              subtitle: "采购单主数据",
+              info: "采购单的通用管理",
+              targetURL: "#PurchaseOrder-manage",
+            }
+          },
+          {
+            id: "supplierParty_manage",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "Supplier",
+            "semanticAction": "Manage",
+            properties: {
+              title: "供应商",
+              subtitle: "供应商主数据",
+              info: "供应商的通用管理",
+              targetURL: "#SupplierParty-Manage",
+            }
+          },
+          {
+            id: "purchaseRequest_Manage",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "Purchase",
+            "semanticAction": "Request",
+            properties: {
+              title: "采购请求",
+              subtitle: "采购请求管理",
+              info: "采购请求应用",
+              targetURL: "#Purchase-Request",
+            }
+          },
+          {
+            id: "purchaseQuote_Manage",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "PurchaseQuote",
+            "semanticAction": "Manage",
+            properties: {
+              title: "报价",
+              subtitle: "报价管理",
+              info: "报价应用",
+              targetURL: "#PurchaseQuote-Manage",
+            }
+          },
+          {
             id: "Invoice",//tile的ID
             chipId: "catalogTile_35",
             size: "1x1",
@@ -46,7 +106,37 @@
               info: "发票的通用管理",
               targetURL: "#Invoice-Manage",
             }
-          }
+          },
+          {
+            id: "payment_Manage",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "Payment",
+            "semanticAction": "Manage",
+            properties: {
+              title: "支付",
+              subtitle: "支付主数据",
+              info: "支付的通用管理",
+              targetURL: "#Payment-Manage",
+            }
+          },
+          {
+            id: "purchaseAgreement_Manage",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "PurchaseAgreement",
+            "semanticAction": "Manage",
+            properties: {
+              title: "合同",
+              subtitle: "合同主数据",
+              info: "合同的通用管理",
+              targetURL: "#PurchaseAgreement-Manage",
+            }
+          },
           ]
       }
     ],
@@ -95,6 +185,42 @@
         applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
         url: sUshellO3RootPath + "/apps/invoice-manage/webapp",
         description: "管理形式发票"
+      },
+      "PurchaseOrder-manage": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.purchaseordermanage",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/purchaseorder-manage/webapp",
+        description: "管理采购订单"
+      },
+      "SupplierParty-Manage": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.supplierpartymanage",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/supplierparty-manage/webapp",
+        description: "管理供应商"
+      },
+      "Purchase-Request": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.purchaserequest",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/purchase-request/webapp",
+        description: "管理订单"
+      },
+      "PurchaseQuote-Manage": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.purchasequotemanage",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/purchasequote-manage/webapp",
+        description: "管理订单"
+      },
+      "Payment-Manage": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.paymentmanage",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/payment-manage/webapp",
+        description: "管理支付"
+      },
+      "PurchaseAgreement-Manage": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.purchaseagreementmanage",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/purchaseagreement-manage/webapp",
+        description: "预览食品销售数据"
       },
    },
 
