@@ -1,0 +1,194 @@
+{
+    "_version": "1.32.0",
+    "sap.app": {
+        "id": "com.banfftech.processentitymanage",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "dataSources": {
+            "mainService": {
+                "uri": "/officeauto/control/odataAppSvc/approvalFlow/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "annotation"
+                    ],
+                    "odataVersion": "4.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            },
+            "annotation": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation.xml",
+                "settings": {
+                    "localUri": "annotations/annotation.xml"
+                }
+            }
+        },
+        "offline": false,
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "ui5template.fiorielements.v4.lrop",
+            "version": "1.0.0"
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "com-banfftech-processentitymanage-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "ProcessEntity",
+                    "action": "Manage",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "icon": ""
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "resources": {
+            "js": [],
+            "css": []
+        },
+        "dependencies": {
+            "minUI5Version": "1.118.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.fe.templates": {}
+            }
+        },
+        "models": {
+            "@i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            }
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "ProcessEntitiesList",
+                    "target": "ProcessEntitiesList"
+                },
+                {
+                    "pattern": "ProcessEntities({key}):?query:",
+                    "name": "ProcessEntitiesObjectPage",
+                    "target": "ProcessEntitiesObjectPage"
+                },
+                {
+                    "pattern": "ProcessEntities({key})/DBField({key2}):?query:",
+                    "name": "ProcessEntities_BDFieldObjectPage",
+                    "target": "ProcessEntities_BDFieldObjectPage"
+                }
+            ],
+            "targets": {
+                "ProcessEntitiesList": {
+                    "type": "Component",
+                    "id": "ProcessEntitiesList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "ProcessEntities",
+                            "variantManagement": "Page",
+                            "navigation": {
+                                "ProcessEntities": {
+                                    "detail": {
+                                        "route": "ProcessEntitiesObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "ProcessEntitiesObjectPage": {
+                    "type": "Component",
+                    "id": "ProcessEntitiesObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "entitySet": "ProcessEntities",
+                            "navigation": {
+                                "DBField": {
+                                    "detail": {
+                                        "route": "ProcessEntities_BDFieldObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "ProcessEntities_BDFieldObjectPage": {
+                    "type": "Component",
+                    "id": "ProcessEntities_BDFieldObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "DBFields",
+                            "contextPath": "/ProcessEntities/DBField",
+                            "navigation": {}
+                        }
+                    }
+                }
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "extends": {
+            "extensions": {
+                "sap.ui.controllerExtensions": {}
+            }
+        }
+    },
+    "sap.platform.abap": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.platform.hcp": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.fiori": {
+        "_version": "1.1.0",
+        "registrationIds": [],
+        "archeType": "transactional"
+    }
+}

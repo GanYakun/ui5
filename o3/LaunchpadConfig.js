@@ -48,7 +48,45 @@
               }
          }
         ],
-       },
+       },{
+        //业务对象管理(标签显示配置、业务对象配置)
+        id: "SystemManage",
+        title: "系统管理",
+        isPreset: true,
+        isVisible: true,
+        isGroupLocked: true,
+        tiles: [
+          {
+            id: "approve_flow",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "ProcessEntity",
+            "semanticAction": "Manage",
+            properties: {
+              title: "业务对象-管理",
+              subtitle: "业务对象管理",
+              info: "程序员管理可审批的业务对象、字段的语义化",
+              targetURL: "#ProcessEntity-Manage",
+            }
+          },{
+            id: "UILabApp_Manage",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "UILabApp",
+            "semanticAction": "Manage",
+            properties: {
+              title: "应用访问权限",
+              subtitle: "应用权限主数据",
+              info: "应用访问权限",
+              targetURL: "#UIApp-Manage",
+            }
+          }
+        ],
+      },
        {//主数据
          id: "orgStructure_manage",
          title: "组织管理",
@@ -281,6 +319,18 @@
        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
        url: sUshellO3RootPath + "/apps/role-manage/webapp",
        description: "角色管理"
+      },
+      "ProcessEntity-Manage": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.processentitymanage",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/process-entity-manage/webapp",
+        description: "业务主表管理"
+      },
+      "UIApp-Manage": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.uilabappmanage",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/uilab-app-manage/webapp",
+        description: "应用访问权限"
       },
    },
 

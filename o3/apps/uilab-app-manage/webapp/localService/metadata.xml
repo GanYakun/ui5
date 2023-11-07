@@ -1,0 +1,273 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Measures.V1.xml">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Core.xml">
+        <edmx:Include Namespace="Org.OData.Core.V1" Alias="Core"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Capabilities.xml">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Aggregation.xml">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Session.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Session.v1" Alias="Session"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.dpbird">
+            <EntityType Name="RoleType">
+                <Key>
+                    <PropertyRef Name="roleTypeId"/>
+                </Key>
+                <Property Name="roleTypeId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="parentTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="hasTable" Type="Edm.String" MaxLength="1"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="UILabApp">
+                <Key>
+                    <PropertyRef Name="uiLabAppId"/>
+                </Key>
+                <Property Name="uiLabAppId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="uiLabAppName" Type="Edm.String" MaxLength="255"/>
+                <Property Name="permissionId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <NavigationProperty Name="RoleTypeUILabApp" Type="Collection(com.dpbird.RoleTypeUILabApp)"/>
+            </EntityType>
+            <EntityType Name="RoleTypeUILabApp">
+                <Key>
+                    <PropertyRef Name="roleTypeUILabAppId"/>
+                </Key>
+                <Property Name="roleTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="uiLabAppId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="roleTypeUILabAppId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <NavigationProperty Name="RoleType" Type="com.dpbird.RoleType">
+                    <ReferentialConstraint Property="roleTypeId" ReferencedProperty="roleTypeId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="UILabApp" Type="com.dpbird.UILabApp">
+                    <ReferentialConstraint Property="uiLabAppId" ReferencedProperty="uiLabAppId"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityContainer Name="O3Container">
+                <EntitySet Name="RoleTypeUILabApps" EntityType="com.dpbird.RoleTypeUILabApp">
+                    <NavigationPropertyBinding Path="RoleType" Target="RoleTypes"/>
+                    <NavigationPropertyBinding Path="UILabApp" Target="UILabApps"/>
+                </EntitySet>
+                <EntitySet Name="RoleTypes" EntityType="com.dpbird.RoleType"/>
+                <EntitySet Name="UILabApps" EntityType="com.dpbird.UILabApp">
+                    <NavigationPropertyBinding Path="RoleTypeUILabApp" Target="RoleTypeUILabApps"/>
+                </EntitySet>
+            </EntityContainer>
+            <Annotations Target="com.dpbird.RoleType/roleTypeId">
+                <Annotation Term="Common.Label">
+                    <String>roleTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RoleType/parentTypeId">
+                <Annotation Term="Common.Label">
+                    <String>parentTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RoleType/hasTable">
+                <Annotation Term="Common.Label">
+                    <String>hasTable</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RoleType/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.UILabApp">
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>uiLabAppName</PropertyPath>
+                        <PropertyPath>permissionId</PropertyPath>
+                        <PropertyPath>description</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>uiLabAppName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>permissionId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>description</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="BasicInfo">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>uiLabAppName</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>permissionId</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>description</Path>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>BasicInfo</String>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.UILabApp/uiLabAppId">
+                <Annotation Term="Common.Label">
+                    <String>uiLabAppId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.UILabApp/uiLabAppName">
+                <Annotation Term="Common.Label">
+                    <String>uiLabAppName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.UILabApp/permissionId">
+                <Annotation Term="Common.Label">
+                    <String>permissionId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.UILabApp/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RoleTypeUILabApp">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>roleTypeId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>uiLabAppId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RoleTypeUILabApp/roleTypeId">
+                <Annotation Term="Common.Label">
+                    <String>roleTypeId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>RoleType/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextFirst</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>roleTypeId</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>RoleTypes</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>roleTypeId</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>roleTypeId</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RoleTypeUILabApp/uiLabAppId">
+                <Annotation Term="Common.Label">
+                    <String>uiLabAppId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>UILabApp/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextFirst</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>uiLabAppId</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>UILabApps</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>uiLabAppId</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>uiLabAppId</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RoleTypeUILabApp/roleTypeUILabAppId">
+                <Annotation Term="Common.Label">
+                    <String>roleTypeUILabAppId</String>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
