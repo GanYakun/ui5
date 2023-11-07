@@ -15,7 +15,40 @@
 
 
     groups: [
+      {
+        id: "我的主页",
+        title: "我的主页",
+        isPreset: true,
+        isVisible: true,
+        isGroupLocked: false,
+        tiles: [
 
+        ]
+      },
+      {
+        id: "c",
+        title: "采购管理",
+        isPreset: true,
+        isVisible: true,
+        isGroupLocked: false,
+        tiles: [
+          {
+            id: "Invoice",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "Invoice",
+            "semanticAction": "Manage",
+            properties: {
+              title: "发票",
+              subtitle: "发票主数据",
+              info: "发票的通用管理",
+              targetURL: "#Invoice-Manage",
+            }
+          }
+          ]
+      }
     ],
     catalogs: [
       {
@@ -57,7 +90,12 @@
       }
     ],
     applications: {
-
+      "Invoice-Manage": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.invoicemanage",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/invoice-manage/webapp",
+        description: "管理形式发票"
+      },
    },
 
     // data for the personalization service
