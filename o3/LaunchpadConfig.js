@@ -71,29 +71,19 @@
               targetURL: "#ProcessEntity-Manage",
             }
           },{
-            //业务对象管理(标签显示配置、业务对象配置)
-            id: "ProcessEntityManage",
-            title: "流程管理",
-            isPreset: true,
-            isVisible: true,
-            isGroupLocked: true,
-            tiles: [
-              {
-                id: "customer_process_entity_manage",//tile的ID
-                chipId: "catalogTile_35",
-                size: "1x1",
-                tileType: "sap.ushell.ui.tile.StaticTile",
-                isLinkPersonalizationSupported: true,
-                "semanticObject": "ProcessEntity",
-                "semanticAction": "Manage",
-                properties: {
-                  title: "业务应用-管理",
-                  subtitle: "业务应用管理",
-                  info: "设置业务应用对应的字段是否可用作审批条件",
-                  targetURL: "#Customer-ProcessEntity-Manage",
-                }
-              }
-            ],
+            id: "customer_process_entity_manage",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "ProcessEntity",
+            "semanticAction": "Manage",
+            properties: {
+              title: "业务应用-管理",
+              subtitle: "业务应用管理",
+              info: "设置业务应用对应的字段是否可用作审批条件",
+              targetURL: "#Customer-ProcessEntity-Manage",
+            }
           },{
             id: "UILabApp_Manage",//tile的ID
             chipId: "catalogTile_35",
