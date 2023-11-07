@@ -1,0 +1,297 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/gongsconfig/control/odataAppSvc/approvalManage/$metadata">
+        <edmx:Include Namespace="com.dpbird"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
+            <Annotations Target="com.dpbird.Approved/statusId">
+                <Annotation Term="UI.ParameterDefaultValue" String="WEPR_COMPLETE"/> 
+                <Annotation Term="UI.Hidden" Bool="true"/>
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="com.dpbird.ApproveRefuse/statusId">
+                <Annotation Term="UI.ParameterDefaultValue" String="WEPR_REFUSE"/> 
+                <Annotation Term="UI.Hidden" Bool="true"/>
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="com.dpbird.Approved">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>approval</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ApproveRefuse">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>approval</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.O3Container/Approvals">
+                 <Annotation Term="UI.DeleteHidden" Bool="true"/>  
+            </Annotations>
+            <Annotations Target="com.dpbird.Approval">
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="审批通过" />
+                            <PropertyValue Property="Action" String="com.dpbird.Approved" />
+                            <Annotation Term="UI.Hidden">
+                                <If>
+                                    <Eq>
+                                        <Path>statusId</Path>
+                                        <String>WEPR_WAIT</String>
+                                    </Eq>
+                                    <Bool>false</Bool>
+                                    <Bool>true</Bool>
+                                </If>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="审批不通过" />
+                            <PropertyValue Property="Action" String="com.dpbird.ApproveRefuse" />
+                            <Annotation Term="UI.Hidden">
+                                <If>
+                                    <Eq>
+                                        <Path>statusId</Path>
+                                        <String>WEPR_WAIT</String>
+                                    </Eq>
+                                    <Bool>false</Bool>
+                                    <Bool>true</Bool>
+                                </If>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionPresentationVariant" Qualifier="WaitApproval">
+                    <Record Type="UI.SelectionPresentationVariantType">
+                        <PropertyValue Property="Text" String="待审批" />
+                        <PropertyValue Property="SelectionVariant">
+                            <Record Type="UI.SelectionVariantType">
+                                <PropertyValue Property="SelectOptions">
+                                    <Collection>
+                                        <Record Type="UI.SelectOptionType">
+                                            <PropertyValue Property="PropertyName" PropertyPath="statusId" />
+                                            <PropertyValue Property="Ranges">
+                                                <Collection>
+                                                    <Record Type="UI.SelectionRangeType">
+                                                        <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" />
+                                                        <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" />
+                                                        <PropertyValue Property="Low" String="WEPR_WAIT" />
+                                                    </Record>
+                                                </Collection>
+                                            </PropertyValue>
+                                        </Record>
+                                    </Collection>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="PresentationVariant">
+                            <Record Type="UI.PresentationVariantType">
+                                <PropertyValue Property="Visualizations">
+                                    <Collection>
+                                        <AnnotationPath>@UI.LineItem#ApprovalList</AnnotationPath>
+                                    </Collection>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionPresentationVariant" Qualifier="ProcessApproval">
+                    <Record Type="UI.SelectionPresentationVariantType">
+                        <PropertyValue Property="Text" String="已审批" />
+                        <PropertyValue Property="SelectionVariant">
+                            <Record Type="UI.SelectionVariantType">
+                                <PropertyValue Property="SelectOptions">
+                                    <Collection>
+                                        <Record Type="UI.SelectOptionType">
+                                            <PropertyValue Property="PropertyName" PropertyPath="statusId" />
+                                            <PropertyValue Property="Ranges">
+                                                <Collection>
+                                                    <Record Type="UI.SelectionRangeType">
+                                                        <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" />
+                                                        <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/NE" />
+                                                        <PropertyValue Property="Low" String="WEPR_WAIT" />
+                                                    </Record>
+                                                </Collection>
+                                            </PropertyValue>
+                                        </Record>
+                                    </Collection>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="PresentationVariant">
+                            <Record Type="UI.PresentationVariantType">
+                                <PropertyValue Property="Visualizations">
+                                    <Collection>
+                                        <AnnotationPath>@UI.LineItem#ApprovalList</AnnotationPath>
+                                    </Collection>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="ApprovalStatus">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Title" String="审批状态"/>
+                        <PropertyValue Property="Value" Path="statusId"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="GeneratedHeaderFacet1"/>
+                            <PropertyValue Property="Label" String="基本信息"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BaseInfo"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="GeneratedHeaderFacet2"/>
+                            <PropertyValue Property="Label" String="审批状态"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#ApprovalStatus"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="GeneratedFacet1"/>
+                            <PropertyValue Property="Label" String="流程发起人信息"/>
+                            <PropertyValue Property="Target" AnnotationPath="RootNodeWorkEffort/@UI.FieldGroup#ApproverInformation"/>
+                        </Record>
+                        <!-- 入库单数据集 -->
+                        <Record Type="UI.CollectionFacet">
+                            <Annotation Term="UI.Hidden">
+                                <If>
+                                    <And>
+                                        <Eq><Path>dbEntityName</Path><String>CustRequest</String></Eq>
+                                        <Eq><Path>PurchaseShipmentRequest/custRequestTypeId</Path><String>RF_INCOMING_SHIPMENT</String></Eq>
+                                    </And>
+                                    <Bool>false</Bool><Bool>true</Bool>
+                                </If>
+                            </Annotation>
+                            <PropertyValue Property="ID" String="InStoreCollectionFacet"/>
+                            <PropertyValue Property="Label" String="入库基本信息"/>
+                            <PropertyValue Property="Facets" >
+                                <Collection >
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="InStoreInfo"/>
+                                        <PropertyValue Property="Target" AnnotationPath="PurchaseShipmentRequest/@UI.FieldGroup#BaseInfo"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <Annotation Term="UI.Hidden">
+                                            <If>
+                                                <And>
+                                                    <Eq><Path>dbEntityName</Path><String>CustRequest</String></Eq>
+                                                    <Eq><Path>PurchaseShipmentRequest/custRequestCategoryId</Path><String>RF_PURCHASE</String></Eq>
+                                                </And>
+                                                <Bool>false</Bool><Bool>true</Bool>
+                                            </If>
+                                        </Annotation>
+                                        <PropertyValue Property="Target" AnnotationPath="PurchaseShipmentRequest/CustRequestItem/@UI.LineItem#Buy_CustRequestItemLineItem"/>
+                                        <PropertyValue Property="Label" String="入库项信息"/>
+                                        <PropertyValue Property="ID" String="buy_InStoreItemInfo"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <Annotation Term="UI.Hidden">
+                                            <If>
+                                                <And>
+                                                    <Eq><Path>dbEntityName</Path><String>CustRequest</String></Eq>
+                                                    <Eq><Path>PurchaseShipmentRequest/custRequestCategoryId</Path><String>RF_RECYCLE</String></Eq>
+                                                </And>
+                                                <Bool>false</Bool><Bool>true</Bool>
+                                            </If>
+                                        </Annotation>
+                                        <PropertyValue Property="Target" AnnotationPath="PurchaseShipmentRequest/CustRequestItem/@UI.LineItem#Rec_CustRequestItemLineItem"/>
+                                        <PropertyValue Property="Label" String="入库项信息"/>
+                                        <PropertyValue Property="ID" String="rec_InStoreItemInfo"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+
+                        <!-- 出库单数据集 -->
+                        <Record Type="UI.CollectionFacet">
+                            <Annotation Term="UI.Hidden">
+                                <If>
+                                    <And>
+                                        <Eq><Path>dbEntityName</Path><String>CustRequest</String></Eq>
+                                        <Eq><Path>OfficeShipmentRequest/custRequestTypeId</Path><String>RF_OUTGOING_SHIPMENT</String></Eq>
+                                    </And>
+                                    <Bool>false</Bool><Bool>true</Bool>
+                                </If>
+                            </Annotation>
+                            <PropertyValue Property="ID" String="OutStoreCollectionFacet"/>
+                            <PropertyValue Property="Label" String="出库基本信息"/>
+                            <PropertyValue Property="Facets" >
+                                <Collection >
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="OutStoreInfo"/>
+                                        <PropertyValue Property="Target" AnnotationPath="OfficeShipmentRequest/@UI.FieldGroup#BaseInfo"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Target" AnnotationPath="OfficeShipmentRequest/OutgoingCustRequestItem/@UI.LineItem#CustRequestItemLineItem"/>
+                                        <PropertyValue Property="Label" String="出库项信息"/>
+                                        <PropertyValue Property="ID" String="OutStoreItemInfo"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+
+                        <!-- 调拨单数据集 -->
+                        <Record Type="UI.CollectionFacet">
+                            <Annotation Term="UI.Hidden">
+                                <If>
+                                    <And>
+                                        <Eq><Path>dbEntityName</Path><String>CustRequest</String></Eq>
+                                        <Eq><Path>TransferShipmentRequest/custRequestTypeId</Path><String>RF_TRANSFER_SHIPMENT</String></Eq>
+                                    </And>
+                                    <Bool>false</Bool><Bool>true</Bool>
+                                </If>
+                            </Annotation>
+                            <PropertyValue Property="ID" String="TranStoreCollectionFacet"/>
+                            <PropertyValue Property="Label" String="调拨基本信息"/>
+                            <PropertyValue Property="Facets" >
+                                <Collection >
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="TranStoreInfo"/>
+                                        <PropertyValue Property="Target" AnnotationPath="TransferShipmentRequest/@UI.FieldGroup#CustRequestBaseInfo"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="TranPartyStoreInfo"/>
+                                        <PropertyValue Property="Label" String="调拨出入方信息"/>
+                                        <PropertyValue Property="Target" AnnotationPath="TransferShipmentRequest/@UI.FieldGroup#TransferRequestInfo"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Target" AnnotationPath="TransferShipmentRequest/OutgoingCustRequestItem/@UI.LineItem#CustRequestItemLineItem"/>
+                                        <PropertyValue Property="Label" String="调拨项信息"/>
+                                        <PropertyValue Property="ID" String="TranStoreItemInfo"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="GeneratedFacet4"/>
+                            <PropertyValue Property="Label" String="审批记录"/>
+                            <PropertyValue Property="Target" AnnotationPath="ApprovalRecord/@UI.LineItem#RecordApproval"/>                        
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

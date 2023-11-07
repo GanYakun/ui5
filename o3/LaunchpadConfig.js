@@ -25,6 +25,54 @@
 
         ]
       },
+      {//审批
+          id: "ApprovalAppManage",
+          title: "审批管理",
+          isPreset: true,
+          isVisible: true,
+          isGroupLocked: true,
+          tiles: [
+          {
+          id: "Approval_Manage",//tile的ID
+          chipId: "catalogTile_35",
+          size: "1x1",
+          tileType: "sap.ushell.ui.tile.StaticTile",
+          isLinkPersonalizationSupported: true,
+          "semanticObject": "Approval",
+          "semanticAction": "Manage",
+              properties: {
+                title: "审批管理",
+                subtitle: "审批管理",
+                info: "审批主数据管理",
+                targetURL: "#Approval-Manage",
+              }
+         }
+        ],
+       },
+       {//主数据
+         id: "orgStructure_manage",
+         title: "组织管理",
+         isPreset: true,
+         isVisible: true,
+         isGroupLocked: true,
+         tiles: [
+          {
+            id: "Role_Manage",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "Role",
+            "semanticAction": "Manage",
+            properties: {
+              title: "角色管理",
+              subtitle: "角色管理",
+              info: "角色主数据",
+              targetURL: "#Role-Manage",
+            }
+         },
+        ],
+      },
       {
         id: "c",
         title: "采购管理",
@@ -221,6 +269,18 @@
         applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
         url: sUshellO3RootPath + "/apps/purchaseagreement-manage/webapp",
         description: "预览食品销售数据"
+      },
+      "Approval-Manage": {
+       additionalInformation: "SAPUI5.Component=com.banfftech.approvalmanage",
+       applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+       url: sUshellO3RootPath + "/apps/approval-manage/webapp",
+       description: "审批管理"
+      },
+      "Role-Manage": {
+       additionalInformation: "SAPUI5.Component=com.banfftech.rolemanage",
+       applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+       url: sUshellO3RootPath + "/apps/role-manage/webapp",
+       description: "角色管理"
       },
    },
 
