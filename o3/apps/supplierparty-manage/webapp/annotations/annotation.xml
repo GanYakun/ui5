@@ -179,15 +179,15 @@
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="地址" />
-                                    <PropertyValue Property="Value" Path="supplierAddress1" />
+                                    <PropertyValue Property="Value" Path="address1" />
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="邮箱" />
-                                    <PropertyValue Property="Value" Path="supplierPrimaryEmail" />
+                                    <PropertyValue Property="Value" Path="primaryEmail" />
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="联系电话" />
-                                    <PropertyValue Property="Value" Path="supplierPrimaryPhone" />
+                                    <PropertyValue Property="Value" Path="primaryPhone" />
                                 </Record>
                             </Collection>
                         </PropertyValue>
@@ -233,14 +233,6 @@
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="statusId"/>
                               <PropertyValue Property="Criticality" Path="criticalityValue">
-                             <!-- <If>
-                                <Eq>
-                                    <Path>statusId</Path>
-                                    <String>PARTY_DISABLED</String>
-                                </Eq>
-                                 <Int>1</Int>
-                                <Int>3</Int>
-                            </If> -->
                             </PropertyValue>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                              
@@ -250,15 +242,15 @@
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="supplierPrimaryEmail"/>
+                            <PropertyValue Property="Value" Path="primaryEmail"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
                           <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="supplierAddress1"/>
+                            <PropertyValue Property="Value" Path="address1"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
                           <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="supplierPrimaryPhone"/>
+                            <PropertyValue Property="Value" Path="primaryPhone"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
                     </Collection>
@@ -323,13 +315,13 @@
                         <PropertyValue Property="Data">
                             <Collection>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="SupplierPartyAndContact/primaryEmail" />
+                                    <PropertyValue Property="Value" Path="primaryEmail" />
                                 </Record>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="SupplierPartyAndContact/address1" />
+                                    <PropertyValue Property="Value" Path="address1" />
                                 </Record>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="SupplierPartyAndContact/primaryPhone" />
+                                    <PropertyValue Property="Value" Path="primaryPhone" />
                                 </Record>
                                   <Record Type="UI.DataFieldForAnnotation">
                             <PropertyValue Property="Label" String="公司主要联系人"/>
@@ -340,41 +332,15 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
-
-                <Annotation Term="UI.FieldGroup" Qualifier="TimeInfo">
-                    <Record Type="UI.FieldGroupType">
-                        <PropertyValue Property="Data">
-                            <Collection>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="创建日期" />
-                                    <PropertyValue Property="Value" Path="createdDate" />
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="最近更新日期" />
-                                    <PropertyValue Property="Value" Path="lastModifiedDate" />
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="首订单日期" />
-                                    <PropertyValue Property="Value" Path="firstOrderDate" />
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="加入日期" />
-                                    <PropertyValue Property="Value" Path="collectionDate" />
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-
                 
                 <Annotation Term="Communication.Contact">
                     <Record Type="Communication.ContactType">
-                        <PropertyValue Property="fn" Path="partyNamePrimary"/>
+                        <PropertyValue Property="fn" Path="contactName"/>
                         <PropertyValue Property="tel"  >
                             <Collection>
                                 <Record Type="Communication.PhoneNumberType">
                                     <PropertyValue Property="type" EnumMember="Communication.PhoneType/cell"/>
-                                    <PropertyValue Property="uri" Path="phoneMobilePrimary"/>
+                                    <PropertyValue Property="uri" Path="contactPhoneMobile"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>
@@ -382,7 +348,7 @@
                             <Collection>
                                 <Record Type="Communication.EmailAddressType">
                                     <PropertyValue Property="type" EnumMember="Communication.ContactInformationType/work"/>
-                                    <PropertyValue Property="address" Path="emailPrimary"/>
+                                    <PropertyValue Property="address" Path="contactEmailPrimary"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>
@@ -414,7 +380,7 @@
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="Label" String="公司基本信息"/>
                             <PropertyValue Property="ID" String="BaseInfo"/>
-                            <PropertyValue Property="Target" AnnotationPath="PartyGroup/@UI.FieldGroup#PartyGroupFieldGroup"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyGroupFieldGroup"/>
                             <!-- <Annotation Term="UI.PartOfPreview" Bool="false"/> -->
                         </Record>
                         <Record Type="UI.ReferenceFacet">
@@ -430,7 +396,7 @@
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="PostalAddressSelect"/>
                             <PropertyValue Property="Label" String="联系人"/>
-                            <PropertyValue Property="Target"  AnnotationPath="PartyAndContact/@UI.LineItem#PartyRelationshipLineItem"/>
+                            <PropertyValue Property="Target"  AnnotationPath="PersonAndContact/@UI.LineItem#PartyRelationshipLineItem"/>
                         </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="NoteDataLineItem"/>
@@ -680,15 +646,15 @@
             <Annotation Term="Common.Label" String="发货地址"></Annotation>
             </Annotations>
            
-            <Annotations Target="com.dpbird.PartyAndContact">
+            <Annotations Target="com.dpbird.PersonAndContact">
                 <Annotation Term="UI.LineItem" Qualifier="PartyRelationshipLineItem">
                     <Collection>
                        
-                        <Record Type="UI.DataField">
+                        <!-- <Record Type="UI.DataField">
                             <PropertyValue Property="Label" String="姓名"/>
                             <PropertyValue Property="Value" Path="partyName"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
+                        </Record> -->
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="phoneMobile"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
@@ -697,10 +663,10 @@
                             <PropertyValue Property="Value" Path="primaryEmail"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
-                         <Record Type="UI.DataField">
+                         <!-- <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="primaryPhone"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
+                        </Record> -->
                         <Record Type="UI.DataField">
                           <PropertyValue Property="Label" String="职位"/>
                             <PropertyValue Property="Value" Path="position"/>
