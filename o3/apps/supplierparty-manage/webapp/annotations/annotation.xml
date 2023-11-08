@@ -645,36 +645,6 @@
             <Annotations Target="com.dpbird.SupplierPartyAndContactFroShip/address1">
             <Annotation Term="Common.Label" String="发货地址"></Annotation>
             </Annotations>
-           
-            <Annotations Target="com.dpbird.PersonAndContact">
-                <Annotation Term="UI.LineItem" Qualifier="PartyRelationshipLineItem">
-                    <Collection>
-                       
-                        <!-- <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="姓名"/>
-                            <PropertyValue Property="Value" Path="partyName"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record> -->
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="phoneMobile"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="primaryEmail"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                         <!-- <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="primaryPhone"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record> -->
-                        <Record Type="UI.DataField">
-                          <PropertyValue Property="Label" String="职位"/>
-                            <PropertyValue Property="Value" Path="position"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                    </Collection>
-                </Annotation>
-            </Annotations>
 
             <Annotations Target="com.dpbird.Party">
             <Annotation Term="UI.QuickViewFacets">
