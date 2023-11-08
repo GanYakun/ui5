@@ -165,6 +165,7 @@
                             <PropertyValue Property="ID" String="QuickCreate"/>
                             <PropertyValue Property="Label" String="QuickCreate"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#QuickCreate"/>
+                            <Annotation Term="UI.Hidden" Path=""></Annotation>
                         </Record>
                     </Collection>
                 </Annotation>
