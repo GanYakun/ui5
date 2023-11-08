@@ -1,6 +1,7 @@
 package com.dpbird.odata;
 
 import com.dpbird.odata.edm.*;
+import com.dpbird.odata.services.OfbizServiceException;
 import com.dpbird.odata.services.ProcessorServices;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.httpclient.HttpStatus;
@@ -72,6 +73,7 @@ public class Util {
     public static final String DATE_TIME_FORMAT_GMT = "yyyy-MM-dd'T'HH:mm:ss.SSS Z";
     public static final String ODATA_PROPERTIES = "odata.properties";
     public static final String ODATA_LAB_PROPERTIES = "odatalab.properties";
+    public static final String CONFIG_PROPERTIES = "gconfig.properties";
     //	private static ResourceBundleMapWrapper uiLabelMap = null;
     private static Map<Locale, ResourceBundleMapWrapper> uiLabelLocaleMap = new HashMap<>();
 
@@ -664,7 +666,7 @@ public class Util {
             uiLabelMap.addBottomResourceBundle("CommonUiLabels");
             uiLabelMap.addBottomResourceBundle("SecurityUiLabels");
             uiLabelMap.addBottomResourceBundle("ServiceErrorUiLabels");
-            uiLabelMap.addBottomResourceBundle("ExtendedUiLabels");
+//            uiLabelMap.addBottomResourceBundle("ExtendedUiLabels");
             uiLabelLocaleMap.put(locale, uiLabelMap);
 
         }
@@ -969,26 +971,35 @@ public class Util {
                 if (property.getType() != null && property.getType().equals("Edm.Boolean")) {
                     if ((boolean) value) {
                         result.put(name, "Y");
+                        continue;
                     } else {
                         result.put(name, "N");
+                        continue;
                     }
                 } else if (property.getType() != null && property.getType().equals(OfbizMapOdata.NAMESPACE + ".MaritalStatus")) {
                     if ((Integer) value == 1) {
                         result.put(name, "S");
+                        continue;
                     } else if ((Integer) value == 2) {
                         result.put(name, "M");
+                        continue;
                     } else if ((Integer) value == 3) {
                         result.put(name, "P");
+                        continue;
                     } else if ((Integer) value == 4) {
                         result.put(name, "D");
+                        continue;
                     } else if ((Integer) value == 5) {
                         result.put(name, "W");
+                        continue;
                     }
                 } else if (property.getType() != null && property.getType().equals(OfbizMapOdata.NAMESPACE + ".Gender")) {
                     if ((Integer) value == 1) {
                         result.put(name, "M");
+                        continue;
                     } else if ((Integer) value == 2) {
                         result.put(name, "F");
+                        continue;
                     }
                 }
             }
@@ -1247,50 +1258,9 @@ public class Util {
             }
             targetFields.put(targetEntityFieldName, sourceGenericValue.get(targetEntityFieldName));
         }
-        GenericValue targetGenericValue = GenericValue.create(delegator, targetModelEntity, targetFields);
-        return targetGenericValue;
+        return GenericValue.create(delegator, targetModelEntity, targetFields);
     }
 
-    public static Map<String, Object> getRelationKeyMap(Delegator delegator, String entityName,
-                                                        String relationName, OdataOfbizEntity entity, String relEntityName) {
-        Map<String, Object> result = new HashMap<String, Object>();
-        boolean isOdataView = OdataView.isOdataView(delegator, entityName);
-
-        GenericValue genericValue = null;
-        try {
-            genericValue = entityToGenericValue(delegator, entity, entityName);
-        } catch (OfbizODataException e) {
-            e.printStackTrace();
-        }
-
-        if (isOdataView) {
-            List<Map<String, Object>> viewKeyMaps = OdataView.getRelationKeyMap(delegator, entityName, relationName);
-            for (Map<String, Object> map : viewKeyMaps) {
-                String fieldName = (String) map.get("fieldName");
-                String relFieldName = (String) map.get("relFieldName");
-                Object fieldValue = genericValue.get(fieldName);
-                result.put(relFieldName, fieldValue);
-            }
-        } else {
-            ModelEntity modelEntity = delegator.getModelEntity(entityName);
-            ModelRelation modelRelation = modelEntity.getRelation(relationName);
-            if (modelRelation == null) {
-                if (relEntityName != null) {
-                    modelRelation = modelEntity.getRelation(relEntityName);
-                }
-            }
-            if (modelRelation != null) {
-                List<ModelKeyMap> modelKeyMaps = modelRelation.getKeyMaps();
-                for (ModelKeyMap modelKeyMap : modelKeyMaps) {
-                    String fieldName = modelKeyMap.getFieldName();
-                    String relFieldName = modelKeyMap.getRelFieldName();
-                    Object fieldValue = genericValue.get(fieldName);
-                    result.put(relFieldName, fieldValue);
-                }
-            }
-        }
-        return result;
-    }
 
     public static File getFile(byte[] bfile, String filePath, String fileName) throws IOException {
         BufferedOutputStream bos = null;
@@ -1884,6 +1854,9 @@ public class Util {
         String property = "service." + entityName + "." + action;
         String serviceName = EntityUtilProperties.getPropertyValue(ODATA_PROPERTIES, property, delegator);
         if (UtilValidate.isEmpty(serviceName)) {
+            serviceName = EntityUtilProperties.getPropertyValue(CONFIG_PROPERTIES, property, delegator);
+        }
+        if (UtilValidate.isEmpty(serviceName)) {
             serviceName = EntityUtilProperties.getPropertyValue(ODATA_LAB_PROPERTIES, property, delegator);
         }
         if (UtilValidate.isEmpty(serviceName)) {
@@ -2089,7 +2062,7 @@ public class Util {
         }
         for (String expression : expressions) {
             expression = expression.trim();
-            if (expression.contains("=")) {
+            if (expression.contains("=") && !expression.contains("!=")) {
                 String[] keyValue = expression.split("=");
                 if (UtilValidate.isNotEmpty(keyValue)) {
                     String key = keyValue[0].trim();
@@ -2097,10 +2070,11 @@ public class Util {
                     String realValue = (String) parseVariable(valueStr, request);
                     conditionMap.put(key, realValue);
                 }
-            } else {
-                conditionMap.clear();
-                return conditionMap;
             }
+//            else {
+//                conditionMap.clear();
+//                return conditionMap;
+//            }
         }
         return conditionMap;
     }
@@ -2695,22 +2669,112 @@ public class Util {
      *
      * @param packageName 要扫描的包名
      * @param annotation 要扫描的注解
-     * @param implInterface 实现接口
      * @return 所有匹配的Class
      */
-    public static List<Class<?>> getClassesWithAnnotation(String packageName, Class<? extends Annotation> annotation, Class<?> implInterface) {
+    public static Set<Class<?>> getClassesWithAnnotation(String packageName, Class<? extends Annotation> annotation) {
         List<Class<?>> result = new ArrayList<>();
         Reflections reflections = new Reflections(packageName);
-        Set<Class<?>> typesAnnotatedWith = reflections.getTypesAnnotatedWith(annotation);
-        for (Class<?> aClass : typesAnnotatedWith) {
-            if (UtilValidate.isNotEmpty(implInterface)) {
-                boolean assignableFrom = implInterface.isAssignableFrom(aClass);
-                if (assignableFrom) {
-                    result.add(aClass);
-                }
+        return reflections.getTypesAnnotatedWith(annotation);
+//        for (Class<?> aClass : typesAnnotatedWith) {
+//            if (UtilValidate.isNotEmpty(implInterface)) {
+//                boolean assignableFrom = implInterface.isAssignableFrom(aClass);
+//                if (assignableFrom) {
+//                    result.add(aClass);
+//                }
+//            }
+//        }
+//        return result;
+    }
+
+    /**
+     * 转换异常信息
+     */
+    public static String getExceptionMsg(Throwable throwable, Locale locale) {
+        if (UtilValidate.isEmpty(locale)) {
+            locale = Locale.ENGLISH;
+        }
+        Throwable originalException = getOriginalException(throwable);
+        if (originalException instanceof OfbizServiceException || originalException instanceof OfbizODataException) {
+            return originalException.getMessage();
+        } else {
+            return UtilProperties.getMessage("OdataUiLabels", "ErrMsg.SERVER_ERROR", locale);
+        }
+    }
+
+    /**
+     * 解析异常
+     */
+    public static Throwable getOriginalException(Throwable throwable) {
+        if (throwable.getCause() != null) {
+            return getOriginalException(throwable.getCause());
+        }
+        return throwable;
+    }
+
+    public static int getTopOption(Map<String, QueryOption> queryOptions) {
+        if (UtilValidate.isNotEmpty(queryOptions)
+                && queryOptions.get("topOption") != null
+                && ((TopOption) queryOptions.get("topOption")).getValue() > 0) {
+            return ((TopOption) queryOptions.get("topOption")).getValue();
+        }
+        return OfbizOdataProcessor.MAX_ROWS;
+    }
+
+    public static int getSkipOption(Map<String, QueryOption> queryOptions) {
+        if (UtilValidate.isNotEmpty(queryOptions)
+                && queryOptions.get("skipOption") != null
+                && ((SkipOption) queryOptions.get("skipOption")).getValue() > 0) {
+            return ((SkipOption) queryOptions.get("skipOption")).getValue();
+        }
+        return 0;
+    }
+
+
+    public static GenericValue getDraftRelatedOne(Delegator delegator, String draftUUID, String navDraftTable) throws GenericEntityException {
+        //排序标记为删除的数据
+        List<GenericValue> navDraftUUIDs = EntityQuery.use(delegator).from("DraftAdministrativeData")
+                .where("parentDraftUUID", draftUUID, "draftEntityName", navDraftTable).getFieldList("draftUUID");
+        if (UtilValidate.isEmpty(navDraftUUIDs)) {
+            return null;
+        }
+        EntityCondition queryCondition = EntityCondition.makeCondition(UtilMisc.toList(EntityCondition.makeCondition("isActiveEntity", EntityOperator.EQUALS, "Y"),
+                EntityCondition.makeCondition("hasDraftEntity", EntityOperator.EQUALS, "Y")), EntityOperator.OR);
+        queryCondition = appendCondition(queryCondition, EntityCondition.makeCondition("draftUUID", EntityOperator.IN, navDraftUUIDs));
+        return EntityQuery.use(delegator).from(navDraftTable).where(queryCondition).queryFirst();
+    }
+
+    public static List<GenericValue> getDraftRelatedList(Delegator delegator, String draftUUID, String navDraftTable) throws GenericEntityException {
+        //排序标记为删除的数据
+        List<GenericValue> navDraftUUIDs = EntityQuery.use(delegator).from("DraftAdministrativeData")
+                .where("parentDraftUUID", draftUUID, "draftEntityName", navDraftTable).getFieldList("draftUUID");
+        if (UtilValidate.isEmpty(navDraftUUIDs)) {
+            return null;
+        }
+        EntityCondition queryCondition = EntityCondition.makeCondition(UtilMisc.toList(EntityCondition.makeCondition("isActiveEntity", EntityOperator.EQUALS, "Y"),
+                EntityCondition.makeCondition("hasDraftEntity", EntityOperator.EQUALS, "Y")), EntityOperator.OR);
+        queryCondition = appendCondition(queryCondition, EntityCondition.makeCondition("draftUUID", EntityOperator.IN, navDraftUUIDs));
+        return EntityQuery.use(delegator).from(navDraftTable).where(queryCondition).queryList();
+    }
+
+    /**
+     * 获取译文
+     */
+    public static String getTranslation(Delegator delegator, String key, Locale locale) throws GenericEntityException {
+        String language = locale.getLanguage();
+        GenericValue genericValue = EntityQuery.use(delegator).from("Internationalization").where("lang", language, "property", key).queryFirst();
+        return UtilValidate.isNotEmpty(genericValue) ? genericValue.getString("value") : null;
+    }
+
+    /**
+     * 获取Action,Function绑定的对象
+     */
+    public static OdataOfbizEntity getBoundEntity(Map<String, Object> parameter) {
+        for (Object value : parameter.values()) {
+            if (value instanceof OdataOfbizEntity) {
+                return (OdataOfbizEntity) value;
             }
         }
-        return result;
+        return null;
     }
 
 }

@@ -55,11 +55,13 @@ public class OfbizCsdlEntityType extends CsdlEntityType implements Cloneable {
     private final Map<String, Object> defaultValueProperties = new HashMap<>();
     private final Map<String, Object> autoValueProperties = new HashMap<>();
     private List<String> insertRequireProperties = new ArrayList<>();
+    private List<String> defaultOrderByProperties = new ArrayList<>();
+    private String ofbizType;
 
     public OfbizCsdlEntityType(String ofbizEntity, String handlerClass, boolean autoProperties, boolean autoEnum,
                                boolean filterByDate, String attrEntityName, String attrNumericEntityName, String attrDateEntityName, boolean hasDerivedEntity,
                                EntityCondition entityCondition, String entityConditionStr, String labelPrefix, String searchOption, boolean groupBy, boolean hasStream,
-                               boolean autoLabel, boolean autoDraft, boolean autoValueList, boolean autoSet, String draftEntityName, String entitySetName) {
+                               boolean autoLabel, boolean autoDraft, boolean autoValueList, boolean autoSet, String draftEntityName, String entitySetName, String ofbizType) {
         super();
         this.ofbizEntity = ofbizEntity;
         this.handlerClass = handlerClass;
@@ -85,6 +87,7 @@ public class OfbizCsdlEntityType extends CsdlEntityType implements Cloneable {
         this.autoSet = autoSet;
         this.draftEntityName = draftEntityName;
         this.entitySetName = entitySetName;
+        this.ofbizType = ofbizType;
         setHasStream(hasStream);
     }
 
@@ -384,6 +387,22 @@ public class OfbizCsdlEntityType extends CsdlEntityType implements Cloneable {
 
     public boolean isAutoSet() {
         return autoSet;
+    }
+
+    public List<String> getDefaultOrderByProperties() {
+        return defaultOrderByProperties;
+    }
+
+    public void setDefaultOrderByProperties(List<String> defaultOrderByProperties) {
+        this.defaultOrderByProperties = defaultOrderByProperties;
+    }
+
+    public String getOfbizType() {
+        return ofbizType;
+    }
+
+    public void setOfbizType(String ofbizType) {
+        this.ofbizType = ofbizType;
     }
 
     @Override

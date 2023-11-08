@@ -94,10 +94,8 @@ public class UriResourceProcessor {
         Map<String, Object> primaryKey = Util.uriParametersToMap(uriResourceEntitySet.getKeyPredicates(), edmEntityType, edmProvider);
         Object entityData;
         if (sapContextId != null && UtilValidate.isNotEmpty(primaryKey)) {
-//            DraftHandler draftHandler = new DraftHandler(odataContext, sapContextId, edmEntityType);
-//            entityData = draftHandler.readEntityData(edmEntityType, primaryKey, queryOptions);
             DraftReaderAndWriter draftReaderAndWriter = new DraftReaderAndWriter(odataContext, sapContextId, edmEntityType);
-            entityData = draftReaderAndWriter.findOne(primaryKey, queryOptions);
+            entityData = draftReaderAndWriter.findOne(primaryKey, edmEntitySet, queryOptions);
         } else {
             ExtraOdataReader reader = new ExtraOdataReader(odataContext, queryOptions, UtilMisc.toMap("edmBindingTarget", edmEntitySet));
             entityData = UtilValidate.isEmpty(primaryKey) ? reader.findList() : reader.findOne(primaryKey, queryOptions);
@@ -137,14 +135,11 @@ public class UriResourceProcessor {
         boolean isCollection = resourceIsCollection(odataParts.getUriResource(), uriResource, edmProvider);
         if (sapContextId != null && UtilValidate.isNotEmpty(navCsdlEntityType.getDraftEntityName()) && !csdlNavigationProperty.isReadOnly()) {
             //draft
-//            DraftHandler draftHandler = new DraftHandler(odataContext, sapContextId, edmEntityType);
             if (isCollection && UtilValidate.isEmpty(navigationPrimaryKey)) {
-//                EntityCollection draftRelatedEntities = draftHandler.findRelatedEntityCollection(ofbizCsdlEntityType, entity.getKeyMap(), edmNavigationProperty, queryOptions);
                 DraftReaderAndWriter draftReaderAndWriter = new DraftReaderAndWriter(odataContext, sapContextId, edmEntityType);
                 EntityCollection relatedList = draftReaderAndWriter.findRelatedList(entity, edmEntityType, edmNavigationProperty, queryOptions);
                 currentUriResourceData.setEntityData(relatedList);
             } else {
-//                Entity draftRelatedEntity = draftHandler.getRelatedEntityData(entity.getKeyMap(), edmNavigationProperty, navigationPrimaryKey, queryOptions);
                 DraftReaderAndWriter draftReaderAndWriter = new DraftReaderAndWriter(odataContext, sapContextId, edmEntityType);
                 Entity draftRelatedEntity = draftReaderAndWriter.findRelatedOne(entity, edmNavigationProperty, navigationPrimaryKey, queryOptions);
                 currentUriResourceData.setEntityData(draftRelatedEntity);

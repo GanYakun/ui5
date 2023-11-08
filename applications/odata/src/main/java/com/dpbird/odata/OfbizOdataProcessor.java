@@ -2,6 +2,7 @@ package com.dpbird.odata;
 
 import com.dpbird.odata.edm.*;
 import com.dpbird.odata.handler.HandlerFactory;
+import net.sf.ehcache.search.aggregator.Max;
 import org.apache.fop.util.ListUtil;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.StringUtil;
@@ -77,7 +78,7 @@ public class OfbizOdataProcessor {
     protected Set<String> fieldsToSelect = null;
     protected Set<String> applySelect = null;
     protected int skipValue = 0;
-    protected int topValue = MAX_ROWS;
+    protected int topValue = 200;
     protected List<String> orderBy;
     protected String sapContextId;
     protected boolean filterByDate = false;
@@ -132,9 +133,9 @@ public class OfbizOdataProcessor {
         //检查是否是多段式的apply查询 如果是就不添加主对象的EntitySetCondition
         List<UriResource> uriResourceParts = (List<UriResource>) odataContext.get("uriResourceParts");
         boolean isMultistageApply = Util.isMultistageApply(uriResourceParts, queryOptions);
-        if (UtilValidate.isNotEmpty(edmParams) && edmParams.get("edmBindingTarget") != null && !isMultistageApply) {
+        if (UtilValidate.isNotEmpty(edmParams) && !isMultistageApply) {
             EdmBindingTarget edmBindingTarget = (EdmBindingTarget) edmParams.get("edmBindingTarget");
-            if (edmBindingTarget instanceof EdmEntitySet) { // 只有entitySet时才会有entitySetCondition
+            if (UtilValidate.isNotEmpty(edmBindingTarget) && edmBindingTarget instanceof EdmEntitySet) { // 只有entitySet时才会有entitySetCondition
                 OfbizCsdlEntitySet csdlEntitySet = (OfbizCsdlEntitySet) this.edmProvider.getEntityContainer()
                         .getEntitySet(((EdmEntitySet) edmParams.get("edmBindingTarget")).getName());
                 String entitySetConditionStr = csdlEntitySet.getConditionStr();
@@ -150,7 +151,6 @@ public class OfbizOdataProcessor {
         }
         entityCondition = Util.appendCondition(entityCondition, entitySetCondition);
         entityCondition = Util.appendCondition(entityCondition, entityTypeCondition);
-
         if (this.edmEntityType != null) {
             OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) this.edmProvider.getEntityType(edmEntityType.getFullQualifiedName());
             this.filterByDate = csdlEntityType.isFilterByDate();
@@ -395,17 +395,21 @@ public class OfbizOdataProcessor {
     }
 
     protected void retrieveFindOption() {
-        topValue = getTopOption(queryOptions);
         skipValue = getSkipOption(queryOptions);
+        topValue = getTopOption(queryOptions);
     }
 
     protected int getTopOption(Map<String, QueryOption> queryOptions) {
         if (UtilValidate.isNotEmpty(queryOptions)
                 && queryOptions.get("topOption") != null
                 && ((TopOption) queryOptions.get("topOption")).getValue() > 0) {
-            return ((TopOption) queryOptions.get("topOption")).getValue();
+            int topValue = ((TopOption) queryOptions.get("topOption")).getValue();
+            if (topValue > MAX_ROWS) {
+                topValue = MAX_ROWS;
+            }
+            return topValue;
         }
-        return MAX_ROWS;
+        return 200;
     }
 
     protected int getSkipOption(Map<String, QueryOption> queryOptions) {
@@ -937,11 +941,16 @@ public class OfbizOdataProcessor {
         Debug.logInfo("adding expand option with name = " + navPropName, module);
         if (edmNavigationProperty.isCollection()) { // expand的对象是collection
             ExpandOption nestedExpandOption = expandItem.getExpandOption(); // expand nested in expand
-            if (nestedExpandOption == null && expandLevel > 1) {
+            if (expandLevel > 1) {
                 ExpandOptionImpl expandOptionImpl = new ExpandOptionImpl();
                 LevelsOptionImpl levelsOptionImpl = (LevelsOptionImpl) levelsExpandOption;
                 levelsOptionImpl.setValue(expandLevel--);
                 expandOptionImpl.addExpandItem(expandItem);
+                if (nestedExpandOption != null) {
+                    for (ExpandItem item : nestedExpandOption.getExpandItems()) {
+                        expandOptionImpl.addExpandItem(item);
+                    }
+                }
                 nestedExpandOption = expandOptionImpl;
             }
             Map<String, QueryOption> embeddedQueryOptions = UtilMisc.toMap("expandOption", nestedExpandOption, "orderByOption", expandItem.getOrderByOption(),
@@ -1027,7 +1036,7 @@ public class OfbizOdataProcessor {
      * 判断一个Navigation查询的整个流程是否缺省的
      */
     protected boolean isDefaultQuery(EdmEntityType edmEntityType, EdmNavigationProperty edmNavigationProperty, OfbizAppEdmProvider edmProvider) {
-        String edmEntityHandler = HandlerFactory.getHandlerImpl(edmProvider, UtilMisc.toList(edmNavigationProperty.getName()), delegator);
+        String edmEntityHandler = HandlerFactory.getHandlerImpl(edmProvider, UtilMisc.toList(edmNavigationProperty.getType().getName()), delegator);
         String edmNavigationHandler = HandlerFactory.getHandlerImpl(edmProvider, UtilMisc.toList(edmEntityType.getName(), edmNavigationProperty.getName()), delegator);
         return UtilValidate.isEmpty(edmEntityHandler) && UtilValidate.isEmpty(edmNavigationHandler);
     }
@@ -1056,12 +1065,17 @@ public class OfbizOdataProcessor {
             }
             List<String> navigationNames = edmEntityType.getNavigationPropertyNames();
             for (String navigationName : navigationNames) {
-                EdmNavigationProperty navigationProperty = edmEntityType.getNavigationProperty(navigationName);
-                addExpandNavigation(entityList, edmEntityType, navigationProperty, expandLevel);
+                for (Entity entity : entityList) {
+                    EdmNavigationProperty navigationProperty = edmEntityType.getNavigationProperty(navigationName);
+                    addExpandNavigation((OdataOfbizEntity) entity, edmEntityType, navigationProperty, expandLevel);
+                }
             }
         } else {
             for (ExpandItem expandItem : expandItems) {
-                addAllExpandItem(entityList, expandItem, edmBindingTarget, edmEntityType);
+                for (Entity entity : entityList) {
+                    addExpandItem((OdataOfbizEntity) entity, expandItem, edmEntityType);
+                }
+//                addAllExpandItem(entityList, expandItem, edmBindingTarget, edmEntityType);
             }
         }
     }

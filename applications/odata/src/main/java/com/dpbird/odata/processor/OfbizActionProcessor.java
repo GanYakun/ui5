@@ -123,22 +123,10 @@ public class OfbizActionProcessor
         response.addHeader("sap-messages", "[" + jsonObject.toString() + "]");
     }
 
-//    private static DraftActionProcessor getDraftActionProcessor(ODataRequest oDataRequest, ODataResponse oDataResponse,
-//                                                                Map<String, QueryOption> queryOptions, Map<String, Object> edmParams) throws OfbizODataException {
-//        Map<String, Object> odataContext = UtilMisc.toMap("delegator", delegator, "dispatcher", dispatcher,
-//                "edmProvider", edmProvider, "userLogin", userLogin, "httpServletRequest", httpServletRequest,
-//                "oDataRequest", oDataRequest, "oDataResponse", oDataResponse, "oData", odata,
-//                "serviceMetadata", serviceMetadata, "sapContextId", sapContextId, "locale", locale);
-//        EdmEntityType edmEntityType = (EdmEntityType) edmParams.get("edmEntityType");
-//        OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmEntityType.getFullQualifiedName());
-//        return new DraftActionProcessor(queryOptions, odataContext, csdlEntityType, edmEntityType);
-//    }
-
-
     @Override
     public void processActionEntityCollection(ODataRequest oDataRequest, ODataResponse oDataResponse, UriInfo uriInfo,
                                               ContentType requestFormat, ContentType contentType)
-            throws ODataApplicationException, ODataLibraryException {
+            throws ODataApplicationException {
         Debug.logInfo("------------------------------------------------------------ in processActionEntityCollection", module);
         // Get the action from the resource path
         if (contentType == null) {
@@ -269,8 +257,10 @@ public class OfbizActionProcessor
             final Preferences.Return returnPreference = odata.createPreferences(oDataResponse.getHeaders(HttpHeader.PREFER)).getReturn();
             if (returnPreference == null || returnPreference == Preferences.Return.REPRESENTATION) {
                 returnedEntitySet = edmAction.getReturnedEntitySet(boundEntitySet);
+                Entity entity = entityResult.getEntity();
+                entity.getProperties().removeIf(property -> "Edm.Stream".equals(property.getType()));
                 oDataResponse.setContent(odata.createSerializer(responseFormat)
-                        .entity(serviceMetadata, edmReturnEntityType, entityResult.getEntity(), EntitySerializerOptions.with()
+                        .entity(serviceMetadata, edmReturnEntityType, entity, EntitySerializerOptions.with()
                                 .contextURL(isODataMetadataNone(responseFormat) ? null
                                         : getContextUrl(null, edmReturnEntityType, true))
                                 .expand(expandOption).select(selectOption).build())
@@ -308,8 +298,7 @@ public class OfbizActionProcessor
             if (UtilValidate.isNotEmpty(oDataRequest.getHeader("SAP-ContextId")) && sapContextId != null) {
                 DataModifyActions.setResponseSessionContext(oDataResponse, sapContextId);
             }
-            String exceptionMeg = e instanceof GenericServiceException ? e.getCause().getMessage() : e.getMessage();
-            throw new ODataApplicationException(exceptionMeg, HttpStatusCode.INTERNAL_SERVER_ERROR.getStatusCode(), Locale.ROOT);
+            throw new ODataApplicationException(Util.getExceptionMsg(e, locale), HttpStatusCode.INTERNAL_SERVER_ERROR.getStatusCode(), Locale.ROOT);
         }
     }
 

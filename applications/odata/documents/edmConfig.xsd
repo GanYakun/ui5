@@ -8,6 +8,7 @@
                     <xs:element ref="Action"/>
                     <xs:element ref="ComplexType"/>
                     <xs:element ref="EntityType"/>
+                    <xs:element ref="ExtendEntityType"/>
                     <xs:element ref="EnumType"/>
                     <xs:element ref="Function"/>
                     <xs:element ref="view-entity"/>
@@ -26,6 +27,7 @@
             </xs:sequence>
             <xs:attribute name="EntitySetPath" type="xs:NCName"/>
             <xs:attribute name="IsBound" type="xs:boolean"/>
+            <xs:attribute name="SideEffects" type="xs:boolean" />
             <xs:attribute name="IsEntityAction" type="xs:boolean"/>
             <xs:attribute name="Name" use="required" type="xs:NCName"/>
             <xs:attribute name="OfbizService"/>
@@ -92,6 +94,20 @@
             <xs:attribute name="AutoSet" type="xs:boolean"/>
             <xs:attribute name="EntitySetName" type="xs:NCName"/>
             <xs:attribute name="InsertRequireProperties" type="xs:anyURI"/>
+            <xs:attribute name="Orderby" type="xs:anyURI"/>
+            <xs:attribute name="OfbizType" type="xs:anyURI"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ExtendEntityType">
+        <xs:annotation>
+            <xs:documentation>Inherit objects and extend</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Property"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="NavigationProperty"/>
+            </xs:choice>
+            <xs:attribute name="Name" use="required" type="xs:NCName"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="RelAlias">
@@ -262,6 +278,7 @@
                 <xs:element minOccurs="0" ref="ParameterIn"/>
                 <xs:element minOccurs="0" ref="ParameterOut"/>
                 <xs:element minOccurs="0" ref="ParameterInOut"/>
+                <xs:element minOccurs="0" ref="ParameterConstant"/>
             </xs:choice>
             <xs:attribute name="CollectionPath" type="xs:NCName"/>
             <xs:attribute name="WithFixedValues" type="xs:boolean"/>
@@ -271,20 +288,26 @@
     </xs:element>
     <xs:element name="ParameterInOut">
         <xs:complexType>
-            <xs:attribute name="ValueListProperty" type="xs:NCName"/>
-            <xs:attribute name="LocalDataProperty" type="xs:NCName"/>
+            <xs:attribute name="ValueListProperty" type="xs:anyURI"/>
+            <xs:attribute name="LocalDataProperty" type="xs:anyURI"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="ParameterIn">
         <xs:complexType>
-            <xs:attribute name="ValueListProperty" type="xs:NCName"/>
-            <xs:attribute name="LocalDataProperty" type="xs:NCName"/>
+            <xs:attribute name="ValueListProperty" type="xs:anyURI"/>
+            <xs:attribute name="LocalDataProperty" type="xs:anyURI"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="ParameterOut">
         <xs:complexType>
-            <xs:attribute name="ValueListProperty" type="xs:NCName"/>
-            <xs:attribute name="LocalDataProperty" type="xs:NCName"/>
+            <xs:attribute name="ValueListProperty" type="xs:anyURI"/>
+            <xs:attribute name="LocalDataProperty" type="xs:anyURI"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ParameterConstant">
+        <xs:complexType>
+            <xs:attribute name="ValueListProperty" type="xs:anyURI"/>
+            <xs:attribute name="Constant" type="xs:NCName"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="Title">
@@ -300,6 +323,7 @@
     <xs:element name="DataField">
         <xs:complexType>
             <xs:attribute name="Values"/>
+            <xs:attribute name="Criticality"/>
             <xs:attribute name="Importance" type="xs:NCName"/>
         </xs:complexType>
     </xs:element>
@@ -312,6 +336,11 @@
             <xs:attribute name="Inline" type="xs:boolean"/>
             <xs:attribute name="Hidden" type="xs:NCName"/>
             <xs:attribute name="Importance" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Criticality">
+        <xs:complexType>
+            <xs:attribute name="Value"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="HeaderInfo">
@@ -335,6 +364,7 @@
     <xs:element name="LineItem">
         <xs:complexType>
             <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element minOccurs="0" ref="Criticality"/>
                 <xs:element minOccurs="0" maxOccurs="unbounded" ref="DataField"/>
                 <xs:element minOccurs="0" maxOccurs="unbounded" ref="DataFieldForAction"/>
             </xs:choice>
@@ -370,6 +400,7 @@
             <xs:attribute name="Computed" type="xs:boolean"/>
             <xs:attribute name="Immutable" type="xs:boolean"/>
             <xs:attribute name="IsImageURL" type="xs:boolean"/>
+            <xs:attribute name="IsImage" type="xs:boolean"/>
             <xs:attribute name="MultiLineText" type="xs:boolean"/>
             <xs:attribute name="ExcludeFromNavigationContext" type="xs:boolean"/>
             <xs:attribute name="Hidden" type="xs:NCName"/>
@@ -399,11 +430,17 @@
     </xs:element>
     <xs:element name="Parameter">
         <xs:complexType>
+            <xs:all>
+                <xs:element minOccurs="0" ref="ValueList"/>
+            </xs:all>
             <xs:attribute name="IsCollection" type="xs:boolean"/>
             <xs:attribute name="Name" use="required" type="xs:NCName"/>
             <xs:attribute name="Type" use="required" type="xs:NCName"/>
             <xs:attribute name="Nullable" type="xs:boolean"/>
             <xs:attribute name="Precision" type="xs:integer"/>
+            <xs:attribute name="Scale" type="xs:integer"/>
+            <xs:attribute name="FieldControl" type="xs:NCName"/>
+            <xs:attribute name="Label"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="ReturnType">

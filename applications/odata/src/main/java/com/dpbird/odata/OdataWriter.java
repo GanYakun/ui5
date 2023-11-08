@@ -25,6 +25,7 @@ import org.apache.olingo.server.api.deserializer.DeserializerException;
 import org.apache.olingo.server.api.uri.UriResourceEntitySet;
 import org.apache.olingo.server.api.uri.queryoption.QueryOption;
 
+import java.sql.Date;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -49,14 +50,13 @@ public class OdataWriter extends OfbizOdataProcessor {
         this.serviceMetadata = (ServiceMetadata) odataContext.get("serviceMetadata");
         this.edmProvider = (OfbizAppEdmProvider) odataContext.get("edmProvider");
         this.rawServiceUri = (String) odataContext.get("rawServiceUri");
-        if (this.entityToWrite != null) {
-            processEntitySetValues();
-        }
     }
 
     public OdataOfbizEntity createEntityData(Entity entityToWrite) throws OfbizODataException {
         EdmEntityType edmEntityType = edmBindingTarget.getEntityType();
         addEntitySetCondition(entityToWrite);
+        //转换日期
+        convertDate(entityToWrite);
         //通过接口实例创建实体数据
         EntityHandler entityHandler = HandlerFactory.getEntityHandler(edmEntityType, edmProvider, delegator);
         Map<String, Object> created = entityHandler.create(entityToWrite, odataContext, edmBindingTarget, null);
@@ -75,6 +75,8 @@ public class OdataWriter extends OfbizOdataProcessor {
 
     public Entity createRelatedEntity(Entity entity, Entity entityToWrite) throws OfbizODataException {
         EdmEntityType edmEntityType = this.edmBindingTarget.getEntityType();
+        //转换日期
+        convertDate(entityToWrite);
         //获取创建参数
         NavigationHandler navigationHandler = HandlerFactory.getNavigationHandler(edmEntityType, edmNavigationProperty, edmProvider, delegator);
         Map<String, Object> insertParam = navigationHandler.getInsertParam(odataContext, (OdataOfbizEntity) entity, edmEntityType,
@@ -95,6 +97,8 @@ public class OdataWriter extends OfbizOdataProcessor {
     public OdataOfbizEntity updateEntityData(Map<String, Object> primaryKey, Entity entityToWrite)
             throws OfbizODataException {
         EdmEntityType edmEntityType = edmBindingTarget.getEntityType();
+        //转换日期
+        convertDate(entityToWrite);
         EntityHandler entityHandler = HandlerFactory.getEntityHandler(edmEntityType, edmProvider, delegator);
         Map<String, Object> update = entityHandler.update(primaryKey, entityToWrite, odataContext, edmBindingTarget, null);
         OdataOfbizEntity updatedEntity = resultToEntity(edmEntityType, update);
@@ -109,6 +113,8 @@ public class OdataWriter extends OfbizOdataProcessor {
 
     public Entity updateRelatedEntity(Entity entity, Entity entityToWrite, Map<String, Object> primaryKey) throws OfbizODataException {
         EdmEntityType edmEntityType = this.edmBindingTarget.getEntityType();
+        //转换日期
+        convertDate(entityToWrite);
         //获取更新参数
         NavigationHandler navigationHandler = HandlerFactory.getNavigationHandler(edmEntityType, edmNavigationProperty, edmProvider, delegator);
         Map<String, Object> updateParam = navigationHandler.getUpdateParam(odataContext, (OdataOfbizEntity) entity, edmEntityType,
@@ -139,32 +145,6 @@ public class OdataWriter extends OfbizOdataProcessor {
         //删除
         EntityHandler entityHandler = HandlerFactory.getEntityHandler(edmNavigationProperty.getType(), edmProvider, delegator);
         entityHandler.delete(entityToDelete, odataContext, edmBindingTarget, deleteParam);
-    }
-
-    private void processEntitySetValues() {
-        EntitySetHandler entitySetHandler = EntitySetHandlerFactory.getEntitySetHandler(this.edmBindingTarget.getName());
-        String fullQualifiedTypeName = this.edmBindingTarget.getEntityType().getFullQualifiedName().getFullQualifiedNameAsString();
-        if (!entityToWrite.getType().equals(fullQualifiedTypeName)) {
-            return;
-        }
-        this.isCreatable = entitySetHandler.isCreatable();
-        Map<String, Object> defaultValues = entitySetHandler.defaultFieldValues();
-        if (UtilValidate.isNotEmpty(defaultValues)) {
-            Set<Entry<String, Object>> entrySet = defaultValues.entrySet();
-            for (Entry<String, Object> entry : entrySet) {
-                Property property = new Property();
-                property.setName(entry.getKey());
-                EdmElement edmProperty = this.edmBindingTarget.getEntityType().getProperty(entry.getKey());
-                if (UtilValidate.isEmpty(edmProperty)) {
-                    entityToWrite.addProperty(new Property(null, entry.getKey(), ValueType.PRIMITIVE, entry.getValue()));
-                    continue;
-                }
-                String typeFullQualifiedNameStr = edmProperty.getType().getFullQualifiedName().toString();
-                property.setType(typeFullQualifiedNameStr);
-                property.setValue(ValueType.PRIMITIVE, entry.getValue());
-                entityToWrite.addProperty(property);
-            }
-        }
     }
 
     private void addEntitySetCondition(Entity entityToWrite) throws OfbizODataException {
@@ -326,6 +306,16 @@ public class OdataWriter extends OfbizOdataProcessor {
         } else {
             OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) edmProvider.getEntityType(edmEntityType.getFullQualifiedName());
             return (OdataOfbizEntity) Util.mapToEntity(csdlEntityType, resultMap);
+        }
+    }
+
+    private void convertDate(Entity entity) {
+        for (Property property : entity.getProperties()) {
+            if (property != null && property.getValue() != null && property.getValue() instanceof GregorianCalendar) {
+                GregorianCalendar calendar = (GregorianCalendar) property.getValue();
+                long timeInMillis = calendar.getTimeInMillis();
+                property.setValue(property.getValueType(), new Date(timeInMillis));
+            }
         }
     }
 

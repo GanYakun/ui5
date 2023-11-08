@@ -211,6 +211,22 @@ under the License.
         <attribute name="bindPrimaryKey" type="Map" mode="IN"/>
     </service>
 
+    <service name="dpbird.clearDraft" engine="java"
+             location="com.dpbird.odata.services.ProcessorServices" invoke="clearDraft">
+        <description>Clean up draft data</description>
+    </service>
+
+    <service name="dpbird.deleteDraftTable" engine="java"
+             location="com.dpbird.odata.services.ProcessorServices" invoke="deleteDraftTable">
+        <description>Delete the in-memory database table</description>
+        <attribute name="entityNames" type="List" mode="IN" optional="false"><description>删除指定的草稿表</description></attribute>
+    </service>
+
+    <service name="dpbird.writeOfbizEntity" engine="java" transaction-timeout="1200000"
+             location="com.dpbird.odata.services.ProcessorServices" invoke="writeOfbizEntity">
+        <description>记录ofbiz数据结构</description>
+    </service>
+
     <!-- end services for odata -->
 
 <!--    <service name="dpbird.loadDraftData" engine="java"-->
