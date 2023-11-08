@@ -99,16 +99,6 @@
                 </Annotation>
             </Annotations>
 
-            <Annotations Target="com.dpbird.O3Container/SupplierParties">
-                <Annotation Term="com.sap.vocabularies.Session.v1.StickySessionSupported">
-                    <Record>
-                        <PropertyValue Property="NewAction" String="com.dpbird.SupplierNewAction"/>
-                        <PropertyValue Property="EditAction" String="com.dpbird.SupplierPartyEditAction"/>
-                        <PropertyValue Property="DiscardAction" String="DiscardAction"/>
-                        <PropertyValue Property="SaveAction" String="com.dpbird.SupplierPartySaveAction"/>
-                    </Record>
-                </Annotation>
-            </Annotations>
             <Annotations Target="com.dpbird.O3Container/SupplierProducts">
                 <Annotation Term="Capabilities.UpdateRestrictions">
                     <Record Type="Capabilities.UpdateRestrictionsType">
@@ -605,11 +595,6 @@
 
                 <Annotation Term="UI.Facets">
                     <Collection>
-                        <!-- <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="ID" String="AgreementItemLineItem"/>
-                            <PropertyValue Property="Target" AnnotationPath="AgreementItem/@UI.LineItem#AgreementItemLineItem" />
-                            <PropertyValue Property="Label" String="合同项目"/>
-                        </Record> -->
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="AgreementTermLineItem"/>
                             <PropertyValue Property="Target" AnnotationPath="AgreementTerm/@UI.LineItem#AgreementTermLineItem" />
@@ -634,11 +619,10 @@
              <Annotations Target="com.dpbird.O3Container/SupplierParties">
                 <Annotation Term="UI.UpdateHidden">
                     <If>
-                            <Eq>
-                                <Path>statusId</Path>
-                                <String>PARTY_DISABLED</String>
-                            </Eq>
-                      
+                        <Eq>
+                            <Path>statusId</Path>
+                            <String>PARTY_DISABLED</String>
+                        </Eq>
                         <Bool>true</Bool>
                         <Bool>false</Bool>
                     </If>
@@ -647,56 +631,6 @@
 
             <Annotations Target="com.dpbird.O3Container/SupplierParties">
                 <Annotation Term="UI.DeleteHidden" Bool="true"/>
-            </Annotations>
-
-            <Annotations Target="com.dpbird.Shipment">
-            <Annotation Term="UI.LineItem" Qualifier="ShipmentLineItem">
-            <Annotation Term="UI.Criticality" Path="shipmentStatus"></Annotation>
-                    <Collection>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="trackingIdNumber"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="shipmentId"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                          <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="ShipmentItem/productId"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="ShipmentRouteSegment/carrierPartyId"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="primaryOrderId"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="estimatedShipDate"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                          <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="ShipmentRouteSegment/actualArrivalDate"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="SupplierPartyAndContactForShip/address1"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                          <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="CustomerPartyAndContactForShip/address1"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="statusId"/>
-                            <PropertyValue Property="Criticality" Path="shipmentStatus">
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
-                    </Collection>
-                </Annotation>
             </Annotations>
 
             <Annotations Target="com.dpbird.FinAccount">
