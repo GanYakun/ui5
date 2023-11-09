@@ -24,40 +24,29 @@
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
             <!-- 国际化标签配置Begin -->
             <Annotations Target="com.dpbird.SupplierParty/partyId">
-                <Annotation Term="Common.Label" String="供应商名称"/>
+                <Annotation Term="Common.Label" String="{@i18n>partyName}"/>
             </Annotations>
             
             <Annotations Target="com.dpbird.SupplierParty/partyName">
-                <Annotation Term="Common.Label" String="供应商名称"/>
+                <Annotation Term="Common.Label" String="{@i18n>partyName}"/>
             </Annotations>
 
             <Annotations Target="com.dpbird.O3Container/SupplierProducts">
                 <Annotation Term="UI.DeleteHidden" Bool="true" />
             </Annotations>
 
-             <Annotations Target="com.dpbird.PartyGroup/annualRevenue">
-             <Annotation Term="Common.IsCurrency" ></Annotation>
-              <Annotation Term="Measures.ISOCurrency" String="￥" ></Annotation>
-             </Annotations>
-
-              <Annotations Target="com.dpbird.PartyGroup/numEmployees">
-              <Annotation Term="Measures.Unit" String="人" ></Annotation>
-             </Annotations>
-
-              <Annotations Target="com.dpbird.SupplierParty/totalAmount">
-              <Annotation Term="Measures.Unit" String="CNY" ></Annotation>
-             </Annotations>
-
-            <Annotations Target="com.dpbird.RawMaterialProduct">
-            <Annotation Term="UI.SelectionFields">
-            <Collection >
-            <PropertyPath >productId</PropertyPath>
-             <PropertyPath >productName</PropertyPath>
-                <PropertyPath >quantityUomId</PropertyPath>
-            </Collection>
-            </Annotation>
-            
+            <Annotations Target="com.dpbird.SupplierParty/annualRevenue">
+                <Annotation Term="Common.IsCurrency" ></Annotation>
+                <Annotation Term="Measures.ISOCurrency" String="￥" ></Annotation>
             </Annotations>
+
+            <Annotations Target="com.dpbird.SupplierParty/numEmployees">
+                <Annotation Term="Measures.Unit" String="人" ></Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.SupplierParty/totalAmount">
+                <Annotation Term="Measures.Unit" String="CNY" ></Annotation>
+             </Annotations>
 
             <!-- 国际化标签配置End -->
 
@@ -86,76 +75,7 @@
             </Annotations>
             <!-- 选择框配置End -->
 
-            <!-- 对象编辑配置Begin -->
-             <Annotations Target="com.dpbird.O3Container/SupplierProducts">
-                <Annotation Term="Org.OData.Capabilities.V1.InsertRestrictions">
-                    <Record Type="Org.OData.Capabilities.V1.InsertRestrictionsType">
-                        <PropertyValue Property="RequiredProperties">
-                            <Collection>
-                                <PropertyPath>productId</PropertyPath>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-            </Annotations>
-
-            <Annotations Target="com.dpbird.O3Container/SupplierProducts">
-                <Annotation Term="Capabilities.UpdateRestrictions">
-                    <Record Type="Capabilities.UpdateRestrictionsType">
-                        <PropertyValue Property="Updatable" Bool="false" />
-                    </Record>
-                </Annotation>
-            </Annotations>
-
-            <Annotations Target="com.dpbird.O3Container/Shipments">
-                <Annotation Term="Capabilities.UpdateRestrictions">
-                    <Record Type="Capabilities.UpdateRestrictionsType">
-                        <PropertyValue Property="Updatable" Bool="false" />
-                    </Record>
-                </Annotation>
-            </Annotations>
-              <Annotations Target="com.dpbird.O3Container/ShipmentRouteSegments">
-                <Annotation Term="Capabilities.UpdateRestrictions">
-                    <Record Type="Capabilities.UpdateRestrictionsType">
-                        <PropertyValue Property="Updatable" Bool="false" />
-                    </Record>
-                </Annotation>
-            </Annotations>
-         
-            <Annotations Target="com.dpbird.O3Container/Shipments">
-                <Annotation Term="Capabilities.DeleteRestrictions">
-                    <Record Type="Capabilities.DeleteRestrictionsType">
-                        <PropertyValue Property="Deletable" Bool="false" />
-                    </Record>
-                </Annotation>
-            </Annotations>
-             <Annotations Target="com.dpbird.O3Container/ShipmentRouteSegments">
-                <Annotation Term="Capabilities.DeleteRestrictions">
-                    <Record Type="Capabilities.DeleteRestrictionsType">
-                        <PropertyValue Property="Deletable" Bool="false" />
-                    </Record>
-                </Annotation>
-            </Annotations>
             
-            <Annotations Target="com.dpbird.O3Container/Shipments">
-                <Annotation Term="Capabilities.InsertRestrictions">
-                    <Record Type="Capabilities.InsertRestrictionsType">
-                        <PropertyValue Property="Insertable" Bool="false" />
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.O3Container/ShipmentRouteSegments">
-                <Annotation Term="Capabilities.InsertRestrictions">
-                    <Record Type="Capabilities.InsertRestrictionsType">
-                        <PropertyValue Property="Insertable" Bool="false" />
-                    </Record>
-                </Annotation>
-            </Annotations>
-             
-            <Annotations Target="com.dpbird.SupplierNewAction/partyName">
-                <Annotation Term="Common.Label" String="{@i18n>partyName}" />
-                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
-            </Annotations>
             <!-- 对象编辑配置End -->
     
             <Annotations Target="com.dpbird.SupplierParty">
@@ -165,7 +85,7 @@
                             <PropertyValue Property="ID" String="QuickCreate"/>
                             <PropertyValue Property="Label" String="QuickCreate"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#QuickCreate"/>
-                            <Annotation Term="UI.Hidden" Path=""></Annotation>
+                            <Annotation Term="UI.Hidden" Path="createSupplierHidden"></Annotation>
                         </Record>
                     </Collection>
                 </Annotation>
@@ -175,19 +95,15 @@
                         <PropertyValue Property="Data">
                             <Collection>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="供应商名称" />
                                     <PropertyValue Property="Value" Path="partyName" />
                                 </Record>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="地址" />
                                     <PropertyValue Property="Value" Path="address1" />
                                 </Record>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="邮箱" />
                                     <PropertyValue Property="Value" Path="primaryEmail" />
                                 </Record>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="联系电话" />
                                     <PropertyValue Property="Value" Path="primaryPhone" />
                                 </Record>
                             </Collection>
@@ -257,19 +173,19 @@
                     </Collection>
                 </Annotation>
           
-             <Annotation Term="UI.Identification" >
+                <Annotation Term="UI.Identification">
                     <Collection > 
                          <Record Type="UI.DataFieldForAction" >
                             <PropertyValue Property="Action" String="com.dpbird.ChangeSupplierStatusToEnable"/>
                             <PropertyValue Property="Label"  String="禁用供应商" />
                             <Annotation Term="UI.Hidden">
                                 <If>
-                                        <Eq>
-                                            <Path>statusId</Path>
-                                            <String>PARTY_DISABLED</String>
-                                        </Eq>
-                                    <Bool>true</Bool>
-                                    <Bool>false</Bool>
+                                    <Eq>
+                                        <Path>statusId</Path>
+                                        <String>PARTY_DISABLED</String>
+                                    </Eq>
+                                <Bool>true</Bool>
+                                <Bool>false</Bool>
                                 </If>
                             </Annotation>
                         </Record>   
@@ -324,11 +240,11 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="primaryPhone" />
                                 </Record>
-                                  <Record Type="UI.DataFieldForAnnotation">
-                            <PropertyValue Property="Label" String="公司主要联系人"/>
-                            <PropertyValue Property="Target" AnnotationPath="@Communication.Contact"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High" />
-                        </Record>
+                                <Record Type="UI.DataFieldForAnnotation">
+                                    <PropertyValue Property="Label" String="公司主要联系人"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@Communication.Contact"/>
+                                    <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High" />
+                                </Record>
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -515,20 +431,20 @@
 
                 <Annotation Term="UI.Chart" Qualifier="chart1">
                     <Record Type="UI.ChartDefinitionType" >
-                      <PropertyValue Property="Title" String="预付金额"/>
-                      <PropertyValue Property="ChartType" EnumMember="UI.ChartType/Donut" />
-                      <PropertyValue Property="Measures" >
-                        <Collection>
-                          <PropertyPath>grandTotal</PropertyPath>
-                        </Collection>
-                      </PropertyValue>
-                      <PropertyValue Property="MeasureAttributes">
-                        <Collection>
-                          <Record Type="UI.ChartMeasureAttributeType" >
-                            <PropertyValue Property="Measure" PropertyPath="grandTotal" />
-                            <PropertyValue Property="DataPoint" AnnotationPath="@UI.DataPoint#grandTotal_Pie" />
-                          </Record>
-                        </Collection>
+                        <PropertyValue Property="Title" String="预付金额"/>
+                        <PropertyValue Property="ChartType" EnumMember="UI.ChartType/Donut" />
+                        <PropertyValue Property="Measures" >
+                            <Collection>
+                                <PropertyPath>grandTotal</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="MeasureAttributes">
+                            <Collection>
+                                <Record Type="UI.ChartMeasureAttributeType" >
+                                    <PropertyValue Property="Measure" PropertyPath="grandTotal" />
+                                    <PropertyValue Property="DataPoint" AnnotationPath="@UI.DataPoint#grandTotal_Pie" />
+                                </Record>
+                            </Collection>
                         </PropertyValue>
                     </Record>
                 </Annotation> 
@@ -577,6 +493,38 @@
                         <PropertyValue Property="TargetEntities">
                             <Collection>
                                 <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.CreatePartyClassificationGroup">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>partyClassificationGroup</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.UpdatePartyClassificationGroup/partyClassificationTypeId">
+                <Annotation Term="UI.ParameterDefaultValue" Path="partyClassificationGroup/partyClassificationTypeId"/>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.UpdatePartyClassificationGroup/description">
+                <Annotation Term="UI.ParameterDefaultValue" Path="partyClassificationGroup/description"/>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.UpdatePartyClassificationGroup">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>partyClassificationGroup</NavigationPropertyPath>
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -643,12 +591,8 @@
                 </Annotation>
             </Annotations>
 
-            <Annotations Target="com.dpbird.SupplierPartyAndContactFroShip/address1">
-            <Annotation Term="Common.Label" String="发货地址"></Annotation>
-            </Annotations>
-
             <Annotations Target="com.dpbird.Party">
-            <Annotation Term="UI.QuickViewFacets">
+                <Annotation Term="UI.QuickViewFacets">
                     <Collection>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="quickviewfieldgroup"/>
