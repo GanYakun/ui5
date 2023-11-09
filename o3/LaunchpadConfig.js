@@ -163,6 +163,66 @@
             }
           },
           {
+            id: "supplierApprove_ManageByApplication",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "SupplierApprove",
+            "semanticAction": "ManageByApplication",
+            properties: {
+              title: "供应商管理-申请人使用",
+              subtitle: "供应商数据填写",
+              info: "供应商数据填写",
+              targetURL: "#SupplierApprove-ManageByApplication",
+            }
+          },
+          {
+            id: "supplierApprove_ManageBySuppLier",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "SupplierApprove",
+            "semanticAction": "ManageBySuppLier",
+            properties: {
+              title: "供应商管理-供应商使用",
+              subtitle: "供应商数据填写",
+              info: "供应商数据填写",
+              targetURL: "#SupplierApprove-ManageBySupplier",
+            }
+          },
+          {
+            id: "supplierApprove_ManageByCompliance",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "SupplierApprove",
+            "semanticAction": "ManageByCompliance",
+            properties: {
+              title: "供应商管理-合规部门使用",
+              subtitle: "供应商数据填写",
+              info: "供应商数据填写",
+              targetURL: "#SupplierApprove-ManageByCompliance",
+            }
+          },
+          {
+            id: "supplierApprove_ManageByProcurement",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "SupplierApprove",
+            "semanticAction": "ManageByProcurement",
+            properties: {
+              title: "供应商管理-采购部门使用",
+              subtitle: "供应商数据填写",
+              info: "供应商数据填写",
+              targetURL: "#SupplierApprove-ManageByProcurement",
+            }
+          },
+          {
             id: "purchaseRequest_Manage",//tile的ID
             chipId: "catalogTile_35",
             size: "1x1",
@@ -296,6 +356,30 @@
         additionalInformation: "SAPUI5.Component=com.banfftech.supplierpartymanage",
         applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
         url: sUshellO3RootPath + "/apps/supplierparty-manage/webapp",
+        description: "管理供应商"
+      },
+      "SupplierApprove-ManageByApplication": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.supplierapprovemanagebyapplication",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/supplierapprove-managebyapplication/webapp",
+        description: "管理供应商"
+      },
+      "SupplierApprove-ManageByCompliance": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.supplierapprovemanagebycompliance",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/supplierapprove-managebycompliance/webapp",
+        description: "管理供应商"
+      },
+      "SupplierApprove-ManageBySupplier": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.supplierapprovemanagebysupplier",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/supplierapprove-managebysupplier/webapp",
+        description: "管理供应商"
+      },
+      "SupplierApprove-ManageByProcurement": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.supplierapprovemanagebyprocurement",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/supplierapprove-managebyprocurement/webapp",
         description: "管理供应商"
       },
       "Purchase-Request": {

@@ -1,0 +1,83 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Communication.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/officeauto/control/odataAppSvc/supplierApproveService/$metadata">
+        <edmx:Include Namespace="com.dpbird"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
+        <Annotations Target="com.dpbird.SupplierParty">
+             <Annotation Term="UI.HeaderFacets">
+                <Collection>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="PartyBaseInfo"/>
+                        <PropertyValue Property="Label" String="{@i18n>PartyBaseInfo}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyBaseInfo"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="TimeInfo"/>
+                        <PropertyValue Property="Label" String="{@i18n>TimeInfo}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#TimeInfo"/>
+                    </Record>
+                        <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="statusId"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#IdentificationCode"/>
+                        <PropertyValue Property="Label" String="{@i18n>Identification}"/>
+                        <PropertyValue Property="ID" String="Identification"/>
+                    </Record>
+                </Collection>
+            </Annotation>
+
+                <Annotation Term="UI.DataPoint" Qualifier="statusId">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Value" Path="statusId"/>
+                    <PropertyValue Property="Title" String="{@i18n>statusId}"/>
+                    <PropertyValue Property="Criticality" Path="criticalityValue"/>
+                </Record>
+            </Annotation>
+
+            <Annotation Term="UI.FieldGroup" Qualifier="PartyBaseInfo">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="primaryEmail" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="address1" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="primaryPhone" />
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+
+            <Annotation Term="UI.Identification">
+                <Collection > 
+                    <Record Type="UI.DataFieldForAction" >
+                        <PropertyValue Property="Action" String="com.dpbird.SubmitToProcurement"/>
+                        <PropertyValue Property="Label"  String="{@i18n>SubmitApproval_Supplier}" />
+                    </Record>                                                                                                                                                       
+                </Collection>
+            </Annotation>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.SubmitToProcurement/target">
+            <Annotation Term="UI.ParameterDefaultValue" String="procurement"></Annotation>
+            <Annotation Term="UI.Hidden" Bool="true"></Annotation>
+        </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
