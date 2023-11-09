@@ -279,7 +279,7 @@
                         </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="TimeInfo"/>
-                            <PropertyValue Property="Label" String="时间信息"/>
+                            <PropertyValue Property="Label" String="{@i18n>TimeInfo}"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#TimeInfo"/>
                         </Record>
                          <Record Type="UI.ReferenceFacet">
@@ -292,7 +292,7 @@
                         </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#IdentificationCode"/>
-                            <PropertyValue Property="Label" String="身份识别"/>
+                            <PropertyValue Property="Label" String="{@i18n>Identification}"/>
                             <PropertyValue Property="ID" String="Identification"/>
                         </Record>
                     </Collection>
@@ -312,7 +312,7 @@
                                     <PropertyValue Property="Value" Path="primaryPhone" />
                                 </Record>
                                 <Record Type="UI.DataFieldForAnnotation">
-                                    <PropertyValue Property="Label" String="公司主要联系人"/>
+                                    <PropertyValue Property="Label" String="{@i18n>CommunicationContact}"/>
                                     <PropertyValue Property="Target" AnnotationPath="@Communication.Contact"/>
                                     <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High" />
                                 </Record>
@@ -346,7 +346,7 @@
                  <Annotation Term="UI.DataPoint" Qualifier="statusId">
                     <Record Type="UI.DataPointType">
                         <PropertyValue Property="Value" Path="statusId"/>
-                        <PropertyValue Property="Title" String="使用状态"/>
+                        <PropertyValue Property="Title" String="{@i18n>statusId}"/>
                         <PropertyValue Property="Criticality" Path="criticalityValue" >
                            
                         </PropertyValue>
@@ -356,7 +356,7 @@
                 <Annotation Term="UI.DataPoint" Qualifier="TotalAmount">
                     <Record Type="UI.DataPointType">
                         <PropertyValue Property="Value" Path="totalAmount"/>
-                        <PropertyValue Property="Title" String="订单总金额"/>
+                        <PropertyValue Property="Title" String="{@i18n>totalAmount}"/>
                         <PropertyValue Property="Criticality" Int="3" >
                            
                         </PropertyValue>
@@ -366,22 +366,22 @@
                 <Annotation Term="UI.Facets">
                     <Collection>
                         <Record Type="UI.CollectionFacet">
-                            <PropertyValue Property="Label" String="公司信息"/>
+                            <PropertyValue Property="Label" String="{@i18n>CompanyInfo}"/>
                             <PropertyValue Property="ID" String="CompanyInfo"/>
                             <PropertyValue Property="Facets">
                                 <Collection>
                                      <Record Type="UI.ReferenceFacet">
-                                        <PropertyValue Property="Label" String="公司基本信息"/>
-                                        <PropertyValue Property="ID" String="BaseInfo"/>
+                                        <PropertyValue Property="Label" String="{@i18n>CompanyBaseInfo}"/>
+                                        <PropertyValue Property="ID" String="PartyGroupFieldGroup"/>
                                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyGroupFieldGroup"/>
                                     </Record>
                                      <Record Type="UI.ReferenceFacet">
-                                        <PropertyValue Property="Label" String="公司联系信息"/>
+                                        <PropertyValue Property="Label" String="{@i18n>CompanyContactInfo}"/>
                                         <PropertyValue Property="ID" String="ContactInfo"/>
                                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ContactInfo"/>
                                     </Record>
                                     <Record Type="UI.ReferenceFacet">
-                                        <PropertyValue Property="Label" String="时间信息"/>
+                                        <PropertyValue Property="Label" String="{@i18n>SupplierTimeInfo}"/>
                                         <PropertyValue Property="ID" String="SupplierTimeInfo"/>
                                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#SupplierTimeInfo"/>
                                     </Record>
@@ -390,58 +390,63 @@
                         </Record>
                        
                         <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="Label" String="公司综合评级"/>
+                            <PropertyValue Property="Label" String="{@i18n>PartyClassificationGroupLineItem}"/>
                             <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
                             <PropertyValue Property="Target" AnnotationPath="PartyClassificationGroup/@UI.LineItem#PartyClassificationGroupLineItem"/>
                         </Record>
                         <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="Label" String="售后服务记录"/>
+                            <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>
+                            <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
+                            <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="{@i18n>AfterSalesServiceLine}"/>
                             <PropertyValue Property="ID" String="AfterSalesService"/>
                             <PropertyValue Property="Target" AnnotationPath="AfterSalesService/@UI.LineItem#AfterSalesServiceLine"/>
                         </Record>
                         <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="ID" String="PostalAddressSelect"/>
-                            <PropertyValue Property="Label" String="联系人"/>
+                            <PropertyValue Property="ID" String="PartyRelationshipLineItem"/>
+                            <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>
                             <PropertyValue Property="Target"  AnnotationPath="PersonAndContact/@UI.LineItem#PartyRelationshipLineItem"/>
                         </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="NoteDataLineItem"/>
-                            <PropertyValue Property="Label" String="备注信息"/>
+                            <PropertyValue Property="Label" String="{@i18n>NoteDataLineItem}"/>
                             <PropertyValue Property="Target"  AnnotationPath="NoteData/@UI.LineItem#NoteDataLineItem"/>
                         </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="SupplierProductLineItem"/>
-                            <PropertyValue Property="Label" String="供应产品信息"/>
+                            <PropertyValue Property="Label" String="{@i18n>SupplierProductLineItem}"/>
                             <PropertyValue Property="Target"  AnnotationPath="SupplierProduct/@UI.LineItem#SupplierProductLineItem"/>
                         </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="PurchaseAgreementLineItem"/>
-                            <PropertyValue Property="Label" String="供应合同信息"/>
+                            <PropertyValue Property="Label" String="{@i18n>PurchaseAgreementLineItem}"/>
                             <PropertyValue Property="Target"  AnnotationPath="PurchaseAgreement/@UI.LineItem#PurchaseAgreementLineItem"/>
                         </Record>
                          <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="Label" String="银行账号"/>
+                            <PropertyValue Property="Label" String="{@i18n>BankAccount}"/>
                             <PropertyValue Property="ID" String="BankAccount"/>
                             <PropertyValue Property="Target" AnnotationPath="OwnerFinAccount/@UI.LineItem#FinAccountLineItem" />
                         </Record>
                         <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="Label" String="订单信息"/>
+                            <PropertyValue Property="Label" String="{@i18n>OrderInfo}"/>
                             <PropertyValue Property="ID" String="OrderInfo"/>
                             <PropertyValue Property="Target" AnnotationPath="PurchaseOrder/@UI.LineItem" />
                         </Record>
                          <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="Label" String="报价记录"/>
+                            <PropertyValue Property="Label" String="{@i18n>PurchaseQuote}"/>
                             <PropertyValue Property="ID" String="PurchaseQuote"/>
                             <PropertyValue Property="Target" AnnotationPath="PurchaseQuote/@UI.LineItem" />
                         </Record>
                          <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="Label" String="发票信息"/>
+                            <PropertyValue Property="Label" String="{@i18n>InvoiceInfo}"/>
                             <PropertyValue Property="ID" String="InvoiceInfo"/>
                             <PropertyValue Property="Target" AnnotationPath="Invoice/@UI.LineItem" />
                         </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="ShipmentLineItem"/>
-                            <PropertyValue Property="Label" String="货运信息"/>
+                            <PropertyValue Property="Label" String="{@i18n>ShipmentLineItem}"/>
                             <PropertyValue Property="Target"  AnnotationPath="FromShipment/@UI.LineItem#ShipmentLineItem"/>
                         </Record>
                     </Collection>
@@ -454,28 +459,22 @@
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="invoiceId" />
-                            <PropertyValue Property="Label" String="发票ID"/>
                         </Record>
                           <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="statusId" />
-                            <PropertyValue Property="Label" String="状态"/>
                             <PropertyValue Property="Criticality" Path="statusColor"/>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="partyIdFrom" />
-                            <PropertyValue Property="Label" String="开据方"/>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="invoiceDate" />
-                            <PropertyValue Property="Label" String="开据时间"/>
                         </Record> 
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="description" />
-                            <PropertyValue Property="Label" String="描述"/>
                         </Record> 
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="orderId" />
-                            <PropertyValue Property="Label" String="订单ID"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
                         </Record> 
                     </Collection>
@@ -487,32 +486,25 @@
                     <Annotation Term="UI.Criticality" Path="orderHeaderStatus"/>
                     <Collection>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="订单ID"/>
                             <PropertyValue Property="Value" Path="orderId"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="订单备注"/>
                             <PropertyValue Property="Value" Path="orderName"/>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="statusId"/>
-                            <PropertyValue Property="Label" String="状态"/>
                             <PropertyValue Property="Criticality" Path="orderHeaderStatus"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="销售渠道"/>
                             <PropertyValue Property="Value" Path="salesChannelEnumId"/>
                         </Record>
                         <Record Type="UI.DataFieldForAnnotation">
-                        <PropertyValue Property="Label" String="支付金额"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.Chart#chart1"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="合计"/>
                             <PropertyValue Property="Value" Path="grandTotal"/>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="订单日期"/>
                             <PropertyValue Property="Value" Path="orderDate"/>
                         </Record>
                     </Collection>
@@ -520,7 +512,7 @@
 
                 <Annotation Term="UI.Chart" Qualifier="chart1">
                     <Record Type="UI.ChartDefinitionType" >
-                        <PropertyValue Property="Title" String="预付金额"/>
+                        <PropertyValue Property="Title" String="{@i18n>ChartTitlePaidAmount}"/>
                         <PropertyValue Property="ChartType" EnumMember="UI.ChartType/Donut" />
                         <PropertyValue Property="Measures" >
                             <Collection>
@@ -554,12 +546,12 @@
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="BaseInfo"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BaseInfo"/>
-                            <PropertyValue Property="Label" String="基本信息"/>
+                            <PropertyValue Property="Label" String="{@i18n>BaseInfo}"/>
                         </Record>
                          <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="TimeInfo"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#AgreementTime"/>
-                            <PropertyValue Property="Label" String="合同时间"/>
+                            <PropertyValue Property="Label" String="{@i18n>AgreementTime}"/>
                         </Record>
                         
                     </Collection>
@@ -570,7 +562,7 @@
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="AgreementTermLineItem"/>
                             <PropertyValue Property="Target" AnnotationPath="AgreementTerm/@UI.LineItem#AgreementTermLineItem" />
-                            <PropertyValue Property="Label" String="合同条款"/>
+                            <PropertyValue Property="Label" String="{@i18n>AgreementTermLineItem}"/>
                         </Record>
                     </Collection>
                 </Annotation>
@@ -697,7 +689,7 @@
                     <Collection>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="quickviewfieldgroup"/>
-                            <PropertyValue Property="Label" String="承运公司信息"/>
+                            <PropertyValue Property="Label" String="{@i18n>CarrierParty}"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#quickviewfieldgroup"/>
                         </Record>
                     </Collection>
@@ -707,15 +699,12 @@
                         <PropertyValue Property="Data">
                             <Collection>
                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="公司名称"/>
                                     <PropertyValue Property="Value" Path="partyName"/>
                                 </Record>
                                  <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="联系电话"/>
                                     <PropertyValue Property="Value" Path="PartyAndContact/primaryPhone"/>
                                 </Record>
                                  <Record Type="UI.DataField">
-                                    <PropertyValue Property="Label" String="邮箱"/>
                                     <PropertyValue Property="Value" Path="PartyAndContact/primaryEmail"/>
                                 </Record>
                             </Collection>

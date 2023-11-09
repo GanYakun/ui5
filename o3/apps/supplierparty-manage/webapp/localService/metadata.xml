@@ -292,6 +292,21 @@
                 </NavigationProperty>
             </EntityType>
             <EntityType Name="QuoteStatusItem"/>
+            <EntityType Name="SurveyQuestionAnswer">
+                <Key>
+                    <PropertyRef Name="surveyQuestionId"/>
+                </Key>
+                <Property Name="surveyQuestionId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="booleanResponse" Type="Edm.String" MaxLength="1"/>
+                <Property Name="currencyResponse" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <Property Name="floatResponse" Type="Edm.Double"/>
+                <Property Name="numericResponse" Type="Edm.Int64"/>
+                <Property Name="textResponse" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="surveyOptionSeqId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="answeredDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+            </EntityType>
             <EntityType Name="FixedAsset">
                 <Key>
                     <PropertyRef Name="fixedAssetId"/>
@@ -493,6 +508,7 @@
                 <NavigationProperty Name="PurchaseQuote" Type="Collection(com.dpbird.PurchaseQuote)"/>
                 <NavigationProperty Name="AfterSalesService" Type="Collection(com.dpbird.AfterSalesService)"/>
                 <NavigationProperty Name="PartyClassificationGroup" Type="Collection(com.dpbird.PartyClassificationGroup)"/>
+                <NavigationProperty Name="SurveyQuestionAppl" Type="Collection(com.dpbird.SurveyQuestionAppl)"/>
             </EntityType>
             <EntityType Name="Party">
                 <Key>
@@ -852,6 +868,21 @@
                     <ReferentialConstraint Property="ownerPartyId" ReferencedProperty="partyId"/>
                 </NavigationProperty>
             </EntityType>
+            <EntityType Name="Survey">
+                <Key>
+                    <PropertyRef Name="surveyId"/>
+                </Key>
+                <Property Name="surveyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="surveyName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="comments" Type="Edm.String" MaxLength="255"/>
+                <Property Name="submitCaption" Type="Edm.String" MaxLength="60"/>
+                <Property Name="responseService" Type="Edm.String" MaxLength="255"/>
+                <Property Name="isAnonymous" Type="Edm.String" MaxLength="1"/>
+                <Property Name="allowMultiple" Type="Edm.String" MaxLength="1"/>
+                <Property Name="allowUpdate" Type="Edm.String" MaxLength="1"/>
+                <Property Name="acroFormContentId" Type="Edm.String" MaxLength="60"/>
+            </EntityType>
             <EntityType Name="AgreementTerm">
                 <Key>
                     <PropertyRef Name="agreementTermId"/>
@@ -972,6 +1003,45 @@
                 <NavigationProperty Name="SupplierParty" Type="com.dpbird.SupplierParty"/>
                 <NavigationProperty Name="Company" Type="com.dpbird.Company"/>
                 <NavigationProperty Name="AgreementTerm" Type="Collection(com.dpbird.AgreementTerm)"/>
+            </EntityType>
+            <EntityType Name="SurveyQuestionAppl">
+                <Key>
+                    <PropertyRef Name="surveyId"/>
+                    <PropertyRef Name="surveyQuestionId"/>
+                </Key>
+                <Property Name="surveyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="surveyQuestionId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="fromDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="thruDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="surveyPageSeqId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="surveyMultiRespId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="surveyMultiRespColId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="requiredField" Type="Edm.String" MaxLength="1"/>
+                <Property Name="sequenceNum" Type="Edm.Int64"/>
+                <Property Name="externalFieldRef" Type="Edm.String" MaxLength="255"/>
+                <Property Name="withSurveyQuestionId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="withSurveyOptionSeqId" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="SurveyQuestion" Type="com.dpbird.SurveyQuestion">
+                    <ReferentialConstraint Property="surveyQuestionId" ReferencedProperty="surveyQuestionId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="Survey" Type="com.dpbird.Survey">
+                    <ReferentialConstraint Property="surveyId" ReferencedProperty="surveyId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="SurveyQuestionAnswer" Type="com.dpbird.SurveyQuestionAnswer"/>
+            </EntityType>
+            <EntityType Name="SurveyQuestion">
+                <Key>
+                    <PropertyRef Name="surveyQuestionId"/>
+                </Key>
+                <Property Name="surveyQuestionId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="surveyQuestionCategoryId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="surveyQuestionTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="question" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="hint" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="enumTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="geoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="formatString" Type="Edm.String" MaxLength="255"/>
             </EntityType>
             <ComplexType Name="ApproverData">
                 <Property Name="nodeId" Type="Edm.Decimal"/>
@@ -1106,6 +1176,7 @@
                 <EntitySet Name="Unm" EntityType="com.dpbird.Uom">
                     <NavigationPropertyBinding Path="UomType" Target="UomTypes"/>
                 </EntitySet>
+                <EntitySet Name="SurveyQuestions" EntityType="com.dpbird.SurveyQuestion"/>
                 <EntitySet Name="ShipmentStatusItems" EntityType="com.dpbird.ShipmentStatusItem"/>
                 <EntitySet Name="SupplierParties" EntityType="com.dpbird.SupplierParty">
                     <NavigationPropertyBinding Path="SupplierProduct" Target="SupplierProducts"/>
@@ -1121,7 +1192,9 @@
                     <NavigationPropertyBinding Path="PurchaseQuote" Target="PurchaseQuotes"/>
                     <NavigationPropertyBinding Path="AfterSalesService" Target="AfterSalesServices"/>
                     <NavigationPropertyBinding Path="PartyClassificationGroup" Target="PartyClassificationGroups"/>
+                    <NavigationPropertyBinding Path="SurveyQuestionAppl" Target="SurveyQuestionAppls"/>
                 </EntitySet>
+                <EntitySet Name="SurveyQuestionAnswers" EntityType="com.dpbird.SurveyQuestionAnswer"/>
                 <EntitySet Name="AfterSalesServices" EntityType="com.dpbird.AfterSalesService">
                     <NavigationPropertyBinding Path="FixedAsset" Target="FixedAssets"/>
                 </EntitySet>
@@ -1154,6 +1227,12 @@
                 </EntitySet>
                 <EntitySet Name="ShipmentRouteSegments" EntityType="com.dpbird.ShipmentRouteSegment">
                     <NavigationPropertyBinding Path="CarrierParty" Target="Parties"/>
+                </EntitySet>
+                <EntitySet Name="Surveys" EntityType="com.dpbird.Survey"/>
+                <EntitySet Name="SurveyQuestionAppls" EntityType="com.dpbird.SurveyQuestionAppl">
+                    <NavigationPropertyBinding Path="SurveyQuestion" Target="SurveyQuestions"/>
+                    <NavigationPropertyBinding Path="Survey" Target="Surveys"/>
+                    <NavigationPropertyBinding Path="SurveyQuestionAnswer" Target="SurveyQuestionAnswers"/>
                 </EntitySet>
                 <EntitySet Name="OrderSalesEnumerations" EntityType="com.dpbird.Enumeration"/>
                 <EntitySet Name="RawMaterialProducts" EntityType="com.dpbird.RawMaterialProduct">
@@ -2374,6 +2453,56 @@
             <Annotations Target="com.dpbird.Product/orderDecimalQuantity">
                 <Annotation Term="Common.Label">
                     <String>orderDecimalQuantity</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAnswer/surveyQuestionId">
+                <Annotation Term="Common.Label">
+                    <String>surveyQuestionId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAnswer/partyId">
+                <Annotation Term="Common.Label">
+                    <String>partyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAnswer/booleanResponse">
+                <Annotation Term="Common.Label">
+                    <String>booleanResponse</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAnswer/currencyResponse">
+                <Annotation Term="Common.Label">
+                    <String>currencyResponse</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAnswer/floatResponse">
+                <Annotation Term="Common.Label">
+                    <String>floatResponse</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAnswer/numericResponse">
+                <Annotation Term="Common.Label">
+                    <String>numericResponse</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAnswer/textResponse">
+                <Annotation Term="Common.Label">
+                    <String>textResponse</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAnswer/surveyOptionSeqId">
+                <Annotation Term="Common.Label">
+                    <String>surveyOptionSeqId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAnswer/answeredDate">
+                <Annotation Term="Common.Label">
+                    <String>answeredDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAnswer/lastModifiedDate">
+                <Annotation Term="Common.Label">
+                    <String>lastModifiedDate</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FixedAsset/fixedAssetId">
@@ -5075,6 +5204,56 @@
                     <String>availableBalance</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.Survey/surveyId">
+                <Annotation Term="Common.Label">
+                    <String>surveyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Survey/surveyName">
+                <Annotation Term="Common.Label">
+                    <String>surveyName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Survey/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Survey/comments">
+                <Annotation Term="Common.Label">
+                    <String>comments</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Survey/submitCaption">
+                <Annotation Term="Common.Label">
+                    <String>submitCaption</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Survey/responseService">
+                <Annotation Term="Common.Label">
+                    <String>responseService</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Survey/isAnonymous">
+                <Annotation Term="Common.Label">
+                    <String>isAnonymous</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Survey/allowMultiple">
+                <Annotation Term="Common.Label">
+                    <String>allowMultiple</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Survey/allowUpdate">
+                <Annotation Term="Common.Label">
+                    <String>allowUpdate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Survey/acroFormContentId">
+                <Annotation Term="Common.Label">
+                    <String>acroFormContentId</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.AgreementTerm">
                 <Annotation Term="UI.LineItem" Qualifier="AgreementTermLineItem">
                     <Collection>
@@ -5796,6 +5975,157 @@
             <Annotations Target="com.dpbird.PurchaseAgreement/textData">
                 <Annotation Term="Common.Label">
                     <String>textData</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl">
+                <Annotation Term="UI.LineItem" Qualifier="SurveyQuestionApplLineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>surveyId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>SurveyQuestion/surveyQuestionCategoryId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>SurveyQuestion/question</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>SurveyQuestionAnswer/partyId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>SurveyQuestionAnswer/booleanResponse</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl/surveyId">
+                <Annotation Term="Common.Label">
+                    <String>surveyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl/surveyQuestionId">
+                <Annotation Term="Common.Label">
+                    <String>surveyQuestionId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl/fromDate">
+                <Annotation Term="Common.Label">
+                    <String>fromDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl/thruDate">
+                <Annotation Term="Common.Label">
+                    <String>thruDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl/surveyPageSeqId">
+                <Annotation Term="Common.Label">
+                    <String>surveyPageSeqId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl/surveyMultiRespId">
+                <Annotation Term="Common.Label">
+                    <String>surveyMultiRespId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl/surveyMultiRespColId">
+                <Annotation Term="Common.Label">
+                    <String>surveyMultiRespColId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl/requiredField">
+                <Annotation Term="Common.Label">
+                    <String>requiredField</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl/sequenceNum">
+                <Annotation Term="Common.Label">
+                    <String>sequenceNum</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl/externalFieldRef">
+                <Annotation Term="Common.Label">
+                    <String>externalFieldRef</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl/withSurveyQuestionId">
+                <Annotation Term="Common.Label">
+                    <String>withSurveyQuestionId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl/withSurveyOptionSeqId">
+                <Annotation Term="Common.Label">
+                    <String>withSurveyOptionSeqId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestion/surveyQuestionId">
+                <Annotation Term="Common.Label">
+                    <String>surveyQuestionId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestion/surveyQuestionCategoryId">
+                <Annotation Term="Common.Label">
+                    <String>surveyQuestionCategoryId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestion/surveyQuestionTypeId">
+                <Annotation Term="Common.Label">
+                    <String>surveyQuestionTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestion/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestion/question">
+                <Annotation Term="Common.Label">
+                    <String>question</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestion/hint">
+                <Annotation Term="Common.Label">
+                    <String>hint</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestion/enumTypeId">
+                <Annotation Term="Common.Label">
+                    <String>enumTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestion/geoId">
+                <Annotation Term="Common.Label">
+                    <String>geoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestion/formatString">
+                <Annotation Term="Common.Label">
+                    <String>formatString</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.UpdatePartyClassificationGroup/partyClassificationTypeId">
