@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<entity-engine-xml>
+    <SurveyApplType surveyApplTypeId="CART_ADD" description="Add-To Cart"/>
+    <SurveyApplType surveyApplTypeId="CHECK_OUT" description="Check-Out"/>
+    <SurveyApplType surveyApplTypeId="GENERAL_POLL" description="General Poll"/>
+    <SurveyApplType surveyApplTypeId="RANDOM_POLL" description="Random Poll"/>
+    <SurveyApplType surveyApplTypeId="CUSTOMER_PROFILE" description="Customer Profile"/>
+    <SurveyApplType surveyApplTypeId="SORDER_PLACE" description="Sales Order Placement"/>
+    <SurveyApplType surveyApplTypeId="PORDER_PLACE" description="Purchase Order Placement"/>
+    <SurveyApplType surveyApplTypeId="PORDITM_PLACE" description="Purchase Order Item Placement"/>
+
+    <SurveyQuestionType surveyQuestionTypeId="BOOLEAN" description="Boolean (Yes/No)"/>
+    <SurveyQuestionType surveyQuestionTypeId="CONTENT" description="Content Record"/>
+    <SurveyQuestionType surveyQuestionTypeId="COUNTRY" description="Country"/>
+    <SurveyQuestionType surveyQuestionTypeId="CREDIT_CARD" description="Credit Card Number"/>
+    <SurveyQuestionType surveyQuestionTypeId="GEO" description="Geo List"/>
+    <SurveyQuestionType surveyQuestionTypeId="GIFT_CARD" description="Gift Card Number"/>
+    <SurveyQuestionType surveyQuestionTypeId="DATE" description="Date String (mm/dd/yyyy)"/>
+    <SurveyQuestionType surveyQuestionTypeId="EMAIL" description="Email Address"/>
+    <SurveyQuestionType surveyQuestionTypeId="ENUMERATION" description="Enumeration"/>
+    <SurveyQuestionType surveyQuestionTypeId="NUMBER_CURRENCY" description="Numeric (Currency)"/>
+    <SurveyQuestionType surveyQuestionTypeId="NUMBER_FLOAT" description="Numeric (Float)"/>
+    <SurveyQuestionType surveyQuestionTypeId="NUMBER_LONG" description="Numeric (Long)"/>
+    <SurveyQuestionType surveyQuestionTypeId="OPTION" description="Selected Option"/>
+    <SurveyQuestionType surveyQuestionTypeId="PASSWORD" description="Password"/>
+    <SurveyQuestionType surveyQuestionTypeId="SEPERATOR_LINE" description="Seperator Line"/>
+    <SurveyQuestionType surveyQuestionTypeId="SEPERATOR_TEXT" description="Seperator Text"/>
+    <SurveyQuestionType surveyQuestionTypeId="STATE_PROVINCE" description="State/Province"/>
+    <SurveyQuestionType surveyQuestionTypeId="TEXT_SHORT" description="Short Text (single-line)"/>
+    <SurveyQuestionType surveyQuestionTypeId="TEXT_LONG" description="Long Text (single-line)"/>
+    <SurveyQuestionType surveyQuestionTypeId="TEXTAREA" description="Text (multi-line)"/>
+    <SurveyQuestionType surveyQuestionTypeId="URL" description="URL"/>
+</entity-engine-xml>
