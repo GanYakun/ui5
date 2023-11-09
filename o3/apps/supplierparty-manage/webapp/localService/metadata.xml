@@ -993,6 +993,43 @@
                 <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
                 <ReturnType Type="com.dpbird.ActiveData"/>
             </Action>
+            <Action Name="FillSupplierBaseInfo" EntitySetPath="supplierParty" IsBound="true">
+                <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
+                <Parameter Name="numEmployees" Type="Edm.String"/>
+                <Parameter Name="annualRevenue" Type="Edm.String"/>
+                <Parameter Name="tickerSymbol" Type="Edm.String"/>
+                <Parameter Name="comments" Type="Edm.String"/>
+                <ReturnType Type="com.dpbird.SupplierParty"/>
+            </Action>
+            <Action Name="UpdateSupplierContactInfo" EntitySetPath="supplierParty" IsBound="true">
+                <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
+                <Parameter Name="primaryPhone" Type="Edm.String"/>
+                <Parameter Name="primaryEmail" Type="Edm.String"/>
+                <Parameter Name="address1" Type="Edm.String"/>
+                <ReturnType Type="com.dpbird.SupplierParty"/>
+            </Action>
+            <Action Name="UpdateSupplierTimeInfo" EntitySetPath="supplierParty" IsBound="true">
+                <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
+                <Parameter Name="collectionDate" Type="Edm.DateTimeOffset"/>
+                <Parameter Name="firstOrderDate" Type="Edm.DateTimeOffset"/>
+                <ReturnType Type="com.dpbird.SupplierParty"/>
+            </Action>
+            <Action Name="ReturnToApplication" EntitySetPath="supplierParty" IsBound="true">
+                <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
+                <ReturnType Type="com.dpbird.SupplierParty"/>
+            </Action>
+            <Action Name="ReturnToApplication" EntitySetPath="supplierParty" IsBound="true">
+                <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
+                <ReturnType Type="com.dpbird.SupplierParty"/>
+            </Action>
+            <Action Name="ReturnToSupplier" EntitySetPath="supplierParty" IsBound="true">
+                <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
+                <ReturnType Type="com.dpbird.SupplierParty"/>
+            </Action>
+            <Action Name="ReturnToCompliance" EntitySetPath="supplierParty" IsBound="true">
+                <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
+                <ReturnType Type="com.dpbird.SupplierParty"/>
+            </Action>
             <Action Name="ChangeSupplierStatusToEnable" EntitySetPath="supplierParty" IsBound="true">
                 <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
                 <ReturnType Type="com.dpbird.SupplierParty"/>
@@ -2755,37 +2792,6 @@
                         <PropertyPath>statusId</PropertyPath>
                         <PropertyPath>primaryPhone</PropertyPath>
                     </Collection>
-                </Annotation>
-                <Annotation Term="UI.FieldGroup" Qualifier="PartyGroupFieldGroup">
-                    <Record Type="UI.FieldGroupType">
-                        <PropertyValue Property="Data">
-                            <Collection>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>numEmployees</Path>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>annualRevenue</Path>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>tickerSymbol</Path>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>comments</Path>
-                                    </PropertyValue>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                        <PropertyValue Property="Label">
-                            <String>PartyGroupFieldGroup</String>
-                        </PropertyValue>
-                    </Record>
                 </Annotation>
                 <Annotation Term="UI.FieldGroup" Qualifier="TimeInfo">
                     <Record Type="UI.FieldGroupType">
