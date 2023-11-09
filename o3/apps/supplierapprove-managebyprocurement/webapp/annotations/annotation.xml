@@ -91,15 +91,15 @@
         </Annotations>
 
         <Annotations Target="com.dpbird.ReturnToApplication/target">
-            <Annotation Term="UI.ParameterDefaultValue" String="procurement"></Annotation>
+            <Annotation Term="UI.ParameterDefaultValue" String="applicant"></Annotation>
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
         </Annotations>
         <Annotations Target="com.dpbird.ReturnToCompliance/target">
-            <Annotation Term="UI.ParameterDefaultValue" String="procurement"></Annotation>
+            <Annotation Term="UI.ParameterDefaultValue" String="compliance"></Annotation>
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
         </Annotations>
         <Annotations Target="com.dpbird.ReturnToSupplier/target">
-            <Annotation Term="UI.ParameterDefaultValue" String="procurement"></Annotation>
+            <Annotation Term="UI.ParameterDefaultValue" String="supplier"></Annotation>
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
         </Annotations>
         </Schema>
