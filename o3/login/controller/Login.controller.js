@@ -25,7 +25,7 @@ sap.ui.define([
 
             $.ajax({
                 type: 'POST',
-                url: '/officeauto/control/login',
+                url: '/officeauto/control/externalLogin',
                 data: loginData,
                 success: function (rsp) {
                     if (rsp._LOGIN_PASSED_) {
