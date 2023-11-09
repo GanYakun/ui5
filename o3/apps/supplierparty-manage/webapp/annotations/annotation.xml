@@ -531,6 +531,18 @@
                 </Annotation>
             </Annotations>
 
+             <Annotations Target="com.dpbird.CreatePersonAndContact">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>personAndContact</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
              <Annotations Target="com.dpbird.O3Container/SupplierParties">
                 <Annotation Term="UI.UpdateHidden">
                     <If>
