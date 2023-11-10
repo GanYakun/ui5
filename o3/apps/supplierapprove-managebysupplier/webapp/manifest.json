@@ -108,7 +108,6 @@
             "css": []
         },
         "routing": {
-            "config": {},
             "routes": [
                 {
                     "pattern": ":?query:",
@@ -137,6 +136,18 @@
                                         "route": "SupplierPartiesObjectPage"
                                     }
                                 }
+                            },
+                            "views": {
+                                "paths": [
+                                    {
+                                        "key": "tableView",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView"
+                                    },
+                                    {
+                                        "key": "tableView1",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView1"
+                                    }
+                                ]
                             }
                         }
                     }

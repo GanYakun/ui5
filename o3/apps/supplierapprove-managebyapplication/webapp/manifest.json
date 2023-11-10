@@ -128,6 +128,18 @@
                     "name": "sap.fe.templates.ListReport",
                     "options": {
                         "settings": {
+                            "views": {
+                                "paths": [
+                                    {
+                                        "key": "tableView",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView"
+                                    },
+                                    {
+                                        "key": "tableView1",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView1"
+                                    }
+                                ]
+                            },
                             "initialLoad": "Enabled",
                             "entitySet": "SupplierParties",
                             "variantManagement": "Page",
