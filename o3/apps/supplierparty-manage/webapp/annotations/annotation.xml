@@ -211,7 +211,6 @@
                               <PropertyValue Property="Criticality" Path="criticalityValue">
                             </PropertyValue>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                             
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="partyId"/>
@@ -227,6 +226,10 @@
                         </Record>
                           <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="primaryPhone"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                          <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="createdDate"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
                     </Collection>
