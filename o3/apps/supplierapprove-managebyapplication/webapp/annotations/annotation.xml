@@ -103,7 +103,7 @@
                                         <PropertyValue Property="Ranges">
                                             <Collection>
                                                 <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="NOT_PROCESSED"></PropertyValue>
+                                                    <PropertyValue Property="Low" String="PROCESSED"></PropertyValue>
                                                     <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
                                                     <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
                                                 </Record>
@@ -138,7 +138,7 @@
                                         <PropertyValue Property="Ranges">
                                             <Collection>
                                                 <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="PROCESSED"></PropertyValue>
+                                                    <PropertyValue Property="Low" String="NOT_PROCESSED"></PropertyValue>
                                                     <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
                                                     <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
                                                 </Record>
