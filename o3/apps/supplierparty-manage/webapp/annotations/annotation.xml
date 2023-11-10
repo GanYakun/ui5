@@ -243,12 +243,12 @@
                                         <Path>statusId</Path>
                                         <String>PARTY_DISABLED</String>
                                     </Eq>
-                                <Bool>true</Bool>
                                 <Bool>false</Bool>
+                                <Bool>true</Bool>
                                 </If>
                             </Annotation>
                         </Record>   
-                        <Record Type="UI.DataFieldForAction" >
+                        <!-- <Record Type="UI.DataFieldForAction" >
                             <PropertyValue Property="Action" String="com.dpbird.SubmitApproval_Supplier"/>
                             <PropertyValue Property="Label"  String="{@i18n>SubmitApproval_Supplier}" />
                         </Record>   
@@ -267,7 +267,7 @@
                         <Record Type="UI.DataFieldForAction" >
                             <PropertyValue Property="Action" String="com.dpbird.ReturnToSupplier"/>
                             <PropertyValue Property="Label"  String="{@i18n>ReturnToSupplier}" />
-                        </Record>                                                                                                                                                           
+                        </Record>                                                                                                                                                            -->
                     </Collection>
                 </Annotation>
                 <Annotation Term="UI.HeaderFacets">
