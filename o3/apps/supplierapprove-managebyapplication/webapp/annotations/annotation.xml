@@ -24,6 +24,38 @@
                 </Collection>
             </Annotation>
 
+            <Annotation Term="UI.QuickCreateFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="QuickCreate"/>
+                            <PropertyValue Property="Label" String="Create Supplier"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#QuickCreate"/>
+                            <Annotation Term="UI.Hidden" Path="createSupplierHidden"></Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
+                <Annotation Term="UI.FieldGroup" Qualifier="QuickCreate">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="partyName" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="address1" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="primaryEmail" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="primaryPhone" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
              <Annotation Term="UI.HeaderFacets">
                 <Collection>
                     <Record Type="UI.ReferenceFacet">
@@ -78,7 +110,17 @@
                 <Collection > 
                     <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.SubmitToProcurement"/>
-                        <PropertyValue Property="Label"  String="{@i18n>SubmitApproval_Supplier}" />
+                        <PropertyValue Property="Label"  String="{@i18n>SubmitApproval_Supplier}"/>
+                        <Annotation Term="UI.Hidden">
+                            <If>
+                                <Eq>
+                                    <Path>currentStatusId</Path>
+                                    <String>PROCESSED</String>
+                                </Eq>
+                                <Bool>true</Bool>
+                                <Bool>false</Bool>
+                            </If>
+                        </Annotation>
                     </Record>                                                                                                                                                       
                 </Collection>
             </Annotation>
