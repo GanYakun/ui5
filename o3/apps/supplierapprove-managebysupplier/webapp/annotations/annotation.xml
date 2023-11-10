@@ -65,11 +65,6 @@
                             <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
                             <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
                         </Record>
-                        <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="ID" String="PartyRelationshipLineItem"/>
-                            <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>
-                            <PropertyValue Property="Target"  AnnotationPath="PersonAndContact/@UI.LineItem#PartyRelationshipLineItem"/>
-                        </Record>
                     </Collection>
                 </Annotation>
 
@@ -263,26 +258,6 @@
         <Annotations Target="com.dpbird.SubmitToProcurement/target">
             <Annotation Term="UI.ParameterDefaultValue" String="procurement"></Annotation>
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
-        </Annotations>
-
-        <Annotations Target="com.dpbird.CreatePersonAndContact/phoneMobile">
-            <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
-        </Annotations>
-
-        <Annotations Target="com.dpbird.CreatePersonAndContact/partyName">
-            <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
-        </Annotations>
-
-        <Annotations Target="com.dpbird.CreatePersonAndContact">
-            <Annotation Term="Common.SideEffects">
-                <Record>
-                    <PropertyValue Property="TargetEntities">
-                        <Collection>
-                            <NavigationPropertyPath>personAndContact</NavigationPropertyPath>
-                        </Collection>
-                    </PropertyValue>
-                </Record>
-            </Annotation>
         </Annotations>
 
         <Annotations Target="com.dpbird.SubmitToProcurement">

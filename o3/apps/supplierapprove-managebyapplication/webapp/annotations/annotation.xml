@@ -14,6 +14,16 @@
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
         <Annotations Target="com.dpbird.SupplierParty">
+            <Annotation Term="UI.Facets">
+                <Collection>
+                   <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="PartyRelationshipLineItem"/>
+                        <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="PersonAndContact/@UI.LineItem#PartyRelationshipLineItem"/>
+                    </Record>
+                </Collection>
+            </Annotation>
+
              <Annotation Term="UI.HeaderFacets">
                 <Collection>
                     <Record Type="UI.ReferenceFacet">
@@ -155,6 +165,26 @@
                     <PropertyValue Property="TargetEntities">
                         <Collection>
                             <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.CreatePersonAndContact/phoneMobile">
+            <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
+        </Annotations>
+
+        <Annotations Target="com.dpbird.CreatePersonAndContact/partyName">
+            <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
+        </Annotations>
+
+        <Annotations Target="com.dpbird.CreatePersonAndContact">
+            <Annotation Term="Common.SideEffects">
+                <Record>
+                    <PropertyValue Property="TargetEntities">
+                        <Collection>
+                            <NavigationPropertyPath>personAndContact</NavigationPropertyPath>
                         </Collection>
                     </PropertyValue>
                 </Record>
