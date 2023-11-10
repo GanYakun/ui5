@@ -274,16 +274,28 @@
         </Annotations>
 
         <Annotations Target="com.dpbird.CreatePersonAndContact">
-                <Annotation Term="Common.SideEffects">
-                    <Record>
-                        <PropertyValue Property="TargetEntities">
-                            <Collection>
-                                <NavigationPropertyPath>personAndContact</NavigationPropertyPath>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-            </Annotations>
+            <Annotation Term="Common.SideEffects">
+                <Record>
+                    <PropertyValue Property="TargetEntities">
+                        <Collection>
+                            <NavigationPropertyPath>personAndContact</NavigationPropertyPath>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.SubmitToProcurement">
+            <Annotation Term="Common.SideEffects">
+                <Record>
+                    <PropertyValue Property="TargetEntities">
+                        <Collection>
+                            <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>

@@ -158,6 +158,50 @@
             <Annotation Term="UI.ParameterDefaultValue" String="procurement"></Annotation>
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
         </Annotations>
+
+        <Annotations Target="com.dpbird.CreatePartyClassificationGroup">
+            <Annotation Term="Common.SideEffects">
+                <Record>
+                    <PropertyValue Property="TargetEntities">
+                        <Collection>
+                            <NavigationPropertyPath>partyClassificationGroup</NavigationPropertyPath>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.SubmitToProcurement">
+            <Annotation Term="Common.SideEffects">
+                <Record>
+                    <PropertyValue Property="TargetEntities">
+                        <Collection>
+                            <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.UpdatePartyClassificationGroup/partyClassificationTypeId">
+            <Annotation Term="UI.ParameterDefaultValue" Path="partyClassificationGroup/partyClassificationTypeId"/>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.UpdatePartyClassificationGroup/description">
+            <Annotation Term="UI.ParameterDefaultValue" Path="partyClassificationGroup/description"/>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.UpdatePartyClassificationGroup">
+            <Annotation Term="Common.SideEffects">
+                <Record>
+                    <PropertyValue Property="TargetEntities">
+                        <Collection>
+                            <NavigationPropertyPath>partyClassificationGroup</NavigationPropertyPath>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>
