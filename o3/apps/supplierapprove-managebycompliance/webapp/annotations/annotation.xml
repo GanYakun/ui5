@@ -43,7 +43,7 @@
                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>PartyClassificationGroupLineItem}"/>
                         <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
-                        <PropertyValue Property="Target" AnnotationPath="PartyClassificationGroup/@UI.LineItem#PartyClassificationGroupLineItem"/>
+                        <PropertyValue Property="Target" AnnotationPath="PartyClassification/@UI.FieldGroup#PartyClassificationFieldGroup"/>
                     </Record>
                 </Collection>
             </Annotation>
@@ -169,12 +169,12 @@
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
         </Annotations>
 
-        <Annotations Target="com.dpbird.CreatePartyClassificationGroup">
+        <Annotations Target="com.dpbird.FillPartyClassification">
             <Annotation Term="Common.SideEffects">
                 <Record>
                     <PropertyValue Property="TargetEntities">
                         <Collection>
-                            <NavigationPropertyPath>partyClassificationGroup</NavigationPropertyPath>
+                            <NavigationPropertyPath>partyClassification</NavigationPropertyPath>
                         </Collection>
                     </PropertyValue>
                 </Record>
@@ -193,20 +193,19 @@
             </Annotation>
         </Annotations>
 
-        <Annotations Target="com.dpbird.UpdatePartyClassificationGroup/partyClassificationTypeId">
-            <Annotation Term="UI.ParameterDefaultValue" Path="partyClassificationGroup/partyClassificationTypeId"/>
-        </Annotations>
-
-        <Annotations Target="com.dpbird.UpdatePartyClassificationGroup/description">
-            <Annotation Term="UI.ParameterDefaultValue" Path="partyClassificationGroup/description"/>
-        </Annotations>
-
-        <Annotations Target="com.dpbird.UpdatePartyClassificationGroup">
-            <Annotation Term="Common.SideEffects">
-                <Record>
-                    <PropertyValue Property="TargetEntities">
+        <Annotations Target="com.dpbird.PartyClassification">
+            <Annotation Term="UI.FieldGroup" Qualifier="PartyClassificationFieldGroup">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
                         <Collection>
-                            <NavigationPropertyPath>partyClassificationGroup</NavigationPropertyPath>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="PartyClassificationGroup/description" />
+                                <PropertyValue Property="Criticality" Path="statusColor" />
+                            </Record>
+                            <Record Type="UI.DataFieldForAction">
+                                <PropertyValue Property="Action" String="com.dpbird.FillPartyClassification" />
+                                <PropertyValue Property="Label" String="填写风险等级" />
+                            </Record>
                         </Collection>
                     </PropertyValue>
                 </Record>

@@ -10,10 +10,21 @@
   jQuery.sap.declare("o3.LaunchpadConfig");
   var sUshellTestRootPath = jQuery.sap.getResourcePath("sap/ushell").replace("resources", "test-resources");
   var sUshellO3RootPath = '/o3';
+
+  let cookies = document.cookie.split(';')
+    // console.log({cookies})
+    let currentToken =null
+    for (let i = 0; i < cookies.length; i++) {
+            const [name, value] = cookies[i].split('=');
+            if (name.trim() === 'userLoginId') {
+              currentToken = value
+            }
+          }
+      console.log({currentToken})
   o3.testContent = {
     //Define groups for the dashboard
 
-
+    
     groups: [
       {
         id: "我的主页",
@@ -159,7 +170,9 @@
               title: "供应商",
               subtitle: "供应商主数据",
               info: "供应商的通用管理",
-              targetURL: "#SupplierParty-Manage",
+              // targetURL: "#SupplierParty-Manage&/SupplierParties(${PartyUserLogin.partyId})",
+              // targetURL: `#SupplierParty-Manage&/SupplierParties('${currentToken}')`,
+              targetURL: "#SupplierParty-Manage"
             }
           },
           {
