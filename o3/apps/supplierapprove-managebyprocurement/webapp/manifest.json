@@ -131,12 +131,19 @@
                             "views": {
                                 "paths": [
                                     {
-                                        "key": "tableView",
-                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView"
+                                        "key": "APPROVAL_CREATED",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#APPROVAL_CREATED"
                                     },
                                     {
-                                        "key": "tableView1",
-                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableView1"
+                                        "key": "APPROVAL_SUBMITTED",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#APPROVAL_SUBMITTED"
+                                    },{
+                                        "key": "APPROVAL_REJECTED",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#APPROVAL_REJECTED"
+                                    },
+                                    {
+                                        "key": "APPROVAL_APPROVED",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#APPROVAL_APPROVED"
                                     }
                                 ]
                             },
