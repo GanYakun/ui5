@@ -10,9 +10,9 @@
     ],
     "main": "webapp/index.html",
     "devDependencies": {
-        "@sap-ux/ui5-middleware-fe-mockserver": "^2.1.115",
+        "@sap-ux/ui5-middleware-fe-mockserver": "^2.2.5",
         "@sap/ux-specification": "UI5-1.116",
-        "@sap/ux-ui5-tooling": "^1.10.4",
+        "@sap/ux-ui5-tooling": "^1.11.4",
         "@ui5/cli": "^2.14.1"
     },
     "scripts": {
