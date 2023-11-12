@@ -430,6 +430,7 @@
                     <PropertyValue Property="Data">
                         <Collection>
                             <Record Type="UI.DataField">
+                                <PropertyValue Property="Label" String="{@i18n>RiskRating}"/>
                                 <PropertyValue Property="Value" Path="PartyClassificationGroup/description" />
                                 <PropertyValue Property="Criticality" Path="statusColor" />
                             </Record>
