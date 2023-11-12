@@ -363,7 +363,7 @@
                         <PropertyValue Property="ID" String="CompanyInfo"/>
                         <PropertyValue Property="Facets">
                             <Collection>
-                                    <Record Type="UI.ReferenceFacet">
+                                <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="Label" String="{@i18n>CompanyBaseInfo}"/>
                                     <PropertyValue Property="ID" String="PartyGroupFieldGroup"/>
                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyGroupFieldGroup"/>

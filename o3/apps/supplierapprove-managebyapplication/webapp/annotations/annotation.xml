@@ -40,10 +40,63 @@
             </Annotation>
             <Annotation Term="UI.Facets">
                 <Collection>
-                   <Record Type="UI.ReferenceFacet">
+                    <Record Type="UI.CollectionFacet">
+                        <PropertyValue Property="Label" String="{@i18n>CompanyInfo}"/>
+                        <PropertyValue Property="ID" String="CompanyInfo"/>
+                        <PropertyValue Property="Facets">
+                            <Collection>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="{@i18n>CompanyBaseInfo}"/>
+                                    <PropertyValue Property="ID" String="PartyGroupFieldGroup"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyGroupFieldGroup"/>
+                                </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="{@i18n>CompanyContactInfo}"/>
+                                    <PropertyValue Property="ID" String="ContactInfo"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ContactInfo"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="{@i18n>SupplierTimeInfo}"/>
+                                    <PropertyValue Property="ID" String="SupplierTimeInfo"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#SupplierTimeInfo"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>
+                        <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
+                        <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="Label" String="{@i18n>PartyClassificationGroupLineItem}"/>
+                        <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
+                        <PropertyValue Property="Target" AnnotationPath="PartyClassification/@UI.FieldGroup#PartyClassificationFieldGroup"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="PartyRelationshipLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>
                         <PropertyValue Property="Target"  AnnotationPath="PersonAndContact/@UI.LineItem#PartyRelationshipLineItem"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="NoteDataLineItem"/>
+                        <PropertyValue Property="Label" String="{@i18n>NoteDataLineItem}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="NoteData/@UI.LineItem#NoteDataLineItem"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="SupplierProductLineItem"/>
+                        <PropertyValue Property="Label" String="{@i18n>SupplierProductLineItem}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="SupplierProduct/@UI.LineItem#SupplierProductLineItem"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="PurchaseAgreementLineItem"/>
+                        <PropertyValue Property="Label" String="{@i18n>PurchaseAgreementLineItem}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="PurchaseAgreement/@UI.LineItem#PurchaseAgreementLineItem"/>
+                    </Record>
+                        <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="Label" String="{@i18n>BankAccount}"/>
+                        <PropertyValue Property="ID" String="BankAccount"/>
+                        <PropertyValue Property="Target" AnnotationPath="OwnerFinAccount/@UI.LineItem#FinAccountLineItem" />
                     </Record>
                 </Collection>
             </Annotation>
@@ -218,6 +271,85 @@
                     <PropertyValue Property="Text" String="待处理"/>
                 </Record>
             </Annotation>
+            <Annotation Term="UI.FieldGroup" Qualifier="PartyGroupFieldGroup">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataFieldForAction">
+                                <PropertyValue Property="Label" String="{@i18n>FillSupplierBaseInfo}"/>
+                                <PropertyValue Property="Inline" Bool="true"/>
+                                <!-- <Annotation Term="UI.Emphasized" Bool="true"/> -->
+                                <PropertyValue Property="Action" String="com.dpbird.FillSupplierBaseInfo"></PropertyValue>
+                                <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Critical" />
+                                <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="numEmployees" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="annualRevenue" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="tickerSymbol" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="comments" />
+                            </Record>
+                            
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+            <Annotation Term="UI.FieldGroup" Qualifier="ContactInfo">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataFieldForAction">
+                                <PropertyValue Property="Label" String="{@i18n>UpdateSupplierContactInfo}"/>
+                                <PropertyValue Property="Inline" Bool="true"/>
+                                <!-- <Annotation Term="UI.Emphasized" Bool="true"/> -->
+                                <PropertyValue Property="Action" String="com.dpbird.UpdateSupplierContactInfo"></PropertyValue>
+                                <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Critical" />
+                                <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="primaryPhone" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="primaryEmail" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="address1" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="usccNumber" />
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+            <Annotation Term="UI.FieldGroup" Qualifier="SupplierTimeInfo">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataFieldForAction">
+                                <PropertyValue Property="Label" String="{@i18n>UpdateSupplierTimeInfo}"/>
+                                <PropertyValue Property="Inline" Bool="true"/>
+                                <!-- <Annotation Term="UI.Emphasized" Bool="true"/>  -->
+                                <PropertyValue Property="Action" String="com.dpbird.UpdateSupplierTimeInfo"></PropertyValue>
+                                <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Critical" />
+                                <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="collectionDate" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="firstOrderDate" />
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
         </Annotations>
 
         <Annotations Target="com.dpbird.SubmitToProcurement/target">
@@ -254,6 +386,48 @@
                         </Collection>
                     </PropertyValue>
                 </Record>
+            </Annotation>
+        </Annotations>
+        <Annotations Target="com.dpbird.FinAccount">
+            <Annotation Term="UI.LineItem" Qualifier="FinAccountLineItem">
+                <Collection>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="finAccountName"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="finAccountCode"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                        <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="currencyUomId"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="accountName"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="statusId"/>
+                        <PropertyValue Property="Criticality">
+                            <If>
+                            <Or>
+                            <Eq>
+                                <Path>statusId</Path>
+                                <String>FNACT_MANFROZEN</String>
+                            </Eq>
+                                <Eq>
+                                <Path>statusId</Path>
+                                <String>FNACT_CANCELLED</String>
+                            </Eq>
+                            </Or>
+                                <Int>1</Int>
+                            <Int>3</Int>
+                        </If>
+                        </PropertyValue>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                </Collection>
             </Annotation>
         </Annotations>
         </Schema>
