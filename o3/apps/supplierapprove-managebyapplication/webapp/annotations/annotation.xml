@@ -377,6 +377,31 @@
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
         </Annotations>
 
+        <Annotations Target="com.dpbird.CreateSupplierProduct/productId">
+            <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
+            <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
+            <Annotation Term="Common.ValueList">
+                <Record Type="Common.ValueListType">
+                    <PropertyValue Property="Label" String="选择产品" />
+                    <PropertyValue Property="CollectionPath" String="Products" />
+                    <PropertyValue Property="Parameters">
+                        <Collection>
+                            <Record Type="Common.ValueListParameterInOut">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="productId" />
+                                <PropertyValue Property="ValueListProperty" String="productId" />
+                            </Record>
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="productName" />
+                            </Record>
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="quantityUomId" />
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+
         <Annotations Target="com.dpbird.CreatePersonAndContact">
             <Annotation Term="Common.SideEffects">
                 <Record>
