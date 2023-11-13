@@ -527,6 +527,11 @@
                         </PropertyValue>
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                     </Record>
+                    <Record Type="UI.DataFieldForAction" >
+                        <PropertyValue Property="Action" String="com.dpbird.CreateFinAccount"/>
+                        <PropertyValue Property="Label"  String="{@i18n>Create}"/>
+                        <PropertyValue Property="Inline"  Bool="false"/>
+                    </Record>
                 </Collection>
             </Annotation>
         </Annotations>
