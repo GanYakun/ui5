@@ -198,7 +198,11 @@
                                 <Bool>false</Bool>
                             </If>
                         </Annotation>
-                    </Record>                                                                                                                                                       
+                    </Record>         
+                    <Record Type="UI.DataFieldForAction" >
+                        <PropertyValue Property="Action" String="com.dpbird.GenerateSurveyQuestionAnswer"/>
+                        <PropertyValue Property="Label"  String="{@i18n>GenerateSurveyQuestionAnswer}"/>
+                    </Record>                                                                                                                                                                     
                 </Collection>
             </Annotation>
 
@@ -382,7 +386,7 @@
             <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
             <Annotation Term="Common.ValueList">
                 <Record Type="Common.ValueListType">
-                    <PropertyValue Property="Label" String="选择产品" />
+                    <PropertyValue Property="Label" String="{@i18n>productId}"/>
                     <PropertyValue Property="CollectionPath" String="Products" />
                     <PropertyValue Property="Parameters">
                         <Collection>
@@ -400,6 +404,10 @@
                     </PropertyValue>
                 </Record>
             </Annotation>
+        </Annotations>
+
+         <Annotations Target="com.dpbird.CreateFinAccount/finAccountName">
+            <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
         </Annotations>
 
         <Annotations Target="com.dpbird.CreatePersonAndContact">
@@ -451,6 +459,11 @@
                         </If>
                         </PropertyValue>
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                    <Record Type="UI.DataFieldForAction" >
+                        <PropertyValue Property="Action" String="com.dpbird.CreateFinAccount"/>
+                        <PropertyValue Property="Label"  String="{@i18n>Create}"/>
+                        <PropertyValue Property="Inline"  Bool="false"/>
                     </Record>
                 </Collection>
             </Annotation>
