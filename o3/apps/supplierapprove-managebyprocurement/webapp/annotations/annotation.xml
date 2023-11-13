@@ -503,10 +503,10 @@
                         <PropertyValue Property="Value" Path="currencyUomId"/>
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                     </Record>
-                    <Record Type="UI.DataField">
+                    <!-- <Record Type="UI.DataField">
                         <PropertyValue Property="Value" Path="accountName"/>
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.DataField">
                         <PropertyValue Property="Value" Path="statusId"/>
                         <PropertyValue Property="Criticality">
