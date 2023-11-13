@@ -199,10 +199,6 @@
                             </If>
                         </Annotation>
                     </Record>         
-                    <Record Type="UI.DataFieldForAction" >
-                        <PropertyValue Property="Action" String="com.dpbird.GenerateSurveyQuestionAnswer"/>
-                        <PropertyValue Property="Label"  String="{@i18n>GenerateSurveyQuestionAnswer}"/>
-                    </Record>                                                                                                                                                                     
                 </Collection>
             </Annotation>
 
@@ -386,7 +382,7 @@
             <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
             <Annotation Term="Common.ValueList">
                 <Record Type="Common.ValueListType">
-                    <PropertyValue Property="Label" String="{@i18n>productId}"/>
+                    <PropertyValue Property="Label" String="{@i18n>ProductId}"/>
                     <PropertyValue Property="CollectionPath" String="Products" />
                     <PropertyValue Property="Parameters">
                         <Collection>
@@ -408,6 +404,25 @@
 
          <Annotations Target="com.dpbird.CreateFinAccount/finAccountName">
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
+         </Annotations>
+
+        <Annotations Target="com.dpbird.CreateFinAccount/currencyUomId">
+            <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
+            <Annotation Term="Common.ValueListWithFixedValues" Bool="true" />
+            <Annotation Term="Common.ValueList">
+                <Record Type="Common.ValueListType">
+                    <PropertyValue Property="Label" String="{@i18n>productId}"/>
+                    <PropertyValue Property="CollectionPath" String="CurrencyUnm" />
+                    <PropertyValue Property="Parameters">
+                        <Collection>
+                            <Record Type="Common.ValueListParameterInOut">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="currencyUomId" />
+                                <PropertyValue Property="ValueListProperty" String="uomId" />
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
         </Annotations>
 
         <Annotations Target="com.dpbird.CreatePersonAndContact">

@@ -161,6 +161,19 @@
                     <ReferentialConstraint Property="carrierPartyId" ReferencedProperty="partyId"/>
                 </NavigationProperty>
             </EntityType>
+            <EntityType Name="CurrencyUom">
+                <Key>
+                    <PropertyRef Name="uomId"/>
+                </Key>
+                <Property Name="uomId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="uomTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="abbreviation" Type="Edm.String" MaxLength="60"/>
+                <Property Name="numericCode" Type="Edm.Int64"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <NavigationProperty Name="UomType" Type="com.dpbird.UomType">
+                    <ReferentialConstraint Property="uomTypeId" ReferencedProperty="uomTypeId"/>
+                </NavigationProperty>
+            </EntityType>
             <EntityType Name="Invoice">
                 <Key>
                     <PropertyRef Name="invoiceId"/>
@@ -296,9 +309,10 @@
             <EntityType Name="SurveyQuestionAnswer">
                 <Key>
                     <PropertyRef Name="surveyQuestionId"/>
+                    <PropertyRef Name="partyId"/>
                 </Key>
                 <Property Name="surveyQuestionId" Type="Edm.String" Nullable="false" MaxLength="60"/>
-                <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="booleanResponse" Type="Edm.String" MaxLength="1"/>
                 <Property Name="currencyResponse" Type="Edm.Decimal" Precision="18" Scale="2"/>
                 <Property Name="floatResponse" Type="Edm.Double"/>
@@ -1134,6 +1148,10 @@
                 <Parameter Name="target" Type="Edm.String"/>
                 <ReturnType Type="com.dpbird.SupplierParty"/>
             </Action>
+            <Action Name="GenerateSurveyQuestionAnswer" IsBound="true">
+                <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
+                <ReturnType Type="com.dpbird.SupplierParty"/>
+            </Action>
             <Action Name="FillPartyClassification" IsBound="true">
                 <Parameter Name="partyClassification" Type="com.dpbird.PartyClassification" Nullable="false"/>
                 <Parameter Name="partyClassificationGroupId" Type="Edm.String"/>
@@ -1162,6 +1180,8 @@
             <Action Name="CreateFinAccount" IsBound="true">
                 <Parameter Name="finAccount" Type="Collection(com.dpbird.FinAccount)" Nullable="false"/>
                 <Parameter Name="finAccountName" Type="Edm.String" Nullable="false"/>
+                <Parameter Name="finAccountCode" Type="Edm.String" Nullable="false"/>
+                <Parameter Name="currencyUomId" Type="Edm.String" Nullable="false"/>
                 <ReturnType Type="com.dpbird.NoteData"/>
             </Action>
             <Function Name="GetApproverData_Supplier" IsBound="true">
@@ -1252,6 +1272,9 @@
                     <NavigationPropertyBinding Path="QuoteStatusItem" Target="QuoteStatusItems"/>
                     <NavigationPropertyBinding Path="SalesChannelEnumeration" Target="OrderSalesEnumerations"/>
                     <NavigationPropertyBinding Path="SupplierParty" Target="SupplierParties"/>
+                </EntitySet>
+                <EntitySet Name="CurrencyUnm" EntityType="com.dpbird.CurrencyUom">
+                    <NavigationPropertyBinding Path="UomType" Target="UomTypes"/>
                 </EntitySet>
                 <EntitySet Name="PurchaseOrders" EntityType="com.dpbird.PurchaseOrder">
                     <NavigationPropertyBinding Path="OrderStatusItem" Target="OrderStatusItems"/>
@@ -1932,6 +1955,68 @@
             <Annotations Target="com.dpbird.ShipmentRouteSegment/upsHighValueReport">
                 <Annotation Term="Common.Label">
                     <String>upsHighValueReport</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CurrencyUom/uomId">
+                <Annotation Term="Common.Label">
+                    <String>uomId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextLast</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CurrencyUom/uomTypeId">
+                <Annotation Term="Common.Label">
+                    <String>uomTypeId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>UomType/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>uomTypeId</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>UomTypes</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>uomTypeId</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>uomTypeId</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CurrencyUom/abbreviation">
+                <Annotation Term="Common.Label">
+                    <String>abbreviation</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CurrencyUom/numericCode">
+                <Annotation Term="Common.Label">
+                    <String>numericCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CurrencyUom/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Invoice">
@@ -6269,6 +6354,17 @@
                     <String>Note Info</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.GenerateSurveyQuestionAnswer">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.FillPartyClassification/partyClassificationGroupId">
                 <Annotation Term="Common.Label">
                     <String>评级</String>
@@ -6375,6 +6471,16 @@
             <Annotations Target="com.dpbird.CreateFinAccount/finAccountName">
                 <Annotation Term="Common.Label">
                     <String>Financial account name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreateFinAccount/finAccountCode">
+                <Annotation Term="Common.Label">
+                    <String>Account code</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreateFinAccount/currencyUomId">
+                <Annotation Term="Common.Label">
+                    <String>Currency UOM</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseQuote/salesChannelEnumId">
