@@ -14,30 +14,6 @@
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
         <Annotations Target="com.dpbird.SupplierParty">
-            <Annotation Term="UI.LineItem">
-                <Collection>
-                    <Record Type="UI.DataField">
-                        <PropertyValue Property="Value" Path="partyId"/>
-                    </Record>
-                    <Record Type="UI.DataField">
-                        <PropertyValue Property="Value" Path="currentStatusId"/>
-                    </Record>
-                    <Record Type="UI.DataField">
-                        <PropertyValue Property="Value" Path="primaryEmail"/>
-                    </Record>
-                    <Record Type="UI.DataField">
-                        <PropertyValue Property="Value" Path="address1"/>
-                    </Record>
-                    <Record Type="UI.DataField">
-                        <PropertyValue Property="Value" Path="primaryPhone"/>
-                    </Record>
-                    <Record Type="UI.DataFieldForAction">
-                        <PropertyValue Property="Action" String="com.dpbird.CreateSupplierParty" />
-                        <PropertyValue Property="Label" String="{@i18n>CreateSupplierParty}" />
-                        <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Critical" />
-                    </Record>
-                </Collection>
-            </Annotation>
             <Annotation Term="UI.Facets">
                 <Collection>
                     <Record Type="UI.CollectionFacet">
@@ -48,17 +24,17 @@
                                 <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="Label" String="{@i18n>CompanyBaseInfo}"/>
                                     <PropertyValue Property="ID" String="PartyGroupFieldGroup"/>
-                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyGroupFieldGroup"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyGroupFieldGroupWithAction"/>
                                 </Record>
                                     <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="Label" String="{@i18n>CompanyContactInfo}"/>
                                     <PropertyValue Property="ID" String="ContactInfo"/>
-                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ContactInfo"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ContactInfoWithAction"/>
                                 </Record>
                                 <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="Label" String="{@i18n>SupplierTimeInfo}"/>
                                     <PropertyValue Property="ID" String="SupplierTimeInfo"/>
-                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#SupplierTimeInfo"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#SupplierTimeInfoWithAction"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>
@@ -100,38 +76,6 @@
                     </Record>
                 </Collection>
             </Annotation>
-
-            <Annotation Term="UI.QuickCreateFacets">
-                    <Collection>
-                        <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="ID" String="QuickCreate"/>
-                            <PropertyValue Property="Label" String="Create Supplier"/>
-                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#QuickCreate"/>
-                            <Annotation Term="UI.Hidden" Path="createSupplierHidden"></Annotation>
-                        </Record>
-                    </Collection>
-                </Annotation>
-
-                <Annotation Term="UI.FieldGroup" Qualifier="QuickCreate">
-                    <Record Type="UI.FieldGroupType">
-                        <PropertyValue Property="Data">
-                            <Collection>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="partyName" />
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="address1" />
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="primaryEmail" />
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="primaryPhone" />
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
 
              <Annotation Term="UI.HeaderFacets">
                 <Collection>
@@ -243,7 +187,7 @@
                         <Record Type="UI.PresentationVariantType">
                             <PropertyValue Property="Visualizations">
                                 <Collection>
-                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                    <AnnotationPath>@UI.LineItem#CreateLineItem</AnnotationPath>
                                 </Collection>
                             </PropertyValue>
                         </Record>
@@ -271,85 +215,6 @@
                     <PropertyValue Property="Text" String="{@i18n>NotProcessed}"/>
                 </Record>
             </Annotation>
-            <Annotation Term="UI.FieldGroup" Qualifier="PartyGroupFieldGroup">
-                <Record Type="UI.FieldGroupType">
-                    <PropertyValue Property="Data">
-                        <Collection>
-                            <Record Type="UI.DataFieldForAction">
-                                <PropertyValue Property="Label" String="{@i18n>FillSupplierBaseInfo}"/>
-                                <PropertyValue Property="Inline" Bool="true"/>
-                                <!-- <Annotation Term="UI.Emphasized" Bool="true"/> -->
-                                <PropertyValue Property="Action" String="com.dpbird.FillSupplierBaseInfo"></PropertyValue>
-                                <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Critical" />
-                                <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="numEmployees" />
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="annualRevenue" />
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="tickerSymbol" />
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="comments" />
-                            </Record>
-                            
-                        </Collection>
-                    </PropertyValue>
-                </Record>
-            </Annotation>
-            <Annotation Term="UI.FieldGroup" Qualifier="ContactInfo">
-                <Record Type="UI.FieldGroupType">
-                    <PropertyValue Property="Data">
-                        <Collection>
-                            <Record Type="UI.DataFieldForAction">
-                                <PropertyValue Property="Label" String="{@i18n>UpdateSupplierContactInfo}"/>
-                                <PropertyValue Property="Inline" Bool="true"/>
-                                <!-- <Annotation Term="UI.Emphasized" Bool="true"/> -->
-                                <PropertyValue Property="Action" String="com.dpbird.UpdateSupplierContactInfo"></PropertyValue>
-                                <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Critical" />
-                                <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="primaryPhone" />
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="primaryEmail" />
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="address1" />
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="usccNumber" />
-                            </Record>
-                        </Collection>
-                    </PropertyValue>
-                </Record>
-            </Annotation>
-            <Annotation Term="UI.FieldGroup" Qualifier="SupplierTimeInfo">
-                <Record Type="UI.FieldGroupType">
-                    <PropertyValue Property="Data">
-                        <Collection>
-                            <Record Type="UI.DataFieldForAction">
-                                <PropertyValue Property="Label" String="{@i18n>UpdateSupplierTimeInfo}"/>
-                                <PropertyValue Property="Inline" Bool="true"/>
-                                <!-- <Annotation Term="UI.Emphasized" Bool="true"/>  -->
-                                <PropertyValue Property="Action" String="com.dpbird.UpdateSupplierTimeInfo"></PropertyValue>
-                                <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Critical" />
-                                <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="collectionDate" />
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="firstOrderDate" />
-                            </Record>
-                        </Collection>
-                    </PropertyValue>
-                </Record>
-            </Annotation>
         </Annotations>
 
         <Annotations Target="com.dpbird.SubmitToProcurement/target">
@@ -373,8 +238,28 @@
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
         </Annotations>
 
+        <Annotations Target="com.dpbird.PartyClassification">
+            <Annotation Term="UI.FieldGroup" Qualifier="PartyClassificationFieldGroup">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Label" String="{@i18n>RiskRating}"/>
+                                <PropertyValue Property="Value" Path="PartyClassificationGroup/description" />
+                                <PropertyValue Property="Criticality" Path="statusColor" />
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+
         <Annotations Target="com.dpbird.CreatePersonAndContact/partyName">
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
+        </Annotations>
+
+        <Annotations Target="com.dpbird.SupplierParty">
+            <Annotation Term="UI.DeleteHidden" Bool="true" />
         </Annotations>
 
          <Annotations Target="com.dpbird.UpdateSupplierContactInfo/address1">

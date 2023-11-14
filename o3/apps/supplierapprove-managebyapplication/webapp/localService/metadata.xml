@@ -309,10 +309,9 @@
             <EntityType Name="SurveyQuestionAnswer">
                 <Key>
                     <PropertyRef Name="surveyQuestionId"/>
-                    <PropertyRef Name="partyId"/>
                 </Key>
                 <Property Name="surveyQuestionId" Type="Edm.String" Nullable="false" MaxLength="60"/>
-                <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="booleanResponse" Type="Edm.String" MaxLength="1"/>
                 <Property Name="currencyResponse" Type="Edm.Decimal" Precision="18" Scale="2"/>
                 <Property Name="floatResponse" Type="Edm.Double"/>
@@ -387,6 +386,16 @@
                 <Property Name="hasTable" Type="Edm.String" MaxLength="1"/>
                 <Property Name="description" Type="Edm.String" MaxLength="255"/>
             </EntityType>
+            <EntityType Name="StatusItem">
+                <Key>
+                    <PropertyRef Name="statusId"/>
+                </Key>
+                <Property Name="statusId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="statusTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="statusCode" Type="Edm.String" MaxLength="60"/>
+                <Property Name="sequenceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
             <EntityType Name="SupplierProduct">
                 <Key>
                     <PropertyRef Name="minimumOrderQuantity"/>
@@ -430,6 +439,7 @@
                 <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="currentStatusId" Type="Edm.String" DefaultValue="NOT_PROCESSED" MaxLength="60"/>
                 <Property Name="createSupplierHidden" Type="Edm.Boolean"/>
+                <Property Name="disableEditSupplier" Type="Edm.Boolean"/>
                 <Property Name="firstOrderDate" Type="Edm.DateTimeOffset"/>
                 <Property Name="collectionDate" Type="Edm.DateTimeOffset"/>
                 <Property Name="totalAmount" Type="Edm.Decimal" Scale="3"/>
@@ -527,6 +537,9 @@
                 <NavigationProperty Name="PurchaseQuote" Type="Collection(com.dpbird.PurchaseQuote)"/>
                 <NavigationProperty Name="AfterSalesService" Type="Collection(com.dpbird.AfterSalesService)"/>
                 <NavigationProperty Name="PartyClassification" Type="com.dpbird.PartyClassification"/>
+                <NavigationProperty Name="CurrentStatusItem" Type="com.dpbird.StatusItem">
+                    <ReferentialConstraint Property="currentStatusId" ReferencedProperty="statusId"/>
+                </NavigationProperty>
                 <NavigationProperty Name="SurveyQuestionAppl" Type="Collection(com.dpbird.SurveyQuestionAppl)"/>
                 <NavigationProperty Name="ChildWorkEffortAndPartyGroupContact" Type="Collection(com.dpbird.CoWorkHistory)"/>
             </EntityType>
@@ -666,9 +679,16 @@
                 </Key>
                 <Property Name="workEffortId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="partyName" Type="Edm.String" MaxLength="100"/>
                 <Property Name="approvePartyId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="currentStatusId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="currentStatusId" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="CurrentStatusItem" Type="com.dpbird.StatusItem">
+                    <ReferentialConstraint Property="currentStatusId" ReferencedProperty="statusId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="ApproveParty" Type="com.dpbird.Party">
+                    <ReferentialConstraint Property="approvePartyId" ReferencedProperty="partyId"/>
+                </NavigationProperty>
             </EntityType>
             <EntityType Name="ProductType">
                 <Key>
@@ -1036,6 +1056,7 @@
                     <PropertyRef Name="surveyId"/>
                     <PropertyRef Name="surveyQuestionId"/>
                 </Key>
+                <Property Name="response" Type="Edm.String"/>
                 <Property Name="surveyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="surveyQuestionId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="fromDate" Type="Edm.DateTimeOffset" Precision="3"/>
@@ -1092,8 +1113,8 @@
             </Action>
             <Action Name="FillSupplierBaseInfo" EntitySetPath="supplierParty" IsBound="true">
                 <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
-                <Parameter Name="numEmployees" Type="Edm.String"/>
-                <Parameter Name="annualRevenue" Type="Edm.String"/>
+                <Parameter Name="numEmployees" Type="Edm.Decimal"/>
+                <Parameter Name="annualRevenue" Type="Edm.Decimal"/>
                 <Parameter Name="tickerSymbol" Type="Edm.String"/>
                 <Parameter Name="comments" Type="Edm.String"/>
                 <ReturnType Type="com.dpbird.SupplierParty"/>
@@ -1135,6 +1156,8 @@
                 <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
                 <Parameter Name="target" Type="Edm.String"/>
                 <Parameter Name="noteInfo" Type="Edm.String"/>
+                <Parameter Name="isSimplifiedForm" Type="Edm.Boolean"/>
+                <Parameter Name="email" Type="Edm.String"/>
                 <ReturnType Type="com.dpbird.SupplierParty"/>
             </Action>
             <Action Name="ReturnToCompliance" EntitySetPath="supplierParty" IsBound="true">
@@ -1253,8 +1276,10 @@
                     <NavigationPropertyBinding Path="PurchaseQuote" Target="PurchaseQuotes"/>
                     <NavigationPropertyBinding Path="AfterSalesService" Target="AfterSalesServices"/>
                     <NavigationPropertyBinding Path="PartyClassification" Target="PartyClassIdentifications"/>
+                    <NavigationPropertyBinding Path="CurrentStatusItem" Target="StatusItems"/>
                     <NavigationPropertyBinding Path="SurveyQuestionAppl" Target="SurveyQuestionAppls"/>
                 </EntitySet>
+                <EntitySet Name="StatusItems" EntityType="com.dpbird.StatusItem"/>
                 <EntitySet Name="SurveyQuestionAnswers" EntityType="com.dpbird.SurveyQuestionAnswer"/>
                 <EntitySet Name="AfterSalesServices" EntityType="com.dpbird.AfterSalesService">
                     <NavigationPropertyBinding Path="FixedAsset" Target="FixedAssets"/>
@@ -2779,14 +2804,6 @@
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
-                                <Path>noteId</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
                                 <Path>noteName</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
@@ -2819,10 +2836,13 @@
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>Create</String>
+                                <String>create</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreateNoteData</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>false</Bool>
                             </PropertyValue>
                             <PropertyValue Property="InvocationGrouping">
                                 <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
@@ -2830,8 +2850,41 @@
                             <PropertyValue Property="Criticality">
                                 <EnumMember>UI.CriticalityType/Positive</EnumMember>
                             </PropertyValue>
-                            <PropertyValue Property="Inline">
-                                <Bool>false</Bool>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="NoteDataLineItemWithoutAction">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteInfo</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteParty</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteDateTime</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -2938,17 +2991,34 @@
                     <String>description</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.StatusItem/statusId">
+                <Annotation Term="Common.Label">
+                    <String>statusId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.StatusItem/statusTypeId">
+                <Annotation Term="Common.Label">
+                    <String>statusTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.StatusItem/statusCode">
+                <Annotation Term="Common.Label">
+                    <String>statusCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.StatusItem/sequenceId">
+                <Annotation Term="Common.Label">
+                    <String>sequenceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.StatusItem/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.SupplierProduct">
                 <Annotation Term="UI.LineItem" Qualifier="SupplierProductLineItem">
                     <Collection>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>productId</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
                                 <Path>Product/productName</Path>
@@ -2967,10 +3037,13 @@
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>Create</String>
+                                <String>create</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreateSupplierProduct</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>false</Bool>
                             </PropertyValue>
                             <PropertyValue Property="InvocationGrouping">
                                 <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
@@ -2978,8 +3051,25 @@
                             <PropertyValue Property="Criticality">
                                 <EnumMember>UI.CriticalityType/Positive</EnumMember>
                             </PropertyValue>
-                            <PropertyValue Property="Inline">
-                                <Bool>false</Bool>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="SupplierProductLineItemWithoutAction">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>Product/productName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>Product/quantityUomId</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -3101,6 +3191,178 @@
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty">
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>currentStatusId</PropertyPath>
+                        <PropertyPath>primaryPhone</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="PartyGroupFieldGroup">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>numEmployees</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>annualRevenue</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>tickerSymbol</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>comments</Path>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>PartyGroupFieldGroup</String>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="PartyGroupFieldGroupWithAction">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>numEmployees</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>annualRevenue</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>tickerSymbol</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>comments</Path>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>PartyGroupFieldGroupWithAction</String>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="ContactInfo">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>primaryPhone</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>primaryEmail</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>address1</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>usccNumber</Path>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>ContactInfo</String>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="ContactInfoWithAction">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>primaryPhone</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>primaryEmail</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>address1</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>usccNumber</Path>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>ContactInfoWithAction</String>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="SupplierTimeInfo">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>collectionDate</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>firstOrderDate</Path>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>SupplierTimeInfo</String>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="SupplierTimeInfoWithAction">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>collectionDate</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>firstOrderDate</Path>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Label">
+                            <String>SupplierTimeInfoWithAction</String>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
                 <Annotation Term="UI.LineItem">
                     <Collection>
                         <Record Type="UI.DataField">
@@ -3145,10 +3407,68 @@
                         </Record>
                     </Collection>
                 </Annotation>
-                <Annotation Term="UI.SelectionFields">
+                <Annotation Term="UI.LineItem" Qualifier="CreateLineItem">
                     <Collection>
-                        <PropertyPath>statusId</PropertyPath>
-                        <PropertyPath>primaryPhone</PropertyPath>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>partyId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>currentStatusId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>primaryEmail</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>address1</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>primaryPhone</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label">
+                                <String>create</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Action">
+                                <String>com.dpbird.CreateNoteData</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>false</Bool>
+                            </PropertyValue>
+                            <PropertyValue Property="InvocationGrouping">
+                                <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                            </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
                     </Collection>
                 </Annotation>
                 <Annotation Term="UI.FieldGroup" Qualifier="TimeInfo">
@@ -3201,10 +3521,10 @@
                 <Annotation Term="UI.HeaderInfo">
                     <Record Type="UI.HeaderInfoType">
                         <PropertyValue Property="TypeName">
-                            <String>供应商</String>
+                            <String>Supplier Party</String>
                         </PropertyValue>
                         <PropertyValue Property="TypeNamePlural">
-                            <String>供应商列表</String>
+                            <String>Supplier Party List</String>
                         </PropertyValue>
                         <PropertyValue Property="Title">
                             <Record Type="UI.DataField">
@@ -3225,7 +3545,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/partyId">
                 <Annotation Term="Common.Label">
-                    <String>partyId</String>
+                    <String>Name</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>partyName</Path>
@@ -3238,6 +3558,12 @@
                 <Annotation Term="Common.Label">
                     <String>Status</String>
                 </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>CurrentStatusItem/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/createSupplierHidden">
                 <Annotation Term="UI.Hidden">
@@ -3245,6 +3571,14 @@
                 </Annotation>
                 <Annotation Term="Common.Label">
                     <String>createSupplierHidden</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/disableEditSupplier">
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>disableEditSupplier</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/firstOrderDate">
@@ -3259,7 +3593,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/totalAmount">
                 <Annotation Term="Common.Label">
-                    <String>订单总金额</String>
+                    <String>totalAmount</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/criticalityValue">
@@ -3832,10 +4166,13 @@
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>Create</String>
+                                <String>create</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreatePersonAndContact</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>false</Bool>
                             </PropertyValue>
                             <PropertyValue Property="InvocationGrouping">
                                 <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
@@ -3843,8 +4180,49 @@
                             <PropertyValue Property="Criticality">
                                 <EnumMember>UI.CriticalityType/Positive</EnumMember>
                             </PropertyValue>
-                            <PropertyValue Property="Inline">
-                                <Bool>false</Bool>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="PartyRelationshipLineItemWithoutAction">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>partyName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>primaryPhone</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>phoneMobile</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>primaryEmail</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>position</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -4242,15 +4620,7 @@
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
-                                <Path>workEffortId</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>approvePartyId</Path>
+                                <Path>ApproveParty/partyName</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -4282,7 +4652,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.CoWorkHistory/partyId">
                 <Annotation Term="Common.Label">
-                    <String>partyId</String>
+                    <String>Name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CoWorkHistory/partyName">
+                <Annotation Term="Common.Label">
+                    <String>partyName</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CoWorkHistory/approvePartyId">
@@ -4290,14 +4665,20 @@
                     <String>Task party</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.CoWorkHistory/lastModifiedDate">
+                <Annotation Term="Common.Label">
+                    <String>Last modified date</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.CoWorkHistory/currentStatusId">
                 <Annotation Term="Common.Label">
                     <String>Status</String>
                 </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.CoWorkHistory/lastModifiedDate">
-                <Annotation Term="Common.Label">
-                    <String>Last modified date</String>
+                <Annotation Term="Common.Text">
+                    <Path>CurrentStatusItem/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.ProductType/productTypeId">
@@ -5925,14 +6306,6 @@
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
-                                <Path>agreementId</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
                                 <Path>productId</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
@@ -6176,14 +6549,6 @@
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
-                                <Path>surveyQuestionId</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
                                 <Path>SurveyQuestion/question</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
@@ -6192,21 +6557,18 @@
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
-                                <Path>SurveyQuestionAnswer/booleanResponse</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>SurveyQuestionAnswer/textResponse</Path>
+                                <Path>response</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
                             </Annotation>
                         </Record>
                     </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAppl/response">
+                <Annotation Term="Common.Label">
+                    <String>Response</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SurveyQuestionAppl/surveyId">
@@ -6314,44 +6676,132 @@
                     <String>formatString</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.FillSupplierBaseInfo">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FillSupplierBaseInfo/numEmployees">
+                <Annotation Term="Common.Label">
+                    <String>Employees Number</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FillSupplierBaseInfo/annualRevenue">
+                <Annotation Term="Common.Label">
+                    <String>Annual Revenue</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FillSupplierBaseInfo/tickerSymbol">
+                <Annotation Term="Common.Label">
+                    <String>Ticker Symbol</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FillSupplierBaseInfo/comments">
+                <Annotation Term="Common.Label">
+                    <String>Comments</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.UpdateSupplierContactInfo">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.UpdateSupplierContactInfo/primaryPhone">
+                <Annotation Term="Common.Label">
+                    <String>Primary Phone</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.UpdateSupplierContactInfo/primaryEmail">
+                <Annotation Term="Common.Label">
+                    <String>Primary Email</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.UpdateSupplierContactInfo/address1">
+                <Annotation Term="Common.Label">
+                    <String>Address</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.UpdateSupplierTimeInfo">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.UpdateSupplierTimeInfo/collectionDate">
+                <Annotation Term="Common.Label">
+                    <String>Collection Date</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.UpdateSupplierTimeInfo/firstOrderDate">
+                <Annotation Term="Common.Label">
+                    <String>First Order Date</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/partyName">
                 <Annotation Term="Common.Label">
-                    <String>供应商名称</String>
+                    <String>Supplier Name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/primaryPhone">
                 <Annotation Term="Common.Label">
-                    <String>电话</String>
+                    <String>Primary Phone</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/address1">
                 <Annotation Term="Common.Label">
-                    <String>地址</String>
+                    <String>Address</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/primaryEmail">
                 <Annotation Term="Common.Label">
-                    <String>邮箱</String>
+                    <String>Primary Email</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SubmitToProcurement/noteInfo">
                 <Annotation Term="Common.Label">
-                    <String>Note Info</String>
+                    <String>noteInfo</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.ReturnToApplication/noteInfo">
                 <Annotation Term="Common.Label">
-                    <String>Note Info</String>
+                    <String>noteInfo</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.ReturnToSupplier/noteInfo">
                 <Annotation Term="Common.Label">
-                    <String>Note Info</String>
+                    <String>noteInfo</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ReturnToSupplier/isSimplifiedForm">
+                <Annotation Term="Common.Label">
+                    <String>isSimplifiedForm</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ReturnToSupplier/email">
+                <Annotation Term="Common.Label">
+                    <String>email</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.ReturnToCompliance/noteInfo">
                 <Annotation Term="Common.Label">
-                    <String>Note Info</String>
+                    <String>noteInfo</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.GenerateSurveyQuestionAnswer">
@@ -6367,12 +6817,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.FillPartyClassification/partyClassificationGroupId">
                 <Annotation Term="Common.Label">
-                    <String>评级</String>
+                    <String>Resque Level</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>评级</String>
+                            <String>Resque Level</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>PartyClassificationGroups</String>
@@ -6408,37 +6858,37 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreateNoteData/noteName">
                 <Annotation Term="Common.Label">
-                    <String>Note name</String>
+                    <String>noteName</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateNoteData/noteInfo">
                 <Annotation Term="Common.Label">
-                    <String>Note Info</String>
+                    <String>noteInfo</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePersonAndContact/partyName">
                 <Annotation Term="Common.Label">
-                    <String>Party Name</String>
+                    <String>partyName</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePersonAndContact/primaryPhone">
                 <Annotation Term="Common.Label">
-                    <String>Phone</String>
+                    <String>phone</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePersonAndContact/phoneMobile">
                 <Annotation Term="Common.Label">
-                    <String>Mobile</String>
+                    <String>mobile</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePersonAndContact/primaryEmail">
                 <Annotation Term="Common.Label">
-                    <String>Email</String>
+                    <String>email</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePersonAndContact/position">
                 <Annotation Term="Common.Label">
-                    <String>Position</String>
+                    <String>position</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierProduct">
@@ -6454,7 +6904,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierProduct/productId">
                 <Annotation Term="Common.Label">
-                    <String>Product ID</String>
+                    <String>productId</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateFinAccount">
@@ -6470,17 +6920,17 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreateFinAccount/finAccountName">
                 <Annotation Term="Common.Label">
-                    <String>Financial account name</String>
+                    <String>finAccountName</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateFinAccount/finAccountCode">
                 <Annotation Term="Common.Label">
-                    <String>Account code</String>
+                    <String>finAccountCode</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateFinAccount/currencyUomId">
                 <Annotation Term="Common.Label">
-                    <String>Currency UOM</String>
+                    <String>currencyUomId</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseQuote/salesChannelEnumId">
