@@ -33,7 +33,7 @@
                     </Record>
                     <Record Type="UI.DataFieldForAction">
                         <PropertyValue Property="Action" String="com.dpbird.CreateSupplierParty" />
-                        <PropertyValue Property="Label" String="创建" />
+                        <PropertyValue Property="Label" String="{@i18n>CreateSupplierParty}" />
                         <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Critical" />
                     </Record>
                 </Collection>
