@@ -19,6 +19,7 @@ import org.apache.ofbiz.webapp.webdav.WebDavUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -43,10 +44,15 @@ public class LoginEvents {
         Delegator delegator = (Delegator) request.getAttribute("delegator");
         GenericValue userLogin;
         Map<String, Object> serviceMap = WebDavUtil.getCredentialsFromRequest(request);
-        HttpSession httpSession = request.getSession(true);
+        HttpSession httpSession = request.getSession();
         Debug.logInfo("========== Current SessionID: " + httpSession.getId(), module);
         if (serviceMap == null) {
-            userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
+            Enumeration<String> attributeNames = httpSession.getAttributeNames();
+            while (attributeNames.hasMoreElements()) {
+                String nextElement = attributeNames.nextElement();
+                Debug.logInfo("=========== session element: " + nextElement, module);
+            }
+            userLogin = (GenericValue) httpSession.getAttribute("userLogin");
             request.setAttribute("userLogin", userLogin);
             GenericValue organization = getOrganization(delegator, userLogin);
             if (UtilValidate.isNotEmpty(organization)) {
