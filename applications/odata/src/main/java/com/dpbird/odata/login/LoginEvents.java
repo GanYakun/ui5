@@ -1,5 +1,6 @@
 package com.dpbird.odata.login;
 
+import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.UtilHttp;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilValidate;
@@ -43,6 +44,7 @@ public class LoginEvents {
         GenericValue userLogin;
         Map<String, Object> serviceMap = WebDavUtil.getCredentialsFromRequest(request);
         HttpSession httpSession = request.getSession(true);
+        Debug.logInfo("========== Current SessionID: " + httpSession.getId(), module);
         if (serviceMap == null) {
             userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
             request.setAttribute("userLogin", userLogin);
