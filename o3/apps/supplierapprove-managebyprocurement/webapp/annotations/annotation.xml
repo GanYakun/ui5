@@ -40,7 +40,7 @@
 
             <Annotation Term="UI.DataPoint" Qualifier="statusId">
                 <Record Type="UI.DataPointType">
-                    <PropertyValue Property="Value" Path="statusId"/>
+                    <PropertyValue Property="Value" Path="currentStatusId"/>
                     <PropertyValue Property="Title" String="{@i18n>statusId}"/>
                     <PropertyValue Property="Criticality" Path="criticalityValue"/>
                 </Record>
@@ -170,7 +170,7 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="待提交"/>
+                    <PropertyValue Property="Text" String="{@i18n>ApprovalCreated}"/>
                 </Record>
             </Annotation>
             
@@ -205,7 +205,7 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="审批中"/>
+                    <PropertyValue Property="Text" String="{@i18n>ApprovalSubmitted}"/>
                 </Record>
             </Annotation>
             <Annotation Term="UI.SelectionPresentationVariant" Qualifier="APPROVAL_REJECTED">
@@ -239,7 +239,7 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="已拒绝"/>
+                    <PropertyValue Property="Text" String="{@i18n>ApprovalRejected}"/>
                 </Record>
             </Annotation>
             <Annotation Term="UI.SelectionPresentationVariant" Qualifier="APPROVAL_APPROVED">
@@ -273,7 +273,7 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="已通过"/>
+                    <PropertyValue Property="Text" String="{@i18n>ApprovalApproved}"/>
                 </Record>
             </Annotation>
             <Annotation Term="UI.FieldGroup" Qualifier="PartyGroupFieldGroup">

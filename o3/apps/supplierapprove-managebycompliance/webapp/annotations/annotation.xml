@@ -103,7 +103,7 @@
 
             <Annotation Term="UI.DataPoint" Qualifier="statusId">
                 <Record Type="UI.DataPointType">
-                    <PropertyValue Property="Value" Path="statusId"/>
+                    <PropertyValue Property="Value" Path="currentStatusId"/>
                     <PropertyValue Property="Title" String="{@i18n>statusId}"/>
                     <PropertyValue Property="Criticality" Path="criticalityValue"/>
                 </Record>
@@ -177,7 +177,7 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="已处理"/>
+                    <PropertyValue Property="Text" String="{@i18n>Processed}"/>
                 </Record>
             </Annotation>
             
@@ -212,7 +212,7 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="待处理"/>
+                    <PropertyValue Property="Text" String="{@i18n>NotProcessed}"/>
                 </Record>
             </Annotation>
             <Annotation Term="UI.FieldGroup" Qualifier="PartyGroupFieldGroup">

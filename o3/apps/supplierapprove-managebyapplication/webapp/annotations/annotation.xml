@@ -159,7 +159,7 @@
 
                 <Annotation Term="UI.DataPoint" Qualifier="statusId">
                 <Record Type="UI.DataPointType">
-                    <PropertyValue Property="Value" Path="statusId"/>
+                    <PropertyValue Property="Value" Path="currentStatusId"/>
                     <PropertyValue Property="Title" String="{@i18n>statusId}"/>
                     <PropertyValue Property="Criticality" Path="criticalityValue"/>
                 </Record>
@@ -233,7 +233,7 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="已处理"/>
+                    <PropertyValue Property="Text" String="{@i18n>Processed}"/>
                 </Record>
             </Annotation>
             
@@ -268,7 +268,7 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="待处理"/>
+                    <PropertyValue Property="Text" String="{@i18n>NotProcessed}"/>
                 </Record>
             </Annotation>
             <Annotation Term="UI.FieldGroup" Qualifier="PartyGroupFieldGroup">
@@ -375,6 +375,34 @@
 
         <Annotations Target="com.dpbird.CreatePersonAndContact/partyName">
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
+        </Annotations>
+
+         <Annotations Target="com.dpbird.UpdateSupplierContactInfo/address1">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/address1" ></Annotation>
+        </Annotations>
+         <Annotations Target="com.dpbird.UpdateSupplierContactInfo/primaryEmail">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/primaryEmail" ></Annotation>
+        </Annotations>
+        <Annotations Target="com.dpbird.UpdateSupplierContactInfo/primaryPhone">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/primaryPhone" ></Annotation>
+        </Annotations>
+         <Annotations Target="com.dpbird.UpdateSupplierTimeInfo/collectionDate">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/collectionDate" ></Annotation>
+        </Annotations>
+         <Annotations Target="com.dpbird.UpdateSupplierTimeInfo/firstOrderDate">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/firstOrderDate" ></Annotation>
+        </Annotations>
+         <Annotations Target="com.dpbird.FillSupplierBaseInfo/annualRevenue">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/annualRevenue" ></Annotation>
+        </Annotations>
+         <Annotations Target="com.dpbird.FillSupplierBaseInfo/comments">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/comments" ></Annotation>
+        </Annotations>
+         <Annotations Target="com.dpbird.FillSupplierBaseInfo/numEmployees">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/numEmployees" ></Annotation>
+        </Annotations>
+        <Annotations Target="com.dpbird.FillSupplierBaseInfo/tickerSymbol">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/tickerSymbol" ></Annotation>
         </Annotations>
 
         <Annotations Target="com.dpbird.CreateSupplierProduct/productId">
