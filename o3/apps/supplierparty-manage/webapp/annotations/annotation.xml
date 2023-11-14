@@ -23,9 +23,7 @@
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
             <!-- 国际化标签配置Begin -->
-            <Annotations Target="com.dpbird.SupplierParty/partyId">
-                <Annotation Term="Common.Label" String="{@i18n>partyId}"/>
-            </Annotations>
+            
             
             <Annotations Target="com.dpbird.SupplierParty/partyName">
                 <Annotation Term="Common.Label" String="{@i18n>partyName}"/>
@@ -55,7 +53,7 @@
             <!-- 对象编辑配置End -->
     
             <Annotations Target="com.dpbird.SupplierParty">
-                <Annotation Term="UI.QuickCreateFacets">
+                <!-- <Annotation Term="UI.QuickCreateFacets">
                     <Collection>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="QuickCreate"/>
@@ -85,7 +83,7 @@
                             </Collection>
                         </PropertyValue>
                     </Record>
-                </Annotation>
+                </Annotation> -->
 
                 <Annotation Term="UI.FieldGroup" Qualifier="PartyGroupFieldGroup">
                     <Record Type="UI.FieldGroupType">
