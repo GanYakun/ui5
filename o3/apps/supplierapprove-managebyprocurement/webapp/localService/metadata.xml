@@ -357,6 +357,7 @@
                     <PropertyRef Name="noteId"/>
                 </Key>
                 <Property Name="noteParty" Type="Edm.String" MaxLength="60"/>
+                <Property Name="actionHidden" Type="Edm.Boolean"/>
                 <Property Name="noteId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="noteName" Type="Edm.String" MaxLength="100"/>
                 <Property Name="noteInfo" Type="Edm.String" MaxLength="5000"/>
@@ -408,6 +409,7 @@
                 <Property Name="currencyUomId" Type="Edm.String" Nullable="false" DefaultValue="CNY" MaxLength="60"/>
                 <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="availableFromDate" Type="Edm.DateTimeOffset" Nullable="false" Precision="3"/>
+                <Property Name="actionHidden" Type="Edm.Boolean"/>
                 <Property Name="productId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="availableThruDate" Type="Edm.DateTimeOffset" Precision="3"/>
                 <Property Name="supplierPrefOrderId" Type="Edm.String" MaxLength="60"/>
@@ -439,7 +441,7 @@
                 <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="currentStatusId" Type="Edm.String" DefaultValue="NOT_PROCESSED" MaxLength="60"/>
                 <Property Name="createSupplierHidden" Type="Edm.Boolean"/>
-                <Property Name="enableEditSupplier" Type="Edm.Boolean"/>
+                <Property Name="disableEditSupplier" Type="Edm.Boolean"/>
                 <Property Name="firstOrderDate" Type="Edm.DateTimeOffset"/>
                 <Property Name="collectionDate" Type="Edm.DateTimeOffset"/>
                 <Property Name="totalAmount" Type="Edm.Decimal" Scale="3"/>
@@ -542,6 +544,7 @@
                 </NavigationProperty>
                 <NavigationProperty Name="SurveyQuestionAppl" Type="Collection(com.dpbird.SurveyQuestionAppl)"/>
                 <NavigationProperty Name="ChildWorkEffortAndPartyGroupContact" Type="Collection(com.dpbird.CoWorkHistory)"/>
+                <NavigationProperty Name="DataResource" Type="com.dpbird.DataResource"/>
             </EntityType>
             <EntityType Name="Party">
                 <Key>
@@ -576,6 +579,7 @@
                     <PropertyRef Name="partyId"/>
                 </Key>
                 <Property Name="position" Type="Edm.String"/>
+                <Property Name="actionHidden" Type="Edm.Boolean"/>
                 <Property Name="primaryPhone" Type="Edm.String" MaxLength="60"/>
                 <Property Name="phoneMobile" Type="Edm.String" MaxLength="60"/>
                 <Property Name="primaryEmail" Type="Edm.String" MaxLength="255"/>
@@ -777,6 +781,30 @@
                     <ReferentialConstraint Property="currencyUomId" ReferencedProperty="uomId"/>
                 </NavigationProperty>
                 <NavigationProperty Name="ShipmentRouteSegment" Type="Collection(com.dpbird.ShipmentRouteSegment)"/>
+            </EntityType>
+            <EntityType Name="DataResource">
+                <Key>
+                    <PropertyRef Name="dataResourceId"/>
+                </Key>
+                <Property Name="dataResourceId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="dataResourceTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="dataTemplateTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="dataCategoryId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="dataSourceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="dataResourceName" Type="Edm.String" MaxLength="255"/>
+                <Property Name="localeString" Type="Edm.String" MaxLength="10"/>
+                <Property Name="mimeTypeId" Type="Edm.String" MaxLength="320"/>
+                <Property Name="characterSetId" Type="Edm.String" MaxLength="255"/>
+                <Property Name="objectInfo" Type="Edm.String" MaxLength="255"/>
+                <Property Name="surveyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="surveyResponseId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="relatedDetailId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="isPublic" Type="Edm.String" MaxLength="1"/>
+                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="lastModifiedByUserLogin" Type="Edm.String" MaxLength="320"/>
             </EntityType>
             <EntityType Name="ShipmentItem">
                 <Key>
@@ -1186,6 +1214,12 @@
                 <Parameter Name="noteInfo" Type="Edm.String" Nullable="false"/>
                 <ReturnType Type="com.dpbird.NoteData"/>
             </Action>
+            <Action Name="bannerUpload" IsBound="true">
+                <Parameter Name="dataResource" Type="com.dpbird.DataResource" Nullable="false"/>
+                <Parameter Name="mimeTypeId" Type="Edm.String"/>
+                <Parameter Name="contentTypeId" Type="Edm.String"/>
+                <ReturnType Type="Edm.String"/>
+            </Action>
             <Action Name="CreatePersonAndContact" IsBound="true">
                 <Parameter Name="personAndContact" Type="Collection(com.dpbird.PersonAndContact)" Nullable="false"/>
                 <Parameter Name="partyName" Type="Edm.String" Nullable="false"/>
@@ -1278,6 +1312,7 @@
                     <NavigationPropertyBinding Path="PartyClassification" Target="PartyClassIdentifications"/>
                     <NavigationPropertyBinding Path="CurrentStatusItem" Target="StatusItems"/>
                     <NavigationPropertyBinding Path="SurveyQuestionAppl" Target="SurveyQuestionAppls"/>
+                    <NavigationPropertyBinding Path="DataResource" Target="DataResources"/>
                 </EntitySet>
                 <EntitySet Name="StatusItems" EntityType="com.dpbird.StatusItem"/>
                 <EntitySet Name="SurveyQuestionAnswers" EntityType="com.dpbird.SurveyQuestionAnswer"/>
@@ -1317,6 +1352,7 @@
                 <EntitySet Name="ShipmentRouteSegments" EntityType="com.dpbird.ShipmentRouteSegment">
                     <NavigationPropertyBinding Path="CarrierParty" Target="Parties"/>
                 </EntitySet>
+                <EntitySet Name="DataResources" EntityType="com.dpbird.DataResource"/>
                 <EntitySet Name="Surveys" EntityType="com.dpbird.Survey"/>
                 <EntitySet Name="SurveyQuestionAppls" EntityType="com.dpbird.SurveyQuestionAppl">
                     <NavigationPropertyBinding Path="SurveyQuestion" Target="SurveyQuestions"/>
@@ -2841,14 +2877,53 @@
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreateNoteData</String>
                             </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>false</Bool>
+                            </PropertyValue>
                             <PropertyValue Property="InvocationGrouping">
                                 <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
                             </PropertyValue>
                             <PropertyValue Property="Criticality">
                                 <EnumMember>UI.CriticalityType/Positive</EnumMember>
                             </PropertyValue>
-                            <PropertyValue Property="Inline">
-                                <Bool>false</Bool>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                            <Annotation Term="UI.Hidden">
+                                <Path>actionHidden</Path>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="NoteDataLineItemWithoutAction">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteInfo</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteParty</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteDateTime</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -2866,6 +2941,14 @@
                     <Annotation Term="UI.TextArrangement">
                         <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
                     </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.NoteData/actionHidden">
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>actionHidden</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.NoteData/noteId">
@@ -3006,14 +3089,37 @@
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreateSupplierProduct</String>
                             </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>false</Bool>
+                            </PropertyValue>
                             <PropertyValue Property="InvocationGrouping">
                                 <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
                             </PropertyValue>
                             <PropertyValue Property="Criticality">
                                 <EnumMember>UI.CriticalityType/Positive</EnumMember>
                             </PropertyValue>
-                            <PropertyValue Property="Inline">
-                                <Bool>false</Bool>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                            <Annotation Term="UI.Hidden">
+                                <Path>actionHidden</Path>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="SupplierProductLineItemWithoutAction">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>Product/productName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>Product/quantityUomId</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -3052,6 +3158,14 @@
                 </Annotation>
                 <Annotation Term="Common.Label">
                     <String>availableFromDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierProduct/actionHidden">
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>actionHidden</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierProduct/productId">
@@ -3196,6 +3310,26 @@
                                         <Path>comments</Path>
                                     </PropertyValue>
                                 </Record>
+                                <Record Type="UI.DataFieldForAction">
+                                    <PropertyValue Property="Label">
+                                        <String>Update Basic Info</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Action">
+                                        <String>com.dpbird.FillSupplierBaseInfo</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Inline">
+                                        <Bool>false</Bool>
+                                    </PropertyValue>
+                                    <PropertyValue Property="InvocationGrouping">
+                                        <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Criticality">
+                                        <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
                             </Collection>
                         </PropertyValue>
                         <PropertyValue Property="Label">
@@ -3258,6 +3392,26 @@
                                         <Path>usccNumber</Path>
                                     </PropertyValue>
                                 </Record>
+                                <Record Type="UI.DataFieldForAction">
+                                    <PropertyValue Property="Label">
+                                        <String>Update Contact</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Action">
+                                        <String>com.dpbird.UpdateSupplierContactInfo</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Inline">
+                                        <Bool>false</Bool>
+                                    </PropertyValue>
+                                    <PropertyValue Property="InvocationGrouping">
+                                        <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Criticality">
+                                        <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
                             </Collection>
                         </PropertyValue>
                         <PropertyValue Property="Label">
@@ -3299,6 +3453,26 @@
                                     <PropertyValue Property="Value">
                                         <Path>firstOrderDate</Path>
                                     </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataFieldForAction">
+                                    <PropertyValue Property="Label">
+                                        <String>Update Dates</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Action">
+                                        <String>com.dpbird.UpdateSupplierTimeInfo</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Inline">
+                                        <Bool>false</Bool>
+                                    </PropertyValue>
+                                    <PropertyValue Property="InvocationGrouping">
+                                        <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Criticality">
+                                        <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
                                 </Record>
                             </Collection>
                         </PropertyValue>
@@ -3400,14 +3574,14 @@
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreateNoteData</String>
                             </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>false</Bool>
+                            </PropertyValue>
                             <PropertyValue Property="InvocationGrouping">
                                 <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
                             </PropertyValue>
                             <PropertyValue Property="Criticality">
                                 <EnumMember>UI.CriticalityType/Positive</EnumMember>
-                            </PropertyValue>
-                            <PropertyValue Property="Inline">
-                                <Bool>false</Bool>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -3517,12 +3691,12 @@
                     <String>createSupplierHidden</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.SupplierParty/enableEditSupplier">
+            <Annotations Target="com.dpbird.SupplierParty/disableEditSupplier">
                 <Annotation Term="UI.Hidden">
                     <Bool>true</Bool>
                 </Annotation>
                 <Annotation Term="Common.Label">
-                    <String>enableEditSupplier</String>
+                    <String>disableEditSupplier</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/firstOrderDate">
@@ -4115,14 +4289,61 @@
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreatePersonAndContact</String>
                             </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>false</Bool>
+                            </PropertyValue>
                             <PropertyValue Property="InvocationGrouping">
                                 <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
                             </PropertyValue>
                             <PropertyValue Property="Criticality">
                                 <EnumMember>UI.CriticalityType/Positive</EnumMember>
                             </PropertyValue>
-                            <PropertyValue Property="Inline">
-                                <Bool>false</Bool>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                            <Annotation Term="UI.Hidden">
+                                <Path>actionHidden</Path>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="PartyRelationshipLineItemWithoutAction">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>partyName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>primaryPhone</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>phoneMobile</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>primaryEmail</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>position</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -4134,6 +4355,11 @@
             <Annotations Target="com.dpbird.PersonAndContact/position">
                 <Annotation Term="Common.Label">
                     <String>Position</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PersonAndContact/actionHidden">
+                <Annotation Term="Common.Label">
+                    <String>actionHidden</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/primaryPhone">
@@ -5092,6 +5318,101 @@
             <Annotations Target="com.dpbird.Shipment/trackingIdNumber">
                 <Annotation Term="Common.Label">
                     <String>trackingIdNumber</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/dataResourceId">
+                <Annotation Term="Common.Label">
+                    <String>dataResourceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/dataResourceTypeId">
+                <Annotation Term="Common.Label">
+                    <String>dataResourceTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/dataTemplateTypeId">
+                <Annotation Term="Common.Label">
+                    <String>dataTemplateTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/dataCategoryId">
+                <Annotation Term="Common.Label">
+                    <String>dataCategoryId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/dataSourceId">
+                <Annotation Term="Common.Label">
+                    <String>dataSourceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/statusId">
+                <Annotation Term="Common.Label">
+                    <String>statusId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/dataResourceName">
+                <Annotation Term="Common.Label">
+                    <String>dataResourceName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/localeString">
+                <Annotation Term="Common.Label">
+                    <String>localeString</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/mimeTypeId">
+                <Annotation Term="Common.Label">
+                    <String>mimeTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/characterSetId">
+                <Annotation Term="Common.Label">
+                    <String>characterSetId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/objectInfo">
+                <Annotation Term="Common.Label">
+                    <String>objectInfo</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/surveyId">
+                <Annotation Term="Common.Label">
+                    <String>surveyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/surveyResponseId">
+                <Annotation Term="Common.Label">
+                    <String>surveyResponseId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/relatedDetailId">
+                <Annotation Term="Common.Label">
+                    <String>relatedDetailId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/isPublic">
+                <Annotation Term="Common.Label">
+                    <String>isPublic</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/createdDate">
+                <Annotation Term="Common.Label">
+                    <String>createdDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/createdByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>createdByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/lastModifiedDate">
+                <Annotation Term="Common.Label">
+                    <String>lastModifiedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DataResource/lastModifiedByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>lastModifiedByUserLogin</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.ShipmentItem/productId">

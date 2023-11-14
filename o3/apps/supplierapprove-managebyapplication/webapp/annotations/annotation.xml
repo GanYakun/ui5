@@ -234,6 +234,18 @@
             </Annotation>
         </Annotations>
 
+         <Annotations Target="com.dpbird.CreateSupplierParty">
+            <Annotation Term="Common.SideEffects">
+                <Record>
+                    <PropertyValue Property="TargetEntities">
+                        <Collection>
+                            <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+
         <Annotations Target="com.dpbird.CreatePersonAndContact/phoneMobile">
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
         </Annotations>

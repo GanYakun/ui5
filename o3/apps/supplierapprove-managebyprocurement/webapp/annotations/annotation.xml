@@ -461,6 +461,32 @@
             </Annotation>
         </Annotations>
 
+        <Annotations Target="com.dpbird.DataResource">
+            <Annotation Term="UI.LineItem">
+                <Collection>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="dataResourceName"></PropertyValue>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="objectInfo"></PropertyValue>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="createdDate"></PropertyValue>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="lastModifiedDate"></PropertyValue>
+                    </Record>
+                    <Record Type="UI.DataFieldForAction">
+                        <PropertyValue Property="Label" String="上传" />
+                        <PropertyValue Property="Action" String="com.dpbird.bannerUpload" />
+                        <PropertyValue Property="Inline" Bool="true" />
+                        <Annotation Term="Common.mediaUploadLink"
+                            String="/mdt/control/uploadFile?key={{}}#relation=Content/DataResource/ImageDataResource" />
+                    </Record>
+                </Collection>
+            </Annotation>
+        </Annotations>
+
         <Annotations Target="com.dpbird.CreateSupplierProduct/productId">
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
             <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
