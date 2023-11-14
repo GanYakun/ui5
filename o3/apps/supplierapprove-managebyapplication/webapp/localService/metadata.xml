@@ -3252,6 +3252,26 @@
                                         <Path>comments</Path>
                                     </PropertyValue>
                                 </Record>
+                                <Record Type="UI.DataFieldForAction">
+                                    <PropertyValue Property="Label">
+                                        <String>Update Basic Info</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Action">
+                                        <String>com.dpbird.FillSupplierBaseInfo</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Inline">
+                                        <Bool>false</Bool>
+                                    </PropertyValue>
+                                    <PropertyValue Property="InvocationGrouping">
+                                        <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Criticality">
+                                        <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
                             </Collection>
                         </PropertyValue>
                         <PropertyValue Property="Label">
@@ -3314,6 +3334,26 @@
                                         <Path>usccNumber</Path>
                                     </PropertyValue>
                                 </Record>
+                                <Record Type="UI.DataFieldForAction">
+                                    <PropertyValue Property="Label">
+                                        <String>Update Contact</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Action">
+                                        <String>com.dpbird.UpdateSupplierContactInfo</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Inline">
+                                        <Bool>false</Bool>
+                                    </PropertyValue>
+                                    <PropertyValue Property="InvocationGrouping">
+                                        <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Criticality">
+                                        <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
+                                </Record>
                             </Collection>
                         </PropertyValue>
                         <PropertyValue Property="Label">
@@ -3355,6 +3395,26 @@
                                     <PropertyValue Property="Value">
                                         <Path>firstOrderDate</Path>
                                     </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataFieldForAction">
+                                    <PropertyValue Property="Label">
+                                        <String>Update Dates</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Action">
+                                        <String>com.dpbird.UpdateSupplierTimeInfo</String>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Inline">
+                                        <Bool>false</Bool>
+                                    </PropertyValue>
+                                    <PropertyValue Property="InvocationGrouping">
+                                        <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Criticality">
+                                        <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                                    </PropertyValue>
+                                    <Annotation Term="UI.Importance">
+                                        <EnumMember>UI.ImportanceType/High</EnumMember>
+                                    </Annotation>
                                 </Record>
                             </Collection>
                         </PropertyValue>
