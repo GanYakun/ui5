@@ -198,18 +198,18 @@
                 </Annotation>
 
                 <Annotation Term="UI.LineItem">
-                <Annotation Term="UI.Criticality" Path="criticalityValue"/>
+                <!-- <Annotation Term="UI.Criticality" Path="criticalityValue"/> -->
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="logoImageUrl"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
-                        <Record Type="UI.DataField">
+                        <!-- <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="statusId"/>
                               <PropertyValue Property="Criticality" Path="criticalityValue">
                             </PropertyValue>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                        </Record>
+                        </Record> -->
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="partyId"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
@@ -233,9 +233,9 @@
                     </Collection>
                 </Annotation>
           
-                <Annotation Term="UI.Identification">
-                    <Collection > 
-                         <Record Type="UI.DataFieldForAction" >
+                <!-- <Annotation Term="UI.Identification">
+                    <Collection >  -->
+                         <!-- <Record Type="UI.DataFieldForAction" >
                             <PropertyValue Property="Action" String="com.dpbird.ChangeSupplierStatusToEnable"/>
                             <PropertyValue Property="Label"  String="{@i18n>ChangeSupplierStatusToEnable}" />
                             <Annotation Term="UI.Hidden">
@@ -248,7 +248,7 @@
                                 <Bool>true</Bool>
                                 </If>
                             </Annotation>
-                        </Record>   
+                        </Record>    -->
                         <!-- <Record Type="UI.DataFieldForAction" >
                             <PropertyValue Property="Action" String="com.dpbird.SubmitApproval_Supplier"/>
                             <PropertyValue Property="Label"  String="{@i18n>SubmitApproval_Supplier}" />
@@ -269,8 +269,8 @@
                             <PropertyValue Property="Action" String="com.dpbird.ReturnToSupplier"/>
                             <PropertyValue Property="Label"  String="{@i18n>ReturnToSupplier}" />
                         </Record>                                                                                                                                                            -->
-                    </Collection>
-                </Annotation>
+                    <!-- </Collection>
+                </Annotation> -->
                 <Annotation Term="UI.HeaderFacets">
                     <Collection>
                         <Record Type="UI.ReferenceFacet">
@@ -283,10 +283,10 @@
                             <PropertyValue Property="Label" String="{@i18n>TimeInfo}"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#TimeInfo"/>
                         </Record>
-                         <Record Type="UI.ReferenceFacet">
+                         <!-- <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="statusId"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
-                        </Record>
+                        </Record> -->
                          <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="TotalAmount"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#TotalAmount"/>
@@ -397,7 +397,7 @@
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="Label" String="{@i18n>PartyClassificationGroupLineItem}"/>
                             <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
-                            <PropertyValue Property="Target" AnnotationPath="PartyClassificationGroup/@UI.LineItem#PartyClassificationGroupLineItem"/>
+                            <PropertyValue Property="Target" AnnotationPath="PartyClassification/@UI.FieldGroup#PartyClassificationFieldGroup"/>
                         </Record>
                         
                         <Record Type="UI.ReferenceFacet">
@@ -435,11 +435,11 @@
                             <PropertyValue Property="ID" String="OrderInfo"/>
                             <PropertyValue Property="Target" AnnotationPath="PurchaseOrder/@UI.LineItem" />
                         </Record>
-                         <Record Type="UI.ReferenceFacet">
+                         <!-- <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="Label" String="{@i18n>PurchaseQuote}"/>
                             <PropertyValue Property="ID" String="PurchaseQuote"/>
                             <PropertyValue Property="Target" AnnotationPath="PurchaseQuote/@UI.LineItem" />
-                        </Record>
+                        </Record> -->
                          <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="Label" String="{@i18n>InvoiceInfo}"/>
                             <PropertyValue Property="ID" String="InvoiceInfo"/>
@@ -453,6 +453,22 @@
                     </Collection>
                 </Annotation>
             </Annotations>
+
+             <Annotations Target="com.dpbird.PartyClassification">
+            <Annotation Term="UI.FieldGroup" Qualifier="PartyClassificationFieldGroup">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Label" String="{@i18n>RiskRating}"/>
+                                <PropertyValue Property="Value" Path="PartyClassificationGroup/description" />
+                                <PropertyValue Property="Criticality" Path="statusColor" />
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
 
             <Annotations Target="com.dpbird.Invoice">
                 <Annotation Term="UI.LineItem">
