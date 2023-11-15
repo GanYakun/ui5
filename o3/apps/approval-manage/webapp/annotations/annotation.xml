@@ -46,6 +46,92 @@
                  <Annotation Term="UI.DeleteHidden" Bool="true"/>  
             </Annotations>
             <Annotations Target="com.dpbird.Approval">
+                <Annotation Term="UI.LineItem" Qualifier="OfficeAutoApprovalList">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>SupplierParty/partyName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>workEffortName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>MainProcess/version</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>MainProcess/description</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>fromDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>thruDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>RootNodeWorkEffort/createdByUserLogin</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>comments</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>mannerEnumId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>statusId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
+
                 <Annotation Term="UI.Identification">
                     <Collection>
                         <Record Type="UI.DataFieldForAction">
@@ -105,7 +191,7 @@
                             <Record Type="UI.PresentationVariantType">
                                 <PropertyValue Property="Visualizations">
                                     <Collection>
-                                        <AnnotationPath>@UI.LineItem#ApprovalList</AnnotationPath>
+                                        <AnnotationPath>@UI.LineItem#OfficeAutoApprovalList</AnnotationPath>
                                     </Collection>
                                 </PropertyValue>
                             </Record>
@@ -139,7 +225,7 @@
                             <Record Type="UI.PresentationVariantType">
                                 <PropertyValue Property="Visualizations">
                                     <Collection>
-                                        <AnnotationPath>@UI.LineItem#ApprovalList</AnnotationPath>
+                                        <AnnotationPath>@UI.LineItem#OfficeAutoApprovalList</AnnotationPath>
                                     </Collection>
                                 </PropertyValue>
                             </Record>
