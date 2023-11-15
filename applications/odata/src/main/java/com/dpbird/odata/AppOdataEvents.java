@@ -150,16 +150,6 @@ public class AppOdataEvents {
         GenericValue userLogin = (GenericValue) req.getAttribute("userLogin");
         String reloadStr = req.getParameter("reload");
         try {
-            if (userLogin == null) {
-                try {
-                    userLogin = delegator.findOne("UserLogin", true, UtilMisc.toMap("userLoginId", "system"));
-                    req.setAttribute("userLogin", userLogin);
-                } catch (GenericEntityException e) {
-                    e.printStackTrace();
-                    return "error";
-                }
-            }
-
             Locale locale = Util.getLocale(req);
             String pathInfo = req.getPathInfo();
             List<String> pathSegments = StringUtil.split(pathInfo, "/");
