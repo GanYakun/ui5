@@ -135,7 +135,7 @@
                 <Annotation Term="UI.Identification">
                     <Collection>
                         <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="Approved" />
+                            <PropertyValue Property="Label" String="Approve" />
                             <PropertyValue Property="Action" String="com.dpbird.Approved" />
                             <Annotation Term="UI.Hidden">
                                 <If>
@@ -149,7 +149,7 @@
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Label" String="Approval failed" />
+                            <PropertyValue Property="Label" String="Reject" />
                             <PropertyValue Property="Action" String="com.dpbird.ApproveRefuse" />
                             <Annotation Term="UI.Hidden">
                                 <If>
