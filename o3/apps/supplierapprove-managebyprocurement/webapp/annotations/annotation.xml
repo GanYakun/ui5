@@ -693,6 +693,36 @@
                 </Record>
             </Annotation>
         </Annotations>
+         <Annotations Target="com.dpbird.UpdateSupplierContactInfo/address1">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/address1" ></Annotation>
+        </Annotations>
+         <Annotations Target="com.dpbird.UpdateSupplierContactInfo/primaryEmail">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/primaryEmail" ></Annotation>
+        </Annotations>
+        <Annotations Target="com.dpbird.UpdateSupplierContactInfo/primaryPhone">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/primaryPhone" ></Annotation>
+        </Annotations>
+         <Annotations Target="com.dpbird.UpdateSupplierTimeInfo/collectionDate">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/collectionDate" ></Annotation>
+        </Annotations>
+         <Annotations Target="com.dpbird.UpdateSupplierTimeInfo/firstOrderDate">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/firstOrderDate" ></Annotation>
+        </Annotations>
+         <Annotations Target="com.dpbird.FillSupplierBaseInfo/annualRevenue">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/annualRevenue" ></Annotation>
+        </Annotations>
+         <Annotations Target="com.dpbird.FillSupplierBaseInfo/comments">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/comments" ></Annotation>
+        </Annotations>
+         <Annotations Target="com.dpbird.FillSupplierBaseInfo/numEmployees">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/numEmployees" ></Annotation>
+        </Annotations>
+        <Annotations Target="com.dpbird.FillSupplierBaseInfo/tickerSymbol">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/tickerSymbol" ></Annotation>
+        </Annotations>
+         <Annotations Target="com.dpbird.FillSupplierBaseInfo/usccNumber">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/usccNumber" ></Annotation>
+        </Annotations>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>

@@ -445,6 +445,9 @@
         <Annotations Target="com.dpbird.FillSupplierBaseInfo/tickerSymbol">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/tickerSymbol" ></Annotation>
         </Annotations>
+         <Annotations Target="com.dpbird.FillSupplierBaseInfo/usccNumber">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/usccNumber" ></Annotation>
+        </Annotations>
 
         <Annotations Target="com.dpbird.CreateSupplierProduct/productId">
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
