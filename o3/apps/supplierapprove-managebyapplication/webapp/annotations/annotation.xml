@@ -38,6 +38,49 @@
                                 </Record>
                             </Collection>
                         </PropertyValue>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>true</Bool>
+                            <Bool>false</Bool>
+                        </If>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.CollectionFacet">
+                        <PropertyValue Property="Label" String="{@i18n>CompanyInfo}"/>
+                        <PropertyValue Property="ID" String="CompanyInfo2"/>
+                        <PropertyValue Property="Facets">
+                            <Collection>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="{@i18n>CompanyBaseInfo}"/>
+                                    <PropertyValue Property="ID" String="PartyGroupFieldGroup2"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyGroupFieldGroup"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="{@i18n>CompanyContactInfo}"/>
+                                    <PropertyValue Property="ID" String="ContactInfo2"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ContactInfo"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="{@i18n>SupplierTimeInfo}"/>
+                                    <PropertyValue Property="ID" String="SupplierTimeInfo2"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#SupplierTimeInfo"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>false</Bool>
+                            <Bool>true</Bool>
+                        </If>
+                        </Annotation>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>

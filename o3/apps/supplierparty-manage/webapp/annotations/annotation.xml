@@ -388,6 +388,7 @@
                                     </Record>
                                 </Collection>
                             </PropertyValue>
+                            
                         </Record>
                        <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>
