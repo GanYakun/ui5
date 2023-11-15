@@ -173,7 +173,6 @@
                         "settings": {
                             "editableHeaderContent": true,
                             "entitySet": "SupplierParties",
-                            "enhanceI18n": "i18n/supplier.properties",
                             "navigation": {
                                 "SupplierProduct": {
                                     "detail": {
