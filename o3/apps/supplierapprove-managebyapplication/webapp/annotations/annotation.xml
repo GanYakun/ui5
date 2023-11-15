@@ -26,7 +26,7 @@
                                     <PropertyValue Property="ID" String="PartyGroupFieldGroup"/>
                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyGroupFieldGroupWithAction"/>
                                 </Record>
-                                    <Record Type="UI.ReferenceFacet">
+                                <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="Label" String="{@i18n>CompanyContactInfo}"/>
                                     <PropertyValue Property="ID" String="ContactInfo"/>
                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ContactInfoWithAction"/>
@@ -47,32 +47,133 @@
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>PartyClassificationGroupLineItem}"/>
                         <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
-                        <PropertyValue Property="Target" AnnotationPath="PartyClassification/@UI.FieldGroup#PartyClassificationFieldGroup"/>
+                        <PropertyValue Property="Target" AnnotationPath="PartyClassification/@UI.FieldGroup#PartyClassificationFieldGroup">
+                        </PropertyValue>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="PartyRelationshipLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="PersonAndContact/@UI.LineItem#PartyRelationshipLineItem"/>
+                        <PropertyValue Property="Target" AnnotationPath="PersonAndContact/@UI.LineItem#PartyRelationshipLineItemWithoutAction"/>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>false</Bool>
+                            <Bool>true</Bool>
+                        </If>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="PartyRelationshipLineItem2"/>
+                        <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>
+                        <PropertyValue Property="Target" AnnotationPath="PersonAndContact/@UI.LineItem#PartyRelationshipLineItem"/>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>true</Bool>
+                            <Bool>false</Bool>
+                        </If>
+                        </Annotation>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="NoteDataLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>NoteDataLineItem}"/>
                         <PropertyValue Property="Target"  AnnotationPath="NoteData/@UI.LineItem#NoteDataLineItem"/>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>true</Bool>
+                            <Bool>false</Bool>
+                        </If>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="NoteDataLineItem2"/>
+                        <PropertyValue Property="Label" String="{@i18n>NoteDataLineItem}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="NoteData/@UI.LineItem#NoteDataLineItemWithoutAction"/>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>false</Bool>
+                            <Bool>true</Bool>
+                        </If>
+                        </Annotation>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="SupplierProductLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>SupplierProductLineItem}"/>
                         <PropertyValue Property="Target"  AnnotationPath="SupplierProduct/@UI.LineItem#SupplierProductLineItem"/>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>true</Bool>
+                            <Bool>false</Bool>
+                        </If>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="SupplierProductLineItem2"/>
+                        <PropertyValue Property="Label" String="{@i18n>SupplierProductLineItem}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="SupplierProduct/@UI.LineItem#SupplierProductLineItemWithoutAction"/>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>false</Bool>
+                            <Bool>true</Bool>
+                        </If>
+                        </Annotation>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="PurchaseAgreementLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>PurchaseAgreementLineItem}"/>
                         <PropertyValue Property="Target"  AnnotationPath="PurchaseAgreement/@UI.LineItem#PurchaseAgreementLineItem"/>
                     </Record>
-                        <Record Type="UI.ReferenceFacet">
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>BankAccount}"/>
                         <PropertyValue Property="ID" String="BankAccount"/>
                         <PropertyValue Property="Target" AnnotationPath="OwnerFinAccount/@UI.LineItem#FinAccountLineItem" />
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>true</Bool>
+                            <Bool>false</Bool>
+                        </If>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="Label" String="{@i18n>BankAccount}"/>
+                        <PropertyValue Property="ID" String="BankAccount2"/>
+                        <PropertyValue Property="Target" AnnotationPath="OwnerFinAccount/@UI.LineItem#FinAccountLineItemWithoutAction" />
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>false</Bool>
+                            <Bool>true</Bool>
+                        </If>
+                        </Annotation>
                     </Record>
                 </Collection>
             </Annotation>
@@ -376,10 +477,6 @@
                         <PropertyValue Property="Value" Path="currencyUomId"/>
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                     </Record>
-                    <!-- <Record Type="UI.DataField">
-                        <PropertyValue Property="Value" Path="accountName"/>
-                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                    </Record> -->
                     <Record Type="UI.DataField">
                         <PropertyValue Property="Value" Path="statusId"/>
                         <PropertyValue Property="Criticality">
@@ -404,6 +501,43 @@
                         <PropertyValue Property="Action" String="com.dpbird.CreateFinAccount"/>
                         <PropertyValue Property="Label"  String="{@i18n>Create}"/>
                         <PropertyValue Property="Inline"  Bool="false"/>
+                    </Record>
+                </Collection>
+            </Annotation>
+
+            <Annotation Term="UI.LineItem" Qualifier="FinAccountLineItemWithoutAction">
+                <Collection>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="finAccountName"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="finAccountCode"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                        <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="currencyUomId"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="statusId"/>
+                        <PropertyValue Property="Criticality">
+                            <If>
+                            <Or>
+                            <Eq>
+                                <Path>statusId</Path>
+                                <String>FNACT_MANFROZEN</String>
+                            </Eq>
+                                <Eq>
+                                <Path>statusId</Path>
+                                <String>FNACT_CANCELLED</String>
+                            </Eq>
+                            </Or>
+                                <Int>1</Int>
+                            <Int>3</Int>
+                        </If>
+                        </PropertyValue>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                     </Record>
                 </Collection>
             </Annotation>

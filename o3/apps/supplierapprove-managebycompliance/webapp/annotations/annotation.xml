@@ -146,6 +146,16 @@
                     <Record Type="UI.DataFieldForAction">
                         <PropertyValue Property="Action" String="com.dpbird.FillPartyClassification" />
                         <PropertyValue Property="Label" String="{@i18n>FillRisqueLevel}" />
+                        <Annotation Term="UI.Hidden">
+                            <If>
+                                <Eq>
+                                    <Path>currentStatusId</Path>
+                                    <String>PROCESSED</String>
+                                </Eq>
+                                <Bool>true</Bool>
+                                <Bool>false</Bool>
+                            </If>
+                        </Annotation>
                     </Record>                                                                                                                                                   
                 </Collection>
             </Annotation>

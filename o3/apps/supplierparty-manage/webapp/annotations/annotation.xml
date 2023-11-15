@@ -89,14 +89,14 @@
                     <Record Type="UI.FieldGroupType">
                         <PropertyValue Property="Data">
                             <Collection>
-                                <Record Type="UI.DataFieldForAction">
+                                <!-- <Record Type="UI.DataFieldForAction">
                                     <PropertyValue Property="Label" String="{@i18n>FillSupplierBaseInfo}"/>
                                     <PropertyValue Property="Inline" Bool="true"/>
-                                    <!-- <Annotation Term="UI.Emphasized" Bool="true"/> -->
+                                    <Annotation Term="UI.Emphasized" Bool="true"/>
                                     <PropertyValue Property="Action" String="com.dpbird.FillSupplierBaseInfo"></PropertyValue>
                                     <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Critical" />
                                     <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
-                                </Record>
+                                </Record> -->
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="numEmployees" />
                                 </Record>
@@ -119,14 +119,14 @@
                     <Record Type="UI.FieldGroupType">
                         <PropertyValue Property="Data">
                             <Collection>
-                                <Record Type="UI.DataFieldForAction">
+                                <!-- <Record Type="UI.DataFieldForAction">
                                     <PropertyValue Property="Label" String="{@i18n>UpdateSupplierContactInfo}"/>
                                     <PropertyValue Property="Inline" Bool="true"/>
-                                    <!-- <Annotation Term="UI.Emphasized" Bool="true"/> -->
+                                    <Annotation Term="UI.Emphasized" Bool="true"/>
                                     <PropertyValue Property="Action" String="com.dpbird.UpdateSupplierContactInfo"></PropertyValue>
                                     <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Critical" />
                                     <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
-                                </Record>
+                                </Record> -->
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="primaryPhone" />
                                 </Record>
@@ -148,14 +148,14 @@
                     <Record Type="UI.FieldGroupType">
                         <PropertyValue Property="Data">
                             <Collection>
-                                <Record Type="UI.DataFieldForAction">
+                                <!-- <Record Type="UI.DataFieldForAction">
                                     <PropertyValue Property="Label" String="{@i18n>UpdateSupplierTimeInfo}"/>
                                     <PropertyValue Property="Inline" Bool="true"/>
-                                    <!-- <Annotation Term="UI.Emphasized" Bool="true"/>  -->
+                                    <Annotation Term="UI.Emphasized" Bool="true"/> 
                                     <PropertyValue Property="Action" String="com.dpbird.UpdateSupplierTimeInfo"></PropertyValue>
                                     <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Critical" />
                                     <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
-                                </Record>
+                                </Record> -->
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="collectionDate" />
                                 </Record>
