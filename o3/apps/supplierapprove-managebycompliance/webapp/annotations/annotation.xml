@@ -38,6 +38,24 @@
                 </Collection>
             </Annotation>
 
+            <Annotation Term="UI.FieldGroup" Qualifier="PartyBaseInfo">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="primaryEmail" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="address1" />
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="primaryPhone" />
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+
             <Annotation Term="UI.Facets">
                 <Collection>
                     <Record Type="UI.CollectionFacet">
@@ -124,7 +142,11 @@
                                 <Bool>false</Bool>
                             </If>
                         </Annotation>
-                    </Record>                                                                                                                                                       
+                    </Record>    
+                    <Record Type="UI.DataFieldForAction">
+                        <PropertyValue Property="Action" String="com.dpbird.FillPartyClassification" />
+                        <PropertyValue Property="Label" String="{@i18n>FillRisqueLevel}" />
+                    </Record>                                                                                                                                                   
                 </Collection>
             </Annotation>
 
@@ -213,7 +235,7 @@
                 <Record>
                     <PropertyValue Property="TargetEntities">
                         <Collection>
-                            <NavigationPropertyPath>partyClassification</NavigationPropertyPath>
+                            <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
                         </Collection>
                     </PropertyValue>
                 </Record>
@@ -254,10 +276,7 @@
                                 <PropertyValue Property="Value" Path="PartyClassificationGroup/description" />
                                 <PropertyValue Property="Criticality" Path="statusColor" />
                             </Record>
-                            <Record Type="UI.DataFieldForAction">
-                                <PropertyValue Property="Action" String="com.dpbird.FillPartyClassification" />
-                                <PropertyValue Property="Label" String="{@i18n>FillRisqueLevel}" />
-                            </Record>
+                            
                         </Collection>
                     </PropertyValue>
                 </Record>
