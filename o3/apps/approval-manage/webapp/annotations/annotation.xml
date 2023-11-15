@@ -259,56 +259,29 @@
                             <PropertyValue Property="Label" String="Originator Information"/>
                             <PropertyValue Property="Target" AnnotationPath="RootNodeWorkEffort/@UI.FieldGroup#ApproverInformation"/>
                         </Record>
-                        <!-- 入库单数据集 -->
-                        <!-- <Record Type="UI.CollectionFacet">
-                            <Annotation Term="UI.Hidden">
-                                <If>
-                                    <And>
-                                        <Eq><Path>dbEntityName</Path><String>CustRequest</String></Eq>
-                                        <Eq><Path>PurchaseShipmentRequest/custRequestTypeId</Path><String>RF_INCOMING_SHIPMENT</String></Eq>
-                                    </And>
-                                    <Bool>false</Bool><Bool>true</Bool>
-                                </If>
-                            </Annotation>
-                            <PropertyValue Property="ID" String="InStoreCollectionFacet"/>
-                            <PropertyValue Property="Label" String="入库基本信息"/>
+                        <!-- 供应商数据集 -->
+                        <Record Type="UI.CollectionFacet">
+                            <PropertyValue Property="ID" String="SupplierFacet"/>
+                            <PropertyValue Property="Label" String="Supplier Information "/>
                             <PropertyValue Property="Facets" >
                                 <Collection >
                                     <Record Type="UI.ReferenceFacet">
-                                        <PropertyValue Property="ID" String="InStoreInfo"/>
-                                        <PropertyValue Property="Target" AnnotationPath="PurchaseShipmentRequest/@UI.FieldGroup#BaseInfo"/>
+                                        <PropertyValue Property="ID" String="SPINFO"/>
+                                        <PropertyValue Property="Target" AnnotationPath="SupplierParty/@UI.FieldGroup#PartyGroupFieldGroup"/>
                                     </Record>
                                     <Record Type="UI.ReferenceFacet">
-                                        <Annotation Term="UI.Hidden">
-                                            <If>
-                                                <And>
-                                                    <Eq><Path>dbEntityName</Path><String>CustRequest</String></Eq>
-                                                    <Eq><Path>PurchaseShipmentRequest/custRequestCategoryId</Path><String>RF_PURCHASE</String></Eq>
-                                                </And>
-                                                <Bool>false</Bool><Bool>true</Bool>
-                                            </If>
-                                        </Annotation>
-                                        <PropertyValue Property="Target" AnnotationPath="PurchaseShipmentRequest/CustRequestItem/@UI.LineItem#Buy_CustRequestItemLineItem"/>
-                                        <PropertyValue Property="Label" String="入库项信息"/>
-                                        <PropertyValue Property="ID" String="buy_InStoreItemInfo"/>
+                                        <PropertyValue Property="Target" AnnotationPath="SupplierParty/@UI.FieldGroup#ContactInfo"/>
+                                        <PropertyValue Property="Label" String="Contact Information"/>
+                                        <PropertyValue Property="ID" String="ContactInfo"/>
                                     </Record>
                                     <Record Type="UI.ReferenceFacet">
-                                        <Annotation Term="UI.Hidden">
-                                            <If>
-                                                <And>
-                                                    <Eq><Path>dbEntityName</Path><String>CustRequest</String></Eq>
-                                                    <Eq><Path>PurchaseShipmentRequest/custRequestCategoryId</Path><String>RF_RECYCLE</String></Eq>
-                                                </And>
-                                                <Bool>false</Bool><Bool>true</Bool>
-                                            </If>
-                                        </Annotation>
-                                        <PropertyValue Property="Target" AnnotationPath="PurchaseShipmentRequest/CustRequestItem/@UI.LineItem#Rec_CustRequestItemLineItem"/>
-                                        <PropertyValue Property="Label" String="入库项信息"/>
-                                        <PropertyValue Property="ID" String="rec_InStoreItemInfo"/>
+                                        <PropertyValue Property="Target" AnnotationPath="SupplierParty/@UI.FieldGroup#SupplierTimeInfo"/>
+                                        <PropertyValue Property="Label" String="Supplier time information"/>
+                                        <PropertyValue Property="ID" String="TimeInfo"/>
                                     </Record>
                                 </Collection>
                             </PropertyValue>
-                        </Record> -->
+                        </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="GeneratedFacet4"/>
                             <PropertyValue Property="Label" String="Approval Record"/>
