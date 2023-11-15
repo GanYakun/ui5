@@ -45,13 +45,7 @@ public class LoginEvents {
         GenericValue userLogin;
         Map<String, Object> serviceMap = WebDavUtil.getCredentialsFromRequest(request);
         HttpSession httpSession = request.getSession();
-        Debug.logInfo("========== Current SessionID: " + httpSession.getId(), module);
         if (serviceMap == null) {
-            Enumeration<String> attributeNames = httpSession.getAttributeNames();
-            while (attributeNames.hasMoreElements()) {
-                String nextElement = attributeNames.nextElement();
-                Debug.logInfo("=========== session element: " + nextElement, module);
-            }
             userLogin = (GenericValue) httpSession.getAttribute("userLogin");
             request.setAttribute("userLogin", userLogin);
             GenericValue organization = getOrganization(delegator, userLogin);
