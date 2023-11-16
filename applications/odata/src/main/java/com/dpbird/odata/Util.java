@@ -666,7 +666,7 @@ public class Util {
             uiLabelMap.addBottomResourceBundle("CommonUiLabels");
             uiLabelMap.addBottomResourceBundle("SecurityUiLabels");
             uiLabelMap.addBottomResourceBundle("ServiceErrorUiLabels");
-            uiLabelMap.addBottomResourceBundle("ExtendedUiLabels");
+//            uiLabelMap.addBottomResourceBundle("ExtendedUiLabels");
             uiLabelLocaleMap.put(locale, uiLabelMap);
 
         }
@@ -2763,6 +2763,18 @@ public class Util {
         String language = locale.getLanguage();
         GenericValue genericValue = EntityQuery.use(delegator).from("Internationalization").where("lang", language, "property", key).queryFirst();
         return UtilValidate.isNotEmpty(genericValue) ? genericValue.getString("value") : null;
+    }
+
+    /**
+     * 获取Action,Function绑定的对象
+     */
+    public static OdataOfbizEntity getBoundEntity(Map<String, Object> parameter) {
+        for (Object value : parameter.values()) {
+            if (value instanceof OdataOfbizEntity) {
+                return (OdataOfbizEntity) value;
+            }
+        }
+        return null;
     }
 
 }

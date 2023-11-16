@@ -8,6 +8,7 @@
                     <xs:element ref="Action"/>
                     <xs:element ref="ComplexType"/>
                     <xs:element ref="EntityType"/>
+                    <xs:element ref="ExtendEntityType"/>
                     <xs:element ref="EnumType"/>
                     <xs:element ref="Function"/>
                     <xs:element ref="view-entity"/>
@@ -59,6 +60,7 @@
                 <xs:element ref="Key"/>
                 <xs:element ref="HeaderInfo"/>
                 <xs:element ref="LineItem"/>
+                <xs:element ref="DataPoint"/>
                 <xs:element ref="FieldGroup"/>
                 <xs:element ref="SelectionFields"/>
                 <xs:element ref="Exclude"/>
@@ -95,6 +97,18 @@
             <xs:attribute name="InsertRequireProperties" type="xs:anyURI"/>
             <xs:attribute name="Orderby" type="xs:anyURI"/>
             <xs:attribute name="OfbizType" type="xs:anyURI"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ExtendEntityType">
+        <xs:annotation>
+            <xs:documentation>Inherit objects and extend</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Property"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="NavigationProperty"/>
+            </xs:choice>
+            <xs:attribute name="Name" use="required" type="xs:NCName"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="RelAlias">
@@ -358,10 +372,19 @@
             <xs:attribute name="Qualifier" type="xs:NCName"/>
         </xs:complexType>
     </xs:element>
+    <xs:element name="DataPoint">
+        <xs:complexType>
+            <xs:attribute name="Qualifier" type="xs:NCName"/>
+            <xs:attribute name="Value" type="xs:NCName"/>
+            <xs:attribute name="Title" type="xs:NCName"/>
+            <xs:attribute name="Criticality" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="FieldGroup">
         <xs:complexType>
             <xs:sequence>
                 <xs:element minOccurs="0" maxOccurs="unbounded" ref="DataField"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="DataFieldForAction"/>
             </xs:sequence>
             <xs:attribute name="Qualifier" type="xs:NCName"/>
             <xs:attribute name="Label"/>
@@ -426,6 +449,7 @@
             <xs:attribute name="Nullable" type="xs:boolean"/>
             <xs:attribute name="Precision" type="xs:integer"/>
             <xs:attribute name="Scale" type="xs:integer"/>
+            <xs:attribute name="FieldControl" type="xs:NCName"/>
             <xs:attribute name="Label"/>
         </xs:complexType>
     </xs:element>
