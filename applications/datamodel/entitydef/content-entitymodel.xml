@@ -941,7 +941,6 @@ under the License.
     </entity>
     <entity entity-name="DataResourceType"
             package-name="org.apache.ofbiz.content.data"
-            default-resource-name="ContentEntityLabels"
             title="Data Object Type Entity">
       <field name="dataResourceTypeId" type="id"></field>
       <field name="parentTypeId" type="id"></field>
@@ -1019,7 +1018,6 @@ under the License.
     </entity>
     <entity entity-name="MimeType"
             package-name="org.apache.ofbiz.content.data"
-            default-resource-name="ContentEntityLabels"
             title="Mime Type Entity">
       <field name="mimeTypeId" type="id-vlong"></field>
       <field name="description" type="description"></field>
