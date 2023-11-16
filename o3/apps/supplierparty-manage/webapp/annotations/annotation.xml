@@ -39,7 +39,7 @@
             </Annotations>
 
             <Annotations Target="com.dpbird.SupplierParty/numEmployees">
-                <Annotation Term="Measures.Unit" String="人" ></Annotation>
+                <Annotation Term="Measures.Unit" String="Person" ></Annotation>
             </Annotations>
 
             <Annotations Target="com.dpbird.SupplierParty/totalAmount">
@@ -388,7 +388,7 @@
                                     </Record>
                                 </Collection>
                             </PropertyValue>
-                            
+
                         </Record>
                        <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>
