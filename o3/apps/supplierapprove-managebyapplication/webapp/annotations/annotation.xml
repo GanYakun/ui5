@@ -124,6 +124,21 @@
                         </Annotation>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="FinancialStatements"/>
+                        <PropertyValue Property="Label" String="{@i18n>FinancialStatements}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="FinancialStatements/@UI.LineItem#FileList"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ConfidentialityAgreement"/>
+                        <PropertyValue Property="Label" String="{@i18n>ConfidentialityAgreement}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="ConfidentialityAgreement/@UI.LineItem#FileList"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="Otherfiles"/>
+                        <PropertyValue Property="Label" String="{@i18n>Otherfiles}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="OtherFiles/@UI.LineItem#FileList"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="NoteDataLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>NoteDataLineItem}"/>
                         <PropertyValue Property="Target"  AnnotationPath="NoteData/@UI.LineItem#NoteDataLineItem"/>
