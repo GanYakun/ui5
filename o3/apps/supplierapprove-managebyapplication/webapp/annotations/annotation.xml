@@ -83,6 +83,11 @@
                         </Annotation>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
+                        <PropertyValue Property="ID" String="ContactMechPurpose"/>
+                        <PropertyValue Property="Target" AnnotationPath="PostalAddress/@UI.LineItem#PostalAddressLineItem"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>
                         <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
@@ -372,6 +377,18 @@
                     <PropertyValue Property="TargetEntities">
                         <Collection>
                             <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.CreatePostalAddress">
+            <Annotation Term="Common.SideEffects">
+                <Record>
+                    <PropertyValue Property="TargetEntities">
+                        <Collection>
+                            <NavigationPropertyPath>postalAddress</NavigationPropertyPath>
                         </Collection>
                     </PropertyValue>
                 </Record>

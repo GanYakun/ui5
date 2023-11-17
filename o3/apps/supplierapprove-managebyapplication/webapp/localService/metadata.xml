@@ -84,38 +84,6 @@
                     <ReferentialConstraint Property="fixedAssetId" ReferencedProperty="fixedAssetId"/>
                 </NavigationProperty>
             </EntityType>
-            <EntityType Name="Company">
-                <Key>
-                    <PropertyRef Name="partyId"/>
-                </Key>
-                <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
-                <Property Name="primaryPhone" Type="Edm.String" MaxLength="60"/>
-                <Property Name="phoneMobile" Type="Edm.String" MaxLength="60"/>
-                <Property Name="primaryEmail" Type="Edm.String" MaxLength="255"/>
-                <Property Name="address1" Type="Edm.String" MaxLength="255"/>
-                <Property Name="address2" Type="Edm.String" MaxLength="255"/>
-                <Property Name="city" Type="Edm.String" MaxLength="100"/>
-                <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
-                <Property Name="externalId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="description" Type="Edm.String" MaxLength="5000"/>
-                <Property Name="isUnread" Type="Edm.String" MaxLength="1"/>
-                <Property Name="partyTypeId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="lastModifiedByUserLogin" Type="Edm.String" MaxLength="320"/>
-                <Property Name="dataSourceId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
-                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="preferredCurrencyUomId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="partyName" Type="Edm.String" MaxLength="100"/>
-                <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
-                <Property Name="comments" Type="Edm.String" MaxLength="255"/>
-                <Property Name="tickerSymbol" Type="Edm.String" MaxLength="10"/>
-                <Property Name="logoImageUrl" Type="Edm.String" MaxLength="2000"/>
-                <Property Name="groupName" Type="Edm.String" MaxLength="100"/>
-                <Property Name="groupNameLocal" Type="Edm.String" MaxLength="100"/>
-                <Property Name="numEmployees" Type="Edm.Int64"/>
-                <Property Name="officeSiteName" Type="Edm.String" MaxLength="100"/>
-                <Property Name="annualRevenue" Type="Edm.Decimal" Precision="18" Scale="2"/>
-            </EntityType>
             <EntityType Name="ShipmentRouteSegment">
                 <Key>
                     <PropertyRef Name="shipmentId"/>
@@ -160,6 +128,38 @@
                 <NavigationProperty Name="CarrierParty" Type="com.dpbird.Party">
                     <ReferentialConstraint Property="carrierPartyId" ReferencedProperty="partyId"/>
                 </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Company">
+                <Key>
+                    <PropertyRef Name="partyId"/>
+                </Key>
+                <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="primaryPhone" Type="Edm.String" MaxLength="60"/>
+                <Property Name="phoneMobile" Type="Edm.String" MaxLength="60"/>
+                <Property Name="primaryEmail" Type="Edm.String" MaxLength="255"/>
+                <Property Name="address1" Type="Edm.String" MaxLength="255"/>
+                <Property Name="address2" Type="Edm.String" MaxLength="255"/>
+                <Property Name="city" Type="Edm.String" MaxLength="100"/>
+                <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="externalId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="isUnread" Type="Edm.String" MaxLength="1"/>
+                <Property Name="partyTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="lastModifiedByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="dataSourceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="preferredCurrencyUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="partyName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="comments" Type="Edm.String" MaxLength="255"/>
+                <Property Name="tickerSymbol" Type="Edm.String" MaxLength="10"/>
+                <Property Name="logoImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="groupName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="groupNameLocal" Type="Edm.String" MaxLength="100"/>
+                <Property Name="numEmployees" Type="Edm.Int64"/>
+                <Property Name="officeSiteName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="annualRevenue" Type="Edm.Decimal" Precision="18" Scale="2"/>
             </EntityType>
             <EntityType Name="Invoice">
                 <Key>
@@ -332,6 +332,25 @@
                 <Property Name="hasTable" Type="Edm.String" MaxLength="1"/>
                 <Property Name="description" Type="Edm.String" MaxLength="255"/>
             </EntityType>
+            <EntityType Name="PartyContactMechPurpose">
+                <Key>
+                    <PropertyRef Name="contactMechPurposeTypeId"/>
+                    <PropertyRef Name="partyId"/>
+                    <PropertyRef Name="contactMechId"/>
+                    <PropertyRef Name="fromDate"/>
+                </Key>
+                <Property Name="contactMechPurposeTypeId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="contactMechId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="fromDate" Type="Edm.DateTimeOffset" Nullable="false" Precision="3"/>
+                <Property Name="thruDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <NavigationProperty Name="PostalAddress" Type="com.dpbird.PostalAddress">
+                    <ReferentialConstraint Property="contactMechId" ReferencedProperty="contactMechId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="ContactMechPurposeType" Type="com.dpbird.ContactMechPurposeType">
+                    <ReferentialConstraint Property="contactMechPurposeTypeId" ReferencedProperty="contactMechPurposeTypeId"/>
+                </NavigationProperty>
+            </EntityType>
             <EntityType Name="PartyClassificationType">
                 <Key>
                     <PropertyRef Name="partyClassificationTypeId"/>
@@ -418,7 +437,6 @@
                 <NavigationProperty Name="PartyClassificationType" Type="com.dpbird.PartyClassificationType">
                     <ReferentialConstraint Property="partyClassificationTypeId" ReferencedProperty="partyClassificationTypeId"/>
                 </NavigationProperty>
-                <NavigationProperty Name="ClassificationEnumeration" Type="com.dpbird.ClassificationEnumeration"/>
             </EntityType>
             <EntityType Name="PartyRole">
                 <Key>
@@ -642,6 +660,30 @@
                 <NavigationProperty Name="UILabApp" Type="Collection(com.dpbird.UILabApp)"/>
                 <NavigationProperty Name="SecurityPermission" Type="Collection(com.dpbird.SecurityPermission)"/>
                 <NavigationProperty Name="RoleTypeSecurityPermission" Type="Collection(com.dpbird.RoleTypeSecurityPermission)"/>
+            </EntityType>
+            <EntityType Name="PostalAddress">
+                <Key>
+                    <PropertyRef Name="contactMechId"/>
+                </Key>
+                <Property Name="contactMechId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="toName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="attnName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="address1" Type="Edm.String" MaxLength="255"/>
+                <Property Name="address2" Type="Edm.String" MaxLength="255"/>
+                <Property Name="houseNumber" Type="Edm.Int64"/>
+                <Property Name="houseNumberExt" Type="Edm.String" MaxLength="60"/>
+                <Property Name="directions" Type="Edm.String" MaxLength="255"/>
+                <Property Name="city" Type="Edm.String" MaxLength="100"/>
+                <Property Name="cityGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="postalCode" Type="Edm.String" MaxLength="60"/>
+                <Property Name="postalCodeExt" Type="Edm.String" MaxLength="60"/>
+                <Property Name="countryGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="stateProvinceGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="countyGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="municipalityGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="postalCodeGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="geoPointId" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="PartyContactMechPurpose" Type="Collection(com.dpbird.PartyContactMechPurpose)"/>
             </EntityType>
             <EntityType Name="FinAccount">
                 <Key>
@@ -995,6 +1037,7 @@
                 <NavigationProperty Name="SurveyQuestionAppl" Type="Collection(com.dpbird.SurveyQuestionAppl)"/>
                 <NavigationProperty Name="ChildWorkEffortAndPartyGroupContact" Type="Collection(com.dpbird.CoWorkHistory)"/>
                 <NavigationProperty Name="DataResource" Type="com.dpbird.DataResource"/>
+                <NavigationProperty Name="PostalAddress" Type="Collection(com.dpbird.PostalAddress)"/>
             </EntityType>
             <EntityType Name="Party">
                 <Key>
@@ -1024,16 +1067,6 @@
                 <Property Name="sequenceId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="description" Type="Edm.String" MaxLength="255"/>
             </EntityType>
-            <EntityType Name="ClassificationEnumeration">
-                <Key>
-                    <PropertyRef Name="enumId"/>
-                </Key>
-                <Property Name="enumId" Type="Edm.String" Nullable="false" MaxLength="60"/>
-                <Property Name="enumTypeId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="enumCode" Type="Edm.String" MaxLength="60"/>
-                <Property Name="sequenceId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="description" Type="Edm.String" MaxLength="255"/>
-            </EntityType>
             <EntityType Name="SecurityPermission">
                 <Key>
                     <PropertyRef Name="permissionId"/>
@@ -1050,6 +1083,13 @@
                 <Property Name="replenishEnumId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="isRefundable" Type="Edm.String" MaxLength="1"/>
                 <Property Name="hasTable" Type="Edm.String" MaxLength="1"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="ContactMechPurposeType">
+                <Key>
+                    <PropertyRef Name="contactMechPurposeTypeId"/>
+                </Key>
+                <Property Name="contactMechPurposeTypeId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="description" Type="Edm.String" MaxLength="255"/>
             </EntityType>
             <EntityType Name="Enumeration">
@@ -1345,7 +1385,6 @@
                 <Parameter Name="supplierParty" Type="Collection(com.dpbird.SupplierParty)" Nullable="false"/>
                 <Parameter Name="partyName" Type="Edm.String" Nullable="false"/>
                 <Parameter Name="primaryPhone" Type="Edm.String"/>
-                <Parameter Name="address1" Type="Edm.String" Nullable="false"/>
                 <Parameter Name="primaryEmail" Type="Edm.String"/>
                 <ReturnType Type="com.dpbird.SupplierParty"/>
             </Action>
@@ -1384,6 +1423,11 @@
                 <Parameter Name="partyUserLogin" Type="com.dpbird.PartyUserLogin" Nullable="false"/>
                 <ReturnType Type="com.dpbird.SupplierParty"/>
             </Action>
+            <Action Name="CreatePostalAddress" IsBound="true">
+                <Parameter Name="postalAddress" Type="Collection(com.dpbird.PostalAddress)" Nullable="false"/>
+                <Parameter Name="address1" Type="Edm.String" Nullable="false"/>
+                <Parameter Name="contactMechPurposeTypeId" Type="Edm.String"/>
+            </Action>
             <Action Name="CreateNoteData" IsBound="true">
                 <Parameter Name="noteData" Type="Collection(com.dpbird.NoteData)" Nullable="false"/>
                 <Parameter Name="noteName" Type="Edm.String" Nullable="false"/>
@@ -1396,15 +1440,6 @@
                 <Parameter Name="contentTypeId" Type="Edm.String"/>
                 <ReturnType Type="Edm.String"/>
             </Action>
-            <Action Name="CreatePersonAndContact" IsBound="true">
-                <Parameter Name="personAndContact" Type="Collection(com.dpbird.PersonAndContact)" Nullable="false"/>
-                <Parameter Name="partyName" Type="Edm.String" Nullable="false"/>
-                <Parameter Name="primaryPhone" Type="Edm.String"/>
-                <Parameter Name="phoneMobile" Type="Edm.String" Nullable="false"/>
-                <Parameter Name="primaryEmail" Type="Edm.String"/>
-                <Parameter Name="position" Type="Edm.String"/>
-                <ReturnType Type="com.dpbird.PersonAndContact"/>
-            </Action>
             <Action Name="CreateSupplierProduct" IsBound="true">
                 <Parameter Name="supplierProduct" Type="Collection(com.dpbird.SupplierProduct)" Nullable="false"/>
                 <Parameter Name="productId" Type="Edm.String" Nullable="false"/>
@@ -1416,6 +1451,15 @@
                 <Parameter Name="finAccountCode" Type="Edm.String" Nullable="false"/>
                 <Parameter Name="currencyUomId" Type="Edm.String" Nullable="false"/>
                 <ReturnType Type="com.dpbird.NoteData"/>
+            </Action>
+            <Action Name="CreatePersonAndContact" IsBound="true">
+                <Parameter Name="personAndContact" Type="Collection(com.dpbird.PersonAndContact)" Nullable="false"/>
+                <Parameter Name="partyName" Type="Edm.String" Nullable="false"/>
+                <Parameter Name="primaryPhone" Type="Edm.String"/>
+                <Parameter Name="phoneMobile" Type="Edm.String" Nullable="false"/>
+                <Parameter Name="primaryEmail" Type="Edm.String"/>
+                <Parameter Name="position" Type="Edm.String"/>
+                <ReturnType Type="com.dpbird.PersonAndContact"/>
             </Action>
             <Function Name="GetApproverData_Supplier" IsBound="true">
                 <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
@@ -1430,11 +1474,8 @@
                 </EntitySet>
                 <EntitySet Name="PartyClassificationGroups" EntityType="com.dpbird.PartyClassificationGroup">
                     <NavigationPropertyBinding Path="PartyClassificationType" Target="PartyClassificationTypes"/>
-                    <NavigationPropertyBinding Path="ClassificationEnumeration" Target="ClassificationEnumerations"/>
                 </EntitySet>
-                <EntitySet Name="ClassificationEnumerations" EntityType="com.dpbird.ClassificationEnumeration"/>
                 <EntitySet Name="Companies" EntityType="com.dpbird.Company"/>
-                <EntitySet Name="Uoms" EntityType="com.dpbird.Uom"/>
                 <EntitySet Name="Invoices" EntityType="com.dpbird.Invoice">
                     <NavigationPropertyBinding Path="InvoiceType" Target="InvoiceTypes"/>
                     <NavigationPropertyBinding Path="InvoiceStatusItem" Target="InvoiceStatusItems"/>
@@ -1458,19 +1499,19 @@
                 <EntitySet Name="ShipmentItems" EntityType="com.dpbird.ShipmentItem">
                     <NavigationPropertyBinding Path="Product" Target="Products"/>
                 </EntitySet>
-                <EntitySet Name="QuoteStatusItems" EntityType="com.dpbird.QuoteStatusItem"/>
                 <EntitySet Name="Parties" EntityType="com.dpbird.Party"/>
+                <EntitySet Name="QuoteStatusItems" EntityType="com.dpbird.QuoteStatusItem"/>
                 <EntitySet Name="PartyClassIdentifications" EntityType="com.dpbird.PartyClassification">
                     <NavigationPropertyBinding Path="PartyClassificationGroup" Target="PartyClassificationGroups"/>
                 </EntitySet>
                 <EntitySet Name="FinAccountTypes" EntityType="com.dpbird.FinAccountType"/>
                 <EntitySet Name="SupplierStatusItems" EntityType="com.dpbird.SupplierStatusItem"/>
-                <EntitySet Name="PersonAndContacts" EntityType="com.dpbird.PersonAndContact"/>
                 <EntitySet Name="SupplierProducts" EntityType="com.dpbird.SupplierProduct">
                     <NavigationPropertyBinding Path="Product" Target="Products"/>
                     <NavigationPropertyBinding Path="CurrencyUom" Target="Unm"/>
                     <NavigationPropertyBinding Path="Uom" Target="Unm"/>
                 </EntitySet>
+                <EntitySet Name="PersonAndContacts" EntityType="com.dpbird.PersonAndContact"/>
                 <EntitySet Name="Unm" EntityType="com.dpbird.Uom">
                     <NavigationPropertyBinding Path="UomType" Target="UomTypes"/>
                 </EntitySet>
@@ -1494,6 +1535,7 @@
                     <NavigationPropertyBinding Path="SurveyQuestionAppl" Target="SurveyQuestionAppls"/>
                     <NavigationPropertyBinding Path="ChildWorkEffortAndPartyGroupContact" Target="CoWorkHistories"/>
                     <NavigationPropertyBinding Path="DataResource" Target="DataResources"/>
+                    <NavigationPropertyBinding Path="PostalAddress" Target="PostalAddresses"/>
                 </EntitySet>
                 <EntitySet Name="SurveyQuestionAnswers" EntityType="com.dpbird.SurveyQuestionAnswer"/>
                 <EntitySet Name="StatusItems" EntityType="com.dpbird.StatusItem"/>
@@ -1525,15 +1567,16 @@
                 <EntitySet Name="AccountStatusItems" EntityType="com.dpbird.AccountStatusItem"/>
                 <EntitySet Name="InvoiceStatusItems" EntityType="com.dpbird.InvoiceStatusItem"/>
                 <EntitySet Name="TermTypes" EntityType="com.dpbird.TermType"/>
+                <EntitySet Name="ShipmentRouteSegments" EntityType="com.dpbird.ShipmentRouteSegment">
+                    <NavigationPropertyBinding Path="CarrierParty" Target="Parties"/>
+                </EntitySet>
                 <EntitySet Name="CustomerParties" EntityType="com.dpbird.CustomerParty">
                     <NavigationPropertyBinding Path="ToShipment" Target="Shipments"/>
                     <NavigationPropertyBinding Path="FromShipment" Target="Shipments"/>
                     <NavigationPropertyBinding Path="OwnerFinAccount" Target="FinAccounts"/>
                 </EntitySet>
-                <EntitySet Name="ShipmentRouteSegments" EntityType="com.dpbird.ShipmentRouteSegment">
-                    <NavigationPropertyBinding Path="CarrierParty" Target="Parties"/>
-                </EntitySet>
                 <EntitySet Name="DataResources" EntityType="com.dpbird.DataResource"/>
+                <EntitySet Name="ContactMechPurposeTypes" EntityType="com.dpbird.ContactMechPurposeType"/>
                 <EntitySet Name="Surveys" EntityType="com.dpbird.Survey"/>
                 <EntitySet Name="SurveyQuestionAppls" EntityType="com.dpbird.SurveyQuestionAppl">
                     <NavigationPropertyBinding Path="SurveyQuestion" Target="SurveyQuestions"/>
@@ -1551,8 +1594,15 @@
                     <NavigationPropertyBinding Path="CurrencyUom" Target="CurrencyUnm"/>
                     <NavigationPropertyBinding Path="OwnerParty" Target="Parties"/>
                 </EntitySet>
+                <EntitySet Name="PostalAddresses" EntityType="com.dpbird.PostalAddress">
+                    <NavigationPropertyBinding Path="PartyContactMechPurpose" Target="PartyContactMechPurposes"/>
+                </EntitySet>
                 <EntitySet Name="AgreementTerms" EntityType="com.dpbird.AgreementTerm">
                     <NavigationPropertyBinding Path="TermType" Target="TermTypes"/>
+                </EntitySet>
+                <EntitySet Name="PartyContactMechPurposes" EntityType="com.dpbird.PartyContactMechPurpose">
+                    <NavigationPropertyBinding Path="PostalAddress" Target="PostalAddresses"/>
+                    <NavigationPropertyBinding Path="ContactMechPurposeType" Target="ContactMechPurposeTypes"/>
                 </EntitySet>
                 <Singleton Name="Me" Type="com.dpbird.PartyUserLogin"/>
             </EntityContainer>
@@ -1873,147 +1923,6 @@
                     <String>partyId</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.Company/partyId">
-                <Annotation Term="Common.Label">
-                    <String>partyId</String>
-                </Annotation>
-                <Annotation Term="Common.Text">
-                    <Path>partyName</Path>
-                    <Annotation Term="UI.TextArrangement">
-                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
-                    </Annotation>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/primaryPhone">
-                <Annotation Term="Common.Label">
-                    <String>primaryPhone</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/phoneMobile">
-                <Annotation Term="Common.Label">
-                    <String>phoneMobile</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/primaryEmail">
-                <Annotation Term="Common.Label">
-                    <String>primaryEmail</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/address1">
-                <Annotation Term="Common.Label">
-                    <String>address1</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/address2">
-                <Annotation Term="Common.Label">
-                    <String>address2</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/city">
-                <Annotation Term="Common.Label">
-                    <String>city</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/lastModifiedDate">
-                <Annotation Term="Common.Label">
-                    <String>lastModifiedDate</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/externalId">
-                <Annotation Term="Common.Label">
-                    <String>externalId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/description">
-                <Annotation Term="Common.Label">
-                    <String>description</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/isUnread">
-                <Annotation Term="Common.Label">
-                    <String>isUnread</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/partyTypeId">
-                <Annotation Term="Common.Label">
-                    <String>partyTypeId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/lastModifiedByUserLogin">
-                <Annotation Term="Common.Label">
-                    <String>lastModifiedByUserLogin</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/dataSourceId">
-                <Annotation Term="Common.Label">
-                    <String>dataSourceId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/createdDate">
-                <Annotation Term="Common.Label">
-                    <String>createdDate</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/statusId">
-                <Annotation Term="Common.Label">
-                    <String>statusId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/preferredCurrencyUomId">
-                <Annotation Term="Common.Label">
-                    <String>preferredCurrencyUomId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/partyName">
-                <Annotation Term="Common.Label">
-                    <String>partyName</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/createdByUserLogin">
-                <Annotation Term="Common.Label">
-                    <String>createdByUserLogin</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/comments">
-                <Annotation Term="Common.Label">
-                    <String>comments</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/tickerSymbol">
-                <Annotation Term="Common.Label">
-                    <String>tickerSymbol</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/logoImageUrl">
-                <Annotation Term="Common.Label">
-                    <String>logoImageUrl</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/groupName">
-                <Annotation Term="Common.Label">
-                    <String>groupName</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/groupNameLocal">
-                <Annotation Term="Common.Label">
-                    <String>groupNameLocal</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/numEmployees">
-                <Annotation Term="Common.Label">
-                    <String>numEmployees</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/officeSiteName">
-                <Annotation Term="Common.Label">
-                    <String>officeSiteName</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Company/annualRevenue">
-                <Annotation Term="Common.Label">
-                    <String>annualRevenue</String>
-                </Annotation>
-            </Annotations>
             <Annotations Target="com.dpbird.ShipmentRouteSegment/carrierPartyId">
                 <Annotation Term="Common.Label">
                     <String>carrierPartyId</String>
@@ -2198,6 +2107,147 @@
             <Annotations Target="com.dpbird.ShipmentRouteSegment/upsHighValueReport">
                 <Annotation Term="Common.Label">
                     <String>upsHighValueReport</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/partyId">
+                <Annotation Term="Common.Label">
+                    <String>partyId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>partyName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/primaryPhone">
+                <Annotation Term="Common.Label">
+                    <String>primaryPhone</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/phoneMobile">
+                <Annotation Term="Common.Label">
+                    <String>phoneMobile</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/primaryEmail">
+                <Annotation Term="Common.Label">
+                    <String>primaryEmail</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/address1">
+                <Annotation Term="Common.Label">
+                    <String>address1</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/address2">
+                <Annotation Term="Common.Label">
+                    <String>address2</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/city">
+                <Annotation Term="Common.Label">
+                    <String>city</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/lastModifiedDate">
+                <Annotation Term="Common.Label">
+                    <String>lastModifiedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/externalId">
+                <Annotation Term="Common.Label">
+                    <String>externalId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/isUnread">
+                <Annotation Term="Common.Label">
+                    <String>isUnread</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/partyTypeId">
+                <Annotation Term="Common.Label">
+                    <String>partyTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/lastModifiedByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>lastModifiedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/dataSourceId">
+                <Annotation Term="Common.Label">
+                    <String>dataSourceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/createdDate">
+                <Annotation Term="Common.Label">
+                    <String>createdDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/statusId">
+                <Annotation Term="Common.Label">
+                    <String>statusId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/preferredCurrencyUomId">
+                <Annotation Term="Common.Label">
+                    <String>preferredCurrencyUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/partyName">
+                <Annotation Term="Common.Label">
+                    <String>partyName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/createdByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>createdByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/comments">
+                <Annotation Term="Common.Label">
+                    <String>comments</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/tickerSymbol">
+                <Annotation Term="Common.Label">
+                    <String>tickerSymbol</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/logoImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>logoImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/groupName">
+                <Annotation Term="Common.Label">
+                    <String>groupName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/groupNameLocal">
+                <Annotation Term="Common.Label">
+                    <String>groupNameLocal</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/numEmployees">
+                <Annotation Term="Common.Label">
+                    <String>numEmployees</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/officeSiteName">
+                <Annotation Term="Common.Label">
+                    <String>officeSiteName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/annualRevenue">
+                <Annotation Term="Common.Label">
+                    <String>annualRevenue</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Invoice">
@@ -2930,6 +2980,37 @@
             <Annotations Target="com.dpbird.TermType/description">
                 <Annotation Term="Common.Label">
                     <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyContactMechPurpose/contactMechPurposeTypeId">
+                <Annotation Term="Common.Label">
+                    <String>contactMechPurposeTypeId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>ContactMechPurposeType/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyContactMechPurpose/partyId">
+                <Annotation Term="Common.Label">
+                    <String>partyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyContactMechPurpose/contactMechId">
+                <Annotation Term="Common.Label">
+                    <String>contactMechId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyContactMechPurpose/fromDate">
+                <Annotation Term="Common.Label">
+                    <String>fromDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyContactMechPurpose/thruDate">
+                <Annotation Term="Common.Label">
+                    <String>thruDate</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyClassificationType/partyClassificationTypeId">
@@ -4430,6 +4511,138 @@
                     <String>createdByUserLogin</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress">
+                <Annotation Term="UI.LineItem" Qualifier="PostalAddressLineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>PartyContactMechPurpose/contactMechPurposeTypeId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>address1</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label">
+                                <String>create</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Action">
+                                <String>com.dpbird.CreatePostalAddress</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>false</Bool>
+                            </PropertyValue>
+                            <PropertyValue Property="InvocationGrouping">
+                                <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                            </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/contactMechId">
+                <Annotation Term="Common.Label">
+                    <String>contactMechId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/toName">
+                <Annotation Term="Common.Label">
+                    <String>toName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/attnName">
+                <Annotation Term="Common.Label">
+                    <String>attnName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/address1">
+                <Annotation Term="Common.Label">
+                    <String>address1</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/address2">
+                <Annotation Term="Common.Label">
+                    <String>address2</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/houseNumber">
+                <Annotation Term="Common.Label">
+                    <String>houseNumber</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/houseNumberExt">
+                <Annotation Term="Common.Label">
+                    <String>houseNumberExt</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/directions">
+                <Annotation Term="Common.Label">
+                    <String>directions</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/city">
+                <Annotation Term="Common.Label">
+                    <String>city</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/cityGeoId">
+                <Annotation Term="Common.Label">
+                    <String>cityGeoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/postalCode">
+                <Annotation Term="Common.Label">
+                    <String>postalCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/postalCodeExt">
+                <Annotation Term="Common.Label">
+                    <String>postalCodeExt</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/countryGeoId">
+                <Annotation Term="Common.Label">
+                    <String>countryGeoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/stateProvinceGeoId">
+                <Annotation Term="Common.Label">
+                    <String>stateProvinceGeoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/countyGeoId">
+                <Annotation Term="Common.Label">
+                    <String>countyGeoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/municipalityGeoId">
+                <Annotation Term="Common.Label">
+                    <String>municipalityGeoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/postalCodeGeoId">
+                <Annotation Term="Common.Label">
+                    <String>postalCodeGeoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PostalAddress/geoPointId">
+                <Annotation Term="Common.Label">
+                    <String>geoPointId</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.FinAccount/accountName">
                 <Annotation Term="Common.Label">
                     <String>accountName</String>
@@ -5244,6 +5457,12 @@
             <Annotations Target="com.dpbird.StatusItem/statusId">
                 <Annotation Term="Common.Label">
                     <String>statusId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.StatusItem/statusTypeId">
@@ -6417,37 +6636,6 @@
                     <String>description</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.ClassificationEnumeration/enumId">
-                <Annotation Term="Common.Label">
-                    <String>enumId</String>
-                </Annotation>
-                <Annotation Term="Common.Text">
-                    <Path>description</Path>
-                    <Annotation Term="UI.TextArrangement">
-                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
-                    </Annotation>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.ClassificationEnumeration/enumTypeId">
-                <Annotation Term="Common.Label">
-                    <String>enumTypeId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.ClassificationEnumeration/enumCode">
-                <Annotation Term="Common.Label">
-                    <String>enumCode</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.ClassificationEnumeration/sequenceId">
-                <Annotation Term="Common.Label">
-                    <String>sequenceId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.ClassificationEnumeration/description">
-                <Annotation Term="Common.Label">
-                    <String>description</String>
-                </Annotation>
-            </Annotations>
             <Annotations Target="com.dpbird.SecurityPermission/permissionId">
                 <Annotation Term="Common.Label">
                     <String>permissionId</String>
@@ -6484,6 +6672,22 @@
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FinAccountType/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ContactMechPurposeType/contactMechPurposeTypeId">
+                <Annotation Term="Common.Label">
+                    <String>contactMechPurposeTypeId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ContactMechPurposeType/description">
                 <Annotation Term="Common.Label">
                     <String>description</String>
                 </Annotation>
@@ -7699,7 +7903,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo/usccNumber">
                 <Annotation Term="Common.Label">
-                    <String>usccNumber</String>
+                    <String>Tax code</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.UpdateSupplierContactInfo">
@@ -7759,11 +7963,6 @@
                     <String>Primary Phone</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.CreateSupplierParty/address1">
-                <Annotation Term="Common.Label">
-                    <String>Address</String>
-                </Annotation>
-            </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/primaryEmail">
                 <Annotation Term="Common.Label">
                     <String>Primary Email</String>
@@ -7810,6 +8009,41 @@
                     </Record>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.CreatePostalAddress/address1">
+                <Annotation Term="Common.Label">
+                    <String>address1</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreatePostalAddress/contactMechPurposeTypeId">
+                <Annotation Term="Common.Label">
+                    <String>contactMechPurposeTypeId</String>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>contactMechPurposeTypeId</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>ContactMechPurposeTypes</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>contactMechPurposeTypeId</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>contactMechPurposeTypeId</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.CreateNoteData">
                 <Annotation Term="Common.SideEffects">
                     <Record>
@@ -7829,31 +8063,6 @@
             <Annotations Target="com.dpbird.CreateNoteData/noteInfo">
                 <Annotation Term="Common.Label">
                     <String>noteInfo</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.CreatePersonAndContact/partyName">
-                <Annotation Term="Common.Label">
-                    <String>partyName</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.CreatePersonAndContact/primaryPhone">
-                <Annotation Term="Common.Label">
-                    <String>phone</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.CreatePersonAndContact/phoneMobile">
-                <Annotation Term="Common.Label">
-                    <String>mobile</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.CreatePersonAndContact/primaryEmail">
-                <Annotation Term="Common.Label">
-                    <String>email</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.CreatePersonAndContact/position">
-                <Annotation Term="Common.Label">
-                    <String>position</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierProduct">
@@ -7921,6 +8130,31 @@
                 </Annotation>
                 <Annotation Term="Common.ValueListWithFixedValues">
                     <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreatePersonAndContact/partyName">
+                <Annotation Term="Common.Label">
+                    <String>partyName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreatePersonAndContact/primaryPhone">
+                <Annotation Term="Common.Label">
+                    <String>phone</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreatePersonAndContact/phoneMobile">
+                <Annotation Term="Common.Label">
+                    <String>mobile</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreatePersonAndContact/primaryEmail">
+                <Annotation Term="Common.Label">
+                    <String>email</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreatePersonAndContact/position">
+                <Annotation Term="Common.Label">
+                    <String>position</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseQuote/salesChannelEnumId">

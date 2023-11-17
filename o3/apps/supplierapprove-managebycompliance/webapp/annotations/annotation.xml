@@ -58,7 +58,7 @@
 
             <Annotation Term="UI.Facets">
                 <Collection>
-                    <Record Type="UI.CollectionFacet">
+                    <!-- <Record Type="UI.CollectionFacet">
                         <PropertyValue Property="Label" String="{@i18n>CompanyInfo}"/>
                         <PropertyValue Property="ID" String="CompanyInfo"/>
                         <PropertyValue Property="Facets">
@@ -80,7 +80,7 @@
                                 </Record>
                             </Collection>
                         </PropertyValue>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>PartyClassificationGroupLineItem}"/>
                         <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
@@ -91,7 +91,7 @@
                         <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="PartyRelationshipLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>
                         <PropertyValue Property="Target"  AnnotationPath="PersonAndContact/@UI.LineItem#PartyRelationshipLineItemWithoutAction"/>
@@ -100,8 +100,8 @@
                         <PropertyValue Property="ID" String="SupplierProductLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>SupplierProductLineItem}"/>
                         <PropertyValue Property="Target"  AnnotationPath="SupplierProduct/@UI.LineItem#SupplierProductLineItemWithoutAction"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    </Record> -->
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="PurchaseAgreementLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>PurchaseAgreementLineItem}"/>
                         <PropertyValue Property="Target"  AnnotationPath="PurchaseAgreement/@UI.LineItem#PurchaseAgreementLineItem"/>
@@ -110,7 +110,7 @@
                         <PropertyValue Property="Label" String="{@i18n>BankAccount}"/>
                         <PropertyValue Property="ID" String="BankAccount"/>
                         <PropertyValue Property="Target" AnnotationPath="OwnerFinAccount/@UI.LineItem#FinAccountLineItem" />
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="NoteDataLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>NoteDataLineItem}"/>
