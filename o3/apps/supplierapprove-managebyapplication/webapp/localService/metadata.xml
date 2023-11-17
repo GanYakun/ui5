@@ -544,6 +544,16 @@
                 </NavigationProperty>
                 <NavigationProperty Name="ShipmentRouteSegment" Type="Collection(com.dpbird.ShipmentRouteSegment)"/>
             </EntityType>
+            <EntityType Name="ContentAndMediaDataResource">
+                <Key>
+                    <PropertyRef Name="contentId"/>
+                </Key>
+                <Property Name="contentId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="contentName" Type="Edm.String" MaxLength="255"/>
+                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="mimeTypeId" Type="Edm.String" MaxLength="320"/>
+                <Property Name="otherData" Type="Edm.Stream"/>
+            </EntityType>
             <EntityType Name="RawMaterialProduct">
                 <Key>
                     <PropertyRef Name="productId"/>
@@ -1038,6 +1048,9 @@
                 <NavigationProperty Name="ChildWorkEffortAndPartyGroupContact" Type="Collection(com.dpbird.CoWorkHistory)"/>
                 <NavigationProperty Name="DataResource" Type="com.dpbird.DataResource"/>
                 <NavigationProperty Name="PostalAddress" Type="Collection(com.dpbird.PostalAddress)"/>
+                <NavigationProperty Name="FinancialStatements" Type="Collection(com.dpbird.ContentAndMediaDataResource)"/>
+                <NavigationProperty Name="ConfidentialityAgreement" Type="Collection(com.dpbird.ContentAndMediaDataResource)"/>
+                <NavigationProperty Name="OtherFiles" Type="Collection(com.dpbird.ContentAndMediaDataResource)"/>
             </EntityType>
             <EntityType Name="Party">
                 <Key>
@@ -1428,6 +1441,10 @@
                 <Parameter Name="address1" Type="Edm.String" Nullable="false"/>
                 <Parameter Name="contactMechPurposeTypeId" Type="Edm.String"/>
             </Action>
+            <Action Name="UploadAction" IsBound="true">
+                <Parameter Name="contentAndMediaDataResource" Type="Collection(com.dpbird.ContentAndMediaDataResource)" Nullable="false"/>
+                <Parameter Name="file" Type="Edm.Stream" Nullable="false"/>
+            </Action>
             <Action Name="CreateNoteData" IsBound="true">
                 <Parameter Name="noteData" Type="Collection(com.dpbird.NoteData)" Nullable="false"/>
                 <Parameter Name="noteName" Type="Edm.String" Nullable="false"/>
@@ -1536,6 +1553,9 @@
                     <NavigationPropertyBinding Path="ChildWorkEffortAndPartyGroupContact" Target="CoWorkHistories"/>
                     <NavigationPropertyBinding Path="DataResource" Target="DataResources"/>
                     <NavigationPropertyBinding Path="PostalAddress" Target="PostalAddresses"/>
+                    <NavigationPropertyBinding Path="FinancialStatements" Target="ContentAndMediaDataResources"/>
+                    <NavigationPropertyBinding Path="ConfidentialityAgreement" Target="ContentAndMediaDataResources"/>
+                    <NavigationPropertyBinding Path="OtherFiles" Target="ContentAndMediaDataResources"/>
                 </EntitySet>
                 <EntitySet Name="SurveyQuestionAnswers" EntityType="com.dpbird.SurveyQuestionAnswer"/>
                 <EntitySet Name="StatusItems" EntityType="com.dpbird.StatusItem"/>
@@ -1588,6 +1608,7 @@
                     <NavigationPropertyBinding Path="QuantityUom" Target="Unm"/>
                 </EntitySet>
                 <EntitySet Name="UomTypes" EntityType="com.dpbird.UomType"/>
+                <EntitySet Name="ContentAndMediaDataResources" EntityType="com.dpbird.ContentAndMediaDataResource"/>
                 <EntitySet Name="FinAccounts" EntityType="com.dpbird.FinAccount">
                     <NavigationPropertyBinding Path="AccountStatusItem" Target="AccountStatusItems"/>
                     <NavigationPropertyBinding Path="FinAccountType" Target="FinAccountTypes"/>
@@ -4013,6 +4034,81 @@
             <Annotations Target="com.dpbird.Shipment/trackingIdNumber">
                 <Annotation Term="Common.Label">
                     <String>trackingIdNumber</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ContentAndMediaDataResource">
+                <Annotation Term="UI.LineItem" Qualifier="FileList">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>contentName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>createdDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>otherData</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label">
+                                <String>upload</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Action">
+                                <String>com.dpbird.UploadAction</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>false</Bool>
+                            </PropertyValue>
+                            <PropertyValue Property="InvocationGrouping">
+                                <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                            </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ContentAndMediaDataResource/contentId">
+                <Annotation Term="Common.Label">
+                    <String>contentId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ContentAndMediaDataResource/contentName">
+                <Annotation Term="Common.Label">
+                    <String>contentName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ContentAndMediaDataResource/createdDate">
+                <Annotation Term="Common.Label">
+                    <String>createdDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ContentAndMediaDataResource/mimeTypeId">
+                <Annotation Term="Common.Label">
+                    <String>mimeTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ContentAndMediaDataResource/otherData">
+                <Annotation Term="Common.Label">
+                    <String>otherData</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RawMaterialProduct/productId">
