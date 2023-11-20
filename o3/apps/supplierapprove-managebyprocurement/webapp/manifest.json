@@ -130,20 +130,16 @@
                             "views": {
                                 "paths": [
                                     {
-                                        "key": "APPROVAL_CREATED",
-                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#APPROVAL_CREATED"
+                                        "key": "COWORK_CREATED",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#COWORK_CREATED"
                                     },
                                     {
-                                        "key": "APPROVAL_SUBMITTED",
-                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#APPROVAL_SUBMITTED"
+                                        "key": "REQUIRE_CHANGES",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#REQUIRE_CHANGES"
                                     },
                                     {
-                                        "key": "APPROVAL_REJECTED",
-                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#APPROVAL_REJECTED"
-                                    },
-                                    {
-                                        "key": "APPROVAL_APPROVED",
-                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#APPROVAL_APPROVED"
+                                        "key": "REGISTERED",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#REGISTERED"
                                     }
                                 ]
                             },
