@@ -31,9 +31,8 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#IdentificationCode"/>
-                        <PropertyValue Property="Label" String="{@i18n>Identification}"/>
-                        <PropertyValue Property="ID" String="Identification"/>
+                        <PropertyValue Property="ID" String="Classification"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
                     </Record>
                 </Collection>
             </Annotation>
@@ -46,7 +45,15 @@
                 </Record>
             </Annotation>
 
-            <Annotation Term="UI.FieldGroup" Qualifier="PartyBaseInfo">
+            <Annotation Term="UI.DataPoint" Qualifier="PartyClasification">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Value" Path="PartyClassification/PartyClassificationGroup/description"/>
+                    <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
+                    <PropertyValue Property="Criticality" Path="criticalityValue"/>
+                </Record>
+            </Annotation>
+
+            <!-- <Annotation Term="UI.FieldGroup" Qualifier="PartyBaseInfo">
                 <Record Type="UI.FieldGroupType">
                     <PropertyValue Property="Data">
                         <Collection>
@@ -62,7 +69,7 @@
                         </Collection>
                     </PropertyValue>
                 </Record>
-            </Annotation>
+            </Annotation> -->
 
             <Annotation Term="UI.Identification">
                 <Collection > 
@@ -355,11 +362,11 @@
                         <PropertyValue Property="ID" String="ContactMechPurpose"/>
                         <PropertyValue Property="Target" AnnotationPath="PostalAddress/@UI.LineItem#PostalAddressLineItem"/>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>PartyClassificationGroupLineItem}"/>
                         <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="PartyClassification/@UI.FieldGroup#PartyClassificationFieldGroup"/>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="PartyRelationshipLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>

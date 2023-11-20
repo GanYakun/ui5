@@ -92,12 +92,12 @@
                         <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>PartyClassificationGroupLineItem}"/>
                         <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="PartyClassification/@UI.FieldGroup#PartyClassificationFieldGroup">
                         </PropertyValue>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="PartyRelationshipLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>
@@ -288,14 +288,18 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="Classification"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
+                    </Record>
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#IdentificationCode"/>
                         <PropertyValue Property="Label" String="{@i18n>Identification}"/>
                         <PropertyValue Property="ID" String="Identification"/>
-                    </Record>
+                    </Record> -->
                 </Collection>
             </Annotation>
 
-                <Annotation Term="UI.DataPoint" Qualifier="statusId">
+            <Annotation Term="UI.DataPoint" Qualifier="statusId">
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="currentStatusId"/>
                     <PropertyValue Property="Title" String="{@i18n>statusId}"/>
@@ -303,7 +307,15 @@
                 </Record>
             </Annotation>
 
-            <Annotation Term="UI.FieldGroup" Qualifier="PartyBaseInfo">
+            <Annotation Term="UI.DataPoint" Qualifier="PartyClasification">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Value" Path="PartyClassification/PartyClassificationGroup/description"/>
+                    <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
+                    <PropertyValue Property="Criticality" Path="criticalityValue"/>
+                </Record>
+            </Annotation>
+
+            <!-- <Annotation Term="UI.FieldGroup" Qualifier="PartyBaseInfo">
                 <Record Type="UI.FieldGroupType">
                     <PropertyValue Property="Data">
                         <Collection>
@@ -319,7 +331,7 @@
                         </Collection>
                     </PropertyValue>
                 </Record>
-            </Annotation>
+            </Annotation> -->
 
             <Annotation Term="UI.Identification">
                 <Collection > 
