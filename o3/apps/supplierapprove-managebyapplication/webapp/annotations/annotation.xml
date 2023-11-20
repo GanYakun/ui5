@@ -92,12 +92,12 @@
                         <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>PartyClassificationGroupLineItem}"/>
                         <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="PartyClassification/@UI.FieldGroup#PartyClassificationFieldGroup">
                         </PropertyValue>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="PartyRelationshipLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>
@@ -176,7 +176,7 @@
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="SupplierProductLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>SupplierProductLineItem}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="SupplierProduct/@UI.LineItem#SupplierProductLineItem"/>
+                        <PropertyValue Property="Target"  AnnotationPath="Product/@UI.LineItem#SupplierProductLineItem"/>
                         <Annotation Term="UI.Hidden">
                         <If>
                             <Eq>
@@ -191,7 +191,37 @@
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="SupplierProductLineItem2"/>
                         <PropertyValue Property="Label" String="{@i18n>SupplierProductLineItem}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="SupplierProduct/@UI.LineItem#SupplierProductLineItemWithoutAction"/>
+                        <PropertyValue Property="Target"  AnnotationPath="Product/@UI.LineItem#SupplierProductLineItemWithoutAction"/>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>false</Bool>
+                            <Bool>true</Bool>
+                        </If>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="SupplierServiceLineItem"/>
+                        <PropertyValue Property="Label" String="{@i18n>SupplierServiceLineItem}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="Service/@UI.LineItem#SupplierProductLineItem"/>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>true</Bool>
+                            <Bool>false</Bool>
+                        </If>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="SupplierServiceLineItem2"/>
+                        <PropertyValue Property="Label" String="{@i18n>SupplierServiceLineItem}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="Service/@UI.LineItem#SupplierProductLineItemWithoutAction"/>
                         <Annotation Term="UI.Hidden">
                         <If>
                             <Eq>
@@ -258,14 +288,18 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="Classification"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
+                    </Record>
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#IdentificationCode"/>
                         <PropertyValue Property="Label" String="{@i18n>Identification}"/>
                         <PropertyValue Property="ID" String="Identification"/>
-                    </Record>
+                    </Record> -->
                 </Collection>
             </Annotation>
 
-                <Annotation Term="UI.DataPoint" Qualifier="statusId">
+            <Annotation Term="UI.DataPoint" Qualifier="statusId">
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="currentStatusId"/>
                     <PropertyValue Property="Title" String="{@i18n>statusId}"/>
@@ -273,7 +307,15 @@
                 </Record>
             </Annotation>
 
-            <Annotation Term="UI.FieldGroup" Qualifier="PartyBaseInfo">
+            <Annotation Term="UI.DataPoint" Qualifier="PartyClasification">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Value" Path="PartyClassification/PartyClassificationGroup/description"/>
+                    <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
+                    <PropertyValue Property="Criticality" Path="criticalityValue"/>
+                </Record>
+            </Annotation>
+
+            <!-- <Annotation Term="UI.FieldGroup" Qualifier="PartyBaseInfo">
                 <Record Type="UI.FieldGroupType">
                     <PropertyValue Property="Data">
                         <Collection>
@@ -289,7 +331,7 @@
                         </Collection>
                     </PropertyValue>
                 </Record>
-            </Annotation>
+            </Annotation> -->
 
             <Annotation Term="UI.Identification">
                 <Collection > 
@@ -506,6 +548,31 @@
                 <Record Type="Common.ValueListType">
                     <PropertyValue Property="Label" String="{@i18n>ProductId}"/>
                     <PropertyValue Property="CollectionPath" String="Products" />
+                    <PropertyValue Property="Parameters">
+                        <Collection>
+                            <Record Type="Common.ValueListParameterInOut">
+                                <PropertyValue Property="LocalDataProperty" PropertyPath="productId" />
+                                <PropertyValue Property="ValueListProperty" String="productId" />
+                            </Record>
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="productName" />
+                            </Record>
+                            <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="quantityUomId" />
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+
+         <Annotations Target="com.dpbird.CreateSupplierService/productId">
+            <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
+            <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
+            <Annotation Term="Common.ValueList">
+                <Record Type="Common.ValueListType">
+                    <PropertyValue Property="Label" String="{@i18n>ProductId}"/>
+                    <PropertyValue Property="CollectionPath" String="Services" />
                     <PropertyValue Property="Parameters">
                         <Collection>
                             <Record Type="Common.ValueListParameterInOut">
