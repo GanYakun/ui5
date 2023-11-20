@@ -353,6 +353,20 @@
                                 <Bool>false</Bool>
                             </If>
                         </Annotation>
+                    </Record> 
+                    <Record Type="UI.DataFieldForAction" >
+                        <PropertyValue Property="Action" String="com.dpbird.ReturnToSupplier"/>
+                        <PropertyValue Property="Label"  String="{@i18n>ToVendor}"/>
+                        <Annotation Term="UI.Hidden">
+                            <If>
+                                <Eq>
+                                    <Path>currentStatusId</Path>
+                                    <String>PROCESSED</String>
+                                </Eq>
+                                <Bool>false</Bool>
+                                <Bool>true</Bool>
+                            </If>
+                        </Annotation>
                     </Record>         
                 </Collection>
             </Annotation>
@@ -430,6 +444,10 @@
 
         <Annotations Target="com.dpbird.SubmitToProcurement/target">
             <Annotation Term="UI.ParameterDefaultValue" String="procurement"></Annotation>
+            <Annotation Term="UI.Hidden" Bool="true"></Annotation>
+        </Annotations>
+        <Annotations Target="com.dpbird.ReturnToSupplier/target">
+            <Annotation Term="UI.ParameterDefaultValue" String="supplier"></Annotation>
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
         </Annotations>
 

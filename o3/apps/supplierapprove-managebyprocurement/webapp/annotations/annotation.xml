@@ -80,10 +80,10 @@
                             <If>
                                 <Eq>
                                     <Path>currentStatusId</Path>
-                                    <String>APPROVAL_CREATED</String>
+                                    <String>REGISTERED</String>
                                 </Eq>
-                                <Bool>false</Bool>
                                 <Bool>true</Bool>
+                                <Bool>false</Bool>
                             </If>
                         </Annotation>
                     </Record> 
@@ -94,10 +94,10 @@
                             <If>
                                 <Eq>
                                     <Path>currentStatusId</Path>
-                                    <String>APPROVAL_CREATED</String>
+                                    <String>REGISTERED</String>
                                 </Eq>
-                                <Bool>false</Bool>
                                 <Bool>true</Bool>
+                                <Bool>false</Bool>
                             </If>
                         </Annotation>
                     </Record>    
@@ -108,45 +108,45 @@
                             <If>
                                 <Eq>
                                     <Path>currentStatusId</Path>
-                                    <String>APPROVAL_CREATED</String>
+                                    <String>REGISTERED</String>
                                 </Eq>
-                                <Bool>false</Bool>
                                 <Bool>true</Bool>
+                                <Bool>false</Bool>
                             </If>
                         </Annotation>
                     </Record>       
                     <Record Type="UI.DataFieldForAction" >
-                        <PropertyValue Property="Action" String="com.dpbird.SubmitApproval_Supplier"/>
-                        <PropertyValue Property="Label"  String="{@i18n>SubmitApproval_Supplier}" />
+                        <PropertyValue Property="Action" String="com.dpbird.CompleteCoWork"/>
+                        <PropertyValue Property="Label"  String="{@i18n>CompleteCoWork}" />
                         <Annotation Term="UI.Hidden">
                             <If>
                                 <Eq>
                                     <Path>currentStatusId</Path>
-                                    <String>APPROVAL_CREATED</String>
+                                    <String>REGISTERED</String>
                                 </Eq>
-                                <Bool>false</Bool>
                                 <Bool>true</Bool>
+                                <Bool>false</Bool>
                             </If>
                         </Annotation>
                     </Record> 
-                    <Record Type="UI.DataFieldForAction" >
+                    <!-- <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.CancelApproval_Supplier"/>
                         <PropertyValue Property="Label"  String="{@i18n>CancelApproval_Supplier}" />
                         <Annotation Term="UI.Hidden">
                             <If>
                                 <Eq>
                                     <Path>currentStatusId</Path>
-                                    <String>APPROVAL_CREATED</String>
+                                    <String>REGISTERED</String>
                                 </Eq>
-                                <Bool>true</Bool>
                                 <Bool>false</Bool>
+                                <Bool>true</Bool>
                             </If>
                         </Annotation>
-                    </Record>                                                                                                                                                     
+                    </Record>                                                                                                                                                      -->
                 </Collection>
             </Annotation>
 
-             <Annotation Term="UI.SelectionPresentationVariant" Qualifier="APPROVAL_CREATED">
+             <Annotation Term="UI.SelectionPresentationVariant" Qualifier="COWORK_CREATED">
                 <Record Type="UI.SelectionPresentationVariantType">
                     <PropertyValue Property="PresentationVariant">
                         <Record Type="UI.PresentationVariantType">
@@ -166,7 +166,7 @@
                                         <PropertyValue Property="Ranges">
                                             <Collection>
                                                 <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="APPROVAL_CREATED"></PropertyValue>
+                                                    <PropertyValue Property="Low" String="COWORK_CREATED"></PropertyValue>
                                                     <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
                                                     <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
                                                 </Record>
@@ -181,7 +181,7 @@
                 </Record>
             </Annotation>
             
-            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="APPROVAL_SUBMITTED">
+            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="REQUIRE_CHANGES">
                 <Record Type="UI.SelectionPresentationVariantType">
                     <PropertyValue Property="PresentationVariant">
                         <Record Type="UI.PresentationVariantType">
@@ -201,7 +201,7 @@
                                         <PropertyValue Property="Ranges">
                                             <Collection>
                                                 <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="APPROVAL_SUBMITTED"></PropertyValue>
+                                                    <PropertyValue Property="Low" String="REQUIRE_CHANGES"></PropertyValue>
                                                     <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
                                                     <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
                                                 </Record>
@@ -212,10 +212,10 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>ApprovalSubmitted}"/>
+                    <PropertyValue Property="Text" String="{@i18n>RequireChanges}"/>
                 </Record>
             </Annotation>
-            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="APPROVAL_REJECTED">
+            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="REGISTERED">
                 <Record Type="UI.SelectionPresentationVariantType">
                     <PropertyValue Property="PresentationVariant">
                         <Record Type="UI.PresentationVariantType">
@@ -235,7 +235,7 @@
                                         <PropertyValue Property="Ranges">
                                             <Collection>
                                                 <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="APPROVAL_REJECTED"></PropertyValue>
+                                                    <PropertyValue Property="Low" String="REGISTERED"></PropertyValue>
                                                     <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
                                                     <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
                                                 </Record>
@@ -246,41 +246,7 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>ApprovalRejected}"/>
-                </Record>
-            </Annotation>
-            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="APPROVAL_APPROVED">
-                <Record Type="UI.SelectionPresentationVariantType">
-                    <PropertyValue Property="PresentationVariant">
-                        <Record Type="UI.PresentationVariantType">
-                            <PropertyValue Property="Visualizations">
-                                <Collection>
-                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="SelectionVariant">
-                        <Record Type="UI.SelectionVariantType">
-                            <PropertyValue Property="SelectOptions">
-                                <Collection>
-                                    <Record Type="UI.SelectOptionType">
-                                        <PropertyValue Property="PropertyName" PropertyPath="currentStatusId" />
-                                        <PropertyValue Property="Ranges">
-                                            <Collection>
-                                                <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="APPROVAL_APPROVED"></PropertyValue>
-                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
-                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
-                                                </Record>
-                                            </Collection>
-                                        </PropertyValue>
-                                    </Record>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>ApprovalApproved}"/>
+                    <PropertyValue Property="Text" String="{@i18n>Registered}"/>
                 </Record>
             </Annotation>
         
@@ -312,10 +278,10 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>APPROVAL_CREATED</String>
+                                <String>REGISTERED</String>
                             </Eq>
-                            <Bool>false</Bool>
                             <Bool>true</Bool>
+                            <Bool>false</Bool>
                         </If>
                         </Annotation>
                     </Record>
@@ -345,10 +311,10 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>APPROVAL_CREATED</String>
+                                <String>REGISTERED</String>
                             </Eq>
-                            <Bool>true</Bool>
                             <Bool>false</Bool>
+                            <Bool>true</Bool>
                         </If>
                         </Annotation>
                     </Record>
@@ -375,10 +341,10 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>APPROVAL_CREATED</String>
+                                <String>REGISTERED</String>
                             </Eq>
-                            <Bool>true</Bool>
                             <Bool>false</Bool>
+                            <Bool>true</Bool>
                         </If>
                         </Annotation>
                     </Record>
@@ -390,10 +356,10 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>APPROVAL_CREATED</String>
+                                <String>REGISTERED</String>
                             </Eq>
-                            <Bool>false</Bool>
                             <Bool>true</Bool>
+                            <Bool>false</Bool>
                         </If>
                         </Annotation>
                     </Record>
@@ -406,10 +372,10 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>APPROVAL_CREATED</String>
+                                <String>REGISTERED</String>
                             </Eq>
-                            <Bool>false</Bool>
                             <Bool>true</Bool>
+                            <Bool>false</Bool>
                         </If>
                         </Annotation>
                     </Record>
@@ -421,10 +387,10 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>APPROVAL_CREATED</String>
+                                <String>REGISTERED</String>
                             </Eq>
-                            <Bool>true</Bool>
                             <Bool>false</Bool>
+                            <Bool>true</Bool>
                         </If>
                         </Annotation>
                     </Record>
@@ -437,10 +403,10 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>APPROVAL_CREATED</String>
+                                <String>REGISTERED</String>
                             </Eq>
-                            <Bool>false</Bool>
                             <Bool>true</Bool>
+                            <Bool>false</Bool>
                         </If>
                         </Annotation>
                     </Record>
@@ -452,10 +418,10 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>APPROVAL_CREATED</String>
+                                <String>REGISTERED</String>
                             </Eq>
-                            <Bool>true</Bool>
                             <Bool>false</Bool>
+                            <Bool>true</Bool>
                         </If>
                         </Annotation>
                     </Record>
@@ -468,10 +434,10 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>APPROVAL_CREATED</String>
+                                <String>REGISTERED</String>
                             </Eq>
-                            <Bool>false</Bool>
                             <Bool>true</Bool>
+                            <Bool>false</Bool>
                         </If>
                         </Annotation>
                     </Record>
@@ -483,10 +449,10 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>APPROVAL_CREATED</String>
+                                <String>REGISTERED</String>
                             </Eq>
-                            <Bool>true</Bool>
                             <Bool>false</Bool>
+                            <Bool>true</Bool>
                         </If>
                         </Annotation>
                     </Record>
@@ -503,10 +469,10 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>APPROVAL_CREATED</String>
+                                <String>REGISTERED</String>
                             </Eq>
-                            <Bool>false</Bool>
                             <Bool>true</Bool>
+                            <Bool>false</Bool>
                         </If>
                         </Annotation>
                     </Record>
@@ -518,10 +484,10 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>APPROVAL_CREATED</String>
+                                <String>REGISTERED</String>
                             </Eq>
-                            <Bool>true</Bool>
                             <Bool>false</Bool>
+                            <Bool>true</Bool>
                         </If>
                         </Annotation>
                     </Record>
@@ -563,18 +529,6 @@
         </Annotations>
 
         <Annotations Target="com.dpbird.ReturnToApplication">
-            <Annotation Term="Common.SideEffects">
-                <Record>
-                    <PropertyValue Property="TargetEntities">
-                        <Collection>
-                            <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
-                        </Collection>
-                    </PropertyValue>
-                </Record>
-            </Annotation>
-        </Annotations>
-
-        <Annotations Target="com.dpbird.SubmitApproval_Supplier">
             <Annotation Term="Common.SideEffects">
                 <Record>
                     <PropertyValue Property="TargetEntities">
@@ -693,32 +647,6 @@
                         </If>
                         </PropertyValue>
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                    </Record>
-                </Collection>
-            </Annotation>
-        </Annotations>
-
-        <Annotations Target="com.dpbird.DataResource">
-            <Annotation Term="UI.LineItem">
-                <Collection>
-                    <Record Type="UI.DataField">
-                        <PropertyValue Property="Value" Path="dataResourceName"></PropertyValue>
-                    </Record>
-                    <Record Type="UI.DataField">
-                        <PropertyValue Property="Value" Path="objectInfo"></PropertyValue>
-                    </Record>
-                    <Record Type="UI.DataField">
-                        <PropertyValue Property="Value" Path="createdDate"></PropertyValue>
-                    </Record>
-                    <Record Type="UI.DataField">
-                        <PropertyValue Property="Value" Path="lastModifiedDate"></PropertyValue>
-                    </Record>
-                    <Record Type="UI.DataFieldForAction">
-                        <PropertyValue Property="Label" String="上传" />
-                        <PropertyValue Property="Action" String="com.dpbird.bannerUpload" />
-                        <PropertyValue Property="Inline" Bool="true" />
-                        <Annotation Term="Common.mediaUploadLink"
-                            String="/mdt/control/uploadFile?key={{}}#relation=Content/DataResource/ImageDataResource" />
                     </Record>
                 </Collection>
             </Annotation>
