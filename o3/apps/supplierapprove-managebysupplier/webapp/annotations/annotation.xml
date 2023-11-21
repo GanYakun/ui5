@@ -267,8 +267,8 @@
            
         </Annotations>
 
-        <Annotations Target="com.dpbird.SubmitToProcurement/target">
-            <Annotation Term="UI.ParameterDefaultValue" String="procurement"></Annotation>
+        <Annotations Target="com.dpbird.SubmitToProcurement/source">
+<!--            <Annotation Term="UI.ParameterDefaultValue" String="procurement"></Annotation>-->
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
         </Annotations>
 
