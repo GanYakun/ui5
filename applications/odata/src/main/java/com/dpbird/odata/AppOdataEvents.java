@@ -119,6 +119,7 @@ public class AppOdataEvents {
 
             ODataHttpHandler handler = odata.createHandler(edm);
             handler.register(new CustomDefaultProcessor());
+            handler.register(new CustomContentTypeSupportImpl());
             handler.register(new OfbizEntityCollectionProcessor(req, delegator, dispatcher, edmProvider, userLogin, locale));
             handler.register(new OfbizEntityProcessor(req, delegator, dispatcher, edmProvider, userLogin, locale));
             handler.register(new OfbizActionProcessor(req, delegator, dispatcher, edmProvider, userLogin, locale));
@@ -217,6 +218,7 @@ public class AppOdataEvents {
 
             ODataHttpHandler handler = odata.createHandler(edm);
             handler.register(new CustomDefaultProcessor());
+            handler.register(new CustomContentTypeSupportImpl());
             handler.register(new OfbizEntityCollectionProcessor(req, delegator, dispatcher, edmProvider, userLogin, locale));
             handler.register(new OfbizEntityProcessor(req, delegator, dispatcher, edmProvider, userLogin, locale));
             handler.register(new OfbizActionProcessor(req, delegator, dispatcher, edmProvider, userLogin, locale));
@@ -225,7 +227,6 @@ public class AppOdataEvents {
             handler.register(new OfbizPrimitiveCollectionProcessor(req, delegator, dispatcher, edmProvider, userLogin, locale));
             handler.register(new OfbizComplexProcessor(req, delegator, dispatcher, edmProvider, userLogin, locale));
             handler.register(new OfbizReferenceProcessor(req, delegator, dispatcher, edmProvider, userLogin, locale));
-
             // let the handler do the work
             handler.setSplit(2);
             handler.process(req, resp);
@@ -250,8 +251,13 @@ public class AppOdataEvents {
         Delegator delegator = (Delegator) request.getAttribute("delegator");
         GenericValue userLogin = (GenericValue) request.getAttribute("userLogin");
         //访问当前edm需要的权限
-        List<String> requiredPermissions = EntityQuery.use(delegator).from("OdataAppPermission")
-                .where("appId", odataApp).cache().getFieldList("permissionId");
+        GenericValue edmService = EntityQuery.use(delegator).from("EdmService")
+                .where("serviceName", odataApp).queryFirst();
+        if (UtilValidate.isEmpty(edmService)) {
+            return true;
+        }
+        List<String> requiredPermissions = EntityQuery.use(delegator).from("EdmServicePermission")
+                .where(edmService.getPrimaryKey()).getFieldList("permissionId");
         if (UtilValidate.isEmpty(requiredPermissions)) {
             //不需要权限
             return true;

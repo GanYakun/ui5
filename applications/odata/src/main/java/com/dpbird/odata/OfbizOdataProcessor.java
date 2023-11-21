@@ -2,6 +2,7 @@ package com.dpbird.odata;
 
 import com.dpbird.odata.edm.*;
 import com.dpbird.odata.handler.HandlerFactory;
+import net.sf.ehcache.search.aggregator.Max;
 import org.apache.fop.util.ListUtil;
 import org.apache.ofbiz.base.util.Debug;
 import org.apache.ofbiz.base.util.StringUtil;
@@ -131,9 +132,9 @@ public class OfbizOdataProcessor {
         //检查是否是多段式的apply查询 如果是就不添加主对象的EntitySetCondition
         List<UriResource> uriResourceParts = (List<UriResource>) odataContext.get("uriResourceParts");
         boolean isMultistageApply = Util.isMultistageApply(uriResourceParts, queryOptions);
-        if (UtilValidate.isNotEmpty(edmParams) && edmParams.get("edmBindingTarget") != null && !isMultistageApply) {
+        if (UtilValidate.isNotEmpty(edmParams) && !isMultistageApply) {
             EdmBindingTarget edmBindingTarget = (EdmBindingTarget) edmParams.get("edmBindingTarget");
-            if (edmBindingTarget instanceof EdmEntitySet) { // 只有entitySet时才会有entitySetCondition
+            if (UtilValidate.isNotEmpty(edmBindingTarget) && edmBindingTarget instanceof EdmEntitySet) { // 只有entitySet时才会有entitySetCondition
                 OfbizCsdlEntitySet csdlEntitySet = (OfbizCsdlEntitySet) this.edmProvider.getEntityContainer()
                         .getEntitySet(((EdmEntitySet) edmParams.get("edmBindingTarget")).getName());
                 String entitySetConditionStr = csdlEntitySet.getConditionStr();
@@ -149,7 +150,6 @@ public class OfbizOdataProcessor {
         }
         entityCondition = Util.appendCondition(entityCondition, entitySetCondition);
         entityCondition = Util.appendCondition(entityCondition, entityTypeCondition);
-
         if (this.edmEntityType != null) {
             OfbizCsdlEntityType csdlEntityType = (OfbizCsdlEntityType) this.edmProvider.getEntityType(edmEntityType.getFullQualifiedName());
             this.filterByDate = csdlEntityType.isFilterByDate();
@@ -991,7 +991,11 @@ public class OfbizOdataProcessor {
                                            EdmNavigationProperty edmNavigationProperty, Map<String, QueryOption> embeddedQueryOptions) throws OfbizODataException {
         Map<String, Object> embeddedEdmParams = UtilMisc.toMap("edmEntityType", edmEntityType, "edmNavigationProperty", edmNavigationProperty);
         OdataReader reader = new OdataReader(getOdataContext(), embeddedQueryOptions, embeddedEdmParams);
-        return reader.findRelatedList(entity, edmNavigationProperty, embeddedQueryOptions, null);
+        EntityCollection relatedList = reader.findRelatedList(entity, edmNavigationProperty, embeddedQueryOptions, null);
+        for (Entity relatedEntity : relatedList.getEntities()) {
+            relatedEntity.getProperties().removeIf(property -> "Edm.Stream".equals(property.getType()));
+        }
+        return relatedList;
     }
 
     private void expandNonCollection(OdataOfbizEntity entity, EdmEntityType edmEntityType,
