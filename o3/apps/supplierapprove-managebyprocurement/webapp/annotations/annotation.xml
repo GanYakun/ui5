@@ -45,9 +45,9 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FileCountGroup"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="ViewDDFrom"/>
-                        <PropertyValue Property="Label" String="{@i18n>ViewDDFrom}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FileCountGroup"/>
+                        <PropertyValue Property="ID" String="ViewDDForm"/>
+                        <PropertyValue Property="Label" String="{@i18n>ViewDDForm}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ViewDDForm"/>
                     </Record>
                 </Collection>
             </Annotation>
@@ -83,19 +83,19 @@
                     </PropertyValue>
                 </Record>
             </Annotation>
-            <!-- <Annotation Term="UI.FieldGroup" Qualifier="ViewDDFrom">
+            <Annotation Term="UI.FieldGroup" Qualifier="ViewDDForm">
                 <Record Type="UI.FieldGroupType">
                     <PropertyValue Property="Data">
                         <Collection>
                             <Record Type="UI.DataFieldWithUrl">
                                 <PropertyValue Property="Label" String="Form Preview"/>
-                                <PropertyValue Property="Value" String="Form Preview"/>
-                                <PropertyValue Property="Url" Path="objectInfo"/>
+                                <PropertyValue Property="Value" Path="ddFromName"/>
+                                <PropertyValue Property="Url" Path="ddFromUrl"/>
                             </Record>
                         </Collection>
                     </PropertyValue>
                 </Record>
-            </Annotation> -->
+            </Annotation>
 
             <Annotation Term="UI.DataPoint" Qualifier="statusId">
                 <Record Type="UI.DataPointType">
