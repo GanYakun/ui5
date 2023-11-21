@@ -154,6 +154,7 @@ public class OdataProcessorHelper {
             return method.invoke(objectClass, oDataContext, paramMap, edmBindingTarget);
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
+            Util.getOriginalException(e).printStackTrace();
             String locale = Util.getExceptionMsg(e, (Locale) oDataContext.get("locale"));
             throw new OfbizODataException(locale);
         }

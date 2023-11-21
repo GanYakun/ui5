@@ -1,5 +1,6 @@
 package com.dpbird.odata.processor;
 
+import com.dpbird.odata.Util;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilProperties;
 import org.apache.ofbiz.base.util.UtilValidate;
@@ -98,6 +99,8 @@ public class CustomDefaultProcessor implements MetadataProcessor, ServiceDocumen
                              final ContentType requestedContentType) {
         try {
             serverError.getException().printStackTrace();
+            Throwable originalException = Util.getOriginalException(serverError.getException());
+            originalException.printStackTrace();
             /******** ODataErrorDetail ************************************
              ODataErrorDetail oDataErrorDetail = new ODataErrorDetail();
              oDataErrorDetail.setCode("detail code 1");
