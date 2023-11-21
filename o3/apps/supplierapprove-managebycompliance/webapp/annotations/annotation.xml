@@ -22,19 +22,23 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyBaseInfo"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="TimeInfo"/>
-                        <PropertyValue Property="Label" String="{@i18n>TimeInfo}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#TimeInfo"/>
+                        <PropertyValue Property="ID" String="DDFormType"/>
+                        <PropertyValue Property="Label" String="DDFormType"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDFormType"/>
+                    </Record>
+                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="Classification"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
                     </Record>
                         <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="statusId"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#IdentificationCode"/>
                         <PropertyValue Property="Label" String="{@i18n>Identification}"/>
                         <PropertyValue Property="ID" String="Identification"/>
-                    </Record>
+                    </Record> -->
                 </Collection>
             </Annotation>
 
@@ -43,16 +47,21 @@
                     <PropertyValue Property="Data">
                         <Collection>
                             <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="primaryEmail" />
+                                <PropertyValue Property="Value" Path="cycleTime" />
                             </Record>
                             <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="address1" />
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="primaryPhone" />
+                                <PropertyValue Property="Value" Path="ddFormDealStatus" />
                             </Record>
                         </Collection>
                     </PropertyValue>
+                </Record>
+            </Annotation>
+
+            <Annotation Term="UI.DataPoint" Qualifier="PartyClasification">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Value" Path="PartyClassification/PartyClassificationGroup/description"/>
+                    <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
+                    <PropertyValue Property="Criticality" Path="criticalityValue"/>
                 </Record>
             </Annotation>
 
@@ -81,11 +90,11 @@
                             </Collection>
                         </PropertyValue>
                     </Record> -->
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>PartyClassificationGroupLineItem}"/>
                         <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="PartyClassification/@UI.FieldGroup#PartyClassificationFieldGroup"/>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>
                         <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
