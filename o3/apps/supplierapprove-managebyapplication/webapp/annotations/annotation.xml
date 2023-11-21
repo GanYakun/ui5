@@ -83,6 +83,11 @@
                         </Annotation>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="Label" String="{@i18n>SelectDepartment}"/>
+                        <PropertyValue Property="ID" String="SelectDepartment"/>
+                        <PropertyValue Property="Target" AnnotationPath="Department/@UI.LineItem#DepartmentLineItem"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
                         <PropertyValue Property="ID" String="ContactMechPurpose"/>
                         <PropertyValue Property="Target" AnnotationPath="PostalAddress/@UI.LineItem#PostalAddressLineItem"/>
@@ -510,9 +515,6 @@
             <Annotation Term="UI.DeleteHidden" Bool="true" />
         </Annotations>
 
-         <Annotations Target="com.dpbird.UpdateSupplierContactInfo/address1">
-            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/address1" ></Annotation>
-        </Annotations>
          <Annotations Target="com.dpbird.UpdateSupplierContactInfo/primaryEmail">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/primaryEmail" ></Annotation>
         </Annotations>
@@ -620,6 +622,17 @@
                     <PropertyValue Property="TargetEntities">
                         <Collection>
                             <NavigationPropertyPath>personAndContact</NavigationPropertyPath>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+        <Annotations Target="com.dpbird.RemoveDepartment">
+            <Annotation Term="Common.SideEffects">
+                <Record>
+                    <PropertyValue Property="TargetEntities">
+                        <Collection>
+                            <NavigationPropertyPath>/com.dpbird.O3Container/SupplierParties</NavigationPropertyPath>
                         </Collection>
                     </PropertyValue>
                 </Record>
