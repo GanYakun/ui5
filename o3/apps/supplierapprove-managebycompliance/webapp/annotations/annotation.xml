@@ -137,7 +137,7 @@
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="ddFormDealStatus"/>
                     <PropertyValue Property="Title" String="{@i18n>ddFormDealStatus}"/>
-                    <PropertyValue Property="Criticality" Path="criticalityValue"/>
+                    <PropertyValue Property="Criticality" Path="ddFormDealCritical"/>
                 </Record>
             </Annotation>
 
