@@ -26,6 +26,10 @@
                         <PropertyValue Property="Label" String="{@i18n>TimeInfo}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#TimeInfo"/>
                     </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="DDFormType"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDFormType"/>
+                    </Record>
                         <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="statusId"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
