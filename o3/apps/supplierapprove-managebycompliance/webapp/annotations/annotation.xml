@@ -17,9 +17,14 @@
              <Annotation Term="UI.HeaderFacets">
                 <Collection>
                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="PartyBaseInfo"/>
-                        <PropertyValue Property="Label" String="{@i18n>PartyBaseInfo}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyBaseInfo"/>
+                        <PropertyValue Property="ID" String="cycleTime"/>
+                        <PropertyValue Property="Label" String="{@i18n>cycleTime}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#cycleTime"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ddFormDealStatus"/>
+                        <PropertyValue Property="Label" String="ddFormDealStatus"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#ddFormDealStatus"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="DDFormType"/>
@@ -42,26 +47,18 @@
                 </Collection>
             </Annotation>
 
-            <Annotation Term="UI.FieldGroup" Qualifier="PartyBaseInfo">
-                <Record Type="UI.FieldGroupType">
-                    <PropertyValue Property="Data">
-                        <Collection>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="cycleTime" />
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="ddFormDealStatus" />
-                            </Record>
-                        </Collection>
-                    </PropertyValue>
-                </Record>
-            </Annotation>
-
             <Annotation Term="UI.DataPoint" Qualifier="PartyClasification">
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="PartyClassification/PartyClassificationGroup/description"/>
                     <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
                     <PropertyValue Property="Criticality" Path="criticalityValue"/>
+                </Record>
+            </Annotation>
+
+            <Annotation Term="UI.DataPoint" Qualifier="cycleTime">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Value" Path="cycleTime"/>
+                    <PropertyValue Property="Title" String="{@i18n>cycleTime}"/>
                 </Record>
             </Annotation>
 
@@ -132,6 +129,14 @@
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="currentStatusId"/>
                     <PropertyValue Property="Title" String="{@i18n>statusId}"/>
+                    <PropertyValue Property="Criticality" Path="criticalityValue"/>
+                </Record>
+            </Annotation>
+
+            <Annotation Term="UI.DataPoint" Qualifier="ddFormDealStatus">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Value" Path="ddFormDealStatus"/>
+                    <PropertyValue Property="Title" String="{@i18n>ddFormDealStatus}"/>
                     <PropertyValue Property="Criticality" Path="criticalityValue"/>
                 </Record>
             </Annotation>
