@@ -31,11 +31,71 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ComplianceNote"/>
+                        <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Classification"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
                     </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="FileCountGroup"/>
+                        <PropertyValue Property="Label" String="{@i18n>FileCountGroup}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FileCountGroup"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ViewDDFrom"/>
+                        <PropertyValue Property="Label" String="{@i18n>ViewDDFrom}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FileCountGroup"/>
+                    </Record>
                 </Collection>
             </Annotation>
+
+            <Annotation Term="UI.FieldGroup" Qualifier="FileCountGroup">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="fsCount"/>
+                                <PropertyValue Property="Criticality" Path="fsCountCriticality"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="caCount"/>
+                                <PropertyValue Property="Criticality" Path="caCountCriticality"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="ofCount"/>
+                                <PropertyValue Property="Criticality" Path="ofCountCriticality"/>
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+            <Annotation Term="UI.FieldGroup" Qualifier="ComplianceNote">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="complianceNote"/>
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+            <!-- <Annotation Term="UI.FieldGroup" Qualifier="ViewDDFrom">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataFieldWithUrl">
+                                <PropertyValue Property="Label" String="Form Preview"/>
+                                <PropertyValue Property="Value" String="Form Preview"/>
+                                <PropertyValue Property="Url" Path="objectInfo"/>
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation> -->
 
             <Annotation Term="UI.DataPoint" Qualifier="statusId">
                 <Record Type="UI.DataPointType">
@@ -128,7 +188,7 @@
                                 <Bool>false</Bool>
                             </If>
                         </Annotation>
-                    </Record> 
+                    </Record>
                     <!-- <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.CancelApproval_Supplier"/>
                         <PropertyValue Property="Label"  String="{@i18n>CancelApproval_Supplier}" />
