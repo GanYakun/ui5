@@ -232,7 +232,7 @@
        </Annotations>
 
         <Annotations Target="com.dpbird.SubmitToProcurement/source">
-<!--            <Annotation Term="UI.ParameterDefaultValue" String="procurement"></Annotation>-->
+            <Annotation Term="UI.ParameterDefaultValue" String="compliance"></Annotation>
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
         </Annotations>
 
