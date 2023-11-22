@@ -825,14 +825,6 @@
                         <PropertyValue Property="Value" Path="contentName"/>
                         <PropertyValue Property="Url" Path="fileUrl"/>
                     </Record>
-                    <!-- <Record Type="UI.DataField">
-                        <PropertyValue Property="Value">
-                            <Path>contentName</Path>
-                        </PropertyValue>
-                        <Annotation Term="UI.Importance">
-                            <EnumMember>UI.ImportanceType/High</EnumMember>
-                        </Annotation>
-                    </Record> -->
                     <Record Type="UI.DataField">
                         <PropertyValue Property="Value">
                             <Path>createdDate</Path>
@@ -841,15 +833,6 @@
                             <EnumMember>UI.ImportanceType/High</EnumMember>
                         </Annotation>
                     </Record>
-                    <!-- <Record Type="UI.DataField">
-                        <PropertyValue Property="Value">
-                            <Path>otherData</Path>
-                        </PropertyValue>
-                        <Annotation Term="UI.Importance">
-                            <EnumMember>UI.ImportanceType/High</EnumMember>
-                        </Annotation>
-                    </Record> -->
-                    
                     <Record Type="UI.DataFieldForAction">
                         <PropertyValue Property="Label" String="{@i18n>Upload}"/>
                         <PropertyValue Property="Action">
