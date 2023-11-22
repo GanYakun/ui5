@@ -26,11 +26,11 @@
                                     <PropertyValue Property="ID" String="PartyGroupFieldGroup"/>
                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyGroupFieldGroupWithAction"/>
                                 </Record>
-                                <Record Type="UI.ReferenceFacet">
+                                <!-- <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="Label" String="{@i18n>CompanyContactInfo}"/>
                                     <PropertyValue Property="ID" String="ContactInfo"/>
                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ContactInfoWithAction"/>
-                                </Record>
+                                </Record> -->
                                 <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="Label" String="{@i18n>SupplierTimeInfo}"/>
                                     <PropertyValue Property="ID" String="SupplierTimeInfo"/>
@@ -59,11 +59,11 @@
                                     <PropertyValue Property="ID" String="PartyGroupFieldGroup2"/>
                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyGroupFieldGroup"/>
                                 </Record>
-                                <Record Type="UI.ReferenceFacet">
+                                <!-- <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="Label" String="{@i18n>CompanyContactInfo}"/>
                                     <PropertyValue Property="ID" String="ContactInfo2"/>
                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ContactInfo"/>
-                                </Record>
+                                </Record> -->
                                 <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="Label" String="{@i18n>SupplierTimeInfo}"/>
                                     <PropertyValue Property="ID" String="SupplierTimeInfo2"/>
@@ -283,11 +283,11 @@
                         <PropertyValue Property="Label" String="{@i18n>PartyBaseInfo}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyBaseInfo"/>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="TimeInfo"/>
                         <PropertyValue Property="Label" String="{@i18n>TimeInfo}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#TimeInfo"/>
-                    </Record>
+                    </Record> -->
                         <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="DDFormType"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDFormType"/>
@@ -320,7 +320,7 @@
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="PartyClassification/PartyClassificationGroup/description"/>
                     <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
-                    <PropertyValue Property="Criticality" Path="criticalityValue"/>
+                    <PropertyValue Property="Criticality" Path="riskCritical"/>
                 </Record>
             </Annotation>
 
