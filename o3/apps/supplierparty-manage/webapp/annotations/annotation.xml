@@ -455,7 +455,7 @@
                 </Annotation>
             </Annotations>
 
-             <Annotations Target="com.dpbird.PartyClassification">
+         <Annotations Target="com.dpbird.PartyClassification">
             <Annotation Term="UI.FieldGroup" Qualifier="PartyClassificationFieldGroup">
                 <Record Type="UI.FieldGroupType">
                     <PropertyValue Property="Data">
