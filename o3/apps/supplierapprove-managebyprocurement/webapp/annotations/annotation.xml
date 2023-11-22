@@ -66,16 +66,16 @@
                     <PropertyValue Property="Data">
                         <Collection>
                             <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="fsCount"/>
-                                <PropertyValue Property="Criticality" Path="fsCountCriticality"/>
+                                <PropertyValue Property="Value" Path="fsStatus"/>
+                                <PropertyValue Property="Criticality" Path="fsStatusCriticality"/>
                             </Record>
                             <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="caCount"/>
-                                <PropertyValue Property="Criticality" Path="caCountCriticality"/>
+                                <PropertyValue Property="Value" Path="caStatus"/>
+                                <PropertyValue Property="Criticality" Path="caStatusCriticality"/>
                             </Record>
                             <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="ofCount"/>
-                                <PropertyValue Property="Criticality" Path="ofCountCriticality"/>
+                                <PropertyValue Property="Value" Path="ofStatus"/>
+                                <PropertyValue Property="Criticality" Path="ofStatusCriticality"/>
                             </Record>
                         </Collection>
                     </PropertyValue>
