@@ -35,15 +35,16 @@
                         <PropertyValue Property="ID" String="Classification"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
                     </Record>
-                        <Record Type="UI.ReferenceFacet">
+                        <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="statusId"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record>
+                    -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="Work Scope"/>
                         <PropertyValue Property="ID" String="WorkScope"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WorkScope"/>
-                    </Record>
+                    </Record> 
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#IdentificationCode"/>
                         <PropertyValue Property="Label" String="{@i18n>Identification}"/>
@@ -97,11 +98,11 @@
                         <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="PartyClassification/@UI.FieldGroup#PartyClassificationFieldGroup"/>
                     </Record> -->
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>
                         <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
-                    </Record>
+                    </Record> -->
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="PartyRelationshipLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>

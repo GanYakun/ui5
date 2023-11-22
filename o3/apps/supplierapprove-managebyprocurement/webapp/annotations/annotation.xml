@@ -91,9 +91,9 @@
                             <Record Type="UI.DataField">
                                 <PropertyValue Property="Value" Path="cycleTime"/>
                             </Record>
-                             <Record Type="UI.DataField">
+                             <!-- <Record Type="UI.DataField">
                                 <PropertyValue Property="Value" Path="ddFormDealStatus" />
-                            </Record>
+                            </Record> -->
                         </Collection>
                     </PropertyValue>
                 </Record>
@@ -114,9 +114,9 @@
 
             <Annotation Term="UI.DataPoint" Qualifier="statusId">
                 <Record Type="UI.DataPointType">
-                    <PropertyValue Property="Value" Path="currentStatusId"/>
+                    <PropertyValue Property="Value" Path="ddFormDealStatus"/>
                     <PropertyValue Property="Title" String="{@i18n>statusId}"/>
-                    <PropertyValue Property="Criticality" Path="criticalityValue"/>
+                    <PropertyValue Property="Criticality" Path="ddFormDealCritical" />
                 </Record>
             </Annotation>
 
@@ -124,7 +124,7 @@
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="PartyClassification/PartyClassificationGroup/description"/>
                     <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
-                    <PropertyValue Property="Criticality" Path="criticalityValue"/>
+                    <PropertyValue Property="Criticality" Path="riskCritical" />
                 </Record>
             </Annotation>
 
@@ -393,11 +393,11 @@
                         </If>
                         </Annotation>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>
                         <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
                         <PropertyValue Property="ID" String="ContactMechPurpose"/>
@@ -790,9 +790,9 @@
                 </Record>
             </Annotation>
         </Annotations>
-         <Annotations Target="com.dpbird.UpdateSupplierContactInfo/address1">
+         <!-- <Annotations Target="com.dpbird.UpdateSupplierContactInfo/address1">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/address1" ></Annotation>
-        </Annotations>
+        </Annotations> -->
          <Annotations Target="com.dpbird.UpdateSupplierContactInfo/primaryEmail">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/primaryEmail" ></Annotation>
         </Annotations>
