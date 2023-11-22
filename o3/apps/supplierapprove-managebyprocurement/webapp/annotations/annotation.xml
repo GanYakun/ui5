@@ -16,16 +16,16 @@
         <Annotations Target="com.dpbird.SupplierParty">
              <Annotation Term="UI.HeaderFacets">
                 <Collection>
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="PartyBaseInfo"/>
                         <PropertyValue Property="Label" String="{@i18n>PartyBaseInfo}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyBaseInfo"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    </Record> -->
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="TimeInfo"/>
                         <PropertyValue Property="Label" String="{@i18n>TimeInfo}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#TimeInfo"/>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="DDFormType"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDFormType"/>
@@ -82,6 +82,12 @@
                         <Collection>
                             <Record Type="UI.DataField">
                                 <PropertyValue Property="Value" Path="complianceNote"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="cycleTime"/>
+                            </Record>
+                             <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="ddFormDealStatus" />
                             </Record>
                         </Collection>
                     </PropertyValue>
@@ -326,11 +332,11 @@
                                     <PropertyValue Property="ID" String="PartyGroupFieldGroup"/>
                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyGroupFieldGroupWithAction"/>
                                 </Record>
-                                    <Record Type="UI.ReferenceFacet">
+                                    <!-- <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="Label" String="{@i18n>CompanyContactInfo}"/>
                                     <PropertyValue Property="ID" String="ContactInfo"/>
                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ContactInfoWithAction"/>
-                                </Record>
+                                </Record> -->
                                 <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="Label" String="{@i18n>SupplierTimeInfo}"/>
                                     <PropertyValue Property="ID" String="SupplierTimeInfo"/>
@@ -359,11 +365,11 @@
                                     <PropertyValue Property="ID" String="PartyGroupFieldGroup2"/>
                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyGroupFieldGroup"/>
                                 </Record>
-                                    <Record Type="UI.ReferenceFacet">
+                                    <!-- <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="Label" String="{@i18n>CompanyContactInfo}"/>
                                     <PropertyValue Property="ID" String="ContactInfo2"/>
                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ContactInfo"/>
-                                </Record>
+                                </Record> -->
                                 <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="Label" String="{@i18n>SupplierTimeInfo}"/>
                                     <PropertyValue Property="ID" String="SupplierTimeInfo2"/>
