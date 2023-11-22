@@ -134,6 +134,36 @@
                         </Annotation>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="BeneficialPersonLineItem"/>
+                        <PropertyValue Property="Label" String="{@i18n>BeneficialPersonLineItem}"/>
+                        <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#BeneficialPersonLineItem"/>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>false</Bool>
+                            <Bool>true</Bool>
+                        </If>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="BeneficialPersonLineItem_Action"/>
+                        <PropertyValue Property="Label" String="{@i18n>BeneficialPersonLineItem}"/>
+                        <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#BeneficialPersonLineItem_Action"/>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>true</Bool>
+                            <Bool>false</Bool>
+                        </If>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="FinancialStatements"/>
                         <PropertyValue Property="Label" String="{@i18n>FinancialStatements}"/>
                         <PropertyValue Property="Target"  AnnotationPath="FinancialStatements/@UI.LineItem#FileList"/>
@@ -288,17 +318,22 @@
                         <PropertyValue Property="Label" String="{@i18n>TimeInfo}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#TimeInfo"/>
                     </Record> -->
-                        <Record Type="UI.ReferenceFacet">
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="DDFormType"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDFormType"/>
                     </Record>
-                        <Record Type="UI.ReferenceFacet">
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="statusId"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Classification"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="Label" String="Work Scope"/>
+                        <PropertyValue Property="ID" String="WorkScope"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WorkScope"/>
                     </Record>
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#IdentificationCode"/>
@@ -494,6 +529,10 @@
         <Annotations Target="com.dpbird.CreatePersonAndContact/phoneMobile">
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
         </Annotations>
+        <Annotations Target="com.dpbird.CreatePersonAndContact/roleTypeIdTo">
+            <Annotation Term="UI.ParameterDefaultValue" String="CONTACT"></Annotation>
+            <Annotation Term="UI.Hidden" Bool="true"></Annotation>
+        </Annotations>
 
         <Annotations Target="com.dpbird.PartyClassification">
             <Annotation Term="UI.FieldGroup" Qualifier="PartyClassificationFieldGroup">
@@ -621,6 +660,17 @@
         </Annotations>
 
         <Annotations Target="com.dpbird.CreatePersonAndContact">
+            <Annotation Term="Common.SideEffects">
+                <Record>
+                    <PropertyValue Property="TargetEntities">
+                        <Collection>
+                            <NavigationPropertyPath>personAndContact</NavigationPropertyPath>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
+        <Annotations Target="com.dpbird.CreateBeneficialPerson">
             <Annotation Term="Common.SideEffects">
                 <Record>
                     <PropertyValue Property="TargetEntities">
