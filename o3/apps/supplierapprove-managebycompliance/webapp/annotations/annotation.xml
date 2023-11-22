@@ -51,7 +51,7 @@
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="PartyClassification/PartyClassificationGroup/description"/>
                     <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
-                    <PropertyValue Property="Criticality" Path="criticalityValue"/>
+                    <PropertyValue Property="Criticality" Path="riskCritical"/>
                 </Record>
             </Annotation>
 
