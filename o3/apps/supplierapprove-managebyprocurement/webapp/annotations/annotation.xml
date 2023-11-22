@@ -86,9 +86,9 @@
                             <Record Type="UI.DataField">
                                 <PropertyValue Property="Value" Path="cycleTime"/>
                             </Record>
-                             <Record Type="UI.DataField">
+                             <!-- <Record Type="UI.DataField">
                                 <PropertyValue Property="Value" Path="ddFormDealStatus" />
-                            </Record>
+                            </Record> -->
                         </Collection>
                     </PropertyValue>
                 </Record>
@@ -109,9 +109,9 @@
 
             <Annotation Term="UI.DataPoint" Qualifier="statusId">
                 <Record Type="UI.DataPointType">
-                    <PropertyValue Property="Value" Path="currentStatusId"/>
+                    <PropertyValue Property="Value" Path="ddFormDealStatus"/>
                     <PropertyValue Property="Title" String="{@i18n>statusId}"/>
-                    <PropertyValue Property="Criticality" Path="criticalityValue"/>
+                    <PropertyValue Property="Criticality" Path="ddFormDealCritical" />
                 </Record>
             </Annotation>
 

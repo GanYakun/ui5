@@ -35,10 +35,10 @@
                         <PropertyValue Property="ID" String="Classification"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
                     </Record>
-                        <Record Type="UI.ReferenceFacet">
+                        <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="statusId"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
-                    </Record>
+                    </Record> -->
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#IdentificationCode"/>
                         <PropertyValue Property="Label" String="{@i18n>Identification}"/>
