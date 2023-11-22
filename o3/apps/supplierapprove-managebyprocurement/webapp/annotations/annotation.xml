@@ -809,6 +809,62 @@
          <Annotations Target="com.dpbird.FillSupplierBaseInfo/usccNumber">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/usccNumber" ></Annotation>
         </Annotations>
+
+
+        <Annotations Target="com.dpbird.PartyMediaResource">
+            <Annotation Term="UI.LineItem" Qualifier="FileList">
+                <Collection>
+                    <Record Type="UI.DataFieldWithUrl">
+                        <PropertyValue Property="Label" String="File"/>
+                        <PropertyValue Property="Value" Path="contentName"/>
+                        <PropertyValue Property="Url" Path="fileUrl"/>
+                    </Record>
+                    <!-- <Record Type="UI.DataField">
+                        <PropertyValue Property="Value">
+                            <Path>contentName</Path>
+                        </PropertyValue>
+                        <Annotation Term="UI.Importance">
+                            <EnumMember>UI.ImportanceType/High</EnumMember>
+                        </Annotation>
+                    </Record> -->
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value">
+                            <Path>createdDate</Path>
+                        </PropertyValue>
+                        <Annotation Term="UI.Importance">
+                            <EnumMember>UI.ImportanceType/High</EnumMember>
+                        </Annotation>
+                    </Record>
+                    <!-- <Record Type="UI.DataField">
+                        <PropertyValue Property="Value">
+                            <Path>otherData</Path>
+                        </PropertyValue>
+                        <Annotation Term="UI.Importance">
+                            <EnumMember>UI.ImportanceType/High</EnumMember>
+                        </Annotation>
+                    </Record> -->
+                    
+                    <Record Type="UI.DataFieldForAction">
+                        <PropertyValue Property="Label" String="{@i18n>Upload}"/>
+                        <PropertyValue Property="Action">
+                            <String>com.dpbird.UploadAction</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Inline">
+                            <Bool>false</Bool>
+                        </PropertyValue>
+                        <PropertyValue Property="InvocationGrouping">
+                            <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                        </PropertyValue>
+                        <PropertyValue Property="Criticality">
+                            <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                        </PropertyValue>
+                        <Annotation Term="UI.Importance">
+                            <EnumMember>UI.ImportanceType/High</EnumMember>
+                        </Annotation>
+                    </Record>
+                </Collection>
+            </Annotation>
+        </Annotations>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>
