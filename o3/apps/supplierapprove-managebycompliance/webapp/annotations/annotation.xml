@@ -39,6 +39,11 @@
                         <PropertyValue Property="ID" String="statusId"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="Label" String="Work Scope"/>
+                        <PropertyValue Property="ID" String="WorkScope"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WorkScope"/>
+                    </Record>
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#IdentificationCode"/>
                         <PropertyValue Property="Label" String="{@i18n>Identification}"/>

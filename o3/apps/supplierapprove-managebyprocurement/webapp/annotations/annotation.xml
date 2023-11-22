@@ -53,6 +53,11 @@
                         <PropertyValue Property="Label" String="{@i18n>ViewDDForm}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ViewDDForm"/>
                     </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="Label" String="Work Scope"/>
+                        <PropertyValue Property="ID" String="WorkScope"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WorkScope"/>
+                    </Record>
                 </Collection>
             </Annotation>
 
