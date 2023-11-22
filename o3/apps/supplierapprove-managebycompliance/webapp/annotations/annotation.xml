@@ -128,6 +128,21 @@
                         <PropertyValue Property="Label" String="{@i18n>NoteDataLineItem}"/>
                         <PropertyValue Property="Target"  AnnotationPath="NoteData/@UI.LineItem#NoteDataLineItem"/>
                     </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="FinancialStatements"/>
+                        <PropertyValue Property="Label" String="{@i18n>FinancialStatements}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="FinancialStatements/@UI.LineItem#FileList"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ConfidentialityAgreement"/>
+                        <PropertyValue Property="Label" String="{@i18n>ConfidentialityAgreement}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="ConfidentialityAgreement/@UI.LineItem#FileList"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="Otherfiles"/>
+                        <PropertyValue Property="Label" String="{@i18n>Otherfiles}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="OtherFiles/@UI.LineItem#FileList"/>
+                    </Record>
                 </Collection>
             </Annotation>
 
@@ -350,6 +365,44 @@
                         </If>
                         </PropertyValue>
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                </Collection>
+            </Annotation>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.PartyMediaResource">
+            <Annotation Term="UI.LineItem" Qualifier="FileList">
+                <Collection>
+                    <Record Type="UI.DataFieldWithUrl">
+                        <PropertyValue Property="Label" String="File"/>
+                        <PropertyValue Property="Value" Path="contentName"/>
+                        <PropertyValue Property="Url" Path="fileUrl"/>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value">
+                            <Path>createdDate</Path>
+                        </PropertyValue>
+                        <Annotation Term="UI.Importance">
+                            <EnumMember>UI.ImportanceType/High</EnumMember>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.DataFieldForAction">
+                        <PropertyValue Property="Label" String="{@i18n>Upload}"/>
+                        <PropertyValue Property="Action">
+                            <String>com.dpbird.UploadAction</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Inline">
+                            <Bool>false</Bool>
+                        </PropertyValue>
+                        <PropertyValue Property="InvocationGrouping">
+                            <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                        </PropertyValue>
+                        <PropertyValue Property="Criticality">
+                            <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                        </PropertyValue>
+                        <Annotation Term="UI.Importance">
+                            <EnumMember>UI.ImportanceType/High</EnumMember>
+                        </Annotation>
                     </Record>
                 </Collection>
             </Annotation>
