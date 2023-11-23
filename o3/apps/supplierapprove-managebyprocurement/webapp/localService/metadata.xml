@@ -3456,7 +3456,7 @@
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>removeDepartment</String>
+                                <String>Remove</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.RemoveDepartment</String>
@@ -3986,7 +3986,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/amount">
                 <Annotation Term="Common.Label">
-                    <String>partyRelationshipAmount</String>
+                    <String>Ownership</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/primaryPhone">
@@ -5646,7 +5646,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PostalAddress/address2">
                 <Annotation Term="Common.Label">
-                    <String>address2</String>
+                    <String>Website address</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PostalAddress/houseNumber">
@@ -6858,15 +6858,20 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="SupplierCategory">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Title">
+                            <String>SupplierCategory</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Value">
+                            <Path>ProductCategory/categoryName</Path>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
                 <Annotation Term="UI.FieldGroup" Qualifier="PartyGroupFieldGroup">
                     <Record Type="UI.FieldGroupType">
                         <PropertyValue Property="Data">
                             <Collection>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>ProductCategory/categoryName</Path>
-                                    </PropertyValue>
-                                </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
                                         <Path>usccNumber</Path>
@@ -6924,11 +6929,6 @@
                     <Record Type="UI.FieldGroupType">
                         <PropertyValue Property="Data">
                             <Collection>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>ProductCategory/categoryName</Path>
-                                    </PropertyValue>
-                                </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
                                         <Path>usccNumber</Path>
@@ -7402,7 +7402,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/isGovernment">
                 <Annotation Term="Common.Label">
-                    <String>isGovernment</String>
+                    <String>Is government</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/ddFormType">
@@ -7603,12 +7603,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/complianceNote">
                 <Annotation Term="Common.Label">
-                    <String>suggestion</String>
+                    <String>Suggestion</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/fsStatus">
                 <Annotation Term="Common.Label">
-                    <String>Upload status of financial statements</String>
+                    <String>Financial Report</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/fsStatusCriticality">
@@ -7618,7 +7618,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/caStatus">
                 <Annotation Term="Common.Label">
-                    <String>Upload status of confidentiality agreement</String>
+                    <String>NDA</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/caStatusCriticality">
@@ -7628,7 +7628,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/cpStatus">
                 <Annotation Term="Common.Label">
-                    <String>cpStatus</String>
+                    <String>Compliance Report</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/cpStatusCriticality">
@@ -7644,11 +7644,6 @@
             <Annotations Target="com.dpbird.SupplierParty/ddFromUrl">
                 <Annotation Term="Common.Label">
                     <String>ddFromUrl</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierParty/workScope">
-                <Annotation Term="Common.Label">
-                    <String>workScope</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/agent">
@@ -7693,12 +7688,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/adverseResults">
                 <Annotation Term="Common.Label">
-                    <String>adverseResults</String>
+                    <String>Confirmation of due diligence screening and reporting of any adverse outcomes</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/additionalProtection">
                 <Annotation Term="Common.Label">
-                    <String>additionalProtection</String>
+                    <String>Any additional contractual protections or enhanced due diligence recommended?</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/approvePartyId">
@@ -9713,12 +9708,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.FillPartyClassification/adverseResults">
                 <Annotation Term="Common.Label">
-                    <String>adverseResults</String>
+                    <String>Confirmation of due diligence screening and reporting of any adverse outcomes</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FillPartyClassification/additionalProtection">
                 <Annotation Term="Common.Label">
-                    <String>additionalProtection</String>
+                    <String>Any additional contractual protections or enhanced due diligence recommended?</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo">
@@ -9831,12 +9826,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/partyName">
                 <Annotation Term="Common.Label">
-                    <String>Supplier Name</String>
+                    <String>Vendor name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/isGovernment">
                 <Annotation Term="Common.Label">
-                    <String>isGovernment</String>
+                    <String>Is government</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/priority">
@@ -9871,12 +9866,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/productCategoryId">
                 <Annotation Term="Common.Label">
-                    <String>Supplier category</String>
+                    <String>Category</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>Supplier category</String>
+                            <String>Category</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>ProductCategories</String>
@@ -10367,7 +10362,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreateBeneficialPerson/amount">
                 <Annotation Term="Common.Label">
-                    <String>partyRelationshipAmount</String>
+                    <String>Ownership</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateBeneficialPerson/nationality">

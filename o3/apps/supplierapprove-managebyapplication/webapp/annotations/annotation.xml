@@ -367,6 +367,10 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#Priority"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="SupplierCategory"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#SupplierCategory"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Classification"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
                     </Record>
