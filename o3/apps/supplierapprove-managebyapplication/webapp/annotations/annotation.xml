@@ -179,6 +179,11 @@
                         <PropertyValue Property="Target"  AnnotationPath="ComplianceReport/@UI.LineItem#FileList"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="OtherFiles"/>
+                        <PropertyValue Property="Label" String="{@i18n>Otherfiles}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="OtherFiles/@UI.LineItem#FileList"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="NoteDataLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>NoteDataLineItem}"/>
                         <PropertyValue Property="Target"  AnnotationPath="NoteData/@UI.LineItem#NoteDataLineItem"/>
@@ -385,8 +390,8 @@
                                 <PropertyValue Property="Criticality" Path="caStatusCriticality"/>
                             </Record>
                             <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="ofStatus"/>
-                                <PropertyValue Property="Criticality" Path="ofStatusCriticality"/>
+                                <PropertyValue Property="Value" Path="cpStatus"/>
+                                <PropertyValue Property="Criticality" Path="cpStatusCriticality"/>
                             </Record>
                         </Collection>
                     </PropertyValue>
@@ -398,7 +403,7 @@
                     <PropertyValue Property="Data">
                         <Collection>
                             <Record Type="UI.DataFieldWithUrl">
-                                <PropertyValue Property="Label" String="Form Preview"/>
+                                <PropertyValue Property="Label" String=""/>
                                 <PropertyValue Property="Value" Path="ddFromName"/>
                                 <PropertyValue Property="Url" Path="ddFromUrl"/>
                             </Record>
@@ -413,6 +418,12 @@
                         <Collection>
                             <Record Type="UI.DataField">
                                 <PropertyValue Property="Value" Path="complianceNote"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="adverseResults"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="additionalProtection"/>
                             </Record>
                         </Collection>
                     </PropertyValue>
