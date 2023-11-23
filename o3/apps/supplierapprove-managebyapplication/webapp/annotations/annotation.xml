@@ -499,7 +499,7 @@
                                 <Or>
                                     <Eq>
                                         <Path>currentStatusId</Path>
-                                        <String>REGISTERED</String>
+                                        <String>PROCESSED</String>
                                     </Eq>
                                     <Eq>
                                         <Path>ddFormType</Path>
@@ -520,8 +520,8 @@
                                     <Path>currentStatusId</Path>
                                     <String>PROCESSED</String>
                                 </Eq>
-                                <Bool>false</Bool>
                                 <Bool>true</Bool>
+                                <Bool>false</Bool>
                             </If>
                         </Annotation>
                     </Record>         
