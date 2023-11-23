@@ -309,26 +309,36 @@
              <Annotation Term="UI.HeaderFacets">
                 <Collection>
                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="PartyBaseInfo"/>
-                        <PropertyValue Property="Label" String="{@i18n>PartyBaseInfo}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PartyBaseInfo"/>
-                    </Record>
-                    <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="TimeInfo"/>
-                        <PropertyValue Property="Label" String="{@i18n>TimeInfo}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#TimeInfo"/>
-                    </Record> -->
-                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="DDFormType"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDFormType"/>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
+                        <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="statusId"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ComplianceNote"/>
+                        <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="CycleTime"/>
+                        <PropertyValue Property="Label" String="{@i18n>CycleTime}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#CycleTime"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Classification"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="FileCountGroup"/>
+                        <PropertyValue Property="Label" String="{@i18n>FileCountGroup}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FileCountGroup"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ViewDDForm"/>
+                        <PropertyValue Property="Label" String="{@i18n>ViewDDForm}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ViewDDForm"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="Work Scope"/>
@@ -341,6 +351,60 @@
                         <PropertyValue Property="ID" String="Identification"/>
                     </Record> -->
                 </Collection>
+            </Annotation>
+
+             <Annotation Term="UI.DataPoint" Qualifier="CycleTime">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Value" Path="cycleTime"/>
+                    <PropertyValue Property="Title" String="{@i18n>CycleTime}"/>
+                </Record>
+            </Annotation>
+
+            <Annotation Term="UI.FieldGroup" Qualifier="FileCountGroup">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="fsStatus"/>
+                                <PropertyValue Property="Criticality" Path="fsStatusCriticality"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="caStatus"/>
+                                <PropertyValue Property="Criticality" Path="caStatusCriticality"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="ofStatus"/>
+                                <PropertyValue Property="Criticality" Path="ofStatusCriticality"/>
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+
+            <Annotation Term="UI.FieldGroup" Qualifier="ViewDDForm">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataFieldWithUrl">
+                                <PropertyValue Property="Label" String="Form Preview"/>
+                                <PropertyValue Property="Value" Path="ddFromName"/>
+                                <PropertyValue Property="Url" Path="ddFromUrl"/>
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+
+             <Annotation Term="UI.FieldGroup" Qualifier="ComplianceNote">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="complianceNote"/>
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
             </Annotation>
 
             <Annotation Term="UI.DataPoint" Qualifier="statusId">
@@ -526,9 +590,9 @@
             </Annotation>
         </Annotations>
 
-        <Annotations Target="com.dpbird.CreatePersonAndContact/phoneMobile">
+        <!-- <Annotations Target="com.dpbird.CreatePersonAndContact/phoneMobile">
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
-        </Annotations>
+        </Annotations> -->
         <Annotations Target="com.dpbird.CreatePersonAndContact/roleTypeIdTo">
             <Annotation Term="UI.ParameterDefaultValue" String="CONTACT"></Annotation>
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
@@ -550,9 +614,9 @@
             </Annotation>
         </Annotations>
 
-        <Annotations Target="com.dpbird.CreatePersonAndContact/partyName">
+        <!-- <Annotations Target="com.dpbird.CreatePersonAndContact/partyName">
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
-        </Annotations>
+        </Annotations> -->
 
         <Annotations Target="com.dpbird.SupplierParty">
             <Annotation Term="UI.DeleteHidden" Bool="true" />

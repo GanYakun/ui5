@@ -40,6 +40,11 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="CycleTime"/>
+                        <PropertyValue Property="Label" String="{@i18n>CycleTime}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#CycleTime"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Classification"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
                     </Record>
@@ -88,14 +93,15 @@
                             <Record Type="UI.DataField">
                                 <PropertyValue Property="Value" Path="complianceNote"/>
                             </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="cycleTime"/>
-                            </Record>
-                             <!-- <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="ddFormDealStatus" />
-                            </Record> -->
                         </Collection>
                     </PropertyValue>
+                </Record>
+            </Annotation>
+
+           <Annotation Term="UI.DataPoint" Qualifier="CycleTime">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Value" Path="cycleTime"/>
+                    <PropertyValue Property="Title" String="{@i18n>CycleTime}"/>
                 </Record>
             </Annotation>
             <Annotation Term="UI.FieldGroup" Qualifier="ViewDDForm">
