@@ -97,8 +97,8 @@
                                     <Path>currentStatusId</Path>
                                     <String>PROCESSED</String>
                                 </Eq>
-                                <Bool>false</Bool>
                                 <Bool>true</Bool>
+                                <Bool>false</Bool>
                             </If>
                             </Annotation>
                     </Record>
@@ -112,8 +112,8 @@
                                     <Path>currentStatusId</Path>
                                     <String>PROCESSED</String>
                                 </Eq>
-                                <Bool>true</Bool>
                                 <Bool>false</Bool>
+                                <Bool>true</Bool>
                             </If>
                         </Annotation>
                     </Record>
