@@ -176,10 +176,16 @@
                         <PropertyValue Property="Label"  String="{@i18n>ReturnToSupplier}" />
                         <Annotation Term="UI.Hidden">
                             <If>
-                                <Eq>
-                                    <Path>currentStatusId</Path>
-                                    <String>REGISTERED</String>
-                                </Eq>
+                                <Or>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>REGISTERED</String>
+                                    </Eq>
+                                    <Eq>
+                                        <Path>ddFormDealStatus</Path>
+                                        <String>No DD</String>
+                                    </Eq>
+                                </Or>
                                 <Bool>true</Bool>
                                 <Bool>false</Bool>
                             </If>
