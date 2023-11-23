@@ -496,16 +496,10 @@
                         <PropertyValue Property="Label"  String="{@i18n>SubmitApproval_Supplier}"/>
                         <Annotation Term="UI.Hidden">
                             <If>
-                                <Or>
-                                    <Eq>
-                                        <Path>currentStatusId</Path>
-                                        <String>PROCESSED</String>
-                                    </Eq>
-                                    <Eq>
-                                        <Path>ddFormType</Path>
-                                        <String>No DD</String>
-                                    </Eq>
-                                </Or>
+                                <Eq>
+                                    <Path>currentStatusId</Path>
+                                    <String>PROCESSx`ED</String>
+                                </Eq>
                                 <Bool>true</Bool>
                                 <Bool>false</Bool>
                             </If>
@@ -516,10 +510,16 @@
                         <PropertyValue Property="Label"  String="{@i18n>ToVendor}"/>
                         <Annotation Term="UI.Hidden">
                             <If>
-                                <Eq>
-                                    <Path>currentStatusId</Path>
-                                    <String>PROCESSED</String>
-                                </Eq>
+                                <Or>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>PROCESSED</String>
+                                    </Eq>
+                                    <Eq>
+                                        <Path>ddFormType</Path>
+                                        <String>No DD</String>
+                                    </Eq>
+                                </Or>
                                 <Bool>true</Bool>
                                 <Bool>false</Bool>
                             </If>
