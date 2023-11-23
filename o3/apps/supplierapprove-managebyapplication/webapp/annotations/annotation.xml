@@ -458,9 +458,6 @@
                     <PropertyValue Property="Data">
                         <Collection>
                             <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="complianceNote"/>
-                            </Record>
-                            <Record Type="UI.DataField">
                                 <PropertyValue Property="Value" Path="adverseResults"/>
                             </Record>
                             <Record Type="UI.DataField">
