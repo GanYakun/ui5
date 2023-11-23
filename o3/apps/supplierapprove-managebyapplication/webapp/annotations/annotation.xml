@@ -347,6 +347,10 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="Classification"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="ComplianceNote"/>
                         <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
@@ -370,10 +374,7 @@
                         <PropertyValue Property="ID" String="SupplierCategory"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#SupplierCategory"/>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="Classification"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
-                    </Record>
+                    
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="FileCountGroup"/>
                         <PropertyValue Property="Label" String="{@i18n>FileCountGroup}"/>
