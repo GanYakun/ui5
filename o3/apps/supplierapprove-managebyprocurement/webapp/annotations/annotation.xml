@@ -409,6 +409,36 @@
                         <PropertyValue Property="Target" AnnotationPath="PartyClassification/@UI.FieldGroup#PartyClassificationFieldGroup"/>
                     </Record> -->
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="BeneficialPersonLineItem"/>
+                        <PropertyValue Property="Label" String="{@i18n>BeneficialPersonLineItem}"/>
+                        <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#BeneficialPersonLineItem"/>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>false</Bool>
+                            <Bool>true</Bool>
+                        </If>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="BeneficialPersonLineItem_Action"/>
+                        <PropertyValue Property="Label" String="{@i18n>BeneficialPersonLineItem}"/>
+                        <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#BeneficialPersonLineItem_Action"/>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>currentStatusId</Path>
+                                <String>PROCESSED</String>
+                            </Eq>
+                            <Bool>true</Bool>
+                            <Bool>false</Bool>
+                        </If>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="PartyRelationshipLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>
                         <PropertyValue Property="Target" AnnotationPath="PersonAndContact/@UI.LineItem#PartyRelationshipLineItemWithoutAction"/>
