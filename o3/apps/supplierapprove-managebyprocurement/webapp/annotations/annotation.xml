@@ -79,8 +79,8 @@
                                 <PropertyValue Property="Criticality" Path="caStatusCriticality"/>
                             </Record>
                             <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="ofStatus"/>
-                                <PropertyValue Property="Criticality" Path="ofStatusCriticality"/>
+                                <PropertyValue Property="Value" Path="cpStatus"/>
+                                <PropertyValue Property="Criticality" Path="cpStatusCriticality"/>
                             </Record>
                         </Collection>
                     </PropertyValue>
@@ -109,7 +109,7 @@
                     <PropertyValue Property="Data">
                         <Collection>
                             <Record Type="UI.DataFieldWithUrl">
-                                <PropertyValue Property="Label" String="Form Preview"/>
+                                <PropertyValue Property="Label" String=""/>
                                 <PropertyValue Property="Value" Path="ddFromName"/>
                                 <PropertyValue Property="Url" Path="ddFromUrl"/>
                             </Record>
@@ -483,6 +483,11 @@
                         <PropertyValue Property="ID" String="ConfidentialityAgreement"/>
                         <PropertyValue Property="Label" String="{@i18n>ConfidentialityAgreement}"/>
                         <PropertyValue Property="Target"  AnnotationPath="ConfidentialityAgreement/@UI.LineItem#FileList"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ComplianceReport"/>
+                        <PropertyValue Property="Label" String="{@i18n>ComplianceReport}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="ComplianceReport/@UI.LineItem#FileList"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Otherfiles"/>
