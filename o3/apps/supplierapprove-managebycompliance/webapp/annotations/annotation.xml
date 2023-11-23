@@ -62,7 +62,7 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="Label" String="Compliance Checks"/>
+                        <PropertyValue Property="Label" String="Compliance Response"/>
                         <PropertyValue Property="ID" String="ComplianceResult"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceResult"/>
                     </Record>
