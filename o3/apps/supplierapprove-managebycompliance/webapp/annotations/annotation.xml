@@ -116,7 +116,7 @@
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
                         <PropertyValue Property="ID" String="ContactMechPurpose"/>
-                        <PropertyValue Property="Target" AnnotationPath="PostalAddress/@UI.LineItem#PostalAddressLineItem"/>
+                        <PropertyValue Property="Target" AnnotationPath="PostalAddress/@UI.LineItem#PostalAddressLineItem_NOAction"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="BeneficialPersonLineItem"/>

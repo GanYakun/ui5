@@ -425,6 +425,31 @@
                         <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
                         <PropertyValue Property="ID" String="ContactMechPurpose"/>
                         <PropertyValue Property="Target" AnnotationPath="PostalAddress/@UI.LineItem#PostalAddressLineItem"/>
+                        <Annotation Term="UI.Hidden">
+                            <If>
+                                <Eq>
+                                    <Path>currentStatusId</Path>
+                                    <String>REGISTERED</String>
+                                </Eq>
+                                <Bool>true</Bool>
+                                <Bool>false</Bool>
+                            </If>
+                            </Annotation>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
+                        <PropertyValue Property="ID" String="ContactMechPurpose_NOAction"/>
+                        <PropertyValue Property="Target" AnnotationPath="PostalAddress/@UI.LineItem#PostalAddressLineItem_NOAction"/>
+                        <Annotation Term="UI.Hidden">
+                            <If>
+                                <Eq>
+                                    <Path>currentStatusId</Path>
+                                    <String>REGISTERED</String>
+                                </Eq>
+                                <Bool>false</Bool>
+                                <Bool>true</Bool>
+                            </If>
+                        </Annotation>
                     </Record>
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>PartyClassificationGroupLineItem}"/>
@@ -439,7 +464,7 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>PROCESSED</String>
+                                <String>REGISTERED</String>
                             </Eq>
                             <Bool>false</Bool>
                             <Bool>true</Bool>
@@ -454,7 +479,7 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>PROCESSED</String>
+                                <String>REGISTERED</String>
                             </Eq>
                             <Bool>true</Bool>
                             <Bool>false</Bool>
