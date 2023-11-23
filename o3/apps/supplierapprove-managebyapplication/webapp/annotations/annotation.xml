@@ -496,10 +496,16 @@
                         <PropertyValue Property="Label"  String="{@i18n>SubmitApproval_Supplier}"/>
                         <Annotation Term="UI.Hidden">
                             <If>
-                                <Eq>
-                                    <Path>currentStatusId</Path>
-                                    <String>PROCESSED</String>
-                                </Eq>
+                                <Or>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>REGISTERED</String>
+                                    </Eq>
+                                    <Eq>
+                                        <Path>ddFormType</Path>
+                                        <String>No DD</String>
+                                    </Eq>
+                                </Or>
                                 <Bool>true</Bool>
                                 <Bool>false</Bool>
                             </If>
