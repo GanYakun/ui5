@@ -174,9 +174,9 @@
                         <PropertyValue Property="Target"  AnnotationPath="ConfidentialityAgreement/@UI.LineItem#FileList"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="Otherfiles"/>
-                        <PropertyValue Property="Label" String="{@i18n>Otherfiles}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="OtherFiles/@UI.LineItem#FileList"/>
+                        <PropertyValue Property="ID" String="ComplianceReport"/>
+                        <PropertyValue Property="Label" String="{@i18n>ComplianceReport}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="ComplianceReport/@UI.LineItem#FileList"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="NoteDataLineItem"/>
