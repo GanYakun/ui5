@@ -14,6 +14,42 @@
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
         <Annotations Target="com.dpbird.SupplierParty">
+            <Annotation Term="UI.SelectionFields">
+                <Collection>
+                    <PropertyPath>partyId</PropertyPath>
+                    <PropertyPath>PartyClassification/PartyClassificationGroup/description</PropertyPath>
+                </Collection>
+            </Annotation>
+            <Annotation Term="UI.LineItem" Qualifier="ComplianceAppLineItem">
+                <Collection>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value">
+                            <Path>partyId</Path>
+                        </PropertyValue>
+                        <Annotation Term="UI.Importance">
+                            <EnumMember>UI.ImportanceType/High</EnumMember>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value">
+                            <Path>PartyClassification/PartyClassificationGroup/description</Path>
+                        </PropertyValue>
+                        <PropertyValue Property="Criticality">
+                            <Path>riskCritical</Path>
+                        </PropertyValue>
+                        <Annotation Term="UI.Importance">
+                            <EnumMember>UI.ImportanceType/High</EnumMember>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.DataFieldWithUrl">
+                        <PropertyValue Property="Label" String="DD Form"/>
+                        <PropertyValue Property="Value" Path="ddFromName"/>
+                        <PropertyValue Property="Url" Path="ddFromUrl"/>
+                    </Record>
+                </Collection>
+            </Annotation>
+
+
              <Annotation Term="UI.HeaderFacets">
                 <Collection>
                     <Record Type="UI.ReferenceFacet">
@@ -130,7 +166,7 @@
                         <Record Type="UI.PresentationVariantType">
                             <PropertyValue Property="Visualizations">
                                 <Collection>
-                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                    <AnnotationPath>@UI.LineItem#ComplianceAppLineItem</AnnotationPath>
                                 </Collection>
                             </PropertyValue>
                         </Record>
@@ -165,7 +201,7 @@
                         <Record Type="UI.PresentationVariantType">
                             <PropertyValue Property="Visualizations">
                                 <Collection>
-                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                    <AnnotationPath>@UI.LineItem#ComplianceAppLineItem</AnnotationPath>
                                 </Collection>
                             </PropertyValue>
                         </Record>
