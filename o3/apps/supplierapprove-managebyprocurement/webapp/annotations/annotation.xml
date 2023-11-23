@@ -44,6 +44,11 @@
                         <PropertyValue Property="Label" String="{@i18n>CycleTime}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#CycleTime"/>
                     </Record>
+                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="Priority"/>
+                        <PropertyValue Property="Label" String="{@i18n>Priority}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#Priority"/>
+                    </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Classification"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
@@ -102,6 +107,12 @@
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="cycleTime"/>
                     <PropertyValue Property="Title" String="{@i18n>CycleTime}"/>
+                </Record>
+            </Annotation>
+            <Annotation Term="UI.DataPoint" Qualifier="Priority">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Value" Path="priority"/>
+                    <PropertyValue Property="Title" String="{@i18n>Priority}"/>
                 </Record>
             </Annotation>
             <Annotation Term="UI.FieldGroup" Qualifier="ViewDDForm">
@@ -798,6 +809,9 @@
                             <Record Type="Common.ValueListParameterDisplayOnly">
                                 <PropertyValue Property="ValueListProperty" String="productName" />
                             </Record>
+                             <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="primaryProductCategoryId" />
+                            </Record>
                             <Record Type="Common.ValueListParameterDisplayOnly">
                                 <PropertyValue Property="ValueListProperty" String="quantityUomId" />
                             </Record>
@@ -825,6 +839,9 @@
                             </Record>
                             <Record Type="Common.ValueListParameterDisplayOnly">
                                 <PropertyValue Property="ValueListProperty" String="quantityUomId" />
+                            </Record>
+                             <Record Type="Common.ValueListParameterDisplayOnly">
+                                <PropertyValue Property="ValueListProperty" String="primaryProductCategoryId" />
                             </Record>
                         </Collection>
                     </PropertyValue>
