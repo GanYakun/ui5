@@ -236,6 +236,21 @@
             }
           },
           {
+            id: "supplier_dd_form",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "SupplierParty",
+            "semanticAction": "Form",
+            properties: {
+              title: "供应商_DD_Form",
+              subtitle: "填写DDForm",
+              info: "填写DDForm",
+              targetURL: "#Supplier-DDForm",
+            }
+          },
+          {
             id: "purchaseRequest_Manage",//tile的ID
             chipId: "catalogTile_35",
             size: "1x1",
@@ -394,6 +409,12 @@
         applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
         url: sUshellO3RootPath + "/apps/supplierapprove-managebyprocurement/webapp",
         description: "管理供应商"
+      },
+      "Supplier-DDForm": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.supplierddform",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/supplier-dd-form/webapp",
+        description: "填写DDForm"
       },
       "Purchase-Request": {
         additionalInformation: "SAPUI5.Component=com.banfftech.purchaserequest",

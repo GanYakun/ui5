@@ -1,0 +1,186 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Session.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Session.v1" Alias="Session"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Communication.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/officeauto/control/odataAppSvc/supplierForm/$metadata">
+        <edmx:Include Namespace="com.dpbird"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.banfftech">
+
+            <Annotations Target="com.dpbird.O3Container/SupplierParties">
+                <Annotation Term="Session.StickySessionSupported">
+                    <Record>
+                        <PropertyValue Property="NewAction">
+                            <String>com.dpbird.SupplierPartyNewAction</String>
+                        </PropertyValue>
+                        <PropertyValue Property="EditAction">
+                            <String>com.dpbird.SupplierPartyEditAction</String>
+                        </PropertyValue>
+                        <PropertyValue Property="SaveAction">
+                            <String>com.dpbird.SupplierPartySaveAction</String>
+                        </PropertyValue>
+                        <PropertyValue Property="DiscardAction">
+                            <String>DiscardAction</String>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.SupplierParty/partyName">
+                <Annotation Term="UI.MultiLineText" />
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/address1">
+                <Annotation Term="UI.MultiLineText" />
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/workScope">
+                <Annotation Term="UI.MultiLineText" />
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/businessLocation">
+                <Annotation Term="UI.MultiLineText" />
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty">
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                         <Record Type="UI.CollectionFacet">
+                            <PropertyValue Property="ID" String="FullName"/>
+                            <PropertyValue Property="Label" String="1-7.BUSINESS PARTNER INFORMATION"/>
+                            <PropertyValue Property="Facets" >
+                                <Collection >
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="FullName"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FullName"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="RegisteredAddress"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#RegisteredAddress"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="DateIncorporation"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#DateIncorporation"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="RegistrationNumber"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#RegistrationNumber"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="WebsiteAddress"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WebsiteAddress"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="ContactPerson"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ContactPerson"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="BusinessRelationship"/>
+                            <PropertyValue Property="Label" String="8.Business Relationship to Company"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BusinessRelationship"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="WorkScope"/>
+                            <PropertyValue Property="Label" String="9.Summary of the anticipated scope of work (including estimated value, term of engagement)"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WorkScope"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="BusinessLocation"/>
+                            <PropertyValue Property="Label" String="10.Principal location in which the Business Partner carries out business"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BusinessLocation"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="PartyNameHistory"/>
+                            <PropertyValue Property="Label" String="11.Previous name of Business Partner (if any) and date of name change"/>
+                            <PropertyValue Property="Target" AnnotationPath="PartyNameHistory/@UI.LineItem#HistoryList"/>
+                        </Record>
+
+                        <!-- <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="BeneficialPerson"/>
+                            <PropertyValue Property="Label" String="Full name of Ultimate Beneficial Owner(s) 
+                            (all direct and indirect beneficial owners holding 25% or more economic, voting or control rights)"/>
+                            <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#RelPersons"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="SeniorStaff"/>
+                            <PropertyValue Property="Label" String="Name of Director / Officer"/>
+                            <PropertyValue Property="Target" AnnotationPath="SeniorStaff/@UI.LineItem#RelPersons"/>
+                        </Record> -->
+
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="ComplianceCertifications"/>
+                            <PropertyValue Property="Label" String="COMPLIANCE CERTIFICATIONS"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceCertifications"/>
+                        </Record>
+                        
+
+
+
+                        <!-- <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="FullName"/>
+                            <PropertyValue Property="Label" String="1.Full Name of Company or Individual Party"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FullName"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="RegisteredAddress"/>
+                            <PropertyValue Property="Label" String="2.Registered Address"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#RegisteredAddress"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="DateIncorporation"/>
+                            <PropertyValue Property="Label" String="3(a).Date of Incorporation/Date of Birth"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#DateIncorporation"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="RegistrationNumber"/>
+                            <PropertyValue Property="Label" String="4.Business Registration Number/Passport number"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#RegistrationNumber"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="WebsiteAddress"/>
+                            <PropertyValue Property="Label" String="5.Website Address (if any)"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WebsiteAddress"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="ContactPerson"/>
+                            <PropertyValue Property="Label" String="6.Point of Contact"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ContactPerson"/>
+                        </Record>
+                         <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="ContactInfo"/>
+                            <PropertyValue Property="Label" String="7.Contact information"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ContactInformation"/>
+                        </Record> 
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="BusinessRelationship"/>
+                            <PropertyValue Property="Label" String="8.Business Relationship to Company"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BusinessLocation"/>
+                        </Record>
+                         <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="WorkScope"/>
+                            <PropertyValue Property="Label" String="9.Summary of the anticipated scope of work (including estimated value, term of engagement)"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WorkScope"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="BusinessLocation"/>
+                            <PropertyValue Property="Label" String="10.Principal location in which the Business Partner carries out business"/>
+                            <PropertyValue Property="Target" AnnotationPath="PartyNameHistory/@UI.LineItem#HistoryList"/>
+                        </Record> -->
+                    </Collection>
+                    
+                </Annotation>
+            </Annotations>
+
+            
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
