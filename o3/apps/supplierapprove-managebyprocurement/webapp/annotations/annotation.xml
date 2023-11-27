@@ -246,20 +246,20 @@
                             </If>
                         </Annotation>
                     </Record>
-                    <!-- <Record Type="UI.DataFieldForAction" >
-                        <PropertyValue Property="Action" String="com.dpbird.CancelApproval_Supplier"/>
-                        <PropertyValue Property="Label"  String="{@i18n>CancelApproval_Supplier}" />
+                    <Record Type="UI.DataFieldForAction" >
+                        <PropertyValue Property="Action" String="com.dpbird.FinishDomUpload"/>
+                        <PropertyValue Property="Label"  String="{@i18n>FinishDomUpload}" />
                         <Annotation Term="UI.Hidden">
                             <If>
                                 <Eq>
-                                    <Path>currentStatusId</Path>
-                                    <String>REGISTERED</String>
+                                    <Path>isFinishedDomUpload</Path>
+                                    <Bool>true</Bool>
                                 </Eq>
-                                <Bool>false</Bool>
                                 <Bool>true</Bool>
+                                <Bool>false</Bool>
                             </If>
                         </Annotation>
-                    </Record>                                                                                                                                                      -->
+                    </Record>                                                                                                                                                     
                 </Collection>
             </Annotation>
 

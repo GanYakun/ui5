@@ -1077,11 +1077,14 @@
                 <Property Name="isGovernment" Type="Edm.Boolean"/>
                 <Property Name="ddFormType" Type="Edm.String"/>
                 <Property Name="ddFormDealStatus" Type="Edm.String"/>
+                <Property Name="ddFormStatusHistory" Type="Edm.String"/>
                 <Property Name="cycleTime" Type="Edm.String"/>
                 <Property Name="ddResponseTime" Type="Edm.String"/>
                 <Property Name="createSupplierHidden" Type="Edm.Boolean"/>
                 <Property Name="firstOrderDate" Type="Edm.DateTimeOffset"/>
                 <Property Name="collectionDate" Type="Edm.DateTimeOffset"/>
+                <Property Name="finishDomUploadDate" Type="Edm.DateTimeOffset"/>
+                <Property Name="isFinishedDomUpload" Type="Edm.Boolean"/>
                 <Property Name="totalAmount" Type="Edm.Decimal" Scale="3"/>
                 <Property Name="criticalityValue" Type="Edm.Int64"/>
                 <Property Name="ddFormTypeCritical" Type="Edm.Int64"/>
@@ -1113,7 +1116,7 @@
                 <Property Name="investmentTarget" Type="Edm.Boolean"/>
                 <Property Name="otherSpecify" Type="Edm.Boolean"/>
                 <Property Name="adverseResults" Type="Edm.String"/>
-                <Property Name="additionalProtection" Type="Edm.Boolean"/>
+                <Property Name="additionalProtection" Type="Edm.String"/>
                 <Property Name="approvePartyId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="workEffortId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="recurrenceInfoId" Type="Edm.String" MaxLength="60"/>
@@ -1586,7 +1589,7 @@
                 <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
                 <Parameter Name="partyClassificationGroupId" Type="Edm.String"/>
                 <Parameter Name="adverseResults" Type="Edm.String" Nullable="false"/>
-                <Parameter Name="additionalProtection" Type="Edm.Boolean" Nullable="false"/>
+                <Parameter Name="additionalProtection" Type="Edm.String" Nullable="false"/>
             </Action>
             <Action Name="FillSupplierBaseInfo" EntitySetPath="supplierParty" IsBound="true">
                 <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
@@ -1643,6 +1646,10 @@
                 <Parameter Name="noteInfo" Type="Edm.String"/>
                 <ReturnType Type="com.dpbird.SupplierParty"/>
             </Action>
+            <Action Name="FinishDomUpload" EntitySetPath="supplierParty" IsBound="true">
+                <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
+                <ReturnType Type="com.dpbird.SupplierParty"/>
+            </Action>
             <Action Name="CompleteCoWork" EntitySetPath="supplierParty" IsBound="true">
                 <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
             </Action>
@@ -1654,6 +1661,10 @@
             <Action Name="GenerateSurveyQuestionAnswer" IsBound="true">
                 <Parameter Name="partyUserLogin" Type="com.dpbird.PartyUserLogin" Nullable="false"/>
                 <ReturnType Type="com.dpbird.SupplierParty"/>
+            </Action>
+            <Action Name="ImportProducts" IsBound="true">
+                <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
+                <Parameter Name="file" Type="Edm.Stream" Nullable="false"/>
             </Action>
             <Action Name="CreatePostalAddress" IsBound="true">
                 <Parameter Name="postalAddress" Type="Collection(com.dpbird.PostalAddress)" Nullable="false"/>
@@ -3772,7 +3783,15 @@
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
-                                <Path>partyName</Path>
+                                <Path>firstName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>lastName</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -7415,6 +7434,11 @@
                     <String>DD Status</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/ddFormStatusHistory">
+                <Annotation Term="Common.Label">
+                    <String>ddFormStatusHistory</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/cycleTime">
                 <Annotation Term="Common.Label">
                     <String>Cycle time</String>
@@ -7441,6 +7465,16 @@
             <Annotations Target="com.dpbird.SupplierParty/collectionDate">
                 <Annotation Term="Common.Label">
                     <String>On-board date</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/finishDomUploadDate">
+                <Annotation Term="Common.Label">
+                    <String>finishDomUploadDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/isFinishedDomUpload">
+                <Annotation Term="Common.Label">
+                    <String>isFinishedDomUpload</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/totalAmount">
@@ -9980,6 +10014,17 @@
             <Annotations Target="com.dpbird.ReturnToCompliance/noteInfo">
                 <Annotation Term="Common.Label">
                     <String>Note info</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.FinishDomUpload">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CompleteCoWork">
