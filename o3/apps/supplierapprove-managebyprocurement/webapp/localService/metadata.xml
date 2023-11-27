@@ -426,6 +426,16 @@
                 <Property Name="permissionId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="description" Type="Edm.String" MaxLength="255"/>
             </EntityType>
+            <EntityType Name="ListRegionEnumeration">
+                <Key>
+                    <PropertyRef Name="enumId"/>
+                </Key>
+                <Property Name="enumId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="enumTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="enumCode" Type="Edm.String" MaxLength="60"/>
+                <Property Name="sequenceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
             <EntityType Name="PersonAndContact">
                 <Key>
                     <PropertyRef Name="partyId"/>
@@ -1096,6 +1106,7 @@
                 <Property Name="statusId" Type="Edm.String" DefaultValue="PARTY_DISABLED" MaxLength="60"/>
                 <Property Name="priority" Type="Edm.String" MaxLength="60"/>
                 <Property Name="employeesSection" Type="Edm.String" MaxLength="255"/>
+                <Property Name="tickerSymbol" Type="Edm.String" MaxLength="10"/>
                 <Property Name="usccNumber" Type="Edm.String"/>
                 <Property Name="contactName" Type="Edm.String" MaxLength="100"/>
                 <Property Name="contactPhoneMobile" Type="Edm.String" MaxLength="60"/>
@@ -1121,6 +1132,7 @@
                 <Property Name="otherSpecify" Type="Edm.Boolean"/>
                 <Property Name="adverseResults" Type="Edm.String"/>
                 <Property Name="additionalProtection" Type="Edm.String"/>
+                <Property Name="complianceComments" Type="Edm.String"/>
                 <Property Name="approvePartyId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="workEffortId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="recurrenceInfoId" Type="Edm.String" MaxLength="60"/>
@@ -1185,7 +1197,6 @@
                 <Property Name="phoneMobile" Type="Edm.String" MaxLength="60"/>
                 <Property Name="address1" Type="Edm.String" MaxLength="255"/>
                 <Property Name="externalId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="tickerSymbol" Type="Edm.String" MaxLength="10"/>
                 <Property Name="isUnread" Type="Edm.String" MaxLength="1"/>
                 <Property Name="logoImageUrl" Type="Edm.String" MaxLength="2000"/>
                 <Property Name="primaryPhone" Type="Edm.String" MaxLength="60"/>
@@ -1222,6 +1233,9 @@
                 <NavigationProperty Name="Department" Type="Collection(com.dpbird.Department)"/>
                 <NavigationProperty Name="EmployeesEnumeration" Type="com.dpbird.EmployeesEnumeration">
                     <ReferentialConstraint Property="employeesSection" ReferencedProperty="enumId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="ListRegionEnumeration" Type="com.dpbird.ListRegionEnumeration">
+                    <ReferentialConstraint Property="tickerSymbol" ReferencedProperty="enumId"/>
                 </NavigationProperty>
                 <NavigationProperty Name="FinancialStatements" Type="Collection(com.dpbird.PartyMediaResource)"/>
                 <NavigationProperty Name="ConfidentialityAgreement" Type="Collection(com.dpbird.PartyMediaResource)"/>
@@ -1607,6 +1621,7 @@
                 <Parameter Name="partyClassificationGroupId" Type="Edm.String"/>
                 <Parameter Name="adverseResults" Type="Edm.String" Nullable="false"/>
                 <Parameter Name="additionalProtection" Type="Edm.String" Nullable="false"/>
+                <Parameter Name="complianceComments" Type="Edm.String" Nullable="false"/>
             </Action>
             <Action Name="FillSupplierBaseInfo" EntitySetPath="supplierParty" IsBound="true">
                 <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
@@ -1801,6 +1816,7 @@
                     <NavigationPropertyBinding Path="ProductCategory" Target="ProductCategories"/>
                     <NavigationPropertyBinding Path="Department" Target="Departments"/>
                     <NavigationPropertyBinding Path="EmployeesEnumeration" Target="EmployeesEnumerations"/>
+                    <NavigationPropertyBinding Path="ListRegionEnumeration" Target="ListRegionEnumerations"/>
                     <NavigationPropertyBinding Path="FinancialStatements" Target="PartyMediaResources"/>
                     <NavigationPropertyBinding Path="ConfidentialityAgreement" Target="PartyMediaResources"/>
                     <NavigationPropertyBinding Path="ComplianceReport" Target="PartyMediaResources"/>
@@ -1891,6 +1907,7 @@
                 <EntitySet Name="ContactMechPurposeTypes" EntityType="com.dpbird.ContactMechPurposeType"/>
                 <EntitySet Name="Provinces" EntityType="com.dpbird.Province"/>
                 <EntitySet Name="Surveys" EntityType="com.dpbird.Survey"/>
+                <EntitySet Name="ListRegionEnumerations" EntityType="com.dpbird.ListRegionEnumeration"/>
                 <EntitySet Name="Services" EntityType="com.dpbird.Service">
                     <NavigationPropertyBinding Path="PrimaryProductCategory" Target="ProductCategories"/>
                 </EntitySet>
@@ -2843,7 +2860,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Product/primaryProductCategoryId">
                 <Annotation Term="Common.Label">
-                    <String>Financial Category</String>
+                    <String>Financial category</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>PrimaryProductCategory/categoryName</Path>
@@ -3514,7 +3531,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Department/partyId">
                 <Annotation Term="Common.Label">
-                    <String>Department Name</String>
+                    <String>Department name</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>partyName</Path>
@@ -3605,7 +3622,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Department/partyName">
                 <Annotation Term="Common.Label">
-                    <String>Department Name</String>
+                    <String>Department name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Department/createdByUserLogin">
@@ -3731,6 +3748,37 @@
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.UILabApp/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ListRegionEnumeration/enumId">
+                <Annotation Term="Common.Label">
+                    <String>enumId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ListRegionEnumeration/enumTypeId">
+                <Annotation Term="Common.Label">
+                    <String>enumTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ListRegionEnumeration/enumCode">
+                <Annotation Term="Common.Label">
+                    <String>enumCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ListRegionEnumeration/sequenceId">
+                <Annotation Term="Common.Label">
+                    <String>sequenceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ListRegionEnumeration/description">
                 <Annotation Term="Common.Label">
                     <String>description</String>
                 </Annotation>
@@ -4139,7 +4187,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/lastName">
                 <Annotation Term="Common.Label">
-                    <String>Last Name</String>
+                    <String>Last name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/occupation">
@@ -4244,7 +4292,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/firstName">
                 <Annotation Term="Common.Label">
-                    <String>First Name</String>
+                    <String>First name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/cardId">
@@ -4321,7 +4369,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PartyClassificationGroup/description">
                 <Annotation Term="Common.Label">
-                    <String>Risk rating</String>
+                    <String>Risk level</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyRole/partyId">
@@ -6914,7 +6962,7 @@
                 <Annotation Term="UI.DataPoint" Qualifier="SupplierCategory">
                     <Record Type="UI.DataPointType">
                         <PropertyValue Property="Title">
-                            <String>SupplierCategory</String>
+                            <String>Category</String>
                         </PropertyValue>
                         <PropertyValue Property="Value">
                             <Path>ProductCategory/categoryName</Path>
@@ -7631,10 +7679,21 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/employeesSection">
                 <Annotation Term="Common.Label">
-                    <String>employeesSection</String>
+                    <String>Employees</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>EmployeesEnumeration/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/tickerSymbol">
+                <Annotation Term="Common.Label">
+                    <String>Ticker symbol</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>ListRegionEnumeration/description</Path>
                     <Annotation Term="UI.TextArrangement">
                         <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
                     </Annotation>
@@ -7773,6 +7832,11 @@
             <Annotations Target="com.dpbird.SupplierParty/additionalProtection">
                 <Annotation Term="Common.Label">
                     <String>Any additional contractual protections or enhanced due diligence recommended?</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/complianceComments">
+                <Annotation Term="Common.Label">
+                    <String>complianceComments</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/approvePartyId">
@@ -8052,7 +8116,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/numEmployees">
                 <Annotation Term="Common.Label">
-                    <String>Employee numbers</String>
+                    <String>numEmployees</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/preferredCurrencyUomId">
@@ -8062,7 +8126,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/partyName">
                 <Annotation Term="Common.Label">
-                    <String>Supplier Name</String>
+                    <String>Vendor name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/primaryEmail">
@@ -8093,11 +8157,6 @@
             <Annotations Target="com.dpbird.SupplierParty/externalId">
                 <Annotation Term="Common.Label">
                     <String>externalId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierParty/tickerSymbol">
-                <Annotation Term="Common.Label">
-                    <String>Ticker symbol</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/isUnread">
@@ -8355,7 +8414,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.CoWorkHistory/partyName">
                 <Annotation Term="Common.Label">
-                    <String>Supplier Name</String>
+                    <String>Vendor name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CoWorkHistory/approvePartyId">
@@ -8443,7 +8502,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Service/primaryProductCategoryId">
                 <Annotation Term="Common.Label">
-                    <String>Financial Category</String>
+                    <String>Financial category</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>PrimaryProductCategory/categoryName</Path>
@@ -9826,6 +9885,11 @@
                     <String>Any additional contractual protections or enhanced due diligence recommended?</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.FillPartyClassification/complianceComments">
+                <Annotation Term="Common.Label">
+                    <String>complianceComments</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo">
                 <Annotation Term="Common.SideEffects">
                     <Record>
@@ -9839,12 +9903,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo/employeesSection">
                 <Annotation Term="Common.Label">
-                    <String>Employees Number</String>
+                    <String>Employees</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>Employees Number</String>
+                            <String>Employees</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>EmployeesEnumerations</String>
@@ -9869,12 +9933,37 @@
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo/annualRevenue">
                 <Annotation Term="Common.Label">
-                    <String>Annual Revenue</String>
+                    <String>Annual revenue</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo/tickerSymbol">
                 <Annotation Term="Common.Label">
-                    <String>Ticker Symbol</String>
+                    <String>List region</String>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>List region</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>ListRegionEnumerations</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>tickerSymbol</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>enumId</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo/comments">
@@ -9956,7 +10045,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.UpdateSupplierTimeInfo/firstOrderDate">
                 <Annotation Term="Common.Label">
-                    <String>First Order Date</String>
+                    <String>First order date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/partyName">
@@ -10458,7 +10547,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreatePersonAndContact/lastName">
                 <Annotation Term="Common.Label">
-                    <String>lastName</String>
+                    <String>Last name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePersonAndContact/primaryPhone">
@@ -10488,7 +10577,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreateBeneficialPerson/lastName">
                 <Annotation Term="Common.Label">
-                    <String>lastName</String>
+                    <String>Last name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateBeneficialPerson/primaryPhone">

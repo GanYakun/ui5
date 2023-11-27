@@ -111,6 +111,9 @@
                             <Record Type="UI.DataField">
                                 <PropertyValue Property="Value" Path="additionalProtection"/>
                             </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="complianceComments" />
+                            </Record>
                         </Collection>
                     </PropertyValue>
                 </Record>
