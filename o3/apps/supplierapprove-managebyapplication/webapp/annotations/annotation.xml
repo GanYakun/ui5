@@ -690,12 +690,12 @@
             <Annotation Term="UI.DeleteHidden" Bool="true" />
         </Annotations>
 
-         <Annotations Target="com.dpbird.UpdateSupplierContactInfo/primaryEmail">
+         <!-- <Annotations Target="com.dpbird.UpdateSupplierContactInfo/primaryEmail">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/primaryEmail" ></Annotation>
         </Annotations>
         <Annotations Target="com.dpbird.UpdateSupplierContactInfo/primaryPhone">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/primaryPhone" ></Annotation>
-        </Annotations>
+        </Annotations> -->
          <Annotations Target="com.dpbird.UpdateSupplierTimeInfo/collectionDate">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/collectionDate" ></Annotation>
         </Annotations>
@@ -708,8 +708,11 @@
          <Annotations Target="com.dpbird.FillSupplierBaseInfo/comments">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/comments" ></Annotation>
         </Annotations>
-         <Annotations Target="com.dpbird.FillSupplierBaseInfo/numEmployees">
-            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/numEmployees" ></Annotation>
+         <Annotations Target="com.dpbird.FillSupplierBaseInfo/employeesSection">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/employeesSection" ></Annotation>
+        </Annotations>
+        <Annotations Target="com.dpbird.FillSupplierBaseInfo/priority">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/priority" ></Annotation>
         </Annotations>
         <Annotations Target="com.dpbird.FillSupplierBaseInfo/tickerSymbol">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/tickerSymbol" ></Annotation>
