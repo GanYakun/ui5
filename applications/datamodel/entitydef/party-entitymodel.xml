@@ -2046,7 +2046,6 @@ under the License.
       <field name="tickerSymbol" type="very-short"></field>
       <field name="comments" type="comment"></field>
       <field name="logoImageUrl" type="url"></field>
-      <field name="employeesSection" type="long-varchar"></field>
       <prim-key field="partyId"/>
       <relation type="one" fk-name="PARTY_GRP_PARTY" rel-entity-name="Party">
         <key-map field-name="partyId"/>
