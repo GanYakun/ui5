@@ -23,4 +23,5 @@ under the License.
     <load-component component-location="bfcommon"/>
     <load-component component-location="gongsconfig"/>
     <load-component component-location="bf-demo"/>
+    <load-component component-location="bfui5"/>
 </component-loader>
