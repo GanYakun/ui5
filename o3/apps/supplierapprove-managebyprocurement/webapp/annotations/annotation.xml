@@ -919,8 +919,8 @@
         <Annotations Target="com.dpbird.FillSupplierBaseInfo/priority">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/priority" ></Annotation>
         </Annotations>
-        <Annotations Target="com.dpbird.FillSupplierBaseInfo/tickerSymbol">
-            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/tickerSymbol" ></Annotation>
+        <Annotations Target="com.dpbird.FillSupplierBaseInfo/geoId">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/ListedCountry/geoId" ></Annotation>
         </Annotations>
          <Annotations Target="com.dpbird.FillSupplierBaseInfo/usccNumber">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/usccNumber" ></Annotation>
