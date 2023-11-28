@@ -735,16 +735,13 @@
             <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
             <Annotation Term="Common.ValueList">
                 <Record Type="Common.ValueListType">
-                    <PropertyValue Property="Label" String="{@i18n>ProductId}"/>
+                    <PropertyValue Property="Label" String="{@i18n>GOODS}"/>
                     <PropertyValue Property="CollectionPath" String="Products" />
                     <PropertyValue Property="Parameters">
                         <Collection>
                             <Record Type="Common.ValueListParameterInOut">
                                 <PropertyValue Property="LocalDataProperty" PropertyPath="productId" />
                                 <PropertyValue Property="ValueListProperty" String="productId" />
-                            </Record>
-                            <Record Type="Common.ValueListParameterDisplayOnly">
-                                <PropertyValue Property="ValueListProperty" String="productName" />
                             </Record>
                             <Record Type="Common.ValueListParameterDisplayOnly">
                                 <PropertyValue Property="ValueListProperty" String="primaryProductCategoryId" />
@@ -763,7 +760,7 @@
             <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
             <Annotation Term="Common.ValueList">
                 <Record Type="Common.ValueListType">
-                    <PropertyValue Property="Label" String="{@i18n>ProductId}"/>
+                    <PropertyValue Property="Label" String="{@i18n>Services}"/>
                     <PropertyValue Property="CollectionPath" String="Services" />
                     <PropertyValue Property="Parameters">
                         <Collection>
@@ -772,14 +769,8 @@
                                 <PropertyValue Property="ValueListProperty" String="productId" />
                             </Record>
                             <Record Type="Common.ValueListParameterDisplayOnly">
-                                <PropertyValue Property="ValueListProperty" String="productName" />
-                            </Record>
-                            <Record Type="Common.ValueListParameterDisplayOnly">
                                 <PropertyValue Property="ValueListProperty" String="primaryProductCategoryId" />
                             </Record>
-                            <!-- <Record Type="Common.ValueListParameterDisplayOnly">
-                                <PropertyValue Property="ValueListProperty" String="quantityUomId" />
-                            </Record> -->
                         </Collection>
                     </PropertyValue>
                 </Record>

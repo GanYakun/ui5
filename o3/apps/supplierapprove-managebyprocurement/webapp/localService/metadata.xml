@@ -204,8 +204,8 @@
                 <Property Name="productTypeId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="quantityUomId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="primaryProductCategoryId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="productName" Type="Edm.String" MaxLength="100"/>
                 <Property Name="productId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="productName" Type="Edm.String" MaxLength="100"/>
                 <Property Name="facilityId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="introductionDate" Type="Edm.DateTimeOffset" Precision="3"/>
                 <Property Name="releaseDate" Type="Edm.DateTimeOffset" Precision="3"/>
@@ -283,9 +283,10 @@
             </EntityType>
             <EntityType Name="SurveyQuestionAnswer">
                 <Key>
-                    <PropertyRef Name="surveyQuestionId"/>
+                    <PropertyRef Name="surveyQuestionAnswerId"/>
                 </Key>
-                <Property Name="surveyQuestionId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="surveyQuestionAnswerId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="surveyQuestionId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="booleanResponse" Type="Edm.String" MaxLength="1"/>
                 <Property Name="currencyResponse" Type="Edm.Decimal" Precision="18" Scale="2"/>
@@ -1234,9 +1235,8 @@
                 <NavigationProperty Name="EmployeesEnumeration" Type="com.dpbird.EmployeesEnumeration">
                     <ReferentialConstraint Property="employeesSection" ReferencedProperty="enumId"/>
                 </NavigationProperty>
-                <NavigationProperty Name="ListRegionEnumeration" Type="com.dpbird.ListRegionEnumeration">
-                    <ReferentialConstraint Property="tickerSymbol" ReferencedProperty="enumId"/>
-                </NavigationProperty>
+                <NavigationProperty Name="ListRegionEnumeration" Type="com.dpbird.ListRegionEnumeration"/>
+                <NavigationProperty Name="ListedCountry" Type="Collection(com.dpbird.ListedCountry)"/>
                 <NavigationProperty Name="FinancialStatements" Type="Collection(com.dpbird.PartyMediaResource)"/>
                 <NavigationProperty Name="ConfidentialityAgreement" Type="Collection(com.dpbird.PartyMediaResource)"/>
                 <NavigationProperty Name="ComplianceReport" Type="Collection(com.dpbird.PartyMediaResource)"/>
@@ -1434,6 +1434,18 @@
                 <Property Name="hasTable" Type="Edm.String" MaxLength="1"/>
                 <Property Name="description" Type="Edm.String" MaxLength="255"/>
             </EntityType>
+            <EntityType Name="ListedCountry">
+                <Key>
+                    <PropertyRef Name="geoId"/>
+                </Key>
+                <Property Name="geoId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="geoTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="geoName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="geoCode" Type="Edm.String" MaxLength="60"/>
+                <Property Name="geoSecCode" Type="Edm.String" MaxLength="60"/>
+                <Property Name="abbreviation" Type="Edm.String" MaxLength="60"/>
+                <Property Name="wellKnownText" Type="Edm.String" MaxLength="5000"/>
+            </EntityType>
             <EntityType Name="AgreementTerm">
                 <Key>
                     <PropertyRef Name="agreementTermId"/>
@@ -1627,7 +1639,7 @@
                 <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
                 <Parameter Name="employeesSection" Type="Edm.String"/>
                 <Parameter Name="annualRevenue" Type="Edm.Decimal" Scale="2"/>
-                <Parameter Name="tickerSymbol" Type="Edm.String"/>
+                <Parameter Name="geoId" Type="Collection(Edm.String)"/>
                 <Parameter Name="comments" Type="Edm.String"/>
                 <Parameter Name="usccNumber" Type="Edm.String"/>
                 <Parameter Name="priority" Type="Edm.String"/>
@@ -1817,6 +1829,7 @@
                     <NavigationPropertyBinding Path="Department" Target="Departments"/>
                     <NavigationPropertyBinding Path="EmployeesEnumeration" Target="EmployeesEnumerations"/>
                     <NavigationPropertyBinding Path="ListRegionEnumeration" Target="ListRegionEnumerations"/>
+                    <NavigationPropertyBinding Path="ListedCountry" Target="ListedCountries"/>
                     <NavigationPropertyBinding Path="FinancialStatements" Target="PartyMediaResources"/>
                     <NavigationPropertyBinding Path="ConfidentialityAgreement" Target="PartyMediaResources"/>
                     <NavigationPropertyBinding Path="ComplianceReport" Target="PartyMediaResources"/>
@@ -1844,6 +1857,7 @@
                     <NavigationPropertyBinding Path="OrderStatusItem" Target="OrderStatusItems"/>
                     <NavigationPropertyBinding Path="SalesChannelEnumeration" Target="OrderSalesEnumerations"/>
                 </EntitySet>
+                <EntitySet Name="ListedCountries" EntityType="com.dpbird.ListedCountry"/>
                 <EntitySet Name="AccountStatusItems" EntityType="com.dpbird.AccountStatusItem"/>
                 <EntitySet Name="ShipmentRouteSegments" EntityType="com.dpbird.ShipmentRouteSegment">
                     <NavigationPropertyBinding Path="CarrierParty" Target="Parties"/>
@@ -2869,17 +2883,23 @@
                     </Annotation>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.Product/productId">
+                <Annotation Term="Common.Label">
+                    <String>Product ID</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>productName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.Product/productName">
                 <Annotation Term="Core.Immutable">
                     <Bool>true</Bool>
                 </Annotation>
                 <Annotation Term="Common.Label">
                     <String>Product name</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Product/productId">
-                <Annotation Term="Common.Label">
-                    <String>Product ID</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Product/facilityId">
@@ -3205,6 +3225,11 @@
             <Annotations Target="com.dpbird.Product/orderDecimalQuantity">
                 <Annotation Term="Common.Label">
                     <String>orderDecimalQuantity</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAnswer/surveyQuestionAnswerId">
+                <Annotation Term="Common.Label">
+                    <String>surveyQuestionAnswerId</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SurveyQuestionAnswer/surveyQuestionId">
@@ -6995,7 +7020,7 @@
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
-                                        <Path>tickerSymbol</Path>
+                                        <Path>ListedCountry/geoId</Path>
                                     </PropertyValue>
                                 </Record>
                                 <Record Type="UI.DataField">
@@ -7052,7 +7077,7 @@
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
-                                        <Path>tickerSymbol</Path>
+                                        <Path>ListedCountry/geoId</Path>
                                     </PropertyValue>
                                 </Record>
                                 <Record Type="UI.DataField">
@@ -7836,7 +7861,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/complianceComments">
                 <Annotation Term="Common.Label">
-                    <String>complianceComments</String>
+                    <String>Comments</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/approvePartyId">
@@ -8515,6 +8540,12 @@
                 <Annotation Term="Common.Label">
                     <String>Service ID</String>
                 </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>productName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Service/productTypeId">
                 <Annotation Term="Common.Label">
@@ -8936,6 +8967,47 @@
             <Annotations Target="com.dpbird.InvoiceType/description">
                 <Annotation Term="Common.Label">
                     <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ListedCountry/geoId">
+                <Annotation Term="Common.Label">
+                    <String>Listed country</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>geoName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ListedCountry/geoTypeId">
+                <Annotation Term="Common.Label">
+                    <String>geoTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ListedCountry/geoName">
+                <Annotation Term="Common.Label">
+                    <String>geoName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ListedCountry/geoCode">
+                <Annotation Term="Common.Label">
+                    <String>geoCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ListedCountry/geoSecCode">
+                <Annotation Term="Common.Label">
+                    <String>geoSecCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ListedCountry/abbreviation">
+                <Annotation Term="Common.Label">
+                    <String>abbreviation</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ListedCountry/wellKnownText">
+                <Annotation Term="Common.Label">
+                    <String>wellKnownText</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.AgreementTerm">
@@ -9887,7 +9959,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.FillPartyClassification/complianceComments">
                 <Annotation Term="Common.Label">
-                    <String>complianceComments</String>
+                    <String>Comments</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo">
@@ -9936,7 +10008,7 @@
                     <String>Annual revenue</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.FillSupplierBaseInfo/tickerSymbol">
+            <Annotations Target="com.dpbird.FillSupplierBaseInfo/geoId">
                 <Annotation Term="Common.Label">
                     <String>List region</String>
                 </Annotation>
@@ -9946,16 +10018,16 @@
                             <String>List region</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
-                            <String>ListRegionEnumerations</String>
+                            <String>ListedCountries</String>
                         </PropertyValue>
                         <PropertyValue Property="Parameters">
                             <Collection>
                                 <Record Type="Common.ValueListParameterInOut">
                                     <PropertyValue Property="LocalDataProperty">
-                                        <PropertyPath>tickerSymbol</PropertyPath>
+                                        <PropertyPath>geoId</PropertyPath>
                                     </PropertyValue>
                                     <PropertyValue Property="ValueListProperty">
-                                        <String>enumId</String>
+                                        <String>geoId</String>
                                     </PropertyValue>
                                 </Record>
                             </Collection>
