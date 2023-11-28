@@ -170,6 +170,7 @@
 
                 <Annotation Term="UI.SelectionPresentationVariant" Qualifier="table">
                     <Record Type="UI.SelectionPresentationVariantType">
+                        <PropertyValue Property="Text" String="{@i18n>OnBoardSupplier}"/>
                         <PropertyValue Property="PresentationVariant">
                             <Record Type="UI.PresentationVariantType">
                                 <PropertyValue Property="Visualizations">
@@ -190,7 +191,106 @@
                         <PropertyValue Property="SelectionVariant">
                             <Record Type="UI.SelectionVariantType">
                                 <PropertyValue Property="SelectOptions">
-                                    <Collection/>
+                                    <Collection>
+                                        <Record Type="UI.SelectOptionType">
+                                            <PropertyValue Property="PropertyName" PropertyPath="statusId"></PropertyValue>
+                                            <PropertyValue Property="Ranges">
+                                                <Collection>
+                                                    <Record Type="UI.SelectionRangeType">
+                                                        <PropertyValue Property="Low" String="PARTY_ENABLED"></PropertyValue>
+                                                        <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
+                                                        <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
+                                                    </Record>
+                                                </Collection>
+                                            </PropertyValue>
+                                        </Record>
+                                    </Collection>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                 <Annotation Term="UI.SelectionPresentationVariant" Qualifier="tableDisabled">
+                    <Record Type="UI.SelectionPresentationVariantType">
+                        <PropertyValue Property="Text" String="{@i18n>DisabledSupplier}"/>
+                        <PropertyValue Property="PresentationVariant">
+                            <Record Type="UI.PresentationVariantType">
+                                <PropertyValue Property="Visualizations">
+                                    <Collection>
+                                        <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                    </Collection>
+                                </PropertyValue>
+                                <PropertyValue Property="SortOrder">
+                                    <Collection>
+                                        <Record Type="Common.SortOrderType">
+                                            <PropertyValue Property="Property" PropertyPath="createdDate"/>
+                                            <PropertyValue Property="Descending" Bool="true"/>
+                                        </Record>
+                                    </Collection>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="SelectionVariant">
+                            <Record Type="UI.SelectionVariantType">
+                                <PropertyValue Property="SelectOptions">
+                                    <Collection>
+                                        <Record Type="UI.SelectOptionType">
+                                            <PropertyValue Property="PropertyName" PropertyPath="statusId"></PropertyValue>
+                                            <PropertyValue Property="Ranges">
+                                                <Collection>
+                                                    <Record Type="UI.SelectionRangeType">
+                                                        <PropertyValue Property="Low" String="PARTY_DISABLED"></PropertyValue>
+                                                        <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
+                                                        <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
+                                                    </Record>
+                                                </Collection>
+                                            </PropertyValue>
+                                        </Record>
+                                    </Collection>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                 <Annotation Term="UI.SelectionPresentationVariant" Qualifier="tableOnHold">
+                    <Record Type="UI.SelectionPresentationVariantType">
+                        <PropertyValue Property="Text" String="{@i18n>OnHoldSupplier}"/>
+                        <PropertyValue Property="PresentationVariant">
+                            <Record Type="UI.PresentationVariantType">
+                                <PropertyValue Property="Visualizations">
+                                    <Collection>
+                                        <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                    </Collection>
+                                </PropertyValue>
+                                <PropertyValue Property="SortOrder">
+                                    <Collection>
+                                        <Record Type="Common.SortOrderType">
+                                            <PropertyValue Property="Property" PropertyPath="createdDate"/>
+                                            <PropertyValue Property="Descending" Bool="true"/>
+                                        </Record>
+                                    </Collection>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="SelectionVariant">
+                            <Record Type="UI.SelectionVariantType">
+                                <PropertyValue Property="SelectOptions">
+                                    <Collection>
+                                        <Record Type="UI.SelectOptionType">
+                                            <PropertyValue Property="PropertyName" PropertyPath="statusId"></PropertyValue>
+                                            <PropertyValue Property="Ranges">
+                                                <Collection>
+                                                    <Record Type="UI.SelectionRangeType">
+                                                        <PropertyValue Property="Low" String="PARTY_ON_HOLD"></PropertyValue>
+                                                        <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
+                                                        <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
+                                                    </Record>
+                                                </Collection>
+                                            </PropertyValue>
+                                        </Record>
+                                    </Collection>
                                 </PropertyValue>
                             </Record>
                         </PropertyValue>
@@ -233,10 +333,10 @@
                     </Collection>
                 </Annotation>
           
-                <!-- <Annotation Term="UI.Identification">
-                    <Collection >  -->
-                         <!-- <Record Type="UI.DataFieldForAction" >
-                            <PropertyValue Property="Action" String="com.dpbird.ChangeSupplierStatusToEnable"/>
+                <Annotation Term="UI.Identification">
+                    <Collection > 
+                         <Record Type="UI.DataFieldForAction" >
+                            <PropertyValue Property="Action" String="com.dpbird.DisableSupplier"/>
                             <PropertyValue Property="Label"  String="{@i18n>ChangeSupplierStatusToEnable}" />
                             <Annotation Term="UI.Hidden">
                                 <If>
@@ -244,11 +344,11 @@
                                         <Path>statusId</Path>
                                         <String>PARTY_DISABLED</String>
                                     </Eq>
-                                <Bool>false</Bool>
                                 <Bool>true</Bool>
+                                <Bool>false</Bool>
                                 </If>
                             </Annotation>
-                        </Record>    -->
+                        </Record>   
                         <!-- <Record Type="UI.DataFieldForAction" >
                             <PropertyValue Property="Action" String="com.dpbird.SubmitApproval_Supplier"/>
                             <PropertyValue Property="Label"  String="{@i18n>SubmitApproval_Supplier}" />
@@ -269,8 +369,8 @@
                             <PropertyValue Property="Action" String="com.dpbird.ReturnToSupplier"/>
                             <PropertyValue Property="Label"  String="{@i18n>ReturnToSupplier}" />
                         </Record>                                                                                                                                                            -->
-                    <!-- </Collection>
-                </Annotation> -->
+                    </Collection>
+                </Annotation>
                 <Annotation Term="UI.HeaderFacets">
                     <Collection>
                         <Record Type="UI.ReferenceFacet">

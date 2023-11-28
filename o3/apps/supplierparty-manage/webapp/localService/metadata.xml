@@ -110,6 +110,7 @@
                 <Property Name="comments" Type="Edm.String" MaxLength="255"/>
                 <Property Name="tickerSymbol" Type="Edm.String" MaxLength="10"/>
                 <Property Name="logoImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="employeesSection" Type="Edm.String" MaxLength="255"/>
                 <Property Name="groupName" Type="Edm.String" MaxLength="100"/>
                 <Property Name="groupNameLocal" Type="Edm.String" MaxLength="100"/>
                 <Property Name="numEmployees" Type="Edm.Int64"/>
@@ -304,9 +305,10 @@
             </EntityType>
             <EntityType Name="SurveyQuestionAnswer">
                 <Key>
-                    <PropertyRef Name="surveyQuestionId"/>
+                    <PropertyRef Name="surveyQuestionAnswerId"/>
                 </Key>
-                <Property Name="surveyQuestionId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="surveyQuestionAnswerId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="surveyQuestionId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="booleanResponse" Type="Edm.String" MaxLength="1"/>
                 <Property Name="currencyResponse" Type="Edm.Decimal" Precision="18" Scale="2"/>
@@ -452,6 +454,7 @@
                 <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
                 <Property Name="comments" Type="Edm.String" MaxLength="255"/>
                 <Property Name="tickerSymbol" Type="Edm.String" MaxLength="10"/>
+                <Property Name="employeesSection" Type="Edm.String" MaxLength="255"/>
                 <Property Name="groupName" Type="Edm.String" MaxLength="100"/>
                 <Property Name="groupNameLocal" Type="Edm.String" MaxLength="100"/>
                 <Property Name="numEmployees" Type="Edm.Int64"/>
@@ -1058,9 +1061,8 @@
                 <Property Name="processId" Type="Edm.String"/>
                 <Property Name="nodeId" Type="Edm.Decimal"/>
             </ComplexType>
-            <Action Name="ChangeSupplierStatusToEnable" EntitySetPath="supplierParty" IsBound="true">
+            <Action Name="DisableSupplier" EntitySetPath="supplierParty" IsBound="true">
                 <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
-                <ReturnType Type="com.dpbird.SupplierParty"/>
             </Action>
             <EntityContainer Name="O3Container">
                 <EntitySet Name="FixedAssets" EntityType="com.dpbird.FixedAsset"/>
@@ -1613,6 +1615,11 @@
             <Annotations Target="com.dpbird.Company/logoImageUrl">
                 <Annotation Term="Common.Label">
                     <String>logoImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Company/employeesSection">
+                <Annotation Term="Common.Label">
+                    <String>employeesSection</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Company/groupName">
@@ -2430,6 +2437,11 @@
                     <String>description</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAnswer/surveyQuestionAnswerId">
+                <Annotation Term="Common.Label">
+                    <String>surveyQuestionAnswerId</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.SurveyQuestionAnswer/surveyQuestionId">
                 <Annotation Term="Common.Label">
                     <String>Question ID</String>
@@ -3203,6 +3215,11 @@
                     <String>Ticker symbol</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/employeesSection">
+                <Annotation Term="Common.Label">
+                    <String>Employees</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/groupName">
                 <Annotation Term="Common.Label">
                     <String>groupName</String>
@@ -3215,7 +3232,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/numEmployees">
                 <Annotation Term="Common.Label">
-                    <String>Employee numbers</String>
+                    <String>numEmployees</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/officeSiteName">
@@ -3498,7 +3515,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/lastName">
                 <Annotation Term="Common.Label">
-                    <String>lastName</String>
+                    <String>Last name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/occupation">
@@ -3603,7 +3620,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/firstName">
                 <Annotation Term="Common.Label">
-                    <String>firstName</String>
+                    <String>First name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/cardId">
@@ -3741,7 +3758,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PartyClassificationGroup/description">
                 <Annotation Term="Common.Label">
-                    <String>description</String>
+                    <String>Risk level</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierStatusItem/statusId">

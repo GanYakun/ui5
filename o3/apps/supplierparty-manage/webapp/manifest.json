@@ -142,6 +142,22 @@
                     "name": "sap.fe.templates.ListReport",
                     "options": {
                         "settings": {
+                            "views": {
+                                "paths": [
+                                    {
+                                        "key": "table",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#table"
+                                    },
+                                    {
+                                        "key": "tableDisabled",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableDisabled"
+                                    },
+                                    {
+                                        "key": "tableOnHold",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#tableOnHold"
+                                    }
+                                ]
+                            },
                             "defaultTemplateAnnotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#table",
                             "entitySet": "SupplierParties",
                             "variantManagement": "Page",
