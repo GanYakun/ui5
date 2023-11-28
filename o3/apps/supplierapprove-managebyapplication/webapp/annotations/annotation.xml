@@ -538,6 +538,10 @@
                                 <Bool>false</Bool>
                             </If>
                         </Annotation>
+                    </Record> 
+                    <Record Type="UI.DataFieldForAction" >
+                        <PropertyValue Property="Action" String="com.dpbird.ImportProducts"/>
+                        <PropertyValue Property="Label"  String="{@i18n>ImportProduct}"/>
                     </Record>         
                 </Collection>
             </Annotation>

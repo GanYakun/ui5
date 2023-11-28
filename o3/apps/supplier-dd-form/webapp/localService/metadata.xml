@@ -62,11 +62,11 @@
                 </Key>
                 <Property Name="nationality" Type="Edm.String"/>
                 <Property Name="copyIdentificationAttached" Type="Edm.Boolean"/>
+                <Property Name="positionTitle" Type="Edm.String" MaxLength="100"/>
                 <Property Name="amount" Type="Edm.Decimal" Precision="18" Scale="6"/>
                 <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="roleTypeIdTo" Type="Edm.String" MaxLength="60"/>
                 <Property Name="partyIdFrom" Type="Edm.String" MaxLength="60"/>
-                <Property Name="positionTitle" Type="Edm.String" MaxLength="100"/>
                 <Property Name="comments" Type="Edm.String" MaxLength="255"/>
                 <Property Name="priorityTypeId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="permissionsEnumId" Type="Edm.String" MaxLength="60"/>
@@ -468,7 +468,7 @@
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty">
-                <Annotation Term="UI.LineItem" Qualifier="RelPersons">
+                <Annotation Term="UI.LineItem" Qualifier="BeneficialPerson">
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
@@ -504,6 +504,42 @@
                         </Record>
                     </Collection>
                 </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="SeniorStaff">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>partyName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>nationality</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>positionTitle</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>copyIdentificationAttached</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/nationality">
                 <Annotation Term="Common.Label">
@@ -513,6 +549,11 @@
             <Annotations Target="com.dpbird.RelationshipAndToParty/copyIdentificationAttached">
                 <Annotation Term="Common.Label">
                     <String>随附证明文件复印件</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RelationshipAndToParty/positionTitle">
+                <Annotation Term="Common.Label">
+                    <String>职位</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/amount">
@@ -533,11 +574,6 @@
             <Annotations Target="com.dpbird.RelationshipAndToParty/partyIdFrom">
                 <Annotation Term="Common.Label">
                     <String>partyIdFrom</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.RelationshipAndToParty/positionTitle">
-                <Annotation Term="Common.Label">
-                    <String>positionTitle</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/comments">

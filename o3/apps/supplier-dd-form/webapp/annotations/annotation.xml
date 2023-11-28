@@ -104,17 +104,16 @@
                             <PropertyValue Property="Target" AnnotationPath="PartyNameHistory/@UI.LineItem#HistoryList"/>
                         </Record>
 
-                        <!-- <Record Type="UI.ReferenceFacet">
+                        <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="BeneficialPerson"/>
-                            <PropertyValue Property="Label" String="Full name of Ultimate Beneficial Owner(s) 
-                            (all direct and indirect beneficial owners holding 25% or more economic, voting or control rights)"/>
-                            <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#RelPersons"/>
+                            <PropertyValue Property="Label" String="Ultimate beneficiary"/>
+                            <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#BeneficialPerson"/>
                         </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="SeniorStaff"/>
-                            <PropertyValue Property="Label" String="Name of Director / Officer"/>
-                            <PropertyValue Property="Target" AnnotationPath="SeniorStaff/@UI.LineItem#RelPersons"/>
-                        </Record> -->
+                            <PropertyValue Property="Label" String="Director/Officer"/>
+                            <PropertyValue Property="Target" AnnotationPath="SeniorStaff/@UI.LineItem#SeniorStaff"/>
+                        </Record>
 
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="ComplianceCertifications"/>
@@ -177,6 +176,47 @@
                         </Record> -->
                     </Collection>
                     
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.RelationshipAndToParty">
+                <Annotation Term="UI.LineItem" Qualifier="BeneficialPerson">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Full name of Ultimate Beneficial Owner(s) 
+                            (all direct and indirect beneficial owners holding 25% or more economic, voting or control rights)"/>
+                            <PropertyValue Property="Value">
+                                <Path>partyName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>nationality</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>amount</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>copyIdentificationAttached</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
                 </Annotation>
             </Annotations>
 
