@@ -337,12 +337,40 @@
                     <Collection > 
                          <Record Type="UI.DataFieldForAction" >
                             <PropertyValue Property="Action" String="com.dpbird.DisableSupplier"/>
-                            <PropertyValue Property="Label"  String="{@i18n>ChangeSupplierStatusToEnable}" />
+                            <PropertyValue Property="Label"  String="{@i18n>ChangeSupplierStatusToDisabled}" />
                             <Annotation Term="UI.Hidden">
                                 <If>
                                     <Eq>
                                         <Path>statusId</Path>
                                         <String>PARTY_DISABLED</String>
+                                    </Eq>
+                                <Bool>true</Bool>
+                                <Bool>false</Bool>
+                                </If>
+                            </Annotation>
+                        </Record> 
+                        <Record Type="UI.DataFieldForAction" >
+                            <PropertyValue Property="Action" String="com.dpbird.OnHoldSupplier"/>
+                            <PropertyValue Property="Label"  String="{@i18n>ChangeSupplierStatusToOnHold}" />
+                            <Annotation Term="UI.Hidden">
+                                <If>
+                                    <Eq>
+                                        <Path>statusId</Path>
+                                        <String>PARTY_ON_HOLD</String>
+                                    </Eq>
+                                <Bool>true</Bool>
+                                <Bool>false</Bool>
+                                </If>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction" >
+                            <PropertyValue Property="Action" String="com.dpbird.EnableSupplier"/>
+                            <PropertyValue Property="Label"  String="{@i18n>ChangeSupplierStatusToEnable}" />
+                            <Annotation Term="UI.Hidden">
+                                <If>
+                                    <Eq>
+                                        <Path>statusId</Path>
+                                        <String>PARTY_ENABLED</String>
                                     </Eq>
                                 <Bool>true</Bool>
                                 <Bool>false</Bool>
@@ -698,61 +726,7 @@
                 </Annotation>
             </Annotations>
 
-            <Annotations Target="com.dpbird.ChangeSupplierStatusToEnable">
-                <Annotation Term="Common.SideEffects">
-                    <Record>
-                        <PropertyValue Property="TargetEntities">
-                            <Collection>
-                                <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-            </Annotations>
-
-            <Annotations Target="com.dpbird.CreatePartyClassificationGroup">
-                <Annotation Term="Common.SideEffects">
-                    <Record>
-                        <PropertyValue Property="TargetEntities">
-                            <Collection>
-                                <NavigationPropertyPath>partyClassificationGroup</NavigationPropertyPath>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-            </Annotations>
-
-            <Annotations Target="com.dpbird.UpdatePartyClassificationGroup/partyClassificationTypeId">
-                <Annotation Term="UI.ParameterDefaultValue" Path="partyClassificationGroup/partyClassificationTypeId"/>
-            </Annotations>
-
-            <Annotations Target="com.dpbird.UpdatePartyClassificationGroup/description">
-                <Annotation Term="UI.ParameterDefaultValue" Path="partyClassificationGroup/description"/>
-            </Annotations>
-
-            <Annotations Target="com.dpbird.UpdatePartyClassificationGroup">
-                <Annotation Term="Common.SideEffects">
-                    <Record>
-                        <PropertyValue Property="TargetEntities">
-                            <Collection>
-                                <NavigationPropertyPath>partyClassificationGroup</NavigationPropertyPath>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-            </Annotations>
-
-             <Annotations Target="com.dpbird.CreatePersonAndContact">
-                <Annotation Term="Common.SideEffects">
-                    <Record>
-                        <PropertyValue Property="TargetEntities">
-                            <Collection>
-                                <NavigationPropertyPath>personAndContact</NavigationPropertyPath>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-            </Annotations>
+           
 
              <Annotations Target="com.dpbird.O3Container/SupplierParties">
                 <Annotation Term="UI.UpdateHidden">
@@ -831,12 +805,7 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="partyName"/>
                                 </Record>
-                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="PartyAndContact/primaryPhone"/>
-                                </Record>
-                                 <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="PartyAndContact/primaryEmail"/>
-                                </Record>
+                                
                             </Collection>
                         </PropertyValue>
                     </Record>

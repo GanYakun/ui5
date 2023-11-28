@@ -1063,6 +1063,15 @@
             </ComplexType>
             <Action Name="DisableSupplier" EntitySetPath="supplierParty" IsBound="true">
                 <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
+                <Parameter Name="statusId" Type="Edm.String"/>
+            </Action>
+            <Action Name="OnHoldSupplier" EntitySetPath="supplierParty" IsBound="true">
+                <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
+                <Parameter Name="statusId" Type="Edm.String"/>
+            </Action>
+            <Action Name="EnableSupplier" EntitySetPath="supplierParty" IsBound="true">
+                <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
+                <Parameter Name="statusId" Type="Edm.String"/>
             </Action>
             <EntityContainer Name="O3Container">
                 <EntitySet Name="FixedAssets" EntityType="com.dpbird.FixedAsset"/>
@@ -5903,6 +5912,39 @@
             <Annotations Target="com.dpbird.SurveyQuestion/formatString">
                 <Annotation Term="Common.Label">
                     <String>formatString</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DisableSupplier">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.OnHoldSupplier">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.EnableSupplier">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>supplierParty</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseQuote/salesChannelEnumId">
