@@ -163,7 +163,8 @@
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "SupplierParties"
+                            "entitySet": "SupplierParties",
+                            "sectionLayout": "Tabs"
                         }
                     }
                 }

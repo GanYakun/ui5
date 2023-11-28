@@ -108,7 +108,6 @@
             "css": []
         },
         "routing": {
-            "config": {},
             "routes": [
                 {
                     "pattern": ":?query:",
@@ -160,7 +159,8 @@
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "SupplierParties"
+                            "entitySet": "SupplierParties",
+                            "sectionLayout": "Tabs"
                         }
                     }
                 }
