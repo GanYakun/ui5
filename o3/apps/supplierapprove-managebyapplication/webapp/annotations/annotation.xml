@@ -188,26 +188,6 @@
                         </If>
                         </Annotation>
                     </Record>
-                    <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="FinancialStatements"/>
-                        <PropertyValue Property="Label" String="{@i18n>FinancialStatements}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="FinancialStatements/@UI.LineItem#FileList"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="ConfidentialityAgreement"/>
-                        <PropertyValue Property="Label" String="{@i18n>ConfidentialityAgreement}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="ConfidentialityAgreement/@UI.LineItem#FileList"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="ComplianceReport"/>
-                        <PropertyValue Property="Label" String="{@i18n>ComplianceReport}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="ComplianceReport/@UI.LineItem#FileList"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="OtherFiles"/>
-                        <PropertyValue Property="Label" String="{@i18n>Otherfiles}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="OtherFiles/@UI.LineItem#FileList"/>
-                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="FileList"/>
                         <PropertyValue Property="Label" String="{@i18n>FileList}"/>
