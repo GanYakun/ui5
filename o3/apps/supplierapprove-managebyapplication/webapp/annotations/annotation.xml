@@ -331,6 +331,10 @@
                         <PropertyValue Property="ID" String="statusId"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record>
+                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="complianceCheckWarning"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#complianceCheckWarning"/>
+                    </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Classification"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
