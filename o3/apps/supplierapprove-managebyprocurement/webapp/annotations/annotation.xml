@@ -539,24 +539,9 @@
                         </Annotation>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="FinancialStatements"/>
-                        <PropertyValue Property="Label" String="{@i18n>FinancialStatements}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="FinancialStatements/@UI.LineItem#FileList"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="ConfidentialityAgreement"/>
-                        <PropertyValue Property="Label" String="{@i18n>ConfidentialityAgreement}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="ConfidentialityAgreement/@UI.LineItem#FileList"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="ComplianceReport"/>
-                        <PropertyValue Property="Label" String="{@i18n>ComplianceReport}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="ComplianceReport/@UI.LineItem#FileList"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="Otherfiles"/>
-                        <PropertyValue Property="Label" String="{@i18n>Otherfiles}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="OtherFiles/@UI.LineItem#FileList"/>
+                        <PropertyValue Property="ID" String="FileList"/>
+                        <PropertyValue Property="Label" String="{@i18n>FileList}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="FileList/@UI.LineItem#FileList"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="NoteDataLineItem"/>
@@ -930,14 +915,22 @@
         <Annotations Target="com.dpbird.PartyMediaResource">
             <Annotation Term="UI.LineItem" Qualifier="FileList">
                 <Collection>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value">
+                            <Path>contentName</Path>
+                        </PropertyValue>
+                        <Annotation Term="UI.Importance">
+                            <EnumMember>UI.ImportanceType/High</EnumMember>
+                        </Annotation>
+                    </Record>
                     <Record Type="UI.DataFieldWithUrl">
                         <PropertyValue Property="Label" String="File"/>
-                        <PropertyValue Property="Value" Path="contentName"/>
+                        <PropertyValue Property="Value" Path="dataResourceName"/>
                         <PropertyValue Property="Url" Path="fileUrl"/>
                     </Record>
                     <Record Type="UI.DataField">
                         <PropertyValue Property="Value">
-                            <Path>createdDate</Path>
+                            <Path>fromDate</Path>
                         </PropertyValue>
                         <Annotation Term="UI.Importance">
                             <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -949,7 +942,7 @@
                             <String>com.dpbird.UploadAction</String>
                         </PropertyValue>
                         <PropertyValue Property="Inline">
-                            <Bool>false</Bool>
+                            <Bool>true</Bool>
                         </PropertyValue>
                         <PropertyValue Property="InvocationGrouping">
                             <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
@@ -964,6 +957,8 @@
                 </Collection>
             </Annotation>
         </Annotations>
+
+
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>
