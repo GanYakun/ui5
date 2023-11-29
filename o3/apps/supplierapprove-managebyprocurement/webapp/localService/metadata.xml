@@ -1134,6 +1134,7 @@
                 <Property Name="adverseResults" Type="Edm.String"/>
                 <Property Name="additionalProtection" Type="Edm.String"/>
                 <Property Name="complianceComments" Type="Edm.String"/>
+                <Property Name="complianceCheckWarning" Type="Edm.String"/>
                 <Property Name="approvePartyId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="workEffortId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="recurrenceInfoId" Type="Edm.String" MaxLength="60"/>
@@ -1241,6 +1242,7 @@
                 <NavigationProperty Name="ConfidentialityAgreement" Type="Collection(com.dpbird.PartyMediaResource)"/>
                 <NavigationProperty Name="ComplianceReport" Type="Collection(com.dpbird.PartyMediaResource)"/>
                 <NavigationProperty Name="OtherFiles" Type="Collection(com.dpbird.PartyMediaResource)"/>
+                <NavigationProperty Name="FileList" Type="Collection(com.dpbird.PartyMediaResource)"/>
             </EntityType>
             <EntityType Name="Party">
                 <Key>
@@ -1573,8 +1575,10 @@
                 <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="contentId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="contentName" Type="Edm.String" MaxLength="255"/>
-                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
                 <Property Name="mimeTypeId" Type="Edm.String" MaxLength="320"/>
+                <Property Name="dataResourceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="dataResourceName" Type="Edm.String" MaxLength="255"/>
+                <Property Name="fromDate" Type="Edm.DateTimeOffset" Precision="3"/>
                 <Property Name="otherData" Type="Edm.Stream"/>
                 <Property Name="fileUrl" Type="Edm.String"/>
             </EntityType>
@@ -1722,7 +1726,7 @@
                 <Parameter Name="email" Type="Edm.String" Nullable="false"/>
             </Action>
             <Action Name="UploadAction" IsBound="true">
-                <Parameter Name="partyMediaResource" Type="Collection(com.dpbird.PartyMediaResource)" Nullable="false"/>
+                <Parameter Name="partyMediaResource" Type="com.dpbird.PartyMediaResource" Nullable="false"/>
                 <Parameter Name="file" Type="Edm.Stream" Nullable="false"/>
             </Action>
             <Action Name="CreateNoteData" IsBound="true">
@@ -1834,6 +1838,7 @@
                     <NavigationPropertyBinding Path="ConfidentialityAgreement" Target="PartyMediaResources"/>
                     <NavigationPropertyBinding Path="ComplianceReport" Target="PartyMediaResources"/>
                     <NavigationPropertyBinding Path="OtherFiles" Target="PartyMediaResources"/>
+                    <NavigationPropertyBinding Path="FileList" Target="PartyMediaResources"/>
                 </EntitySet>
                 <EntitySet Name="SurveyQuestionAnswers" EntityType="com.dpbird.SurveyQuestionAnswer"/>
                 <EntitySet Name="AfterSalesServices" EntityType="com.dpbird.AfterSalesService">
@@ -6994,6 +6999,16 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="complianceCheckWarning">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Title">
+                            <String>complianceCheckWarning</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Value">
+                            <Path>complianceCheckWarning</Path>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
                 <Annotation Term="UI.FieldGroup" Qualifier="PartyGroupFieldGroup">
                     <Record Type="UI.FieldGroupType">
                         <PropertyValue Property="Data">
@@ -7862,6 +7877,11 @@
             <Annotations Target="com.dpbird.SupplierParty/complianceComments">
                 <Annotation Term="Common.Label">
                     <String>Comments</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/complianceCheckWarning">
+                <Annotation Term="Common.Label">
+                    <String>complianceCheckWarning</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/approvePartyId">
@@ -9734,14 +9754,24 @@
                     <String>File Name</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.PartyMediaResource/createdDate">
-                <Annotation Term="Common.Label">
-                    <String>Creation time</String>
-                </Annotation>
-            </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/mimeTypeId">
                 <Annotation Term="Common.Label">
                     <String>mimeTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyMediaResource/dataResourceId">
+                <Annotation Term="Common.Label">
+                    <String>dataResourceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyMediaResource/dataResourceName">
+                <Annotation Term="Common.Label">
+                    <String>dataResourceName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyMediaResource/fromDate">
+                <Annotation Term="Common.Label">
+                    <String>Effective start time</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/otherData">
