@@ -128,21 +128,7 @@
             </Annotation>
 
             <Annotation Term="UI.Identification">
-                <Collection > 
-                    <Record Type="UI.DataFieldForAction" >
-                        <PropertyValue Property="Action" String="com.dpbird.SubmitToProcurement"/>
-                        <PropertyValue Property="Label"  String="{@i18n>SubmitApproval_Supplier}" />
-                        <Annotation Term="UI.Hidden">
-                            <If>
-                                <Eq>
-                                    <Path>currentStatusId</Path>
-                                    <String>PROCESSED</String>
-                                </Eq>
-                                <Bool>true</Bool>
-                                <Bool>false</Bool>
-                            </If>
-                        </Annotation>
-                    </Record>    
+                <Collection >
                     <Record Type="UI.DataFieldForAction">
                         <PropertyValue Property="Action" String="com.dpbird.FillPartyClassification" />
                         <PropertyValue Property="Label" String="{@i18n>FillRisqueLevel}" />
