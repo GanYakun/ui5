@@ -762,9 +762,9 @@
                         </Annotation>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="Label" String="{@i18n>HistoryRecord}"/>
-                        <PropertyValue Property="ID" String="HistoryRecord"/>
-                        <PropertyValue Property="Target" AnnotationPath="ChildWorkEffortAndPartyGroupContact/@UI.LineItem#HistoryRecord"/>
+                        <PropertyValue Property="Label" String="{@i18n>FlowingRecords}"/>
+                        <PropertyValue Property="ID" String="FlowingRecords"/>
+                        <PropertyValue Property="Target" AnnotationPath="ChildWorkEffortStatus/@UI.LineItem#WorkEffortStatusList" />
                     </Record>
                 </Collection>
             </Annotation>
