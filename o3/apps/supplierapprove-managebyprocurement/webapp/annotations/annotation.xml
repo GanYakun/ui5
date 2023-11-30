@@ -263,10 +263,16 @@
                         <PropertyValue Property="Label"  String="{@i18n>FinishDomUpload}" />
                         <Annotation Term="UI.Hidden">
                             <If>
-                                <Eq>
-                                    <Path>currentStatusId</Path>
-                                    <String>DOCUMENT_READY</String>
-                                </Eq>
+                                <Or>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>REGISTERED</String>
+                                    </Eq>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>DOCUMENT_READY</String>
+                                    </Eq>
+                                </Or>
                                 <Bool>true</Bool>
                                 <Bool>false</Bool>
                             </If>
