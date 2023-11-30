@@ -379,6 +379,11 @@
                         <PropertyValue Property="ID" String="WorkScope"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WorkScope"/>
                     </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="Label" String="Progress Status"/>
+                        <PropertyValue Property="ID" String="ProgressStatus"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ProgressStatus"/>
+                    </Record>
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#IdentificationCode"/>
                         <PropertyValue Property="Label" String="{@i18n>Identification}"/>
@@ -452,6 +457,9 @@
                             </Record>
                             <Record Type="UI.DataField">
                                 <PropertyValue Property="Value" Path="additionalProtection"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="complianceComments" />
                             </Record>
                         </Collection>
                     </PropertyValue>
@@ -912,14 +920,6 @@
                         <PropertyValue Property="Label" String="File"/>
                         <PropertyValue Property="Value" Path="dataResourceName"/>
                         <PropertyValue Property="Url" Path="fileUrl"/>
-                    </Record>
-                    <Record Type="UI.DataField">
-                        <PropertyValue Property="Value">
-                            <Path>fromDate</Path>
-                        </PropertyValue>
-                        <Annotation Term="UI.Importance">
-                            <EnumMember>UI.ImportanceType/High</EnumMember>
-                        </Annotation>
                     </Record>
                     <Record Type="UI.DataFieldForAction">
                         <PropertyValue Property="Label" String="{@i18n>Upload}"/>

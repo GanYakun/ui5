@@ -142,6 +142,10 @@
                                         "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#REGISTERED"
                                     },
                                     {
+                                        "key": "DOCUMENT_READY",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#DOCUMENT_READY"
+                                    },
+                                    {
                                         "key": "WARNING",
                                         "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#WARNING"
                                     }
