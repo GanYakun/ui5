@@ -77,7 +77,7 @@ public class OfbizOdataProcessor {
     protected Set<String> fieldsToSelect = null;
     protected Set<String> applySelect = null;
     protected int skipValue = 0;
-    protected int topValue = 200;
+    protected int topValue = MAX_ROWS;
     protected List<String> orderBy;
     protected String sapContextId;
     protected boolean filterByDate = false;
@@ -403,12 +403,13 @@ public class OfbizOdataProcessor {
                 && queryOptions.get("topOption") != null
                 && ((TopOption) queryOptions.get("topOption")).getValue() > 0) {
             int topValue = ((TopOption) queryOptions.get("topOption")).getValue();
-            if (topValue > MAX_ROWS) {
-                topValue = MAX_ROWS;
-            }
+//            if (topValue > MAX_ROWS) {
+//                topValue = MAX_ROWS;
+                //TODO: throw exception
+//            }
             return topValue;
         }
-        return 200;
+        return MAX_ROWS;
     }
 
     protected int getSkipOption(Map<String, QueryOption> queryOptions) {
