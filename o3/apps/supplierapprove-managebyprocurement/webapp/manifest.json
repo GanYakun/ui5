@@ -138,12 +138,12 @@
                                         "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#REQUIRE_CHANGES"
                                     },
                                     {
-                                        "key": "REGISTERED",
-                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#REGISTERED"
-                                    },
-                                    {
                                         "key": "DOCUMENT_READY",
                                         "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#DOCUMENT_READY"
+                                    },
+                                    {
+                                        "key": "REGISTERED",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#REGISTERED"
                                     },
                                     {
                                         "key": "WARNING",
