@@ -530,11 +530,11 @@
                             </PropertyValue>
 
                         </Record>
-                       <Record Type="UI.ReferenceFacet">
+                       <!-- <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>
                             <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
                             <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
-                        </Record>
+                        </Record> -->
                         <!-- <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="Label" String="{@i18n>PartyClassificationGroupLineItem}"/>
                             <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
