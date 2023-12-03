@@ -1054,6 +1054,18 @@
                 </Collection>
             </Annotation>
         </Annotations>
+        <Annotations Target="com.dpbird.CreatePurchaseAgreement">
+            <Annotation Term="Common.SideEffects">
+                <Record>
+                    <PropertyValue Property="TargetEntities">
+                        <Collection>
+                            <!-- Add the path to the first parameter that is affected here -->
+                            <NavigationPropertyPath>agreement</NavigationPropertyPath>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+        </Annotations>
 
 
         </Schema>
