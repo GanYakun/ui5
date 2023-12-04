@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-    <edmx:Reference Uri=".3/os/complete/vocabularies/Org.OData.Measures.V1.xml">
+    <edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Measures.V1.xml">
         <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
     </edmx:Reference>
     <edmx:Reference Uri="/odata/vocabularies/Core.xml">
@@ -1101,6 +1101,7 @@
                 <Property Name="currentStatusId" Type="Edm.String" DefaultValue="NOT_PROCESSED" MaxLength="60"/>
                 <Property Name="isGovernment" Type="Edm.Boolean"/>
                 <Property Name="ddFormType" Type="Edm.String"/>
+                <Property Name="ddFormTypeId" Type="Edm.String"/>
                 <Property Name="ddFormDealStatus" Type="Edm.String"/>
                 <Property Name="ddFormStatusHistory" Type="Edm.String"/>
                 <Property Name="cycleTime" Type="Edm.String"/>
@@ -4258,7 +4259,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierStatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>Status ID</String>
+                    <String>statusId</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -4284,7 +4285,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierStatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>Status</String>
+                    <String>description</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.ProductType/productTypeId">
@@ -6048,7 +6049,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.ShipmentStatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>Status ID</String>
+                    <String>statusId</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -6074,7 +6075,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.ShipmentStatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>Status</String>
+                    <String>description</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.WorkEffortStatus">
@@ -6114,7 +6115,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.WorkEffortStatus/statusDatetime">
                 <Annotation Term="Common.Label">
-                    <String>Change date</String>
+                    <String>changeStatus</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.WorkEffortStatus/workEffortId">
@@ -6241,7 +6242,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.InvoiceStatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>Status ID</String>
+                    <String>statusId</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -6267,7 +6268,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.InvoiceStatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>Status</String>
+                    <String>description</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Person/partyId">
@@ -6530,7 +6531,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.QuoteStatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>Status ID</String>
+                    <String>statusId</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -6556,7 +6557,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.QuoteStatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>Status</String>
+                    <String>description</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyGroup/partyId">
@@ -6777,7 +6778,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.StatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>Status ID</String>
+                    <String>statusId</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -6803,7 +6804,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.StatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>Status</String>
+                    <String>description</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierProduct/minimumOrderQuantity">
@@ -7641,6 +7642,11 @@
                     <String>DD type</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/ddFormTypeId">
+                <Annotation Term="Common.Label">
+                    <String>DD type</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/ddFormDealStatus">
                 <Annotation Term="Common.Label">
                     <String>DD Status</String>
@@ -7981,7 +7987,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/applicationWorkStatus">
                 <Annotation Term="Common.Label">
-                    <String>Applicant status</String>
+                    <String>Applicant processing status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/applicationWorkCriticality">
@@ -7991,7 +7997,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/supplierWorkStatus">
                 <Annotation Term="Common.Label">
-                    <String>Supplier status</String>
+                    <String>Supplier processing status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/supplierWorkCriticality">
@@ -8001,7 +8007,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/complianceWorkStatus">
                 <Annotation Term="Common.Label">
-                    <String>Compliance status</String>
+                    <String>Compliance processing status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/complianceWorkCriticality">
@@ -8421,7 +8427,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.OrderStatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>Status ID</String>
+                    <String>statusId</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -8447,7 +8453,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.OrderStatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>Status</String>
+                    <String>description</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SecurityPermission/permissionId">
@@ -9065,7 +9071,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.AccountStatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>Status ID</String>
+                    <String>statusId</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -9091,7 +9097,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.AccountStatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>Status</String>
+                    <String>description</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.InvoiceType/invoiceTypeId">

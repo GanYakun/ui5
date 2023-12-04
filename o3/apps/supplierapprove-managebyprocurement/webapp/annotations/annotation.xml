@@ -803,6 +803,10 @@
             <Annotation Term="UI.ParameterDefaultValue" String="supplier"></Annotation>
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
         </Annotations>
+        <Annotations Target="com.dpbird.ReturnToSupplier/ddFormType">
+            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/ddFormTypeId"></Annotation>
+            <!-- <Annotation Term="UI.Hidden" Bool="true"></Annotation> -->
+        </Annotations>
 
         <Annotations Target="com.dpbird.ReturnToApplication">
             <Annotation Term="Common.SideEffects">
