@@ -1025,14 +1025,14 @@
                         <PropertyValue Property="Value" Path="dataResourceName"/>
                         <PropertyValue Property="Url" Path="fileUrl"/>
                     </Record>
-                    <Record Type="UI.DataField">
+                    <!-- <Record Type="UI.DataField">
                         <PropertyValue Property="Value">
                             <Path>fromDate</Path>
                         </PropertyValue>
                         <Annotation Term="UI.Importance">
                             <EnumMember>UI.ImportanceType/High</EnumMember>
                         </Annotation>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.DataFieldForAction">
                         <PropertyValue Property="Label" String="{@i18n>Upload}"/>
                         <PropertyValue Property="Action">
