@@ -87,7 +87,7 @@
                         <PropertyValue Property="ID" String="SelectDepartment"/>
                         <PropertyValue Property="Target" AnnotationPath="Department/@UI.LineItem#DepartmentLineItem"/>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
                         <PropertyValue Property="ID" String="ContactMechPurpose"/>
                         <PropertyValue Property="Target" AnnotationPath="PostalAddress/@UI.LineItem#PostalAddressLineItem"/>
@@ -116,7 +116,7 @@
                                 <Bool>true</Bool>
                             </If>
                         </Annotation>
-                    </Record>
+                    </Record> -->
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>
                         <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
@@ -128,7 +128,7 @@
                         <PropertyValue Property="Target" AnnotationPath="PartyClassification/@UI.FieldGroup#PartyClassificationFieldGroup">
                         </PropertyValue>
                     </Record> -->
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="PartyRelationshipLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>
                         <PropertyValue Property="Target" AnnotationPath="PersonAndContact/@UI.LineItem#PartyRelationshipLineItemWithoutAction"/>
@@ -157,8 +157,8 @@
                             <Bool>false</Bool>
                         </If>
                         </Annotation>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    </Record> -->
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="BeneficialPersonLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>BeneficialPersonLineItem}"/>
                         <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#BeneficialPersonLineItem"/>
@@ -187,7 +187,7 @@
                             <Bool>false</Bool>
                         </If>
                         </Annotation>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="FileList"/>
                         <PropertyValue Property="Label" String="{@i18n>FileList}"/>
@@ -283,7 +283,7 @@
                         </If>
                         </Annotation>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="PurchaseAgreementLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>PurchaseAgreementLineItem}"/>
                         <PropertyValue Property="Target"  AnnotationPath="PurchaseAgreement/@UI.LineItem#PurchaseAgreementLineItem"/>
@@ -317,7 +317,7 @@
                             <Bool>true</Bool>
                         </If>
                         </Annotation>
-                    </Record>
+                    </Record> -->
                 </Collection>
             </Annotation>
 
