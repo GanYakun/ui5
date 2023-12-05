@@ -16,11 +16,7 @@
         <Annotations Target="com.dpbird.SupplierParty">
             <Annotation Term="UI.Facets">
                 <Collection>
-                 <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="FileList"/>
-                        <PropertyValue Property="Label" String="{@i18n>FileList}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="FileList/@UI.LineItem#FileList"/>
-                    </Record>
+                    
                     <Record Type="UI.CollectionFacet">
                         <PropertyValue Property="Label" String="{@i18n>CompanyInfo}"/>
                         <PropertyValue Property="ID" String="CompanyInfo"/>
@@ -86,6 +82,11 @@
                             <Bool>true</Bool>
                         </If>
                         </Annotation>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="FileList"/>
+                        <PropertyValue Property="Label" String="{@i18n>FileList}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="FileList/@UI.LineItem#FileList"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>SelectDepartment}"/>
@@ -323,21 +324,14 @@
 
              <Annotation Term="UI.HeaderFacets">
                 <Collection>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="DDFormType"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDFormType"/>
-                    </Record>
-                        <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="statusId"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
-                    </Record>
                      <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="complianceCheckWarning"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#complianceCheckWarning"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Classification"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ApproveComments"/>
+                        <PropertyValue Property="Label" String="{@i18n>ApproveComments}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ApproveComments"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="ComplianceNote"/>
@@ -345,15 +339,28 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="DDFormType"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDFormType"/>
+                    </Record>
+                        <!-- <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="statusId"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
+                    </Record> -->
+                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="complianceCheckWarning"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#complianceCheckWarning"/>
+                    </Record>
+                   
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="CycleTime"/>
                         <PropertyValue Property="Label" String="{@i18n>CycleTime}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#CycleTime"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    </Record> -->
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="DDResponseTime"/>
                         <PropertyValue Property="Label" String="{@i18n>DDResponseTime}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDResponseTime"/>
-                    </Record>
+                    </Record> -->
                      <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Priority"/>
                         <PropertyValue Property="Label" String="{@i18n>Priority}"/>
@@ -460,6 +467,19 @@
                             </Record>
                             <Record Type="UI.DataField">
                                 <PropertyValue Property="Value" Path="complianceComments" />
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+
+            <Annotation Term="UI.FieldGroup" Qualifier="ApproveComments">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                        
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="approveComments" />
                             </Record>
                         </Collection>
                     </PropertyValue>
