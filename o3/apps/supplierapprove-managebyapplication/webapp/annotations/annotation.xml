@@ -16,6 +16,11 @@
         <Annotations Target="com.dpbird.SupplierParty">
             <Annotation Term="UI.Facets">
                 <Collection>
+                 <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="FileList"/>
+                        <PropertyValue Property="Label" String="{@i18n>FileList}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="FileList/@UI.LineItem#FileList"/>
+                    </Record>
                     <Record Type="UI.CollectionFacet">
                         <PropertyValue Property="Label" String="{@i18n>CompanyInfo}"/>
                         <PropertyValue Property="ID" String="CompanyInfo"/>
@@ -188,11 +193,6 @@
                         </If>
                         </Annotation>
                     </Record> -->
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="FileList"/>
-                        <PropertyValue Property="Label" String="{@i18n>FileList}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="FileList/@UI.LineItem#FileList"/>
-                    </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="NoteDataLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>NoteDataLineItem}"/>
@@ -539,6 +539,10 @@
                     <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.ImportProducts"/>
                         <PropertyValue Property="Label"  String="{@i18n>ImportProduct}"/>
+                    </Record>    
+                    <Record Type="UI.DataFieldForAction" >
+                        <PropertyValue Property="Action" String="com.dpbird.UploadSupplierLogo"/>
+                        <PropertyValue Property="Label"  String="{@i18n>UploadSupplierLogo}"/>
                     </Record>         
                 </Collection>
             </Annotation>
