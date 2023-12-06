@@ -241,8 +241,8 @@
             size: "1x1",
             tileType: "sap.ushell.ui.tile.StaticTile",
             isLinkPersonalizationSupported: true,
-            "semanticObject": "SupplierParty",
-            "semanticAction": "Form",
+            "semanticObject": "SupplierDDForm",
+            "semanticAction": "Input",
             properties: {
               title: "供应商_DD_Form",
               subtitle: "填写DDForm",
@@ -411,9 +411,9 @@
         description: "管理供应商"
       },
       "Supplier-DDForm": {
-        additionalInformation: "SAPUI5.Component=com.banfftech.supplierddform",
+        additionalInformation: "SAPUI5.Component=com.banfftech.vendorddform",
         applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
-        url: sUshellO3RootPath + "/apps/supplier-dd-form/webapp",
+        url: sUshellO3RootPath + "/apps/vendor-dd-form/webapp",
         description: "填写DDForm"
       },
       "Purchase-Request": {
