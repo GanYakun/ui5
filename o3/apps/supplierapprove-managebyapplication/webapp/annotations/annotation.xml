@@ -28,12 +28,12 @@
                                 </Record>
                                 <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="ID" String="Classification"/>
-                                    <PropertyValue Property="Label" String="{@i18n>RiskRating}"/>
+                                    <!-- <PropertyValue Property="Label" String="{@i18n>RiskRating}"/> -->
                                     <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
                                 </Record>
                                 <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="ID" String="ApproveComments"/>
-                                    <PropertyValue Property="Label" String="{@i18n>ApproveComments}"/>
+                                    <!-- <PropertyValue Property="Label" String="{@i18n>ApproveComments}"/> -->
                                     <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ApproveComments"/>
                                 </Record>
                             </Collection>
@@ -346,10 +346,10 @@
                         <PropertyValue Property="ID" String="statusId"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record> -->
-                     <Record Type="UI.ReferenceFacet">
+                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="complianceCheckWarning"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#complianceCheckWarning"/>
-                    </Record>
+                    </Record> -->
                    
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="CycleTime"/>
@@ -416,6 +416,7 @@
             <Annotation Term="UI.DataPoint" Qualifier="Priority">
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="priority"/>
+                    <PropertyValue Property="Criticality" Path="priorityCritical"/>
                     <PropertyValue Property="Title" String="{@i18n>Priority}"/>
                 </Record>
             </Annotation>
