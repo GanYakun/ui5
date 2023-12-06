@@ -1043,6 +1043,7 @@
 
         <Annotations Target="com.dpbird.PartyMediaResource">
             <Annotation Term="UI.LineItem" Qualifier="FileList">
+            <Annotation Term="UI.Criticality" Path="uploadDocCritical"></Annotation>
                 <Collection>
                     <Record Type="UI.DataField">
                         <PropertyValue Property="Value">
