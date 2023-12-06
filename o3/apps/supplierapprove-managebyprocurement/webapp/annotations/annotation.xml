@@ -38,15 +38,7 @@
                         <PropertyValue Property="ID" String="complianceCheckWarning"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#complianceCheckWarning"/>
                     </Record>
-                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="Classification"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="ComplianceNote"/>
-                        <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
-                    </Record>
+                    
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="CycleTime"/>
                         <PropertyValue Property="Label" String="{@i18n>CycleTime}"/>
@@ -67,11 +59,11 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#SupplierCategory"/>
                     </Record>
                    
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="FileCountGroup"/>
                         <PropertyValue Property="Label" String="{@i18n>FileCountGroup}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FileCountGroup"/>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="ViewDDForm"/>
                         <PropertyValue Property="Label" String="{@i18n>ViewDDForm}"/>
@@ -483,11 +475,43 @@
         
             <Annotation Term="UI.Facets">
                 <Collection>
+                     <Record Type="UI.CollectionFacet">
+                        <PropertyValue Property="Label" String="{@i18n>ApproveInfo}"/>
+                        <PropertyValue Property="ID" String="ApproveInfo"/>
+                        <PropertyValue Property="Facets">
+                            <Collection>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceNote"/>
+                                    <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="Classification"/>
+                                    <!-- <PropertyValue Property="Label" String="{@i18n>RiskRating}"/> -->
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                    <!-- <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="Classification"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ComplianceNote"/>
+                        <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
+                    </Record> -->
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>
                         <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
                     </Record> -->
+                      <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="FileList"/>
+                        <PropertyValue Property="Label" String="{@i18n>FileList}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="FileList/@UI.LineItem#FileList"/>
+                    </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
                         <PropertyValue Property="ID" String="ContactMechPurpose"/>
@@ -583,11 +607,7 @@
                         </If>
                         </Annotation>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="FileList"/>
-                        <PropertyValue Property="Label" String="{@i18n>FileList}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="FileList/@UI.LineItem#FileList"/>
-                    </Record>
+                  
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="NoteDataLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>NoteDataLineItem}"/>
