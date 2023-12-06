@@ -1,4 +1,7 @@
 <edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Measures.V1.xml">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+    </edmx:Reference>
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
         <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
     </edmx:Reference>
@@ -14,6 +17,33 @@
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
         <Annotations Target="com.dpbird.SupplierParty">
+            <Annotation Term="UI.LineItem">
+                <Collection>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="logoImageUrl"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="partyId"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="ddFormType"/>
+                        <PropertyValue Property="Criticality" Path="ddFormTypeCritical"/>
+                        <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                    <Record Type="UI.DataFieldForAnnotation">
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasificationForLineItem"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                      <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="cycleTime"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                </Collection>
+            </Annotation>
+
              <Annotation Term="UI.HeaderFacets">
                 <Collection>
                     <!-- <Record Type="UI.ReferenceFacet">
@@ -34,19 +64,7 @@
                         <PropertyValue Property="ID" String="statusId"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record> -->
-                      <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="complianceCheckWarning"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#complianceCheckWarning"/>
-                    </Record>
-                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="Classification"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="ComplianceNote"/>
-                        <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
-                    </Record>
+
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="CycleTime"/>
                         <PropertyValue Property="Label" String="{@i18n>CycleTime}"/>
@@ -67,15 +85,30 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#SupplierCategory"/>
                     </Record>
                    
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="FileCountGroup"/>
                         <PropertyValue Property="Label" String="{@i18n>FileCountGroup}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FileCountGroup"/>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="ViewDDForm"/>
                         <PropertyValue Property="Label" String="{@i18n>ViewDDForm}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ViewDDForm"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="complianceCheckWarning"/>
+                        <!-- <PropertyValue Property="Label" String="Risk Indicator"/> -->
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#complianceCheckWarning"/>
+                         <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>complianceCheckWarning</Path>
+                                <String>Warning</String>
+                            </Eq>
+                            <Bool>false</Bool>
+                            <Bool>true</Bool>
+                        </If>
+                    </Annotation>
                     </Record>
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="Work Scope"/>
@@ -90,6 +123,14 @@
                 </Collection>
             </Annotation>
 
+            <Annotation Term="UI.DataPoint" Qualifier="complianceCheckWarning">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Title" String="{@i18n>RiskIndicator}"/>
+                    <PropertyValue Property="Value" Path="complianceCheckWarning"/>
+                    <PropertyValue Property="Criticality" Path="checkWarningCritical"/>
+                   
+                </Record>
+            </Annotation>
             <Annotation Term="UI.FieldGroup" Qualifier="FileCountGroup">
                 <Record Type="UI.FieldGroupType">
                     <PropertyValue Property="Data">
@@ -143,6 +184,7 @@
             <Annotation Term="UI.DataPoint" Qualifier="Priority">
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="priority"/>
+                    <PropertyValue Property="Criticality" Path="priorityCritical" />
                     <PropertyValue Property="Title" String="{@i18n>Priority}"/>
                 </Record>
             </Annotation>
@@ -170,9 +212,21 @@
 
             <Annotation Term="UI.DataPoint" Qualifier="PartyClasification">
                 <Record Type="UI.DataPointType">
-                    <PropertyValue Property="Value" Path="PartyClassification/PartyClassificationGroup/description"/>
+                    <PropertyValue Property="Value" Path="ratingNumeric"/>
                     <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
-                    <PropertyValue Property="Criticality" Path="riskCritical" />
+                    <!-- <PropertyValue Property="Criticality" Path="riskCritical" /> -->
+                    <PropertyValue Property="TargetValue" Int="5" />
+                    <PropertyValue Property="Visualization"  EnumMember="UI.VisualizationType/Rating"/>
+                </Record>
+            </Annotation>
+
+            <Annotation Term="UI.DataPoint" Qualifier="PartyClasificationForLineItem">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Value" Path="ratingNumeric" />
+                    <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
+                    <!-- <PropertyValue Property="Criticality" Path="riskCritical" /> -->
+                    <PropertyValue Property="TargetValue" Decimal="5" />
+                    <PropertyValue Property="Visualization"  EnumMember="UI.VisualizationType/Rating"/>
                 </Record>
             </Annotation>
 
@@ -541,11 +595,48 @@
         
             <Annotation Term="UI.Facets">
                 <Collection>
+                     <Record Type="UI.CollectionFacet">
+                        <PropertyValue Property="Label" String="{@i18n>ApproveInfo}"/>
+                        <PropertyValue Property="ID" String="ApproveInfo"/>
+                        <PropertyValue Property="Facets">
+                            <Collection>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceNote"/>
+                                    <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="Classification"/>
+                                    <!-- <PropertyValue Property="Label" String="{@i18n>RiskRating}"/> -->
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ApproveComments"/>
+                                    <!-- <PropertyValue Property="Label" String="{@i18n>ApproveComments}"/> -->
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ApproveComments"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                    <!-- <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="Classification"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ComplianceNote"/>
+                        <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
+                    </Record> -->
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>
                         <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
                     </Record> -->
+                      <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="FileList"/>
+                        <PropertyValue Property="Label" String="{@i18n>FileList}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="FileList/@UI.LineItem#FileList"/>
+                    </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
                         <PropertyValue Property="ID" String="ContactMechPurpose"/>
@@ -641,11 +732,7 @@
                         </If>
                         </Annotation>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="FileList"/>
-                        <PropertyValue Property="Label" String="{@i18n>FileList}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="FileList/@UI.LineItem#FileList"/>
-                    </Record>
+                  
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="NoteDataLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>NoteDataLineItem}"/>
@@ -923,6 +1010,19 @@
                     </Record>
                 </Collection>
             </Annotation>
+
+             <Annotation Term="UI.FieldGroup" Qualifier="ApproveComments">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                        
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="approveComments" />
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
         </Annotations>
         <Annotations Target="com.dpbird.PartyClassification">
             <Annotation Term="UI.FieldGroup" Qualifier="PartyClassificationFieldGroup">
@@ -940,6 +1040,9 @@
             </Annotation>
         </Annotations>
 
+        <!-- <Annotations Target="com.dpbird.FinAccount/currencyUomId">
+            <Annotation Term="Measures.ISOCurrency" String="$"></Annotation>
+        </Annotations> -->
         <Annotations Target="com.dpbird.ReturnToApplication/target">
             <Annotation Term="UI.ParameterDefaultValue" String="applicant"></Annotation>
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
@@ -958,6 +1061,18 @@
         </Annotations>
 
         <Annotations Target="com.dpbird.FillCommentsForPRM/comments">
+            <Annotation Term="UI.MultiLineText"></Annotation>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.ReturnToApplication/noteInfo">
+            <Annotation Term="UI.MultiLineText"></Annotation>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.ReturnToCompliance/noteInfo">
+            <Annotation Term="UI.MultiLineText"></Annotation>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.ReturnToSupplier/noteInfo">
             <Annotation Term="UI.MultiLineText"></Annotation>
         </Annotations>
 
@@ -1168,6 +1283,7 @@
 
         <Annotations Target="com.dpbird.PartyMediaResource">
             <Annotation Term="UI.LineItem" Qualifier="FileList">
+            <Annotation Term="UI.Criticality" Path="uploadDocCritical"></Annotation>
                 <Collection>
                     <Record Type="UI.DataField">
                         <PropertyValue Property="Value">
