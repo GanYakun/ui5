@@ -1,4 +1,7 @@
 <edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Measures.V1.xml">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+    </edmx:Reference>
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
         <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
     </edmx:Reference>
@@ -63,7 +66,6 @@
                         <PropertyValue Property="ID" String="complianceCheckWarning"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#complianceCheckWarning"/>
                     </Record>
-                    
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="CycleTime"/>
                         <PropertyValue Property="Label" String="{@i18n>CycleTime}"/>
@@ -107,6 +109,29 @@
                 </Collection>
             </Annotation>
 
+            <Annotation Term="UI.DataPoint" Qualifier="complianceCheckWarning">
+                    <Record Type="UI.DataPointType">
+                        <PropertyValue Property="Title">
+                            <String>Warning</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Value">
+                            <Path>complianceCheckWarning</Path>
+                        </PropertyValue>
+                        <PropertyValue Property="Criticality">
+                            <Path>checkWarningCritical</Path>
+                        </PropertyValue>
+                        <Annotation Term="UI.Hidden">
+                            <If>
+                                <Eq>
+                                    <Path>complianceCheckWarning</Path>
+                                    <Bool>true</Bool>
+                                </Eq>
+                                <Bool>false</Bool>
+                                <Bool>true</Bool>
+                            </If>
+                        </Annotation>
+                    </Record>
+                </Annotation>
             <Annotation Term="UI.FieldGroup" Qualifier="FileCountGroup">
                 <Record Type="UI.FieldGroupType">
                     <PropertyValue Property="Data">
@@ -160,6 +185,7 @@
             <Annotation Term="UI.DataPoint" Qualifier="Priority">
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="priority"/>
+                    <PropertyValue Property="Criticality" Path="priorityCritical" />
                     <PropertyValue Property="Title" String="{@i18n>Priority}"/>
                 </Record>
             </Annotation>
@@ -527,6 +553,11 @@
                                     <!-- <PropertyValue Property="Label" String="{@i18n>RiskRating}"/> -->
                                     <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
                                 </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ApproveComments"/>
+                                    <!-- <PropertyValue Property="Label" String="{@i18n>ApproveComments}"/> -->
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ApproveComments"/>
+                                </Record>
                             </Collection>
                         </PropertyValue>
                     </Record>
@@ -835,6 +866,19 @@
                     </Record>
                 </Collection>
             </Annotation>
+
+             <Annotation Term="UI.FieldGroup" Qualifier="ApproveComments">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                        
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="approveComments" />
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
         </Annotations>
         <Annotations Target="com.dpbird.PartyClassification">
             <Annotation Term="UI.FieldGroup" Qualifier="PartyClassificationFieldGroup">
@@ -852,6 +896,9 @@
             </Annotation>
         </Annotations>
 
+        <!-- <Annotations Target="com.dpbird.FinAccount/currencyUomId">
+            <Annotation Term="Measures.ISOCurrency" String="$"></Annotation>
+        </Annotations> -->
         <Annotations Target="com.dpbird.ReturnToApplication/target">
             <Annotation Term="UI.ParameterDefaultValue" String="applicant"></Annotation>
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
@@ -870,6 +917,18 @@
         </Annotations>
 
         <Annotations Target="com.dpbird.FillCommentsForPRM/comments">
+            <Annotation Term="UI.MultiLineText"></Annotation>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.ReturnToApplication/noteInfo">
+            <Annotation Term="UI.MultiLineText"></Annotation>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.ReturnToCompliance/noteInfo">
+            <Annotation Term="UI.MultiLineText"></Annotation>
+        </Annotations>
+
+        <Annotations Target="com.dpbird.ReturnToSupplier/noteInfo">
             <Annotation Term="UI.MultiLineText"></Annotation>
         </Annotations>
 

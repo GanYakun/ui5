@@ -692,6 +692,14 @@
             </Annotation>
         </Annotations>
 
+        <Annotations Target="com.dpbird.ReturnToSupplier/noteInfo">
+            <Annotation Term="UI.MultiLineText"></Annotation>
+        </Annotations>
+
+         <Annotations Target="com.dpbird.SubmitToProcurement/noteInfo">
+            <Annotation Term="UI.MultiLineText"></Annotation>
+        </Annotations>
+
         <!-- <Annotations Target="com.dpbird.CreatePersonAndContact/phoneMobile">
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
         </Annotations> -->
