@@ -324,6 +324,11 @@
 
              <Annotation Term="UI.HeaderFacets">
                 <Collection>
+                  <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ComplianceNote"/>
+                        <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
+                    </Record>
                      <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Classification"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
@@ -333,11 +338,7 @@
                         <PropertyValue Property="Label" String="{@i18n>ApproveComments}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ApproveComments"/>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="ComplianceNote"/>
-                        <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
-                    </Record>
+                  
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="DDFormType"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDFormType"/>
@@ -371,11 +372,11 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#SupplierCategory"/>
                     </Record>
                     
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="FileCountGroup"/>
                         <PropertyValue Property="Label" String="{@i18n>FileCountGroup}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FileCountGroup"/>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="ViewDDForm"/>
                         <PropertyValue Property="Label" String="{@i18n>ViewDDForm}"/>
@@ -386,11 +387,11 @@
                         <PropertyValue Property="ID" String="WorkScope"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WorkScope"/>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="Progress Status"/>
                         <PropertyValue Property="ID" String="ProgressStatus"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ProgressStatus"/>
-                    </Record>
+                    </Record> -->
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#IdentificationCode"/>
                         <PropertyValue Property="Label" String="{@i18n>Identification}"/>
