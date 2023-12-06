@@ -495,11 +495,13 @@
                 </Record>
             </Annotation>
 
-            <Annotation Term="UI.DataPoint" Qualifier="PartyClasification">
+             <Annotation Term="UI.DataPoint" Qualifier="PartyClasification">
                 <Record Type="UI.DataPointType">
-                    <PropertyValue Property="Value" Path="PartyClassification/PartyClassificationGroup/description"/>
+                    <PropertyValue Property="Value" Path="ratingNumeric"/>
                     <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
-                    <PropertyValue Property="Criticality" Path="riskCritical"/>
+                    <!-- <PropertyValue Property="Criticality" Path="riskCritical" /> -->
+                    <PropertyValue Property="TargetValue" Int="5" />
+                    <PropertyValue Property="Visualization"  EnumMember="UI.VisualizationType/Rating"/>
                 </Record>
             </Annotation>
 

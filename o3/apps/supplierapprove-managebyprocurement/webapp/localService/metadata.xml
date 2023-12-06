@@ -990,6 +990,7 @@
                     <PropertyRef Name="fromDate"/>
                 </Key>
                 <Property Name="statusColor" Type="Edm.Int64"/>
+                <Property Name="ratingNumeric" Type="Edm.Int64"/>
                 <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="partyClassificationGroupId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="fromDate" Type="Edm.DateTimeOffset" Nullable="false" Precision="3"/>
@@ -1104,10 +1105,8 @@
                 <Property Name="isGovernment" Type="Edm.Boolean"/>
                 <Property Name="ddFormType" Type="Edm.String"/>
                 <Property Name="ddFormTypeId" Type="Edm.String"/>
-                <Property Name="ddFormDealStatus" Type="Edm.String"/>
                 <Property Name="ddFormStatusHistory" Type="Edm.String"/>
                 <Property Name="cycleTime" Type="Edm.String"/>
-                <Property Name="ddResponseTime" Type="Edm.String"/>
                 <Property Name="createSupplierHidden" Type="Edm.Boolean"/>
                 <Property Name="firstOrderDate" Type="Edm.DateTimeOffset"/>
                 <Property Name="collectionDate" Type="Edm.DateTimeOffset"/>
@@ -1116,8 +1115,8 @@
                 <Property Name="totalAmount" Type="Edm.Decimal" Scale="3"/>
                 <Property Name="criticalityValue" Type="Edm.Int64"/>
                 <Property Name="ddFormTypeCritical" Type="Edm.Int64"/>
-                <Property Name="ddFormDealCritical" Type="Edm.Int64"/>
                 <Property Name="riskCritical" Type="Edm.Int64"/>
+                <Property Name="ratingNumeric" Type="Edm.Int64"/>
                 <Property Name="priorityCritical" Type="Edm.Int64"/>
                 <Property Name="statusId" Type="Edm.String" DefaultValue="PARTY_DISABLED" MaxLength="60"/>
                 <Property Name="priority" Type="Edm.String" MaxLength="60"/>
@@ -1597,6 +1596,7 @@
                 <Property Name="imageData" Type="Edm.Stream"/>
                 <Property Name="otherData" Type="Edm.Stream"/>
                 <Property Name="fileUrl" Type="Edm.String"/>
+                <Property Name="uploadDocCritical" Type="Edm.Int64"/>
             </EntityType>
             <EntityType Name="EmployeesEnumeration">
                 <Key>
@@ -6534,6 +6534,11 @@
                     <String>statusColor</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.PartyClassification/ratingNumeric">
+                <Annotation Term="Common.Label">
+                    <String>ratingNumeric</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.PartyClassification/partyId">
                 <Annotation Term="Common.Label">
                     <String>partyId</String>
@@ -7048,11 +7053,6 @@
                                         <Path>comments</Path>
                                     </PropertyValue>
                                 </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>lastSubmittedDate</Path>
-                                    </PropertyValue>
-                                </Record>
                             </Collection>
                         </PropertyValue>
                         <PropertyValue Property="Label">
@@ -7113,11 +7113,6 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
                                         <Path>priority</Path>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>lastSubmittedDate</Path>
                                     </PropertyValue>
                                 </Record>
                                 <Record Type="UI.DataFieldForAction">
@@ -7454,14 +7449,6 @@
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
-                                <Path>ddResponseTime</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
                                 <Path>PartyClassification/PartyClassificationGroup/description</Path>
                             </PropertyValue>
                             <PropertyValue Property="Criticality">
@@ -7510,14 +7497,6 @@
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
                                 <Path>cycleTime</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>ddResponseTime</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -7599,9 +7578,6 @@
                 <Annotation Term="UI.IsImageURL">
                     <Bool>true</Bool>
                 </Annotation>
-                <Annotation Term="Common.Label">
-                    <String>Supplier Logo</String>
-                </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/isGovernment">
                 <Annotation Term="Common.Label">
@@ -7618,11 +7594,6 @@
                     <String>DD type</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.SupplierParty/ddFormDealStatus">
-                <Annotation Term="Common.Label">
-                    <String>DD Status</String>
-                </Annotation>
-            </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/ddFormStatusHistory">
                 <Annotation Term="Common.Label">
                     <String>ddFormStatusHistory</String>
@@ -7631,11 +7602,6 @@
             <Annotations Target="com.dpbird.SupplierParty/cycleTime">
                 <Annotation Term="Common.Label">
                     <String>Cycle time</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierParty/ddResponseTime">
-                <Annotation Term="Common.Label">
-                    <String>DD response time</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/createSupplierHidden">
@@ -7693,17 +7659,6 @@
                     <String>ddFormTypeCritical</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.SupplierParty/ddFormDealCritical">
-                <Annotation Term="UI.Hidden">
-                    <Bool>true</Bool>
-                </Annotation>
-                <Annotation Term="UI.HiddenFilter">
-                    <Bool>true</Bool>
-                </Annotation>
-                <Annotation Term="Common.Label">
-                    <String>ddFormDealCritical</String>
-                </Annotation>
-            </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/riskCritical">
                 <Annotation Term="UI.Hidden">
                     <Bool>true</Bool>
@@ -7713,6 +7668,11 @@
                 </Annotation>
                 <Annotation Term="Common.Label">
                     <String>riskCritical</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/ratingNumeric">
+                <Annotation Term="Common.Label">
+                    <String>ratingNumeric</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/priorityCritical">
@@ -9895,6 +9855,14 @@
             <Annotations Target="com.dpbird.PartyMediaResource/fileUrl">
                 <Annotation Term="Common.Label">
                     <String>fileUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyMediaResource/uploadDocCritical">
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>uploadDocCritical</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.EmployeesEnumeration/enumId">
