@@ -45,6 +45,11 @@
                         <PropertyValue Property="Target"  AnnotationPath="FileList/@UI.LineItem#FileList"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ComplianceReport"/>
+                        <PropertyValue Property="Label" String="{@i18n>ComplianceReport}"/>
+                        <PropertyValue Property="Target"  AnnotationPath="ComplianceReport/@UI.LineItem#ComplianceReport"/>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>SelectDepartment}"/>
                         <PropertyValue Property="ID" String="SelectDepartment"/>
                         <PropertyValue Property="Target" AnnotationPath="Department/@UI.LineItem#DepartmentLineItem"/>
@@ -275,6 +280,11 @@
                         </If>
                         </Annotation>
                     </Record> -->
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="Label" String="{@i18n>FlowingRecords}"/>
+                        <PropertyValue Property="ID" String="FlowingRecords"/>
+                        <PropertyValue Property="Target" AnnotationPath="ChildWorkEffortStatus/@UI.LineItem#WorkEffortStatusList" />
+                    </Record>
                     <Record Type="UI.CollectionFacet">
                         <PropertyValue Property="Label" String="{@i18n>CompanyInfo}"/>
                         <PropertyValue Property="ID" String="CompanyInfo"/>
@@ -645,6 +655,9 @@
             <Annotation Term="UI.ParameterDefaultValue" String="applicant"></Annotation>
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
         </Annotations>
+         <Annotations Target="com.dpbird.CreateSupplierParty/priority">
+            <Annotation Term="UI.ParameterDefaultValue" String="PRIORITY_MEDIUM"></Annotation>
+        </Annotations>
         <Annotations Target="com.dpbird.ReturnToSupplier/target">
             <Annotation Term="UI.ParameterDefaultValue" String="supplier"></Annotation>
             <Annotation Term="UI.Hidden" Bool="true"></Annotation>
@@ -960,7 +973,44 @@
                     </Record>
                     <Record Type="UI.DataFieldWithUrl">
                         <PropertyValue Property="Label" String="File"/>
-                        <PropertyValue Property="Value" Path="dataResourceName"/>
+                        <PropertyValue Property="Value" Path="description"/>
+                        <PropertyValue Property="Url" Path="fileUrl"/>
+                    </Record>
+                    <Record Type="UI.DataFieldForAction">
+                        <PropertyValue Property="Label" String="{@i18n>Upload}"/>
+                        <PropertyValue Property="Action">
+                            <String>com.dpbird.UploadAction</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Inline">
+                            <Bool>true</Bool>
+                        </PropertyValue>
+                        <PropertyValue Property="InvocationGrouping">
+                            <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                        </PropertyValue>
+                        <PropertyValue Property="Criticality">
+                            <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                        </PropertyValue>
+                        <Annotation Term="UI.Importance">
+                            <EnumMember>UI.ImportanceType/High</EnumMember>
+                        </Annotation>
+                    </Record>
+                </Collection>
+            </Annotation>
+
+            <Annotation Term="UI.LineItem" Qualifier="ComplianceReport">
+                <!-- <Annotation Term="UI.Criticality" Path="uploadDocCritical"></Annotation> -->
+                <Collection>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value">
+                            <Path>contentName</Path>
+                        </PropertyValue>
+                        <Annotation Term="UI.Importance">
+                            <EnumMember>UI.ImportanceType/High</EnumMember>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.DataFieldWithUrl">
+                        <PropertyValue Property="Label" String="File"/>
+                        <PropertyValue Property="Value" Path="description"/>
                         <PropertyValue Property="Url" Path="fileUrl"/>
                     </Record>
                     <Record Type="UI.DataFieldForAction">

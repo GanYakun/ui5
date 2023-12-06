@@ -28,15 +28,17 @@
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                     </Record>
                     <Record Type="UI.DataField">
-                        <PropertyValue Property="Value" Path="cycleTime"/>
-                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
-                    </Record>
-                    <Record Type="UI.DataField">
                         <PropertyValue Property="Value" Path="ddFormType"/>
+                        <PropertyValue Property="Criticality" Path="ddFormTypeCritical"/>
+                        <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                     </Record>
                     <Record Type="UI.DataFieldForAnnotation">
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasificationForLineItem"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
+                      <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="cycleTime"/>
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                     </Record>
                 </Collection>
@@ -62,10 +64,7 @@
                         <PropertyValue Property="ID" String="statusId"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
                     </Record> -->
-                      <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="complianceCheckWarning"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#complianceCheckWarning"/>
-                    </Record>
+
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="CycleTime"/>
                         <PropertyValue Property="Label" String="{@i18n>CycleTime}"/>
@@ -96,6 +95,21 @@
                         <PropertyValue Property="Label" String="{@i18n>ViewDDForm}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ViewDDForm"/>
                     </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="complianceCheckWarning"/>
+                        <!-- <PropertyValue Property="Label" String="Risk Indicator"/> -->
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#complianceCheckWarning"/>
+                         <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>complianceCheckWarning</Path>
+                                <String>Warning</String>
+                            </Eq>
+                            <Bool>false</Bool>
+                            <Bool>true</Bool>
+                        </If>
+                    </Annotation>
+                    </Record>
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="Work Scope"/>
                         <PropertyValue Property="ID" String="WorkScope"/>
@@ -110,28 +124,13 @@
             </Annotation>
 
             <Annotation Term="UI.DataPoint" Qualifier="complianceCheckWarning">
-                    <Record Type="UI.DataPointType">
-                        <PropertyValue Property="Title">
-                            <String>Warning</String>
-                        </PropertyValue>
-                        <PropertyValue Property="Value">
-                            <Path>complianceCheckWarning</Path>
-                        </PropertyValue>
-                        <PropertyValue Property="Criticality">
-                            <Path>checkWarningCritical</Path>
-                        </PropertyValue>
-                        <Annotation Term="UI.Hidden">
-                            <If>
-                                <Eq>
-                                    <Path>complianceCheckWarning</Path>
-                                    <Bool>true</Bool>
-                                </Eq>
-                                <Bool>false</Bool>
-                                <Bool>true</Bool>
-                            </If>
-                        </Annotation>
-                    </Record>
-                </Annotation>
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Title" String="{@i18n>RiskIndicator}"/>
+                    <PropertyValue Property="Value" Path="complianceCheckWarning"/>
+                    <PropertyValue Property="Criticality" Path="checkWarningCritical"/>
+                   
+                </Record>
+            </Annotation>
             <Annotation Term="UI.FieldGroup" Qualifier="FileCountGroup">
                 <Record Type="UI.FieldGroupType">
                     <PropertyValue Property="Data">
