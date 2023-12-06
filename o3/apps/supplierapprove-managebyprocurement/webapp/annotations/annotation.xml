@@ -82,11 +82,11 @@
                         <PropertyValue Property="ID" String="WorkScope"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WorkScope"/>
                     </Record> -->
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="Progress Status"/>
                         <PropertyValue Property="ID" String="ProgressStatus"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ProgressStatus"/>
-                    </Record>
+                    </Record> -->
                 </Collection>
             </Annotation>
 
@@ -810,6 +810,10 @@
         <Annotations Target="com.dpbird.ReturnToSupplier/ddFormType">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/ddFormTypeId"></Annotation>
             <!-- <Annotation Term="UI.Hidden" Bool="true"></Annotation> -->
+        </Annotations>
+
+        <Annotations Target="com.dpbird.FillCommentsForPRM/comments">
+            <Annotation Term="UI.MultiLineText"></Annotation>
         </Annotations>
 
         <Annotations Target="com.dpbird.ReturnToApplication">
