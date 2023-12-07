@@ -1241,6 +1241,7 @@
                 <Property Name="supplierWorkCriticality" Type="Edm.Int64"/>
                 <Property Name="complianceWorkStatus" Type="Edm.String"/>
                 <Property Name="complianceWorkCriticality" Type="Edm.Int64"/>
+                <Property Name="ddFormIsSubmitted" Type="Edm.Boolean"/>
                 <Property Name="approvePartyId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="workEffortId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="recurrenceInfoId" Type="Edm.String" MaxLength="60"/>
@@ -1788,6 +1789,7 @@
                 <Property Name="otherData" Type="Edm.Stream"/>
                 <Property Name="fileUrl" Type="Edm.String"/>
                 <Property Name="uploadDocCritical" Type="Edm.Int64"/>
+                <Property Name="addNameForUpload" Type="Edm.String"/>
             </EntityType>
             <EntityType Name="EmployeesEnumeration">
                 <Key>
@@ -8633,7 +8635,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/ratingNumeric">
                 <Annotation Term="Common.Label">
-                    <String>ratingNumeric</String>
+                    <String>Risk level</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/processNumeric">
@@ -8936,6 +8938,11 @@
             <Annotations Target="com.dpbird.SupplierParty/complianceWorkCriticality">
                 <Annotation Term="Common.Label">
                     <String>complianceWorkCriticality</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/ddFormIsSubmitted">
+                <Annotation Term="Common.Label">
+                    <String>ddFormIsSubmitted</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/approvePartyId">
@@ -11457,6 +11464,11 @@
                 </Annotation>
                 <Annotation Term="Common.Label">
                     <String>uploadDocCritical</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyMediaResource/addNameForUpload">
+                <Annotation Term="Common.Label">
+                    <String>addNameForUpload</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.EmployeesEnumeration/enumId">
