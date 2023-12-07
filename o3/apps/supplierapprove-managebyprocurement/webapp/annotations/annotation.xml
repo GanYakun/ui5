@@ -37,6 +37,11 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasificationForLineItem"/>
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                     </Record>
+                    <Record Type="UI.DataFieldForAnnotation">
+                        <PropertyValue Property="Label" String="{@i18n>ProcessBar}"></PropertyValue>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#ProcessBar"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
                       <Record Type="UI.DataField">
                         <PropertyValue Property="Value" Path="cycleTime"/>
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
@@ -227,6 +232,16 @@
                     <!-- <PropertyValue Property="Criticality" Path="riskCritical" /> -->
                     <PropertyValue Property="TargetValue" Decimal="5" />
                     <PropertyValue Property="Visualization"  EnumMember="UI.VisualizationType/Rating"/>
+                </Record>
+            </Annotation>
+
+             <Annotation Term="UI.DataPoint" Qualifier="ProcessBar">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Value" Path="processNumeric" />
+                    <PropertyValue Property="Title" String="{@i18n>ProcessBar}"/>
+                    <PropertyValue Property="Criticality" Path="processCritical" />
+                    <PropertyValue Property="TargetValue" Decimal="7" />
+                    <PropertyValue Property="Visualization"  EnumMember="UI.VisualizationType/Progress"/>
                 </Record>
             </Annotation>
 
