@@ -184,28 +184,9 @@
                                     <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/SeniorStaff/@UI.LineItem#SeniorStaff"/>
                                 </Record>
                                 <Record Type="UI.ReferenceFacet">
-                                    <PropertyValue Property="ID" String="ComplianceCertifications0"/>
-                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert0"/>
-                                </Record>
-                                <Record Type="UI.ReferenceFacet">
-                                    <PropertyValue Property="ID" String="ComplianceCertifications1"/>
-                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert1"/>
-                                </Record>
-                                <Record Type="UI.ReferenceFacet">
-                                    <PropertyValue Property="ID" String="ComplianceCertifications2"/>
-                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert2"/>
-                                </Record>
-                                <Record Type="UI.ReferenceFacet">
-                                    <PropertyValue Property="ID" String="ComplianceCertifications3"/>
-                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert3"/>
-                                </Record>
-                                <Record Type="UI.ReferenceFacet">
-                                    <PropertyValue Property="ID" String="ComplianceCertifications5"/>
-                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert5"/>
-                                </Record>
-                                <Record Type="UI.ReferenceFacet">
-                                    <PropertyValue Property="ID" String="ComplianceCertifications6"/>
-                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert6"/>
+                                    <PropertyValue Property="ID" String="COMPLIANCE_CER"/>
+                                    <PropertyValue Property="Label" String="COMPLIANCE CERTIFICATIONS"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/SurveyQuestionAnswer/@UI.LineItem#AnswerLineItem"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>

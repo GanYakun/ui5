@@ -669,6 +669,16 @@
                 </NavigationProperty>
                 <NavigationProperty Name="ShipmentRouteSegment" Type="Collection(com.dpbird.ShipmentRouteSegment)"/>
             </EntityType>
+            <EntityType Name="BooleanEnum">
+                <Key>
+                    <PropertyRef Name="enumId"/>
+                </Key>
+                <Property Name="enumId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="enumTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="enumCode" Type="Edm.String" MaxLength="60"/>
+                <Property Name="sequenceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
             <EntityType Name="City">
                 <Key>
                     <PropertyRef Name="geoId"/>
@@ -841,6 +851,7 @@
                 <Property Name="hint" Type="Edm.String" MaxLength="5000"/>
                 <Property Name="geoId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="surveyQuestionAnswerId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="enumResponse" Type="Edm.String" MaxLength="60"/>
                 <Property Name="surveyOptionSeqId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
                 <Property Name="currencyResponse" Type="Edm.Decimal" Precision="18" Scale="2"/>
@@ -904,19 +915,7 @@
                 <Property Name="dateIncorporation" Type="Edm.DateTimeOffset"/>
                 <Property Name="businessLocation" Type="Edm.String" MaxLength="255"/>
                 <Property Name="registrationNumber" Type="Edm.String" MaxLength="255"/>
-                <Property Name="workScope" Type="Edm.String" MaxLength="5000"/>
-                <Property Name="answer0" Type="Edm.Boolean" MaxLength="1"/>
-                <Property Name="answerText0" Type="Edm.String" MaxLength="5000"/>
-                <Property Name="answer1" Type="Edm.Boolean" MaxLength="1"/>
-                <Property Name="answerText1" Type="Edm.String" MaxLength="5000"/>
-                <Property Name="answer2" Type="Edm.Boolean" MaxLength="1"/>
-                <Property Name="answerText2" Type="Edm.String" MaxLength="5000"/>
-                <Property Name="answer3" Type="Edm.Boolean" MaxLength="1"/>
-                <Property Name="answerText3" Type="Edm.String" MaxLength="5000"/>
-                <Property Name="answer5" Type="Edm.Boolean" MaxLength="1"/>
-                <Property Name="answerText5" Type="Edm.String" MaxLength="5000"/>
-                <Property Name="answer6" Type="Edm.Boolean" MaxLength="1"/>
-                <Property Name="answerText6" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="workScope" Type="Edm.String"/>
                 <Property Name="agent" Type="Edm.Boolean"/>
                 <Property Name="jvPartner" Type="Edm.Boolean"/>
                 <Property Name="subContractor" Type="Edm.Boolean"/>
@@ -960,6 +959,7 @@
                 <NavigationProperty Name="ContactPerson" Type="Collection(com.dpbird.RelationshipAndToParty)"/>
                 <NavigationProperty Name="RegisterPostalAddress" Type="com.dpbird.RegisterPostalAddress"/>
                 <NavigationProperty Name="RegisteredCountry" Type="com.dpbird.PartyGeo"/>
+                <NavigationProperty Name="SurveyQuestionAnswer" Type="Collection(com.dpbird.DDFormSurveyQuestionAnswer)"/>
             </EntityType>
             <EntityType Name="WorkEffortStatus">
                 <Key>
@@ -1015,6 +1015,29 @@
                 <Property Name="sequenceId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="description" Type="Edm.String" MaxLength="255"/>
             </EntityType>
+            <EntityType Name="DDFormSurveyQuestionAnswer">
+                <Key>
+                    <PropertyRef Name="surveyQuestionAnswerId"/>
+                </Key>
+                <Property Name="enumResponse" Type="Edm.String" MaxLength="60"/>
+                <Property Name="surveyQuestionAnswerId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="surveyQuestionId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="booleanResponse" Type="Edm.String" MaxLength="1"/>
+                <Property Name="currencyResponse" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <Property Name="floatResponse" Type="Edm.Double"/>
+                <Property Name="numericResponse" Type="Edm.Int64"/>
+                <Property Name="textResponse" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="surveyOptionSeqId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="answeredDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <NavigationProperty Name="DDFormSurveyQuestion" Type="com.dpbird.DDFormSurveyQuestion">
+                    <ReferentialConstraint Property="surveyQuestionId" ReferencedProperty="surveyQuestionId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="BooleanEnum" Type="com.dpbird.BooleanEnum">
+                    <ReferentialConstraint Property="enumResponse" ReferencedProperty="enumId"/>
+                </NavigationProperty>
+            </EntityType>
             <EntityType Name="CurrencyUom">
                 <Key>
                     <PropertyRef Name="uomId"/>
@@ -1035,6 +1058,7 @@
                     <PropertyRef Name="fromDate"/>
                 </Key>
                 <Property Name="statusColor" Type="Edm.Int64"/>
+                <Property Name="ratingNumeric" Type="Edm.Int64"/>
                 <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="partyClassificationGroupId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="fromDate" Type="Edm.DateTimeOffset" Nullable="false" Precision="3"/>
@@ -1068,6 +1092,20 @@
                 <NavigationProperty Name="NoteParty" Type="com.dpbird.Party">
                     <ReferentialConstraint Property="noteParty" ReferencedProperty="partyId"/>
                 </NavigationProperty>
+            </EntityType>
+            <EntityType Name="DDFormSurveyQuestion">
+                <Key>
+                    <PropertyRef Name="surveyQuestionId"/>
+                </Key>
+                <Property Name="question" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="surveyQuestionId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="surveyQuestionCategoryId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="surveyQuestionTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="hint" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="enumTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="geoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="formatString" Type="Edm.String" MaxLength="255"/>
             </EntityType>
             <EntityType Name="UomType">
                 <Key>
@@ -1134,10 +1172,8 @@
                 <Property Name="isGovernment" Type="Edm.Boolean"/>
                 <Property Name="ddFormType" Type="Edm.String"/>
                 <Property Name="ddFormTypeId" Type="Edm.String"/>
-                <Property Name="ddFormDealStatus" Type="Edm.String"/>
                 <Property Name="ddFormStatusHistory" Type="Edm.String"/>
                 <Property Name="cycleTime" Type="Edm.String"/>
-                <Property Name="ddResponseTime" Type="Edm.String"/>
                 <Property Name="createSupplierHidden" Type="Edm.Boolean"/>
                 <Property Name="firstOrderDate" Type="Edm.DateTimeOffset"/>
                 <Property Name="collectionDate" Type="Edm.DateTimeOffset"/>
@@ -1146,8 +1182,10 @@
                 <Property Name="totalAmount" Type="Edm.Decimal" Scale="3"/>
                 <Property Name="criticalityValue" Type="Edm.Int64"/>
                 <Property Name="ddFormTypeCritical" Type="Edm.Int64"/>
-                <Property Name="ddFormDealCritical" Type="Edm.Int64"/>
                 <Property Name="riskCritical" Type="Edm.Int64"/>
+                <Property Name="ratingNumeric" Type="Edm.Int64"/>
+                <Property Name="processNumeric" Type="Edm.Int64"/>
+                <Property Name="processCritical" Type="Edm.Int64"/>
                 <Property Name="priorityCritical" Type="Edm.Int64"/>
                 <Property Name="statusId" Type="Edm.String" DefaultValue="PARTY_DISABLED" MaxLength="60"/>
                 <Property Name="priority" Type="Edm.String" MaxLength="60"/>
@@ -1180,7 +1218,7 @@
                 <Property Name="adverseResults" Type="Edm.String"/>
                 <Property Name="additionalProtection" Type="Edm.String"/>
                 <Property Name="complianceComments" Type="Edm.String"/>
-                <Property Name="complianceCheckWarning" Type="Edm.Boolean"/>
+                <Property Name="complianceCheckWarning" Type="Edm.String"/>
                 <Property Name="checkWarningCritical" Type="Edm.Int64"/>
                 <Property Name="applicationWorkStatus" Type="Edm.String"/>
                 <Property Name="applicationWorkCriticality" Type="Edm.Int64"/>
@@ -1693,8 +1731,10 @@
                 <Property Name="dataResourceName" Type="Edm.String" MaxLength="255"/>
                 <Property Name="fromDate" Type="Edm.DateTimeOffset" Precision="3"/>
                 <Property Name="imageData" Type="Edm.Stream"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
                 <Property Name="otherData" Type="Edm.Stream"/>
                 <Property Name="fileUrl" Type="Edm.String"/>
+                <Property Name="uploadDocCritical" Type="Edm.Int64"/>
             </EntityType>
             <EntityType Name="EmployeesEnumeration">
                 <Key>
@@ -1907,6 +1947,10 @@
                 </EntitySet>
                 <EntitySet Name="Countries" EntityType="com.dpbird.Country"/>
                 <EntitySet Name="Companies" EntityType="com.dpbird.Company"/>
+                <EntitySet Name="DDFormSurveyQuestionAnswers" EntityType="com.dpbird.DDFormSurveyQuestionAnswer">
+                    <NavigationPropertyBinding Path="DDFormSurveyQuestion" Target="DDFormSurveyQuestions"/>
+                    <NavigationPropertyBinding Path="BooleanEnum" Target="BooleanEnums"/>
+                </EntitySet>
                 <EntitySet Name="PurchaseAgreements" EntityType="com.dpbird.PurchaseAgreement">
                     <NavigationPropertyBinding Path="Product" Target="Products"/>
                     <NavigationPropertyBinding Path="SupplierParty" Target="SupplierParties"/>
@@ -1921,6 +1965,7 @@
                     <NavigationPropertyBinding Path="ContactPerson" Target="RelationshipAndToParties"/>
                     <NavigationPropertyBinding Path="RegisterPostalAddress" Target="RegisterPostalAddresses"/>
                     <NavigationPropertyBinding Path="RegisteredCountry" Target="PartyGeos"/>
+                    <NavigationPropertyBinding Path="SurveyQuestionAnswer" Target="DDFormSurveyQuestionAnswers"/>
                 </EntitySet>
                 <EntitySet Name="CoWorkHistories" EntityType="com.dpbird.CoWorkHistory">
                     <NavigationPropertyBinding Path="CurrentStatusItem" Target="StatusItems"/>
@@ -1931,6 +1976,7 @@
                 </EntitySet>
                 <EntitySet Name="Parties" EntityType="com.dpbird.Party"/>
                 <EntitySet Name="SupplierStatusItems" EntityType="com.dpbird.SupplierStatusItem"/>
+                <EntitySet Name="DDFormSurveyQuestions" EntityType="com.dpbird.DDFormSurveyQuestion"/>
                 <EntitySet Name="PersonAndContacts" EntityType="com.dpbird.PersonAndContact"/>
                 <EntitySet Name="ShipmentStatusItems" EntityType="com.dpbird.ShipmentStatusItem"/>
                 <EntitySet Name="SupplierParties" EntityType="com.dpbird.SupplierParty">
@@ -1968,6 +2014,7 @@
                 <EntitySet Name="AfterSalesServices" EntityType="com.dpbird.AfterSalesService">
                     <NavigationPropertyBinding Path="FixedAsset" Target="FixedAssets"/>
                 </EntitySet>
+                <EntitySet Name="BooleanEnums" EntityType="com.dpbird.BooleanEnum"/>
                 <EntitySet Name="Shipments" EntityType="com.dpbird.Shipment">
                     <NavigationPropertyBinding Path="ShipmentItem" Target="ShipmentItems"/>
                     <NavigationPropertyBinding Path="SupplierParty" Target="SupplierParties"/>
@@ -5417,6 +5464,37 @@
                     <String>trackingIdNumber</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.BooleanEnum/enumId">
+                <Annotation Term="Common.Label">
+                    <String>enumId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.BooleanEnum/enumTypeId">
+                <Annotation Term="Common.Label">
+                    <String>enumTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.BooleanEnum/enumCode">
+                <Annotation Term="Common.Label">
+                    <String>enumCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.BooleanEnum/sequenceId">
+                <Annotation Term="Common.Label">
+                    <String>sequenceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.BooleanEnum/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.City/geoId">
                 <Annotation Term="Common.Label">
                     <String>geoId</String>
@@ -6274,6 +6352,11 @@
                     <String>surveyQuestionAnswerId</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.SurveyQuestionAndAnswer/enumResponse">
+                <Annotation Term="Common.Label">
+                    <String>enumResponse</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.SurveyQuestionAndAnswer/surveyOptionSeqId">
                 <Annotation Term="Common.Label">
                     <String>surveyOptionSeqId</String>
@@ -6327,12 +6410,6 @@
             <Annotations Target="com.dpbird.FinAccount/currencyUomId">
                 <Annotation Term="Common.Label">
                     <String>货币单位</String>
-                </Annotation>
-                <Annotation Term="Common.Text">
-                    <Path>CurrencyUom/description</Path>
-                    <Annotation Term="UI.TextArrangement">
-                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
-                    </Annotation>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
@@ -6701,192 +6778,6 @@
                             <String>BusinessLocation</String>
                         </PropertyValue>
                     </Record>
-                </Annotation>
-                <Annotation Term="UI.FieldGroup" Qualifier="ComplianceCert0">
-                    <Record Type="UI.FieldGroupType">
-                        <PropertyValue Property="Data">
-                            <Collection>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>answer0</Path>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>answerText0</Path>
-                                    </PropertyValue>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                        <PropertyValue Property="Label">
-                            <String>ComplianceCert0</String>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="UI.FieldGroup" Qualifier="ComplianceCert1">
-                    <Record Type="UI.FieldGroupType">
-                        <PropertyValue Property="Data">
-                            <Collection>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>answer1</Path>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>answerText1</Path>
-                                    </PropertyValue>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                        <PropertyValue Property="Label">
-                            <String>ComplianceCert1</String>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="UI.FieldGroup" Qualifier="ComplianceCert2">
-                    <Record Type="UI.FieldGroupType">
-                        <PropertyValue Property="Data">
-                            <Collection>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>answer2</Path>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>answerText2</Path>
-                                    </PropertyValue>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                        <PropertyValue Property="Label">
-                            <String>ComplianceCert2</String>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="UI.FieldGroup" Qualifier="ComplianceCert3">
-                    <Record Type="UI.FieldGroupType">
-                        <PropertyValue Property="Data">
-                            <Collection>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>answer3</Path>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>answerText3</Path>
-                                    </PropertyValue>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                        <PropertyValue Property="Label">
-                            <String>ComplianceCert3</String>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="UI.FieldGroup" Qualifier="ComplianceCert5">
-                    <Record Type="UI.FieldGroupType">
-                        <PropertyValue Property="Data">
-                            <Collection>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>answer5</Path>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>answerText5</Path>
-                                    </PropertyValue>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                        <PropertyValue Property="Label">
-                            <String>ComplianceCert5</String>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="UI.FieldGroup" Qualifier="ComplianceCert6">
-                    <Record Type="UI.FieldGroupType">
-                        <PropertyValue Property="Data">
-                            <Collection>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>answer6</Path>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>answerText6</Path>
-                                    </PropertyValue>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                        <PropertyValue Property="Label">
-                            <String>ComplianceCert6</String>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/answer0">
-                <Annotation Term="Common.Label">
-                    <String>Does the Business Partner conduct any business in, with, or involving (directly or indirectly) individuals or entities in or from Cuba, Iran, North Korea, Syria, Russia, Belarus or the Crimea region (each, a “Sanctioned Country”)?</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/answerText0">
-                <Annotation Term="Common.Label">
-                    <String>Comments</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/answer1">
-                <Annotation Term="Common.Label">
-                    <String>Does the Business Partner have any physical or legal presence (including offices, branches, and operations) in any Sanctioned Country?</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/answerText1">
-                <Annotation Term="Common.Label">
-                    <String>Comments</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/answer2">
-                <Annotation Term="Common.Label">
-                    <String>Is the Business Partner or any direct or indirect owner of the Business Partner currently listed, or has been listed in the last five (5) years, on any government watchlist, export or trade control list or sanctioned</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/answerText2">
-                <Annotation Term="Common.Label">
-                    <String>Comments</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/answer3">
-                <Annotation Term="Common.Label">
-                    <String>To the best of your knowledge, currently or during the last during the last five (5) years, have any of the Business Partner’s owners, officers, directors or senior management been identified on any official, governmental or regulatory body’s list as a politically exposed person?</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/answerText3">
-                <Annotation Term="Common.Label">
-                    <String>Comments</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/answer5">
-                <Annotation Term="Common.Label">
-                    <String>To the best of your knowledge, currently or during the last during the last five (5) years, has the Business Partner (including its owners, officers, directors or senior management) been: (1) subject to any investigation, administrative action, fine, censure or legal proceedings involving bribery, fraud, corruption, money laundering, violations of sanctions, export controls or similar offenses; or (2) suspended, restricted from doing business, or disbarred/excluded by any regulator, professional licensing agency or government program? For each “Yes” answer, provide complete details of the relevant circumstances.</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/answerText5">
-                <Annotation Term="Common.Label">
-                    <String>Comments</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/answer6">
-                <Annotation Term="Common.Label">
-                    <String>Is any owner, director, officer or senior management of the Business Partner, a former employee of the Company? If “Yes”, provide name, company, title, and last date of employment:</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/answerText6">
-                <Annotation Term="Common.Label">
-                    <String>Comments</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierDDForm/agent">
@@ -7275,6 +7166,124 @@
                     <String>状态</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer">
+                <Annotation Term="UI.LineItem" Qualifier="AnswerLineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>DDFormSurveyQuestion/question</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>enumResponse</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>textResponse</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/enumResponse">
+                <Annotation Term="Common.Text">
+                    <Path>BooleanEnum/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>enumResponse</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>BooleanEnums</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>enumResponse</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>enumId</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/surveyQuestionAnswerId">
+                <Annotation Term="Common.Label">
+                    <String>surveyQuestionAnswerId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/surveyQuestionId">
+                <Annotation Term="Common.Label">
+                    <String>问题ID</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/partyId">
+                <Annotation Term="Common.Label">
+                    <String>应答者ID</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/booleanResponse">
+                <Annotation Term="Common.Label">
+                    <String>是否</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/currencyResponse">
+                <Annotation Term="Common.Label">
+                    <String>金额</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/floatResponse">
+                <Annotation Term="Common.Label">
+                    <String>浮点数</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/numericResponse">
+                <Annotation Term="Common.Label">
+                    <String>数值</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/textResponse">
+                <Annotation Term="Common.Label">
+                    <String>文本回答</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/surveyOptionSeqId">
+                <Annotation Term="Common.Label">
+                    <String>选项序号</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/answeredDate">
+                <Annotation Term="Common.Label">
+                    <String>回答日期</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/lastModifiedDate">
+                <Annotation Term="Common.Label">
+                    <String>最后修改日期</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.CurrencyUom/uomId">
                 <Annotation Term="Common.Label">
                     <String>uomId</String>
@@ -7346,6 +7355,11 @@
                 </Annotation>
                 <Annotation Term="Common.Label">
                     <String>statusColor</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyClassification/ratingNumeric">
+                <Annotation Term="Common.Label">
+                    <String>ratingNumeric</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyClassification/partyId">
@@ -7539,6 +7553,54 @@
                     <String>moreInfoItemName</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestion/question">
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>问题</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestion/surveyQuestionId">
+                <Annotation Term="Common.Label">
+                    <String>surveyQuestionId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestion/surveyQuestionCategoryId">
+                <Annotation Term="Common.Label">
+                    <String>surveyQuestionCategoryId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestion/surveyQuestionTypeId">
+                <Annotation Term="Common.Label">
+                    <String>问题类型</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestion/description">
+                <Annotation Term="Common.Label">
+                    <String>描述</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestion/hint">
+                <Annotation Term="Common.Label">
+                    <String>提示</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestion/enumTypeId">
+                <Annotation Term="Common.Label">
+                    <String>enumTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestion/geoId">
+                <Annotation Term="Common.Label">
+                    <String>geoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestion/formatString">
+                <Annotation Term="Common.Label">
+                    <String>formatString</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.UomType/uomTypeId">
                 <Annotation Term="Common.Label">
                     <String>uomTypeId</String>
@@ -7730,12 +7792,12 @@
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
-                                        <Path>cycleTime</Path>
+                                        <Path>usccNumber</Path>
                                     </PropertyValue>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
-                                        <Path>usccNumber</Path>
+                                        <Path>cycleTime</Path>
                                     </PropertyValue>
                                 </Record>
                             </Collection>
@@ -7753,6 +7815,9 @@
                         <PropertyValue Property="Value">
                             <Path>ddFormType</Path>
                         </PropertyValue>
+                        <PropertyValue Property="Criticality">
+                            <Path>ddFormTypeCritical</Path>
+                        </PropertyValue>
                     </Record>
                 </Annotation>
                 <Annotation Term="UI.DataPoint" Qualifier="SupplierCategory">
@@ -7762,19 +7827,6 @@
                         </PropertyValue>
                         <PropertyValue Property="Value">
                             <Path>ProductCategory/categoryName</Path>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="UI.DataPoint" Qualifier="complianceCheckWarning">
-                    <Record Type="UI.DataPointType">
-                        <PropertyValue Property="Title">
-                            <String>complianceCheckWarning</String>
-                        </PropertyValue>
-                        <PropertyValue Property="Value">
-                            <Path>complianceCheckWarning</Path>
-                        </PropertyValue>
-                        <PropertyValue Property="Criticality">
-                            <Path>checkWarningCritical</Path>
                         </PropertyValue>
                     </Record>
                 </Annotation>
@@ -8192,23 +8244,10 @@
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
-                                <Path>cycleTime</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
                                 <Path>ddFormType</Path>
                             </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>ddResponseTime</Path>
+                            <PropertyValue Property="Criticality">
+                                <Path>ddFormTypeCritical</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -8220,6 +8259,14 @@
                             </PropertyValue>
                             <PropertyValue Property="Criticality">
                                 <Path>riskCritical</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>cycleTime</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -8249,6 +8296,9 @@
                             <PropertyValue Property="Value">
                                 <Path>ddFormType</Path>
                             </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <Path>ddFormTypeCritical</Path>
+                            </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
                             </Annotation>
@@ -8264,14 +8314,6 @@
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
                                 <Path>cycleTime</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>ddResponseTime</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -8382,11 +8424,6 @@
                     <String>表单填写周期</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.SupplierParty/ddResponseTime">
-                <Annotation Term="Common.Label">
-                    <String>ddResponseTime</String>
-                </Annotation>
-            </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/createSupplierHidden">
                 <Annotation Term="UI.Hidden">
                     <Bool>true</Bool>
@@ -8442,17 +8479,6 @@
                     <String>ddFormTypeCritical</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.SupplierParty/ddFormDealCritical">
-                <Annotation Term="UI.Hidden">
-                    <Bool>true</Bool>
-                </Annotation>
-                <Annotation Term="UI.HiddenFilter">
-                    <Bool>true</Bool>
-                </Annotation>
-                <Annotation Term="Common.Label">
-                    <String>ddFormDealCritical</String>
-                </Annotation>
-            </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/riskCritical">
                 <Annotation Term="UI.Hidden">
                     <Bool>true</Bool>
@@ -8462,6 +8488,21 @@
                 </Annotation>
                 <Annotation Term="Common.Label">
                     <String>riskCritical</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/ratingNumeric">
+                <Annotation Term="Common.Label">
+                    <String>ratingNumeric</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/processNumeric">
+                <Annotation Term="Common.Label">
+                    <String>processNumeric</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/processCritical">
+                <Annotation Term="Common.Label">
+                    <String>processCritical</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/priorityCritical">
@@ -11103,6 +11144,11 @@
                     <String>imageData</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.PartyMediaResource/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/otherData">
                 <Annotation Term="Common.Label">
                     <String>文件</String>
@@ -11111,6 +11157,14 @@
             <Annotations Target="com.dpbird.PartyMediaResource/fileUrl">
                 <Annotation Term="Common.Label">
                     <String>fileUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyMediaResource/uploadDocCritical">
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>uploadDocCritical</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.EmployeesEnumeration/enumId">

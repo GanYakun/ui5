@@ -130,6 +130,10 @@
                             "views": {
                                 "paths": [
                                     {
+                                        "key": "ALL_COWORK",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#ALL_COWORK"
+                                    },
+                                    {
                                         "key": "COWORK_CREATED",
                                         "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#COWORK_CREATED"
                                     },
@@ -138,16 +142,8 @@
                                         "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#REQUEST_DD"
                                     },
                                     {
-                                        "key": "COMPLETE_DD",
-                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#COMPLETE_DD"
-                                    },
-                                    {
                                         "key": "DOC_READY",
                                         "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#DOC_READY"
-                                    },
-                                    {
-                                        "key": "REQUEST_COMP",
-                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#REQUEST_COMP"
                                     },
                                     {
                                         "key": "COMPLETE_COMP",
@@ -156,6 +152,10 @@
                                     {
                                         "key": "COMPLETE",
                                         "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#COMPLETE"
+                                    },
+                                    {
+                                        "key": "Warning",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#Warning"
                                     }
                                 ]
                             },
