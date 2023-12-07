@@ -7181,6 +7181,9 @@
                             <PropertyValue Property="Value">
                                 <Path>enumResponse</Path>
                             </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <Path>boolResponseCritical</Path>
+                            </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
                             </Annotation>

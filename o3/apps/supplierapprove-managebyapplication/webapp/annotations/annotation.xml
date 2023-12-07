@@ -1005,7 +1005,7 @@
                     </Record>
                     <Record Type="UI.DataFieldWithUrl">
                         <PropertyValue Property="Label" String="File"/>
-                        <PropertyValue Property="Value" Path="description"/>
+                        <PropertyValue Property="Value" Path="addNameForUpload"/>
                         <PropertyValue Property="Url" Path="fileUrl"/>
                     </Record>
                     <Record Type="UI.DataFieldForAction">
