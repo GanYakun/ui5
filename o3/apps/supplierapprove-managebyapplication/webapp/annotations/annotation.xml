@@ -140,14 +140,9 @@
                         <PropertyValue Property="Target"  AnnotationPath="FileList/@UI.LineItem#FileList"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="ComplianceReport"/>
-                        <PropertyValue Property="Label" String="{@i18n>ComplianceReport}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="ComplianceReport/@UI.LineItem#ComplianceReport"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>SelectDepartment}"/>
                         <PropertyValue Property="ID" String="SelectDepartment"/>
-                        <PropertyValue Property="Target" AnnotationPath="Department/@UI.LineItem#DepartmentLineItem"/>
+                        <PropertyValue Property="Target" AnnotationPath="Company/@UI.LineItem#DepartmentLineItem"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="NoteDataLineItem"/>
@@ -980,7 +975,7 @@
                 </Record>
             </Annotation>
         </Annotations>
-        <Annotations Target="com.dpbird.RemoveDepartment">
+        <Annotations Target="com.dpbird.RemoveCompany">
             <Annotation Term="Common.SideEffects">
                 <Record>
                     <PropertyValue Property="TargetEntities">
