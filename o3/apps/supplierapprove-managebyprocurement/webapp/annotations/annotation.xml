@@ -384,7 +384,7 @@
                 </Record>
             </Annotation>
             
-            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="REQUIRE_CHANGES">
+            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="REQUEST_DD">
                 <Record Type="UI.SelectionPresentationVariantType">
                     <PropertyValue Property="PresentationVariant">
                         <Record Type="UI.PresentationVariantType">
@@ -404,7 +404,7 @@
                                         <PropertyValue Property="Ranges">
                                             <Collection>
                                                 <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="REQUIRE_CHANGES"></PropertyValue>
+                                                    <PropertyValue Property="Low" String="REQUEST_DD"></PropertyValue>
                                                     <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
                                                     <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
                                                 </Record>
@@ -415,10 +415,10 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>RequireChanges}"/>
+                    <PropertyValue Property="Text" String="{@i18n>REQUEST_DD}"/>
                 </Record>
             </Annotation>
-            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="REGISTERED">
+            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="COMPLETE_DD">
                 <Record Type="UI.SelectionPresentationVariantType">
                     <PropertyValue Property="PresentationVariant">
                         <Record Type="UI.PresentationVariantType">
@@ -438,7 +438,7 @@
                                         <PropertyValue Property="Ranges">
                                             <Collection>
                                                 <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="REGISTERED"></PropertyValue>
+                                                    <PropertyValue Property="Low" String="COMPLETE_DD"></PropertyValue>
                                                     <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
                                                     <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
                                                 </Record>
@@ -449,46 +449,11 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>Registered}"/>
-                </Record>
-            </Annotation>
-
-            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="DOCUMENT_READY">
-                <Record Type="UI.SelectionPresentationVariantType">
-                    <PropertyValue Property="PresentationVariant">
-                        <Record Type="UI.PresentationVariantType">
-                            <PropertyValue Property="Visualizations">
-                                <Collection>
-                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="SelectionVariant">
-                        <Record Type="UI.SelectionVariantType">
-                            <PropertyValue Property="SelectOptions">
-                                <Collection>
-                                    <Record Type="UI.SelectOptionType">
-                                        <PropertyValue Property="PropertyName" PropertyPath="currentStatusId" />
-                                        <PropertyValue Property="Ranges">
-                                            <Collection>
-                                                <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="DOCUMENT_READY"></PropertyValue>
-                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
-                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
-                                                </Record>
-                                            </Collection>
-                                        </PropertyValue>
-                                    </Record>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>DocumentReady}"/>
+                    <PropertyValue Property="Text" String="{@i18n>COMPLETE_DD}"/>
                 </Record>
             </Annotation>
 
-             <Annotation Term="UI.SelectionPresentationVariant" Qualifier="WARNING">
+            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="DOC_READY">
                 <Record Type="UI.SelectionPresentationVariantType">
                     <PropertyValue Property="PresentationVariant">
                         <Record Type="UI.PresentationVariantType">
@@ -508,19 +473,7 @@
                                         <PropertyValue Property="Ranges">
                                             <Collection>
                                                 <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="REGISTERED"></PropertyValue>
-                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
-                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
-                                                </Record>
-                                            </Collection>
-                                        </PropertyValue>
-                                    </Record>
-                                    <Record Type="UI.SelectOptionType">
-                                        <PropertyValue Property="PropertyName" PropertyPath="complianceCheckWarning" />
-                                        <PropertyValue Property="Ranges">
-                                            <Collection>
-                                                <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" Bool="true"></PropertyValue>
+                                                    <PropertyValue Property="Low" String="DOC_READY"></PropertyValue>
                                                     <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
                                                     <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
                                                 </Record>
@@ -531,7 +484,112 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>Warning}"/>
+                    <PropertyValue Property="Text" String="{@i18n>DOC_READY}"/>
+                </Record>
+            </Annotation>
+
+             <Annotation Term="UI.SelectionPresentationVariant" Qualifier="REQUEST_COMP">
+                <Record Type="UI.SelectionPresentationVariantType">
+                    <PropertyValue Property="PresentationVariant">
+                        <Record Type="UI.PresentationVariantType">
+                            <PropertyValue Property="Visualizations">
+                                <Collection>
+                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </PropertyValue>
+                    <PropertyValue Property="SelectionVariant">
+                        <Record Type="UI.SelectionVariantType">
+                            <PropertyValue Property="SelectOptions">
+                                <Collection>
+                                    <Record Type="UI.SelectOptionType">
+                                        <PropertyValue Property="PropertyName" PropertyPath="currentStatusId" />
+                                        <PropertyValue Property="Ranges">
+                                            <Collection>
+                                                <Record Type="UI.SelectionRangeType">
+                                                    <PropertyValue Property="Low" String="REQUEST_COMP"></PropertyValue>
+                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
+                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
+                                                </Record>
+                                            </Collection>
+                                        </PropertyValue>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </PropertyValue>
+                    <PropertyValue Property="Text" String="{@i18n>REQUEST_COMP}"/>
+                </Record>
+            </Annotation>
+
+             <Annotation Term="UI.SelectionPresentationVariant" Qualifier="COMPLETE_COMP">
+                <Record Type="UI.SelectionPresentationVariantType">
+                    <PropertyValue Property="PresentationVariant">
+                        <Record Type="UI.PresentationVariantType">
+                            <PropertyValue Property="Visualizations">
+                                <Collection>
+                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </PropertyValue>
+                    <PropertyValue Property="SelectionVariant">
+                        <Record Type="UI.SelectionVariantType">
+                            <PropertyValue Property="SelectOptions">
+                                <Collection>
+                                    <Record Type="UI.SelectOptionType">
+                                        <PropertyValue Property="PropertyName" PropertyPath="currentStatusId" />
+                                        <PropertyValue Property="Ranges">
+                                            <Collection>
+                                                <Record Type="UI.SelectionRangeType">
+                                                    <PropertyValue Property="Low" String="COMPLETE_COMP"></PropertyValue>
+                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
+                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
+                                                </Record>
+                                            </Collection>
+                                        </PropertyValue>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </PropertyValue>
+                    <PropertyValue Property="Text" String="{@i18n>COMPLETE_COMP}"/>
+                </Record>
+            </Annotation>
+
+             <Annotation Term="UI.SelectionPresentationVariant" Qualifier="COMPLETE">
+                <Record Type="UI.SelectionPresentationVariantType">
+                    <PropertyValue Property="PresentationVariant">
+                        <Record Type="UI.PresentationVariantType">
+                            <PropertyValue Property="Visualizations">
+                                <Collection>
+                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </PropertyValue>
+                    <PropertyValue Property="SelectionVariant">
+                        <Record Type="UI.SelectionVariantType">
+                            <PropertyValue Property="SelectOptions">
+                                <Collection>
+                                    <Record Type="UI.SelectOptionType">
+                                        <PropertyValue Property="PropertyName" PropertyPath="currentStatusId" />
+                                        <PropertyValue Property="Ranges">
+                                            <Collection>
+                                                <Record Type="UI.SelectionRangeType">
+                                                    <PropertyValue Property="Low" String="COMPLETE"></PropertyValue>
+                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
+                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
+                                                </Record>
+                                            </Collection>
+                                        </PropertyValue>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </PropertyValue>
+                    <PropertyValue Property="Text" String="{@i18n>COMPLETE}"/>
                 </Record>
             </Annotation>
         
@@ -867,6 +925,93 @@
                             <Bool>true</Bool>
                         </If>
                         </Annotation>
+                    </Record>
+                    <Record Type="UI.CollectionFacet">
+                        <PropertyValue Property="Label" String="{@i18n>ViewDDForm}"/>
+                        <PropertyValue Property="ID" String="DDForm"/>
+                        <PropertyValue Property="Facets">
+                            <Collection>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="Full Name of Company or Individual Party"/>
+                                    <PropertyValue Property="ID" String="FullName"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#FullName"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="Date of Incorporation/Date of Birth"/>
+                                    <PropertyValue Property="ID" String="DateIncorporation"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#DateIncorporation"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
+                                    <PropertyValue Property="ID" String="ContactMechPurpose"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#RegisteredAddress"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="Business Registration Number/Passport number"/>
+                                    <PropertyValue Property="ID" String="RegistrationNumber"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#RegistrationNumber"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ContactPersonList"/>
+                                    <PropertyValue Property="Label" String="Contact Information"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/ContactPerson/@UI.LineItem#ContactPersonList"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="BusinessRelationship"/>
+                                    <PropertyValue Property="Label" String="Business Relationship to Company"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#BusinessRelationship"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="WorkScope"/>
+                                    <PropertyValue Property="Label" String="Summary of the anticipated scope of work (including estimated value, term of engagement)"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#WorkScope"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="BusinessLocation"/>
+                                    <PropertyValue Property="Label" String="Principal location in which the Business Partner carries out business"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#BusinessLocation"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="PartyNameHistory"/>
+                                    <PropertyValue Property="Label" String="Previous name of Business Partner (if any) and date of name change"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/PartyNameHistory/@UI.LineItem#HistoryList"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="BeneficialPerson"/>
+                                    <PropertyValue Property="Label" String="Ultimate beneficiary"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/BeneficialPerson/@UI.LineItem#BeneficialPerson"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="SeniorStaff"/>
+                                    <PropertyValue Property="Label" String="Director/Officer"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/SeniorStaff/@UI.LineItem#SeniorStaff"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceCertifications0"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert0"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceCertifications1"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert1"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceCertifications2"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert2"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceCertifications3"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert3"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceCertifications5"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert5"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceCertifications6"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert6"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
                     </Record>
                 </Collection>
             </Annotation>

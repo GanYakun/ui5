@@ -54,107 +54,6 @@
                         <PropertyValue Property="ID" String="SelectDepartment"/>
                         <PropertyValue Property="Target" AnnotationPath="Department/@UI.LineItem#DepartmentLineItem"/>
                     </Record>
-                    <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
-                        <PropertyValue Property="ID" String="ContactMechPurpose"/>
-                        <PropertyValue Property="Target" AnnotationPath="PostalAddress/@UI.LineItem#PostalAddressLineItem"/>
-                        <Annotation Term="UI.Hidden">
-                            <If>
-                                <Eq>
-                                    <Path>currentStatusId</Path>
-                                    <String>PROCESSED</String>
-                                </Eq>
-                                <Bool>true</Bool>
-                                <Bool>false</Bool>
-                            </If>
-                            </Annotation>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
-                        <PropertyValue Property="ID" String="ContactMechPurpose_NOAction"/>
-                        <PropertyValue Property="Target" AnnotationPath="PostalAddress/@UI.LineItem#PostalAddressLineItem_NOAction"/>
-                        <Annotation Term="UI.Hidden">
-                            <If>
-                                <Eq>
-                                    <Path>currentStatusId</Path>
-                                    <String>PROCESSED</String>
-                                </Eq>
-                                <Bool>false</Bool>
-                                <Bool>true</Bool>
-                            </If>
-                        </Annotation>
-                    </Record> -->
-                    <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="Label" String="{@i18n>SurveyQuestionApplLineItem}"/>
-                        <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
-                        <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
-                    </Record> -->
-                    <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="Label" String="{@i18n>PartyClassificationGroupLineItem}"/>
-                        <PropertyValue Property="ID" String="PartyClassificationGroupLineItem"/>
-                        <PropertyValue Property="Target" AnnotationPath="PartyClassification/@UI.FieldGroup#PartyClassificationFieldGroup">
-                        </PropertyValue>
-                    </Record> -->
-                    <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="PartyRelationshipLineItem"/>
-                        <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>
-                        <PropertyValue Property="Target" AnnotationPath="PersonAndContact/@UI.LineItem#PartyRelationshipLineItemWithoutAction"/>
-                        <Annotation Term="UI.Hidden">
-                        <If>
-                            <Eq>
-                                <Path>currentStatusId</Path>
-                                <String>PROCESSED</String>
-                            </Eq>
-                            <Bool>false</Bool>
-                            <Bool>true</Bool>
-                        </If>
-                        </Annotation>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="PartyRelationshipLineItem2"/>
-                        <PropertyValue Property="Label" String="{@i18n>PartyRelationshipLineItem}"/>
-                        <PropertyValue Property="Target" AnnotationPath="PersonAndContact/@UI.LineItem#PartyRelationshipLineItem"/>
-                        <Annotation Term="UI.Hidden">
-                        <If>
-                            <Eq>
-                                <Path>currentStatusId</Path>
-                                <String>PROCESSED</String>
-                            </Eq>
-                            <Bool>true</Bool>
-                            <Bool>false</Bool>
-                        </If>
-                        </Annotation>
-                    </Record> -->
-                    <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="BeneficialPersonLineItem"/>
-                        <PropertyValue Property="Label" String="{@i18n>BeneficialPersonLineItem}"/>
-                        <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#BeneficialPersonLineItem"/>
-                        <Annotation Term="UI.Hidden">
-                        <If>
-                            <Eq>
-                                <Path>currentStatusId</Path>
-                                <String>PROCESSED</String>
-                            </Eq>
-                            <Bool>false</Bool>
-                            <Bool>true</Bool>
-                        </If>
-                        </Annotation>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="BeneficialPersonLineItem_Action"/>
-                        <PropertyValue Property="Label" String="{@i18n>BeneficialPersonLineItem}"/>
-                        <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#BeneficialPersonLineItem_Action"/>
-                        <Annotation Term="UI.Hidden">
-                        <If>
-                            <Eq>
-                                <Path>currentStatusId</Path>
-                                <String>PROCESSED</String>
-                            </Eq>
-                            <Bool>true</Bool>
-                            <Bool>false</Bool>
-                        </If>
-                        </Annotation>
-                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="NoteDataLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>NoteDataLineItem}"/>
@@ -245,41 +144,6 @@
                         </If>
                         </Annotation>
                     </Record>
-                    <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="PurchaseAgreementLineItem"/>
-                        <PropertyValue Property="Label" String="{@i18n>PurchaseAgreementLineItem}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="PurchaseAgreement/@UI.LineItem#PurchaseAgreementLineItem"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="Label" String="{@i18n>BankAccount}"/>
-                        <PropertyValue Property="ID" String="BankAccount"/>
-                        <PropertyValue Property="Target" AnnotationPath="OwnerFinAccount/@UI.LineItem#FinAccountLineItem" />
-                        <Annotation Term="UI.Hidden">
-                        <If>
-                            <Eq>
-                                <Path>currentStatusId</Path>
-                                <String>PROCESSED</String>
-                            </Eq>
-                            <Bool>true</Bool>
-                            <Bool>false</Bool>
-                        </If>
-                        </Annotation>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="Label" String="{@i18n>BankAccount}"/>
-                        <PropertyValue Property="ID" String="BankAccount2"/>
-                        <PropertyValue Property="Target" AnnotationPath="OwnerFinAccount/@UI.LineItem#FinAccountLineItemWithoutAction" />
-                        <Annotation Term="UI.Hidden">
-                        <If>
-                            <Eq>
-                                <Path>currentStatusId</Path>
-                                <String>PROCESSED</String>
-                            </Eq>
-                            <Bool>false</Bool>
-                            <Bool>true</Bool>
-                        </If>
-                        </Annotation>
-                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>FlowingRecords}"/>
                         <PropertyValue Property="ID" String="FlowingRecords"/>
@@ -340,6 +204,159 @@
                             <Bool>true</Bool>
                         </If>
                         </Annotation>
+                    </Record>
+
+                    <Record Type="UI.CollectionFacet">
+                        <PropertyValue Property="Label" String="{@i18n>ViewDDForm}"/>
+                        <PropertyValue Property="ID" String="DDForm"/>
+                        <PropertyValue Property="Facets">
+                            <Collection>
+                                <!-- <Record Type="UI.CollectionFacet">
+                                    <PropertyValue Property="ID" String="FullName"/>
+                                    <PropertyValue Property="Label" String="BUSINESS PARTNER INFORMATION"/>
+                                    <PropertyValue Property="Facets" >
+                                        <Collection >
+                                            <Record Type="UI.ReferenceFacet">
+                                                <PropertyValue Property="ID" String="FullName"/>
+                                                <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#FullName"/>
+                                            </Record>
+                                            <Record Type="UI.ReferenceFacet">
+                                                <PropertyValue Property="ID" String="DateIncorporation"/>
+                                                <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#DateIncorporation"/>
+                                            </Record>
+                                            <Record Type="UI.ReferenceFacet">
+                                                <PropertyValue Property="ID" String="RegistrationNumber"/>
+                                                <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#RegistrationNumber"/>
+                                            </Record>
+                                        </Collection>
+                                    </PropertyValue>
+                                </Record> -->
+
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="Full Name of Company or Individual Party"/>
+                                    <PropertyValue Property="ID" String="FullName"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#FullName"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="Date of Incorporation/Date of Birth"/>
+                                    <PropertyValue Property="ID" String="DateIncorporation"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#DateIncorporation"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
+                                    <PropertyValue Property="ID" String="ContactMechPurpose"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#RegisteredAddress"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="Label" String="Business Registration Number/Passport number"/>
+                                    <PropertyValue Property="ID" String="RegistrationNumber"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#RegistrationNumber"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ContactPersonList"/>
+                                    <PropertyValue Property="Label" String="Contact Information"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/ContactPerson/@UI.LineItem#ContactPersonList"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="BusinessRelationship"/>
+                                    <PropertyValue Property="Label" String="Business Relationship to Company"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#BusinessRelationship"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="WorkScope"/>
+                                    <PropertyValue Property="Label" String="Summary of the anticipated scope of work (including estimated value, term of engagement)"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#WorkScope"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="BusinessLocation"/>
+                                    <PropertyValue Property="Label" String="Principal location in which the Business Partner carries out business"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#BusinessLocation"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="PartyNameHistory"/>
+                                    <PropertyValue Property="Label" String="Previous name of Business Partner (if any) and date of name change"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/PartyNameHistory/@UI.LineItem#HistoryList"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="BeneficialPerson"/>
+                                    <PropertyValue Property="Label" String="Ultimate beneficiary"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/BeneficialPerson/@UI.LineItem#BeneficialPerson"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="SeniorStaff"/>
+                                    <PropertyValue Property="Label" String="Director/Officer"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/SeniorStaff/@UI.LineItem#SeniorStaff"/>
+                                </Record>
+                                
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceCertifications0"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert0"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceCertifications1"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert1"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceCertifications2"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert2"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceCertifications3"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert3"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceCertifications5"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert5"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceCertifications6"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCert6"/>
+                                </Record>
+                                
+                                <!-- <Record Type="UI.CollectionFacet">
+                                    <PropertyValue Property="ID" String="ComplianceCertifications"/>
+                                    <PropertyValue Property="Label" String="COMPLIANCE CERTIFICATIONS"/>
+                                    <PropertyValue Property="Facets" >
+                                        <Collection >
+                                            <Record Type="UI.ReferenceFacet">
+                                                <PropertyValue Property="ID" String="ComplianceCertifications0"/>
+                                                <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCertifications0"/>
+                                            </Record>
+                                            <Record Type="UI.ReferenceFacet">
+                                                <PropertyValue Property="ID" String="ComplianceCertifications1"/>
+                                                <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCertifications1"/>
+                                            </Record>
+                                            <Record Type="UI.ReferenceFacet">
+                                                <PropertyValue Property="ID" String="ComplianceCertifications2"/>
+                                                <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCertifications2"/>
+                                            </Record>
+                                            <Record Type="UI.ReferenceFacet">
+                                                <PropertyValue Property="ID" String="ComplianceCertifications3"/>
+                                                <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCertifications3"/>
+                                            </Record>
+                                            <Record Type="UI.ReferenceFacet">
+                                                <PropertyValue Property="ID" String="ComplianceCertifications5"/>
+                                                <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCertifications5"/>
+                                            </Record>
+                                            <Record Type="UI.ReferenceFacet">
+                                                <PropertyValue Property="ID" String="ComplianceCertifications6"/>
+                                                <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/@UI.FieldGroup#ComplianceCertifications6"/>
+                                            </Record>
+                                        </Collection>
+                                    </PropertyValue>
+                                </Record> -->
+                            </Collection>
+                        </PropertyValue>
+                        <!-- <Annotation Term="UI.Hidden">
+                            <If>
+                                <Eq>
+                                    <Path>currentStatusId</Path>
+                                    <String>PROCESSED</String>
+                                </Eq>
+                                <Bool>false</Bool>
+                                <Bool>true</Bool>
+                            </If>
+                        </Annotation> -->
                     </Record>
                 </Collection>
             </Annotation>

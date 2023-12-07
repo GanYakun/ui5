@@ -134,20 +134,28 @@
                                         "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#COWORK_CREATED"
                                     },
                                     {
-                                        "key": "REQUIRE_CHANGES",
-                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#REQUIRE_CHANGES"
+                                        "key": "REQUEST_DD",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#REQUEST_DD"
                                     },
                                     {
-                                        "key": "DOCUMENT_READY",
-                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#DOCUMENT_READY"
+                                        "key": "COMPLETE_DD",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#COMPLETE_DD"
                                     },
                                     {
-                                        "key": "REGISTERED",
-                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#REGISTERED"
+                                        "key": "DOC_READY",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#DOC_READY"
                                     },
                                     {
-                                        "key": "WARNING",
-                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#WARNING"
+                                        "key": "REQUEST_COMP",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#REQUEST_COMP"
+                                    },
+                                    {
+                                        "key": "COMPLETE_COMP",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#COMPLETE_COMP"
+                                    },
+                                    {
+                                        "key": "COMPLETE",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#COMPLETE"
                                     }
                                 ]
                             },
