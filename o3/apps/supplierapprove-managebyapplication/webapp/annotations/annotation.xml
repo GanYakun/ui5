@@ -998,7 +998,7 @@
             </Annotation>
 
             <Annotation Term="UI.LineItem" Qualifier="ComplianceReport">
-                <!-- <Annotation Term="UI.Criticality" Path="uploadDocCritical"></Annotation> -->
+                <Annotation Term="UI.Criticality" Path="uploadDocCritical"></Annotation>
                 <Collection>
                     <Record Type="UI.DataField">
                         <PropertyValue Property="Value">
