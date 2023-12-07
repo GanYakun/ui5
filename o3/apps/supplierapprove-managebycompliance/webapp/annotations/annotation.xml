@@ -91,7 +91,7 @@
 
             <Annotation Term="UI.Facets">
                 <Collection>
-                    <Record Type="UI.CollectionFacet">
+                    <!-- <Record Type="UI.CollectionFacet">
                         <PropertyValue Property="ID" String="SupplierFacet"/>
                         <PropertyValue Property="Label" String="DD Form"/>
                         <PropertyValue Property="Facets" >
@@ -107,13 +107,13 @@
                                 </Record>
                             </Collection>
                         </PropertyValue>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="FileList"/>
                         <PropertyValue Property="Label" String="{@i18n>FileList}"/>
                         <PropertyValue Property="Target"  AnnotationPath="ComplianceReport/@UI.LineItem#FileList"/>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>ContactMechPurpose}"/>
                         <PropertyValue Property="ID" String="ContactMechPurpose"/>
                         <PropertyValue Property="Target" AnnotationPath="PostalAddress/@UI.LineItem#PostalAddressLineItem_NOAction"/>
@@ -122,7 +122,7 @@
                         <PropertyValue Property="ID" String="BeneficialPersonLineItem"/>
                         <PropertyValue Property="Label" String="{@i18n>BeneficialPersonLineItem}"/>
                         <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#BeneficialPersonLineItem"/>
-                    </Record>
+                    </Record> -->
                     <Record Type="UI.CollectionFacet">
                         <PropertyValue Property="Label" String="{@i18n>ViewDDForm}"/>
                         <PropertyValue Property="ID" String="DDForm"/>
