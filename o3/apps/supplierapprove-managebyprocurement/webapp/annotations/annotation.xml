@@ -1202,7 +1202,7 @@
             <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
             <Annotation Term="Common.ValueList">
                 <Record Type="Common.ValueListType">
-                    <PropertyValue Property="Label" String="{@i18n>GOODS}"/>
+                    <PropertyValue Property="Label" String="Goods"/>
                     <PropertyValue Property="CollectionPath" String="Products" />
                     <PropertyValue Property="Parameters">
                         <Collection>
@@ -1227,7 +1227,7 @@
             <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
             <Annotation Term="Common.ValueList">
                 <Record Type="Common.ValueListType">
-                    <PropertyValue Property="Label" String="{@i18n>Services}"/>
+                    <PropertyValue Property="Label" String="Services"/>
                     <PropertyValue Property="CollectionPath" String="Services" />
                     <PropertyValue Property="Parameters">
                         <Collection>
