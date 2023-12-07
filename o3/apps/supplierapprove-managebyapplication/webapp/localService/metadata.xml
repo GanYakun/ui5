@@ -38,48 +38,6 @@
                     <ReferentialConstraint Property="roleTypeId" ReferencedProperty="roleTypeId"/>
                 </NavigationProperty>
             </EntityType>
-            <EntityType Name="PartyContactMechPurposeAndAddress">
-                <Key>
-                    <PropertyRef Name="contactMechId"/>
-                </Key>
-                <Property Name="contactMechPurposeTypeId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="countryGeoId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="stateProvinceGeoId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="cityGeoId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="fromDate" Type="Edm.DateTimeOffset" Precision="3"/>
-                <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="contactMechId" Type="Edm.String" Nullable="false" MaxLength="60"/>
-                <Property Name="thruDate" Type="Edm.DateTimeOffset" Precision="3"/>
-                <Property Name="houseNumberExt" Type="Edm.String" MaxLength="60"/>
-                <Property Name="city" Type="Edm.String" MaxLength="100"/>
-                <Property Name="postalCode" Type="Edm.String" MaxLength="60"/>
-                <Property Name="postalCodeGeoId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="houseNumber" Type="Edm.Int64"/>
-                <Property Name="postalCodeExt" Type="Edm.String" MaxLength="60"/>
-                <Property Name="attnName" Type="Edm.String" MaxLength="100"/>
-                <Property Name="countyGeoId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="toName" Type="Edm.String" MaxLength="100"/>
-                <Property Name="contactNumber" Type="Edm.String" MaxLength="60"/>
-                <Property Name="email" Type="Edm.String" MaxLength="60"/>
-                <Property Name="address2" Type="Edm.String" MaxLength="255"/>
-                <Property Name="address1" Type="Edm.String" MaxLength="255"/>
-                <Property Name="areaCode" Type="Edm.String" MaxLength="10"/>
-                <Property Name="directions" Type="Edm.String" MaxLength="255"/>
-                <Property Name="municipalityGeoId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="geoPointId" Type="Edm.String" MaxLength="60"/>
-                <NavigationProperty Name="CountryGeo" Type="com.dpbird.Geo">
-                    <ReferentialConstraint Property="countryGeoId" ReferencedProperty="geoId"/>
-                </NavigationProperty>
-                <NavigationProperty Name="StateProvinceGeo" Type="com.dpbird.Geo">
-                    <ReferentialConstraint Property="stateProvinceGeoId" ReferencedProperty="geoId"/>
-                </NavigationProperty>
-                <NavigationProperty Name="CityGeo" Type="com.dpbird.Geo">
-                    <ReferentialConstraint Property="cityGeoId" ReferencedProperty="geoId"/>
-                </NavigationProperty>
-                <NavigationProperty Name="ContactMechPurposeType" Type="com.dpbird.ContactMechPurposeType">
-                    <ReferentialConstraint Property="contactMechPurposeTypeId" ReferencedProperty="contactMechPurposeTypeId"/>
-                </NavigationProperty>
-            </EntityType>
             <EntityType Name="AfterSalesService">
                 <Key>
                     <PropertyRef Name="workEffortId"/>
@@ -469,6 +427,41 @@
                 <Property Name="parentTypeId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="hasTable" Type="Edm.String" MaxLength="1"/>
                 <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="RegisterPostalAddress">
+                <Key>
+                    <PropertyRef Name="contactMechId"/>
+                </Key>
+                <Property Name="countryGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="stateProvinceGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="cityGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="contactMechId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="toName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="attnName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="address1" Type="Edm.String" MaxLength="255"/>
+                <Property Name="address2" Type="Edm.String" MaxLength="255"/>
+                <Property Name="houseNumber" Type="Edm.Int64"/>
+                <Property Name="houseNumberExt" Type="Edm.String" MaxLength="60"/>
+                <Property Name="directions" Type="Edm.String" MaxLength="255"/>
+                <Property Name="city" Type="Edm.String" MaxLength="100"/>
+                <Property Name="postalCode" Type="Edm.String" MaxLength="60"/>
+                <Property Name="postalCodeExt" Type="Edm.String" MaxLength="60"/>
+                <Property Name="countyGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="municipalityGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="postalCodeGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="geoPointId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="areaCode" Type="Edm.String" MaxLength="10"/>
+                <Property Name="contactNumber" Type="Edm.String" MaxLength="60"/>
+                <Property Name="email" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="CountryGeo" Type="com.dpbird.Geo">
+                    <ReferentialConstraint Property="countryGeoId" ReferencedProperty="geoId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="StateProvinceGeo" Type="com.dpbird.Geo">
+                    <ReferentialConstraint Property="stateProvinceGeoId" ReferencedProperty="geoId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="CityGeo" Type="com.dpbird.Geo">
+                    <ReferentialConstraint Property="cityGeoId" ReferencedProperty="geoId"/>
+                </NavigationProperty>
             </EntityType>
             <EntityType Name="PartyGeo">
                 <Key>
@@ -965,7 +958,7 @@
                 <NavigationProperty Name="BeneficialPerson" Type="Collection(com.dpbird.RelationshipAndToParty)"/>
                 <NavigationProperty Name="SeniorStaff" Type="Collection(com.dpbird.RelationshipAndToParty)"/>
                 <NavigationProperty Name="ContactPerson" Type="Collection(com.dpbird.RelationshipAndToParty)"/>
-                <NavigationProperty Name="PartyContactMechPurposeAndAddress" Type="Collection(com.dpbird.PartyContactMechPurposeAndAddress)"/>
+                <NavigationProperty Name="RegisterPostalAddress" Type="com.dpbird.RegisterPostalAddress"/>
                 <NavigationProperty Name="RegisteredCountry" Type="com.dpbird.PartyGeo"/>
             </EntityType>
             <EntityType Name="WorkEffortStatus">
@@ -1042,6 +1035,7 @@
                     <PropertyRef Name="fromDate"/>
                 </Key>
                 <Property Name="statusColor" Type="Edm.Int64"/>
+                <Property Name="ratingNumeric" Type="Edm.Int64"/>
                 <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="partyClassificationGroupId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="fromDate" Type="Edm.DateTimeOffset" Nullable="false" Precision="3"/>
@@ -1141,10 +1135,8 @@
                 <Property Name="isGovernment" Type="Edm.Boolean"/>
                 <Property Name="ddFormType" Type="Edm.String"/>
                 <Property Name="ddFormTypeId" Type="Edm.String"/>
-                <Property Name="ddFormDealStatus" Type="Edm.String"/>
                 <Property Name="ddFormStatusHistory" Type="Edm.String"/>
                 <Property Name="cycleTime" Type="Edm.String"/>
-                <Property Name="ddResponseTime" Type="Edm.String"/>
                 <Property Name="createSupplierHidden" Type="Edm.Boolean"/>
                 <Property Name="firstOrderDate" Type="Edm.DateTimeOffset"/>
                 <Property Name="collectionDate" Type="Edm.DateTimeOffset"/>
@@ -1153,8 +1145,10 @@
                 <Property Name="totalAmount" Type="Edm.Decimal" Scale="3"/>
                 <Property Name="criticalityValue" Type="Edm.Int64"/>
                 <Property Name="ddFormTypeCritical" Type="Edm.Int64"/>
-                <Property Name="ddFormDealCritical" Type="Edm.Int64"/>
                 <Property Name="riskCritical" Type="Edm.Int64"/>
+                <Property Name="ratingNumeric" Type="Edm.Int64"/>
+                <Property Name="processNumeric" Type="Edm.Int64"/>
+                <Property Name="processCritical" Type="Edm.Int64"/>
                 <Property Name="priorityCritical" Type="Edm.Int64"/>
                 <Property Name="statusId" Type="Edm.String" DefaultValue="PARTY_DISABLED" MaxLength="60"/>
                 <Property Name="priority" Type="Edm.String" MaxLength="60"/>
@@ -1187,7 +1181,7 @@
                 <Property Name="adverseResults" Type="Edm.String"/>
                 <Property Name="additionalProtection" Type="Edm.String"/>
                 <Property Name="complianceComments" Type="Edm.String"/>
-                <Property Name="complianceCheckWarning" Type="Edm.Boolean"/>
+                <Property Name="complianceCheckWarning" Type="Edm.String"/>
                 <Property Name="checkWarningCritical" Type="Edm.Int64"/>
                 <Property Name="applicationWorkStatus" Type="Edm.String"/>
                 <Property Name="applicationWorkCriticality" Type="Edm.Int64"/>
@@ -1700,8 +1694,10 @@
                 <Property Name="dataResourceName" Type="Edm.String" MaxLength="255"/>
                 <Property Name="fromDate" Type="Edm.DateTimeOffset" Precision="3"/>
                 <Property Name="imageData" Type="Edm.Stream"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
                 <Property Name="otherData" Type="Edm.Stream"/>
                 <Property Name="fileUrl" Type="Edm.String"/>
+                <Property Name="uploadDocCritical" Type="Edm.Int64"/>
             </EntityType>
             <EntityType Name="EmployeesEnumeration">
                 <Key>
@@ -1734,7 +1730,7 @@
                 <ReturnType Type="com.dpbird.SupplierDDForm"/>
             </Action>
             <Action Name="DiscardAction" IsBound="false"/>
-            <Action Name="SubmitToProcurement" EntitySetPath="supplierDDForm" IsBound="true">
+            <Action Name="SubmitDDForm" EntitySetPath="supplierDDForm" IsBound="true">
                 <Parameter Name="supplierDDForm" Type="com.dpbird.SupplierDDForm" Nullable="false"/>
                 <Parameter Name="noteInfo" Type="Edm.String"/>
             </Action>
@@ -1926,7 +1922,7 @@
                     <NavigationPropertyBinding Path="BeneficialPerson" Target="RelationshipAndToParties"/>
                     <NavigationPropertyBinding Path="SeniorStaff" Target="RelationshipAndToParties"/>
                     <NavigationPropertyBinding Path="ContactPerson" Target="RelationshipAndToParties"/>
-                    <NavigationPropertyBinding Path="PartyContactMechPurposeAndAddress" Target="PurposeAndAddresses"/>
+                    <NavigationPropertyBinding Path="RegisterPostalAddress" Target="RegisterPostalAddresses"/>
                     <NavigationPropertyBinding Path="RegisteredCountry" Target="PartyGeos"/>
                 </EntitySet>
                 <EntitySet Name="CoWorkHistories" EntityType="com.dpbird.CoWorkHistory">
@@ -1998,6 +1994,11 @@
                 <EntitySet Name="ShipmentRouteSegments" EntityType="com.dpbird.ShipmentRouteSegment">
                     <NavigationPropertyBinding Path="CarrierParty" Target="Parties"/>
                 </EntitySet>
+                <EntitySet Name="RegisterPostalAddresses" EntityType="com.dpbird.RegisterPostalAddress">
+                    <NavigationPropertyBinding Path="CountryGeo" Target="Geos"/>
+                    <NavigationPropertyBinding Path="StateProvinceGeo" Target="Geos"/>
+                    <NavigationPropertyBinding Path="CityGeo" Target="Geos"/>
+                </EntitySet>
                 <EntitySet Name="UomTypes" EntityType="com.dpbird.UomType"/>
                 <EntitySet Name="WorkEffortStatus" EntityType="com.dpbird.WorkEffortStatus">
                     <NavigationPropertyBinding Path="StatusItem" Target="StatusItems"/>
@@ -2027,12 +2028,6 @@
                 <EntitySet Name="PartyClassificationTypes" EntityType="com.dpbird.PartyClassificationType"/>
                 <EntitySet Name="NoteData" EntityType="com.dpbird.NoteData">
                     <NavigationPropertyBinding Path="NoteParty" Target="Parties"/>
-                </EntitySet>
-                <EntitySet Name="PurposeAndAddresses" EntityType="com.dpbird.PartyContactMechPurposeAndAddress">
-                    <NavigationPropertyBinding Path="CountryGeo" Target="Geos"/>
-                    <NavigationPropertyBinding Path="StateProvinceGeo" Target="Geos"/>
-                    <NavigationPropertyBinding Path="CityGeo" Target="Geos"/>
-                    <NavigationPropertyBinding Path="ContactMechPurposeType" Target="ContactMechPurposeTypes"/>
                 </EntitySet>
                 <EntitySet Name="PartyGeos" EntityType="com.dpbird.PartyGeo">
                     <NavigationPropertyBinding Path="Geo" Target="Geos"/>
@@ -2150,341 +2145,6 @@
             <Annotations Target="com.dpbird.BusinessRelationship/description">
                 <Annotation Term="Common.Label">
                     <String>description</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress">
-                <Annotation Term="UI.LineItem" Qualifier="PostalAddressLineItem">
-                    <Collection>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>contactMechPurposeTypeId</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>countryGeoId</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>stateProvinceGeoId</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>cityGeoId</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>address1</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>address2</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>contactNumber</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>email</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                    </Collection>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/contactMechPurposeTypeId">
-                <Annotation Term="Common.Label">
-                    <String>目的</String>
-                </Annotation>
-                <Annotation Term="Common.Text">
-                    <Path>ContactMechPurposeType/description</Path>
-                    <Annotation Term="UI.TextArrangement">
-                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
-                    </Annotation>
-                </Annotation>
-                <Annotation Term="Common.ValueList">
-                    <Record Type="Common.ValueListType">
-                        <PropertyValue Property="Label">
-                            <String>目的</String>
-                        </PropertyValue>
-                        <PropertyValue Property="CollectionPath">
-                            <String>ContactMechPurposeTypes</String>
-                        </PropertyValue>
-                        <PropertyValue Property="Parameters">
-                            <Collection>
-                                <Record Type="Common.ValueListParameterInOut">
-                                    <PropertyValue Property="LocalDataProperty">
-                                        <PropertyPath>contactMechPurposeTypeId</PropertyPath>
-                                    </PropertyValue>
-                                    <PropertyValue Property="ValueListProperty">
-                                        <String>contactMechPurposeTypeId</String>
-                                    </PropertyValue>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Common.ValueListWithFixedValues">
-                    <Bool>true</Bool>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/countryGeoId">
-                <Annotation Term="Common.Label">
-                    <String>国家</String>
-                </Annotation>
-                <Annotation Term="Common.Text">
-                    <Path>CountryGeo/geoName</Path>
-                    <Annotation Term="UI.TextArrangement">
-                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
-                    </Annotation>
-                </Annotation>
-                <Annotation Term="Common.ValueList">
-                    <Record Type="Common.ValueListType">
-                        <PropertyValue Property="Label">
-                            <String>国家</String>
-                        </PropertyValue>
-                        <PropertyValue Property="CollectionPath">
-                            <String>Countries</String>
-                        </PropertyValue>
-                        <PropertyValue Property="Parameters">
-                            <Collection>
-                                <Record Type="Common.ValueListParameterOut">
-                                    <PropertyValue Property="LocalDataProperty">
-                                        <PropertyPath>countryGeoId</PropertyPath>
-                                    </PropertyValue>
-                                    <PropertyValue Property="ValueListProperty">
-                                        <String>geoId</String>
-                                    </PropertyValue>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Common.ValueListWithFixedValues">
-                    <Bool>true</Bool>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/stateProvinceGeoId">
-                <Annotation Term="Common.Label">
-                    <String>省份</String>
-                </Annotation>
-                <Annotation Term="Common.Text">
-                    <Path>StateProvinceGeo/geoName</Path>
-                    <Annotation Term="UI.TextArrangement">
-                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
-                    </Annotation>
-                </Annotation>
-                <Annotation Term="Common.ValueList">
-                    <Record Type="Common.ValueListType">
-                        <PropertyValue Property="Label">
-                            <String>省份</String>
-                        </PropertyValue>
-                        <PropertyValue Property="CollectionPath">
-                            <String>Provinces</String>
-                        </PropertyValue>
-                        <PropertyValue Property="Parameters">
-                            <Collection>
-                                <Record Type="Common.ValueListParameterIn">
-                                    <PropertyValue Property="LocalDataProperty">
-                                        <PropertyPath>countryGeoId</PropertyPath>
-                                    </PropertyValue>
-                                    <PropertyValue Property="ValueListProperty">
-                                        <String>geoIdFrom</String>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="Common.ValueListParameterOut">
-                                    <PropertyValue Property="LocalDataProperty">
-                                        <PropertyPath>stateProvinceGeoId</PropertyPath>
-                                    </PropertyValue>
-                                    <PropertyValue Property="ValueListProperty">
-                                        <String>geoId</String>
-                                    </PropertyValue>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Common.ValueListWithFixedValues">
-                    <Bool>true</Bool>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/cityGeoId">
-                <Annotation Term="Common.Label">
-                    <String>城市</String>
-                </Annotation>
-                <Annotation Term="Common.Text">
-                    <Path>CityGeo/geoName</Path>
-                    <Annotation Term="UI.TextArrangement">
-                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
-                    </Annotation>
-                </Annotation>
-                <Annotation Term="Common.ValueList">
-                    <Record Type="Common.ValueListType">
-                        <PropertyValue Property="Label">
-                            <String>城市</String>
-                        </PropertyValue>
-                        <PropertyValue Property="CollectionPath">
-                            <String>Cities</String>
-                        </PropertyValue>
-                        <PropertyValue Property="Parameters">
-                            <Collection>
-                                <Record Type="Common.ValueListParameterIn">
-                                    <PropertyValue Property="LocalDataProperty">
-                                        <PropertyPath>stateProvinceGeoId</PropertyPath>
-                                    </PropertyValue>
-                                    <PropertyValue Property="ValueListProperty">
-                                        <String>geoIdFrom</String>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="Common.ValueListParameterOut">
-                                    <PropertyValue Property="LocalDataProperty">
-                                        <PropertyPath>cityGeoId</PropertyPath>
-                                    </PropertyValue>
-                                    <PropertyValue Property="ValueListProperty">
-                                        <String>geoId</String>
-                                    </PropertyValue>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Common.ValueListWithFixedValues">
-                    <Bool>true</Bool>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/fromDate">
-                <Annotation Term="Common.Label">
-                    <String>fromDate</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/partyId">
-                <Annotation Term="Common.Label">
-                    <String>partyId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/contactMechId">
-                <Annotation Term="Common.Label">
-                    <String>contactMechId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/thruDate">
-                <Annotation Term="Common.Label">
-                    <String>thruDate</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/houseNumberExt">
-                <Annotation Term="Common.Label">
-                    <String>houseNumberExt</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/city">
-                <Annotation Term="Common.Label">
-                    <String>city</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/postalCode">
-                <Annotation Term="Common.Label">
-                    <String>postalCode</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/postalCodeGeoId">
-                <Annotation Term="Common.Label">
-                    <String>postalCodeGeoId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/houseNumber">
-                <Annotation Term="Common.Label">
-                    <String>houseNumber</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/postalCodeExt">
-                <Annotation Term="Common.Label">
-                    <String>postalCodeExt</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/attnName">
-                <Annotation Term="Common.Label">
-                    <String>attnName</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/countyGeoId">
-                <Annotation Term="Common.Label">
-                    <String>countyGeoId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/toName">
-                <Annotation Term="Common.Label">
-                    <String>toName</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/contactNumber">
-                <Annotation Term="Common.Label">
-                    <String>电话</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/email">
-                <Annotation Term="Common.Label">
-                    <String>邮箱</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/address2">
-                <Annotation Term="Common.Label">
-                    <String>网址</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/address1">
-                <Annotation Term="Common.Label">
-                    <String>地址</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/areaCode">
-                <Annotation Term="Common.Label">
-                    <String>areaCode</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/directions">
-                <Annotation Term="Common.Label">
-                    <String>directions</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/municipalityGeoId">
-                <Annotation Term="Common.Label">
-                    <String>municipalityGeoId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PartyContactMechPurposeAndAddress/geoPointId">
-                <Annotation Term="Common.Label">
-                    <String>geoPointId</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.AfterSalesService">
@@ -2811,7 +2471,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.ShipmentRouteSegment/carrierPartyId">
                 <Annotation Term="Common.Label">
-                    <String>货运公司</String>
+                    <String>Carrier Party</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>CarrierParty/partyName</Path>
@@ -2932,7 +2592,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.ShipmentRouteSegment/actualArrivalDate">
                 <Annotation Term="Common.Label">
-                    <String>到达日期</String>
+                    <String>Actual Arrival Date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.ShipmentRouteSegment/estimatedStartDate">
@@ -3225,7 +2885,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Invoice/statusId">
                 <Annotation Term="Common.Label">
-                    <String>状态</String>
+                    <String>Status</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>InvoiceStatusItem/description</Path>
@@ -3236,7 +2896,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Invoice/partyIdFrom">
                 <Annotation Term="Common.Label">
-                    <String>开据方</String>
+                    <String>Invoice Party</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>FromParty/partyName</Path>
@@ -3247,7 +2907,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Invoice/invoiceId">
                 <Annotation Term="Common.Label">
-                    <String>发票ID</String>
+                    <String>Invoice ID</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Invoice/partyId">
@@ -3272,7 +2932,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Invoice/invoiceDate">
                 <Annotation Term="Common.Label">
-                    <String>开据时间</String>
+                    <String>Invoice Date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Invoice/dueDate">
@@ -3297,7 +2957,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Invoice/description">
                 <Annotation Term="Common.Label">
-                    <String>描述</String>
+                    <String>Description</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Invoice/currencyUomId">
@@ -3312,7 +2972,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Invoice/orderId">
                 <Annotation Term="Common.Label">
-                    <String>订单ID</String>
+                    <String>Order ID</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RoleType/roleTypeId">
@@ -3375,7 +3035,7 @@
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>创建</String>
+                                <String>Create</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreateSupplierProduct</String>
@@ -3426,7 +3086,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Product/productTypeId">
                 <Annotation Term="Common.Label">
-                    <String>产品类型</String>
+                    <String>Product type</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>ProductType/description</Path>
@@ -3440,7 +3100,7 @@
                     <Bool>true</Bool>
                 </Annotation>
                 <Annotation Term="Common.Label">
-                    <String>数量单位</String>
+                    <String>Quantity UOM</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>QuantityUom/description</Path>
@@ -3451,7 +3111,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Product/primaryProductCategoryId">
                 <Annotation Term="Common.Label">
-                    <String>产品财务分类</String>
+                    <String>Financial category</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>PrimaryProductCategory/categoryName</Path>
@@ -3462,7 +3122,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Product/productId">
                 <Annotation Term="Common.Label">
-                    <String>产品ID</String>
+                    <String>Goods name</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>productName</Path>
@@ -3476,7 +3136,7 @@
                     <Bool>true</Bool>
                 </Annotation>
                 <Annotation Term="Common.Label">
-                    <String>产品名称</String>
+                    <String>Product name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Product/facilityId">
@@ -4035,7 +3695,7 @@
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>选择部门</String>
+                                <String>Select</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.SelectDepartment</String>
@@ -4055,7 +3715,7 @@
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>移除部门</String>
+                                <String>Remove</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.RemoveDepartment</String>
@@ -4078,7 +3738,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Department/partyId">
                 <Annotation Term="Common.Label">
-                    <String>部门</String>
+                    <String>Department name</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>partyName</Path>
@@ -4169,7 +3829,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Department/partyName">
                 <Annotation Term="Common.Label">
-                    <String>部门</String>
+                    <String>Department name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Department/createdByUserLogin">
@@ -4224,7 +3884,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PartyContactMechPurpose/contactMechPurposeTypeId">
                 <Annotation Term="Common.Label">
-                    <String>目的</String>
+                    <String>Purpose</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>ContactMechPurposeType/description</Path>
@@ -4277,6 +3937,282 @@
             <Annotations Target="com.dpbird.PartyClassificationType/description">
                 <Annotation Term="Common.Label">
                     <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress">
+                <Annotation Term="UI.LineItem" Qualifier="PostalAddressLineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>countryGeoId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>stateProvinceGeoId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>cityGeoId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>address1</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>address2</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>contactNumber</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>email</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/countryGeoId">
+                <Annotation Term="Common.Label">
+                    <String>Country</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>CountryGeo/geoName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>Country</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>Countries</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>countryGeoId</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>geoId</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/stateProvinceGeoId">
+                <Annotation Term="Common.Label">
+                    <String>Province</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>StateProvinceGeo/geoName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>Province</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>Provinces</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterIn">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>countryGeoId</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>geoIdFrom</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>stateProvinceGeoId</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>geoId</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/cityGeoId">
+                <Annotation Term="Common.Label">
+                    <String>City</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>CityGeo/geoName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>City</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>Cities</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterIn">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>stateProvinceGeoId</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>geoIdFrom</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>cityGeoId</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>geoId</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/contactMechId">
+                <Annotation Term="Common.Label">
+                    <String>contactMechId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/toName">
+                <Annotation Term="Common.Label">
+                    <String>toName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/attnName">
+                <Annotation Term="Common.Label">
+                    <String>attnName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/address1">
+                <Annotation Term="Common.Label">
+                    <String>Address</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/address2">
+                <Annotation Term="Common.Label">
+                    <String>Website address</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/houseNumber">
+                <Annotation Term="Common.Label">
+                    <String>houseNumber</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/houseNumberExt">
+                <Annotation Term="Common.Label">
+                    <String>houseNumberExt</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/directions">
+                <Annotation Term="Common.Label">
+                    <String>directions</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/city">
+                <Annotation Term="Common.Label">
+                    <String>city</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/postalCode">
+                <Annotation Term="Common.Label">
+                    <String>postalCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/postalCodeExt">
+                <Annotation Term="Common.Label">
+                    <String>postalCodeExt</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/countyGeoId">
+                <Annotation Term="Common.Label">
+                    <String>countyGeoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/municipalityGeoId">
+                <Annotation Term="Common.Label">
+                    <String>municipalityGeoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/postalCodeGeoId">
+                <Annotation Term="Common.Label">
+                    <String>postalCodeGeoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/geoPointId">
+                <Annotation Term="Common.Label">
+                    <String>geoPointId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/areaCode">
+                <Annotation Term="Common.Label">
+                    <String>areaCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/contactNumber">
+                <Annotation Term="Common.Label">
+                    <String>Number</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RegisterPostalAddress/email">
+                <Annotation Term="Common.Label">
+                    <String>Email</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyGeo/geoId">
@@ -4398,7 +4334,7 @@
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>创建</String>
+                                <String>Create</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreatePersonAndContact</String>
@@ -4542,7 +4478,7 @@
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>创建</String>
+                                <String>Create</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreateBeneficialPerson</String>
@@ -4565,32 +4501,32 @@
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/position">
                 <Annotation Term="Common.Label">
-                    <String>职位</String>
+                    <String>Position</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/nationality">
                 <Annotation Term="Common.Label">
-                    <String>国籍</String>
+                    <String>Nationality</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/copyIdentificationAttached">
                 <Annotation Term="Common.Label">
-                    <String>随附证明文件复印件</String>
+                    <String>Copy of supporting identification attached</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/amount">
                 <Annotation Term="Common.Label">
-                    <String>所有权</String>
+                    <String>Ownership</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/primaryPhone">
                 <Annotation Term="Common.Label">
-                    <String>电话</String>
+                    <String>Telephone</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/phoneMobile">
                 <Annotation Term="Common.Label">
-                    <String>手机</String>
+                    <String>Mobile</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/primaryEmail">
@@ -4665,7 +4601,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/partyName">
                 <Annotation Term="Common.Label">
-                    <String>名字</String>
+                    <String>Name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/partyId">
@@ -4685,7 +4621,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/lastName">
                 <Annotation Term="Common.Label">
-                    <String>名</String>
+                    <String>Last name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/occupation">
@@ -4790,7 +4726,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/firstName">
                 <Annotation Term="Common.Label">
-                    <String>姓</String>
+                    <String>First name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PersonAndContact/cardId">
@@ -4867,12 +4803,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.PartyClassificationGroup/description">
                 <Annotation Term="Common.Label">
-                    <String>分类名称</String>
+                    <String>Risk level</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierStatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>状态标识</String>
+                    <String>Status ID</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -4898,7 +4834,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierStatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>状态</String>
+                    <String>Status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyNameHistory">
@@ -4938,12 +4874,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.PartyNameHistory/changeDate">
                 <Annotation Term="Common.Label">
-                    <String>变更日期</String>
+                    <String>Change Date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyNameHistory/groupName">
                 <Annotation Term="Common.Label">
-                    <String>变更名称</String>
+                    <String>Change Name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyNameHistory/firstName">
@@ -5319,7 +5255,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Shipment/statusId">
                 <Annotation Term="Common.Label">
-                    <String>状态</String>
+                    <String>Status</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>ShipmentStatusItem/description</Path>
@@ -5346,7 +5282,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Shipment/shipmentId">
                 <Annotation Term="Common.Label">
-                    <String>货运ID</String>
+                    <String>Shipment ID</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Shipment/shipmentTypeId">
@@ -5356,7 +5292,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Shipment/primaryOrderId">
                 <Annotation Term="Common.Label">
-                    <String>订单ID</String>
+                    <String>Primary Order ID</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Shipment/primaryReturnId">
@@ -5376,7 +5312,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Shipment/estimatedShipDate">
                 <Annotation Term="Common.Label">
-                    <String>预计货运时间</String>
+                    <String>Estimated Ship Date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Shipment/estimatedShipWorkEffId">
@@ -6052,7 +5988,7 @@
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>创建</String>
+                                <String>Create</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreatePostalAddress</String>
@@ -6143,7 +6079,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PostalAddress/countryGeoId">
                 <Annotation Term="Common.Label">
-                    <String>国家</String>
+                    <String>Country</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>CountryGeo/geoName</Path>
@@ -6154,7 +6090,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PostalAddress/cityGeoId">
                 <Annotation Term="Common.Label">
-                    <String>城市</String>
+                    <String>City</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>CityGeo/geoName</Path>
@@ -6165,7 +6101,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PostalAddress/stateProvinceGeoId">
                 <Annotation Term="Common.Label">
-                    <String>省份</String>
+                    <String>Province</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>StateProvinceGeo/geoName</Path>
@@ -6191,12 +6127,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.PostalAddress/address1">
                 <Annotation Term="Common.Label">
-                    <String>地址</String>
+                    <String>Address</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PostalAddress/address2">
                 <Annotation Term="Common.Label">
-                    <String>网址</String>
+                    <String>Website address</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PostalAddress/houseNumber">
@@ -6256,12 +6192,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.PostalAddress/contactNumber">
                 <Annotation Term="Common.Label">
-                    <String>电话</String>
+                    <String>Number</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PostalAddress/email">
                 <Annotation Term="Common.Label">
-                    <String>邮箱</String>
+                    <String>Email</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SurveyQuestionAndAnswer">
@@ -6288,12 +6224,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.SurveyQuestionAndAnswer/response">
                 <Annotation Term="Common.Label">
-                    <String>回答</String>
+                    <String>Response</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SurveyQuestionAndAnswer/question">
                 <Annotation Term="Common.Label">
-                    <String>question</String>
+                    <String>Question</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SurveyQuestionAndAnswer/surveyQuestionTypeId">
@@ -6393,18 +6329,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.FinAccount/currencyUomId">
                 <Annotation Term="Common.Label">
-                    <String>货币单位</String>
-                </Annotation>
-                <Annotation Term="Common.Text">
-                    <Path>CurrencyUom/description</Path>
-                    <Annotation Term="UI.TextArrangement">
-                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
-                    </Annotation>
+                    <String>Currency</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>货币单位</String>
+                            <String>Currency</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>CurrencyUoms</String>
@@ -6429,7 +6359,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.FinAccount/finAccountTypeId">
                 <Annotation Term="Common.Label">
-                    <String>账户类型</String>
+                    <String>Account type</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>FinAccountType/description</Path>
@@ -6440,7 +6370,7 @@
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>账户类型</String>
+                            <String>Account type</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>FinAccountTypes</String>
@@ -6465,7 +6395,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.FinAccount/statusId">
                 <Annotation Term="Common.Label">
-                    <String>状态</String>
+                    <String>Status</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>AccountStatusItem/description</Path>
@@ -6476,7 +6406,7 @@
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>状态</String>
+                            <String>Status</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>AccountStatusItems</String>
@@ -6512,17 +6442,17 @@
             </Annotations>
             <Annotations Target="com.dpbird.FinAccount/finAccountId">
                 <Annotation Term="Common.Label">
-                    <String>账户ID</String>
+                    <String>Account ID</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FinAccount/finAccountName">
                 <Annotation Term="Common.Label">
-                    <String>账户名称</String>
+                    <String>Account name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FinAccount/finAccountCode">
                 <Annotation Term="Common.Label">
-                    <String>账户代码</String>
+                    <String>Account code</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FinAccount/finAccountPin">
@@ -6577,7 +6507,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.ShipmentStatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>状态标识</String>
+                    <String>Status ID</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -6603,7 +6533,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.ShipmentStatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>状态</String>
+                    <String>Status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierDDForm">
@@ -6664,7 +6594,22 @@
                             <Collection>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
-                                        <Path>address1</Path>
+                                        <Path>RegisterPostalAddress/countryGeoId</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>RegisterPostalAddress/stateProvinceGeoId</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>RegisterPostalAddress/cityGeoId</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>RegisterPostalAddress/address1</Path>
                                     </PropertyValue>
                                 </Record>
                             </Collection>
@@ -6681,11 +6626,6 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
                                         <Path>dateIncorporation</Path>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>RegisteredCountry/geoId</Path>
                                     </PropertyValue>
                                 </Record>
                             </Collection>
@@ -6886,21 +6826,6 @@
                     </Record>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/partyName">
-                <Annotation Term="Common.Label">
-                    <String>Full Name of Company or Individual Party</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/dateIncorporation">
-                <Annotation Term="Common.Label">
-                    <String>Date of Incorporation/Date of Birth</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/registrationNumber">
-                <Annotation Term="Common.Label">
-                    <String>Business Registration Number/Passport number</String>
-                </Annotation>
-            </Annotations>
             <Annotations Target="com.dpbird.SupplierDDForm/answer0">
                 <Annotation Term="Common.Label">
                     <String>Does the Business Partner conduct any business in, with, or involving (directly or indirectly) individuals or entities in or from Cuba, Iran, North Korea, Syria, Russia, Belarus or the Crimea region (each, a “Sanctioned Country”)?</String>
@@ -6999,6 +6924,11 @@
             <Annotations Target="com.dpbird.SupplierDDForm/otherAttr">
                 <Annotation Term="Common.Label">
                     <String>Other (specify)</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierDDForm/ddStatus">
+                <Annotation Term="Common.Label">
+                    <String>DD Status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierDDForm/primaryPhone">
@@ -7186,12 +7116,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.WorkEffortStatus/partyName">
                 <Annotation Term="Common.Label">
-                    <String>名称</String>
+                    <String>Party Name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.WorkEffortStatus/statusDatetime">
                 <Annotation Term="Common.Label">
-                    <String>变更日期</String>
+                    <String>Change date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.WorkEffortStatus/workEffortId">
@@ -7237,7 +7167,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.ProductCategory/categoryName">
                 <Annotation Term="Common.Label">
-                    <String>分类名称</String>
+                    <String>Category Name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.ProductCategory/description">
@@ -7318,7 +7248,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.InvoiceStatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>状态标识</String>
+                    <String>Status ID</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -7344,7 +7274,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.InvoiceStatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>状态</String>
+                    <String>Status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CurrencyUom/uomId">
@@ -7420,6 +7350,11 @@
                     <String>statusColor</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.PartyClassification/ratingNumeric">
+                <Annotation Term="Common.Label">
+                    <String>ratingNumeric</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.PartyClassification/partyId">
                 <Annotation Term="Common.Label">
                     <String>partyId</String>
@@ -7442,7 +7377,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.QuoteStatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>状态标识</String>
+                    <String>Status ID</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -7468,7 +7403,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.QuoteStatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>状态</String>
+                    <String>Status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.NoteData">
@@ -7508,7 +7443,7 @@
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>创建</String>
+                                <String>Create</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreateNoteData</String>
@@ -7567,7 +7502,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.NoteData/noteParty">
                 <Annotation Term="Common.Label">
-                    <String>备注人</String>
+                    <String>Note party</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>NoteParty/partyName</Path>
@@ -7578,22 +7513,22 @@
             </Annotations>
             <Annotations Target="com.dpbird.NoteData/noteId">
                 <Annotation Term="Common.Label">
-                    <String>备注ID</String>
+                    <String>Note ID</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.NoteData/noteName">
                 <Annotation Term="Common.Label">
-                    <String>备注名称</String>
+                    <String>Note name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.NoteData/noteInfo">
                 <Annotation Term="Common.Label">
-                    <String>备注信息</String>
+                    <String>Note info</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.NoteData/noteDateTime">
                 <Annotation Term="Common.Label">
-                    <String>备注日期</String>
+                    <String>Note date time</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.NoteData/moreInfoUrl">
@@ -7639,7 +7574,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.StatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>状态标识</String>
+                    <String>Status ID</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -7665,7 +7600,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.StatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>状态</String>
+                    <String>Status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierProduct/minimumOrderQuantity">
@@ -7689,7 +7624,7 @@
                     <Bool>true</Bool>
                 </Annotation>
                 <Annotation Term="Common.Label">
-                    <String>供应商ID</String>
+                    <String>Vendor ID</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierProduct/availableFromDate">
@@ -7702,7 +7637,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierProduct/productId">
                 <Annotation Term="Common.Label">
-                    <String>产品ID</String>
+                    <String>Name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierProduct/availableThruDate">
@@ -7802,12 +7737,12 @@
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
-                                        <Path>cycleTime</Path>
+                                        <Path>usccNumber</Path>
                                     </PropertyValue>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
-                                        <Path>usccNumber</Path>
+                                        <Path>cycleTime</Path>
                                     </PropertyValue>
                                 </Record>
                             </Collection>
@@ -7820,33 +7755,23 @@
                 <Annotation Term="UI.DataPoint" Qualifier="DDFormType">
                     <Record Type="UI.DataPointType">
                         <PropertyValue Property="Title">
-                            <String>表单类型</String>
+                            <String>DD type</String>
                         </PropertyValue>
                         <PropertyValue Property="Value">
                             <Path>ddFormType</Path>
+                        </PropertyValue>
+                        <PropertyValue Property="Criticality">
+                            <Path>ddFormTypeCritical</Path>
                         </PropertyValue>
                     </Record>
                 </Annotation>
                 <Annotation Term="UI.DataPoint" Qualifier="SupplierCategory">
                     <Record Type="UI.DataPointType">
                         <PropertyValue Property="Title">
-                            <String>SupplierCategory</String>
+                            <String>Category</String>
                         </PropertyValue>
                         <PropertyValue Property="Value">
                             <Path>ProductCategory/categoryName</Path>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="UI.DataPoint" Qualifier="complianceCheckWarning">
-                    <Record Type="UI.DataPointType">
-                        <PropertyValue Property="Title">
-                            <String>complianceCheckWarning</String>
-                        </PropertyValue>
-                        <PropertyValue Property="Value">
-                            <Path>complianceCheckWarning</Path>
-                        </PropertyValue>
-                        <PropertyValue Property="Criticality">
-                            <Path>checkWarningCritical</Path>
                         </PropertyValue>
                     </Record>
                 </Annotation>
@@ -7948,7 +7873,7 @@
                                 </Record>
                                 <Record Type="UI.DataFieldForAction">
                                     <PropertyValue Property="Label">
-                                        <String>更新</String>
+                                        <String>Update Basic Info</String>
                                     </PropertyValue>
                                     <PropertyValue Property="Action">
                                         <String>com.dpbird.FillSupplierBaseInfo</String>
@@ -8020,7 +7945,7 @@
                                 </Record>
                                 <Record Type="UI.DataFieldForAction">
                                     <PropertyValue Property="Label">
-                                        <String>更新</String>
+                                        <String>Update Contact</String>
                                     </PropertyValue>
                                     <PropertyValue Property="Action">
                                         <String>com.dpbird.UpdateSupplierContactInfo</String>
@@ -8112,7 +8037,7 @@
                                 </Record>
                                 <Record Type="UI.DataFieldForAction">
                                     <PropertyValue Property="Label">
-                                        <String>更新</String>
+                                        <String>Update Dates</String>
                                     </PropertyValue>
                                     <PropertyValue Property="Action">
                                         <String>com.dpbird.UpdateSupplierTimeInfo</String>
@@ -8264,23 +8189,10 @@
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
-                                <Path>cycleTime</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
                                 <Path>ddFormType</Path>
                             </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>ddResponseTime</Path>
+                            <PropertyValue Property="Criticality">
+                                <Path>ddFormTypeCritical</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -8292,6 +8204,14 @@
                             </PropertyValue>
                             <PropertyValue Property="Criticality">
                                 <Path>riskCritical</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>cycleTime</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -8321,6 +8241,9 @@
                             <PropertyValue Property="Value">
                                 <Path>ddFormType</Path>
                             </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <Path>ddFormTypeCritical</Path>
+                            </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
                             </Annotation>
@@ -8341,17 +8264,9 @@
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
                             </Annotation>
                         </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>ddResponseTime</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>创建</String>
+                                <String>Create</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreateSupplierParty</String>
@@ -8401,7 +8316,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/partyId">
                 <Annotation Term="Common.Label">
-                    <String>供应商</String>
+                    <String>Name</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>partyName</Path>
@@ -8412,7 +8327,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/currentStatusId">
                 <Annotation Term="Common.Label">
-                    <String>状态</String>
+                    <String>Status</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>CurrentStatusItem/description</Path>
@@ -8425,23 +8340,20 @@
                 <Annotation Term="UI.IsImageURL">
                     <Bool>true</Bool>
                 </Annotation>
-                <Annotation Term="Common.Label">
-                    <String>logoImageUrl</String>
-                </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/isGovernment">
                 <Annotation Term="Common.Label">
-                    <String>是否是政府部门</String>
+                    <String>Is government</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/ddFormType">
                 <Annotation Term="Common.Label">
-                    <String>表单类型</String>
+                    <String>DD type</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/ddFormTypeId">
                 <Annotation Term="Common.Label">
-                    <String>表单类型</String>
+                    <String>DD type</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/ddFormStatusHistory">
@@ -8451,12 +8363,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/cycleTime">
                 <Annotation Term="Common.Label">
-                    <String>表单填写周期</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierParty/ddResponseTime">
-                <Annotation Term="Common.Label">
-                    <String>ddResponseTime</String>
+                    <String>Cycle time</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/createSupplierHidden">
@@ -8469,17 +8376,17 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/firstOrderDate">
                 <Annotation Term="Common.Label">
-                    <String>首次下单日期</String>
+                    <String>First order date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/collectionDate">
                 <Annotation Term="Common.Label">
-                    <String>入驻日期</String>
+                    <String>On-board date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/finishDomUploadDate">
                 <Annotation Term="Common.Label">
-                    <String>finishDomUploadDate</String>
+                    <String>Upload Finished Date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/isFinishedDomUpload">
@@ -8514,17 +8421,6 @@
                     <String>ddFormTypeCritical</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.SupplierParty/ddFormDealCritical">
-                <Annotation Term="UI.Hidden">
-                    <Bool>true</Bool>
-                </Annotation>
-                <Annotation Term="UI.HiddenFilter">
-                    <Bool>true</Bool>
-                </Annotation>
-                <Annotation Term="Common.Label">
-                    <String>ddFormDealCritical</String>
-                </Annotation>
-            </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/riskCritical">
                 <Annotation Term="UI.Hidden">
                     <Bool>true</Bool>
@@ -8534,6 +8430,21 @@
                 </Annotation>
                 <Annotation Term="Common.Label">
                     <String>riskCritical</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/ratingNumeric">
+                <Annotation Term="Common.Label">
+                    <String>ratingNumeric</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/processNumeric">
+                <Annotation Term="Common.Label">
+                    <String>processNumeric</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/processCritical">
+                <Annotation Term="Common.Label">
+                    <String>processCritical</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/priorityCritical">
@@ -8582,7 +8493,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/priority">
                 <Annotation Term="Common.Label">
-                    <String>优先级</String>
+                    <String>Priority</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>PriorityEnumeration/description</Path>
@@ -8593,7 +8504,7 @@
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>优先级</String>
+                            <String>Priority</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>PriorityEnumerations</String>
@@ -8618,7 +8529,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/employeesSection">
                 <Annotation Term="Common.Label">
-                    <String>employeesSection</String>
+                    <String>Employees</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>EmployeesEnumeration/description</Path>
@@ -8629,7 +8540,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/tickerSymbol">
                 <Annotation Term="Common.Label">
-                    <String>股票代码</String>
+                    <String>Listed country</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>ListRegionEnumeration/description</Path>
@@ -8640,7 +8551,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/lastSubmittedDate">
                 <Annotation Term="Common.Label">
-                    <String>lastSubmittedDate</String>
+                    <String>Submitted Date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/usccNumber">
@@ -8648,7 +8559,7 @@
                     <Bool>true</Bool>
                 </Annotation>
                 <Annotation Term="Common.Label">
-                    <String>税号</String>
+                    <String>Tax code</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/contactName">
@@ -8685,12 +8596,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/complianceNote">
                 <Annotation Term="Common.Label">
-                    <String>建议</String>
+                    <String>Suggestion</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/fsStatus">
                 <Annotation Term="Common.Label">
-                    <String>财务报表</String>
+                    <String>Financial Report</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/fsStatusCriticality">
@@ -8700,7 +8611,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/caStatus">
                 <Annotation Term="Common.Label">
-                    <String>保密协议</String>
+                    <String>NDA</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/caStatusCriticality">
@@ -8710,7 +8621,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/cpStatus">
                 <Annotation Term="Common.Label">
-                    <String>合规报告</String>
+                    <String>Compliance Report</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/cpStatusCriticality">
@@ -8770,17 +8681,17 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/adverseResults">
                 <Annotation Term="Common.Label">
-                    <String>尽职调查筛选的确认和任何不良结果的报告</String>
+                    <String>Confirmation of due diligence screening and reporting of any adverse outcomes</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/additionalProtection">
                 <Annotation Term="Common.Label">
-                    <String>是否有任何额外的合同保护或加强尽职调查建议?</String>
+                    <String>Any additional contractual protections or enhanced due diligence recommended?</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/complianceComments">
                 <Annotation Term="Common.Label">
-                    <String>complianceComments</String>
+                    <String>Comments</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/complianceCheckWarning">
@@ -8795,7 +8706,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/applicationWorkStatus">
                 <Annotation Term="Common.Label">
-                    <String>申请人处理状态</String>
+                    <String>Applicant status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/applicationWorkCriticality">
@@ -8805,7 +8716,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/supplierWorkStatus">
                 <Annotation Term="Common.Label">
-                    <String>供应商处理状态</String>
+                    <String>Vendor status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/supplierWorkCriticality">
@@ -8815,7 +8726,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/complianceWorkStatus">
                 <Annotation Term="Common.Label">
-                    <String>合规处理状态</String>
+                    <String>Compliance status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/complianceWorkCriticality">
@@ -8825,12 +8736,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/approvePartyId">
                 <Annotation Term="Common.Label">
-                    <String>任务处理人</String>
+                    <String>Task party</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/workEffortId">
                 <Annotation Term="Common.Label">
-                    <String>任务ID</String>
+                    <String>Task ID</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/recurrenceInfoId">
@@ -9040,7 +8951,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/lastModifiedDate">
                 <Annotation Term="Common.Label">
-                    <String>最后修改日期</String>
+                    <String>Last modified date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/sourceReferenceId">
@@ -9065,12 +8976,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/approveComments">
                 <Annotation Term="Common.Label">
-                    <String>approveComments</String>
+                    <String>Procurement Comments</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/createdDate">
                 <Annotation Term="Common.Label">
-                    <String>创建日期</String>
+                    <String>Created date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/actualSetupMillis">
@@ -9110,12 +9021,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/partyName">
                 <Annotation Term="Common.Label">
-                    <String>供应商名称</String>
+                    <String>Vendor name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/comments">
                 <Annotation Term="Common.Label">
-                    <String>备注</String>
+                    <String>Comments</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/groupName">
@@ -9130,7 +9041,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/numEmployees">
                 <Annotation Term="Common.Label">
-                    <String>员工人数</String>
+                    <String>numEmployees</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/officeSiteName">
@@ -9140,12 +9051,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/annualRevenue">
                 <Annotation Term="Common.Label">
-                    <String>年收入</String>
+                    <String>Annual revenue</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Party/partyId">
                 <Annotation Term="Common.Label">
-                    <String>名称</String>
+                    <String>Name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Party/partyTypeId">
@@ -9166,11 +9077,6 @@
             <Annotations Target="com.dpbird.Party/description">
                 <Annotation Term="Common.Label">
                     <String>description</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.Party/statusId">
-                <Annotation Term="Common.Label">
-                    <String>状态</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Party/createdDate">
@@ -9205,12 +9111,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.Party/partyName">
                 <Annotation Term="Common.Label">
-                    <String>名称</String>
+                    <String>Name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.OrderStatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>状态标识</String>
+                    <String>Status ID</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -9236,7 +9142,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.OrderStatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>状态</String>
+                    <String>Status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FinAccountType/finAccountTypeId">
@@ -9353,32 +9259,32 @@
             </Annotations>
             <Annotations Target="com.dpbird.CoWorkHistory/workEffortId">
                 <Annotation Term="Common.Label">
-                    <String>任务ID</String>
+                    <String>Task ID</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CoWorkHistory/partyId">
                 <Annotation Term="Common.Label">
-                    <String>供应商</String>
+                    <String>Name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CoWorkHistory/partyName">
                 <Annotation Term="Common.Label">
-                    <String>供应商名称</String>
+                    <String>Vendor name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CoWorkHistory/approvePartyId">
                 <Annotation Term="Common.Label">
-                    <String>任务处理人</String>
+                    <String>Task party</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CoWorkHistory/lastModifiedDate">
                 <Annotation Term="Common.Label">
-                    <String>最后修改日期</String>
+                    <String>Last modified date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CoWorkHistory/currentStatusId">
                 <Annotation Term="Common.Label">
-                    <String>状态</String>
+                    <String>Status</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>CurrentStatusItem/description</Path>
@@ -9408,7 +9314,7 @@
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>创建</String>
+                                <String>Create</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreateSupplierService</String>
@@ -9451,7 +9357,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Service/primaryProductCategoryId">
                 <Annotation Term="Common.Label">
-                    <String>产品财务分类</String>
+                    <String>Financial category</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>PrimaryProductCategory/categoryName</Path>
@@ -9462,7 +9368,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Service/productId">
                 <Annotation Term="Common.Label">
-                    <String>产品ID</String>
+                    <String>Service name</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>productName</Path>
@@ -9473,7 +9379,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Service/productTypeId">
                 <Annotation Term="Common.Label">
-                    <String>产品类型</String>
+                    <String>Service type</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Service/facilityId">
@@ -9523,7 +9429,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Service/productName">
                 <Annotation Term="Common.Label">
-                    <String>产品名称</String>
+                    <String>Service name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Service/description">
@@ -9588,7 +9494,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.Service/quantityUomId">
                 <Annotation Term="Common.Label">
-                    <String>数量单位</String>
+                    <String>Quantity UOM</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Service/quantityIncluded">
@@ -9934,6 +9840,14 @@
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
                             </Annotation>
                         </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>positionTitle</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
                     </Collection>
                 </Annotation>
             </Annotations>
@@ -9947,42 +9861,42 @@
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/nationality">
                 <Annotation Term="Common.Label">
-                    <String>国籍</String>
+                    <String>Nationality</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/copyIdentificationAttached">
                 <Annotation Term="Common.Label">
-                    <String>随附证明文件复印件</String>
+                    <String>Copy of supporting identification attached</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/positionTitle">
                 <Annotation Term="Common.Label">
-                    <String>职位</String>
+                    <String>Position</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/amount">
                 <Annotation Term="Common.Label">
-                    <String>所有权</String>
+                    <String>Ownership</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/firstName">
                 <Annotation Term="Common.Label">
-                    <String>姓</String>
+                    <String>First name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/lastName">
                 <Annotation Term="Common.Label">
-                    <String>名</String>
+                    <String>Last name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/primaryPhone">
                 <Annotation Term="Common.Label">
-                    <String>电话</String>
+                    <String>Primary Phone</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/primaryEmail">
                 <Annotation Term="Common.Label">
-                    <String>邮箱</String>
+                    <String>Primary Email</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/partyId">
@@ -10277,7 +10191,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.ShipmentItem/productId">
                 <Annotation Term="Common.Label">
-                    <String>产品ID</String>
+                    <String>Product ID</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>Product/productName</Path>
@@ -10308,7 +10222,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.AccountStatusItem/statusId">
                 <Annotation Term="Common.Label">
-                    <String>状态标识</String>
+                    <String>Status ID</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>description</Path>
@@ -10334,7 +10248,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.AccountStatusItem/description">
                 <Annotation Term="Common.Label">
-                    <String>状态</String>
+                    <String>Status</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.InvoiceType/invoiceTypeId">
@@ -10359,7 +10273,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.ListedCountry/geoId">
                 <Annotation Term="Common.Label">
-                    <String>geoId</String>
+                    <String>Listed country</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>geoName</Path>
@@ -10904,7 +10818,7 @@
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label">
-                                <String>创建</String>
+                                <String>Create</String>
                             </PropertyValue>
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.CreatePurchaseAgreement</String>
@@ -11002,7 +10916,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseAgreement/partyIdFrom">
                 <Annotation Term="Common.Label">
-                    <String>甲方</String>
+                    <String>Party from</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>Company/partyName</Path>
@@ -11013,7 +10927,7 @@
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>甲方</String>
+                            <String>Party from</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>Companies</String>
@@ -11035,7 +10949,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseAgreement/partyIdTo">
                 <Annotation Term="Common.Label">
-                    <String>乙方</String>
+                    <String>Party to</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>Supplier/partyName</Path>
@@ -11046,7 +10960,7 @@
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>乙方</String>
+                            <String>Party to</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>Suppliers</String>
@@ -11068,7 +10982,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseAgreement/productId">
                 <Annotation Term="Common.Label">
-                    <String>产品</String>
+                    <String>Product</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
                     <Path>Product/productName</Path>
@@ -11079,7 +10993,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseAgreement/agreementId">
                 <Annotation Term="Common.Label">
-                    <String>协议ID</String>
+                    <String>Agreement ID</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseAgreement/roleTypeIdFrom">
@@ -11094,32 +11008,32 @@
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseAgreement/agreementTypeId">
                 <Annotation Term="Common.Label">
-                    <String>协议类型</String>
+                    <String>Agreement type</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseAgreement/agreementDate">
                 <Annotation Term="Common.Label">
-                    <String>协议日期</String>
+                    <String>Agreement date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseAgreement/fromDate">
                 <Annotation Term="Common.Label">
-                    <String>开始日期</String>
+                    <String>From date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseAgreement/thruDate">
                 <Annotation Term="Common.Label">
-                    <String>结束日期</String>
+                    <String>Thru date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseAgreement/description">
                 <Annotation Term="Common.Label">
-                    <String>描述</String>
+                    <String>Description</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseAgreement/textData">
                 <Annotation Term="Common.Label">
-                    <String>协议文本</String>
+                    <String>Agreement text</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/partyContentId">
@@ -11139,7 +11053,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/contentName">
                 <Annotation Term="Common.Label">
-                    <String>文件描述</String>
+                    <String>File Description</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/mimeTypeId">
@@ -11154,12 +11068,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/dataResourceName">
                 <Annotation Term="Common.Label">
-                    <String>文件</String>
+                    <String>File Name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/fromDate">
                 <Annotation Term="Common.Label">
-                    <String>有效起始时间</String>
+                    <String>Effective start time</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/imageData">
@@ -11167,14 +11081,27 @@
                     <String>imageData</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.PartyMediaResource/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/otherData">
                 <Annotation Term="Common.Label">
-                    <String>文件</String>
+                    <String>File</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/fileUrl">
                 <Annotation Term="Common.Label">
                     <String>fileUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PartyMediaResource/uploadDocCritical">
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>uploadDocCritical</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.EmployeesEnumeration/enumId">
@@ -11208,19 +11135,19 @@
                     <String>description</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.SubmitToProcurement/noteInfo">
+            <Annotations Target="com.dpbird.SubmitDDForm/noteInfo">
                 <Annotation Term="Common.Label">
-                    <String>备注信息</String>
+                    <String>Note info</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FillPartyClassification/partyClassificationGroupId">
                 <Annotation Term="Common.Label">
-                    <String>风险等级</String>
+                    <String>Risk Rating</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>风险等级</String>
+                            <String>Risk Rating</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>PartyClassificationGroups</String>
@@ -11245,17 +11172,17 @@
             </Annotations>
             <Annotations Target="com.dpbird.FillPartyClassification/adverseResults">
                 <Annotation Term="Common.Label">
-                    <String>尽职调查筛选的确认和任何不良结果的报告</String>
+                    <String>Confirmation of due diligence screening and reporting of any adverse outcomes</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FillPartyClassification/additionalProtection">
                 <Annotation Term="Common.Label">
-                    <String>是否有任何额外的合同保护或加强尽职调查建议?</String>
+                    <String>Any additional contractual protections or enhanced due diligence recommended?</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FillPartyClassification/complianceComments">
                 <Annotation Term="Common.Label">
-                    <String>complianceComments</String>
+                    <String>Comments</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo">
@@ -11271,12 +11198,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo/employeesSection">
                 <Annotation Term="Common.Label">
-                    <String>员工数量</String>
+                    <String>Employees</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>员工数量</String>
+                            <String>Employees</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>EmployeesEnumerations</String>
@@ -11301,17 +11228,17 @@
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo/annualRevenue">
                 <Annotation Term="Common.Label">
-                    <String>年利润</String>
+                    <String>Annual revenue</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo/geoId">
                 <Annotation Term="Common.Label">
-                    <String>股票代码</String>
+                    <String>Listed country</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>股票代码</String>
+                            <String>Listed country</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>ListedCountries</String>
@@ -11336,12 +11263,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo/comments">
                 <Annotation Term="Common.Label">
-                    <String>备注</String>
+                    <String>Comments</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo/usccNumber">
                 <Annotation Term="Common.Label">
-                    <String>社会统一信用代码</String>
+                    <String>Tax code</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FillSupplierBaseInfo/priority">
@@ -11351,7 +11278,7 @@
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>优先级</String>
+                            <String>Priority</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>PriorityEnumerations</String>
@@ -11387,12 +11314,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.UpdateSupplierContactInfo/primaryPhone">
                 <Annotation Term="Common.Label">
-                    <String>电话</String>
+                    <String>Primary Phone</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.UpdateSupplierContactInfo/primaryEmail">
                 <Annotation Term="Common.Label">
-                    <String>邮箱</String>
+                    <String>Primary Email</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.UpdateSupplierTimeInfo">
@@ -11408,22 +11335,22 @@
             </Annotations>
             <Annotations Target="com.dpbird.UpdateSupplierTimeInfo/collectionDate">
                 <Annotation Term="Common.Label">
-                    <String>收藏日期</String>
+                    <String>On-board date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.UpdateSupplierTimeInfo/firstOrderDate">
                 <Annotation Term="Common.Label">
-                    <String>首次订单日期</String>
+                    <String>First order date</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/partyName">
                 <Annotation Term="Common.Label">
-                    <String>供应商名称</String>
+                    <String>Vendor name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/isGovernment">
                 <Annotation Term="Common.Label">
-                    <String>是否是政府部门</String>
+                    <String>Is government</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/priority">
@@ -11433,7 +11360,7 @@
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>优先级</String>
+                            <String>Priority</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>PriorityEnumerations</String>
@@ -11458,12 +11385,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierParty/productCategoryId">
                 <Annotation Term="Common.Label">
-                    <String>供应商类型</String>
+                    <String>Category</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>供应商类型</String>
+                            <String>Category</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>ProductCategories</String>
@@ -11488,7 +11415,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.SubmitToProcurement/noteInfo">
                 <Annotation Term="Common.Label">
-                    <String>备注信息</String>
+                    <String>Note info</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.ReturnToApplication">
@@ -11504,7 +11431,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.ReturnToApplication/noteInfo">
                 <Annotation Term="Common.Label">
-                    <String>备注信息</String>
+                    <String>Note info</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.ReturnToSupplier">
@@ -11520,17 +11447,17 @@
             </Annotations>
             <Annotations Target="com.dpbird.ReturnToSupplier/noteInfo">
                 <Annotation Term="Common.Label">
-                    <String>备注信息</String>
+                    <String>Note info</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.ReturnToSupplier/ddFormType">
                 <Annotation Term="Common.Label">
-                    <String>表单类型</String>
+                    <String>DD type</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>表单类型</String>
+                            <String>DD type</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>DDFormEnumerations</String>
@@ -11571,7 +11498,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.ReturnToCompliance/noteInfo">
                 <Annotation Term="Common.Label">
-                    <String>备注信息</String>
+                    <String>Note info</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.FinishDomUpload">
@@ -11620,12 +11547,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreatePostalAddress/contactMechPurposeTypeId">
                 <Annotation Term="Common.Label">
-                    <String>目的</String>
+                    <String>Purpose</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>目的</String>
+                            <String>Purpose</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>ContactMechPurposeTypes</String>
@@ -11650,12 +11577,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreatePostalAddress/countryGeoId">
                 <Annotation Term="Common.Label">
-                    <String>国家</String>
+                    <String>Country</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>国家</String>
+                            <String>Country</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>Countries</String>
@@ -11680,12 +11607,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreatePostalAddress/stateProvinceGeoId">
                 <Annotation Term="Common.Label">
-                    <String>省份</String>
+                    <String>Province</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>省份</String>
+                            <String>Province</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>Provinces</String>
@@ -11718,12 +11645,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreatePostalAddress/cityGeoId">
                 <Annotation Term="Common.Label">
-                    <String>城市</String>
+                    <String>City</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>城市</String>
+                            <String>City</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>Cities</String>
@@ -11756,17 +11683,17 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreatePostalAddress/address1">
                 <Annotation Term="Common.Label">
-                    <String>地址</String>
+                    <String>Address</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePostalAddress/address2">
                 <Annotation Term="Common.Label">
-                    <String>网址</String>
+                    <String>Website address</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePostalAddress/contactNumber">
                 <Annotation Term="Common.Label">
-                    <String>电话</String>
+                    <String>Number</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePostalAddress/email">
@@ -11787,22 +11714,22 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreateNoteData/noteName">
                 <Annotation Term="Common.Label">
-                    <String>备注名称</String>
+                    <String>Note name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateNoteData/noteInfo">
                 <Annotation Term="Common.Label">
-                    <String>备注信息</String>
+                    <String>Note info</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePurchaseAgreement/productId">
                 <Annotation Term="Common.Label">
-                    <String>产品标识</String>
+                    <String>Product name</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>产品标识</String>
+                            <String>Product name</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>Products</String>
@@ -11843,7 +11770,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierProduct/productId">
                 <Annotation Term="Common.Label">
-                    <String>产品标识</String>
+                    <String>Product name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierService">
@@ -11859,7 +11786,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreateSupplierService/productId">
                 <Annotation Term="Common.Label">
-                    <String>产品标识</String>
+                    <String>Product name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateFinAccount">
@@ -11875,22 +11802,22 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreateFinAccount/finAccountName">
                 <Annotation Term="Common.Label">
-                    <String>账户名称</String>
+                    <String>Account name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateFinAccount/finAccountCode">
                 <Annotation Term="Common.Label">
-                    <String>账户代码</String>
+                    <String>Account code</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateFinAccount/currencyUomId">
                 <Annotation Term="Common.Label">
-                    <String>货币单位</String>
+                    <String>Currency</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>货币单位</String>
+                            <String>Currency</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>CurrencyUnm</String>
@@ -11926,12 +11853,12 @@
             </Annotations>
             <Annotations Target="com.dpbird.SelectDepartment/partyId">
                 <Annotation Term="Common.Label">
-                    <String>选择部门</String>
+                    <String>Select department</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>选择部门</String>
+                            <String>Select department</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
                             <String>Departments</String>
@@ -11956,22 +11883,22 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreatePersonAndContact/firstName">
                 <Annotation Term="Common.Label">
-                    <String>姓</String>
+                    <String>First name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePersonAndContact/lastName">
                 <Annotation Term="Common.Label">
-                    <String>名</String>
+                    <String>Last name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePersonAndContact/primaryPhone">
                 <Annotation Term="Common.Label">
-                    <String>电话</String>
+                    <String>Phone</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePersonAndContact/phoneMobile">
                 <Annotation Term="Common.Label">
-                    <String>手机</String>
+                    <String>Mobile</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreatePersonAndContact/primaryEmail">
@@ -11981,27 +11908,27 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreatePersonAndContact/position">
                 <Annotation Term="Common.Label">
-                    <String>职位</String>
+                    <String>Position</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateBeneficialPerson/firstName">
                 <Annotation Term="Common.Label">
-                    <String>姓</String>
+                    <String>First name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateBeneficialPerson/lastName">
                 <Annotation Term="Common.Label">
-                    <String>名</String>
+                    <String>Last name</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateBeneficialPerson/primaryPhone">
                 <Annotation Term="Common.Label">
-                    <String>电话</String>
+                    <String>Phone</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateBeneficialPerson/phoneMobile">
                 <Annotation Term="Common.Label">
-                    <String>手机</String>
+                    <String>Mobile</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateBeneficialPerson/primaryEmail">
@@ -12011,17 +11938,17 @@
             </Annotations>
             <Annotations Target="com.dpbird.CreateBeneficialPerson/amount">
                 <Annotation Term="Common.Label">
-                    <String>所有权</String>
+                    <String>Ownership</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateBeneficialPerson/nationality">
                 <Annotation Term="Common.Label">
-                    <String>国籍</String>
+                    <String>Nationality</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CreateBeneficialPerson/copyIdentificationAttached">
                 <Annotation Term="Common.Label">
-                    <String>随附证明文件复印件</String>
+                    <String>Copy of supporting identification attached</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseQuote/salesChannelEnumId">
