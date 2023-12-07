@@ -47,6 +47,16 @@
                     </Record>
                     <Record Type="UI.DataField">
                         <PropertyValue Property="Value">
+                            <Path>groupTypeId</Path>
+                        </PropertyValue>
+                         <PropertyValue Property="Criticality" Path="vendorTypeCritical"/>
+                        <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
+                        <Annotation Term="UI.Importance">
+                            <EnumMember>UI.ImportanceType/High</EnumMember>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value">
                             <Path>lastSubmittedDate</Path>
                         </PropertyValue>
                         <Annotation Term="UI.Importance">
