@@ -33,6 +33,12 @@
                         <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                     </Record>
+                     <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="groupTypeId"/>
+                        <PropertyValue Property="Criticality" Path="vendorTypeCritical"/>
+                        <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record>
                     <Record Type="UI.DataFieldForAnnotation">
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasificationForLineItem"/>
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
@@ -1254,7 +1260,7 @@
             <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
             <Annotation Term="Common.ValueList">
                 <Record Type="Common.ValueListType">
-                    <PropertyValue Property="Label" String="{@i18n>GOODS}"/>
+                    <PropertyValue Property="Label" String="Goods"/>
                     <PropertyValue Property="CollectionPath" String="Products" />
                     <PropertyValue Property="Parameters">
                         <Collection>
@@ -1279,7 +1285,7 @@
             <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
             <Annotation Term="Common.ValueList">
                 <Record Type="Common.ValueListType">
-                    <PropertyValue Property="Label" String="{@i18n>Services}"/>
+                    <PropertyValue Property="Label" String="Services"/>
                     <PropertyValue Property="CollectionPath" String="Services" />
                     <PropertyValue Property="Parameters">
                         <Collection>

@@ -47,6 +47,16 @@
                     </Record>
                     <Record Type="UI.DataField">
                         <PropertyValue Property="Value">
+                            <Path>groupTypeId</Path>
+                        </PropertyValue>
+                         <PropertyValue Property="Criticality" Path="vendorTypeCritical"/>
+                        <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
+                        <Annotation Term="UI.Importance">
+                            <EnumMember>UI.ImportanceType/High</EnumMember>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value">
                             <Path>lastSubmittedDate</Path>
                         </PropertyValue>
                         <Annotation Term="UI.Importance">
@@ -130,14 +140,9 @@
                         <PropertyValue Property="Target"  AnnotationPath="FileList/@UI.LineItem#FileList"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="ComplianceReport"/>
-                        <PropertyValue Property="Label" String="{@i18n>ComplianceReport}"/>
-                        <PropertyValue Property="Target"  AnnotationPath="ComplianceReport/@UI.LineItem#ComplianceReport"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="{@i18n>SelectDepartment}"/>
                         <PropertyValue Property="ID" String="SelectDepartment"/>
-                        <PropertyValue Property="Target" AnnotationPath="Department/@UI.LineItem#DepartmentLineItem"/>
+                        <PropertyValue Property="Target" AnnotationPath="Company/@UI.LineItem#DepartmentLineItem"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="NoteDataLineItem"/>
@@ -809,7 +814,7 @@
             <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
             <Annotation Term="Common.ValueList">
                 <Record Type="Common.ValueListType">
-                    <PropertyValue Property="Label" String="{@i18n>GOODS}"/>
+                    <PropertyValue Property="Label" String="Goods"/>
                     <PropertyValue Property="CollectionPath" String="Products" />
                     <PropertyValue Property="Parameters">
                         <Collection>
@@ -831,10 +836,9 @@
 
          <Annotations Target="com.dpbird.CreateSupplierService/productId">
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
-            <Annotation Term="Common.ValueListWithFixedValues" Bool="false" />
             <Annotation Term="Common.ValueList">
                 <Record Type="Common.ValueListType">
-                    <PropertyValue Property="Label" String="{@i18n>Services}"/>
+                    <PropertyValue Property="Label" String="Service"/>
                     <PropertyValue Property="CollectionPath" String="Services" />
                     <PropertyValue Property="Parameters">
                         <Collection>
@@ -896,7 +900,7 @@
                 </Record>
             </Annotation>
         </Annotations>
-        <Annotations Target="com.dpbird.RemoveDepartment">
+        <Annotations Target="com.dpbird.RemoveCompany">
             <Annotation Term="Common.SideEffects">
                 <Record>
                     <PropertyValue Property="TargetEntities">
