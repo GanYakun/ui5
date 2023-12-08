@@ -438,7 +438,10 @@
                         <PropertyValue Property="Label" String="{@i18n>PartyBaseInfo}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#HeaderBasicInfo"/>
                     </Record>
-                    
+                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="DDFormType"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDFormType"/>
+                    </Record>
                      <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Priority"/>
                         <PropertyValue Property="Label" String="{@i18n>Priority}"/>
