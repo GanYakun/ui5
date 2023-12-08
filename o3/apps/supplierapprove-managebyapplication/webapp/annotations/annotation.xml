@@ -99,6 +99,35 @@
                 </Collection>
             </Annotation>
 
+            <Annotation Term="UI.FieldGroup" Qualifier="HeaderBasicInfo">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                              <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>groupTypeId</Path>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Criticality" Path="vendorTypeCritical"/>
+                                    <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>priority</Path>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Criticality" Path="priorityCritical"/>
+                                    <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>ProductCategory/categoryName</Path>
+                                    </PropertyValue>
+                                </Record>
+                              
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
             <Annotation Term="UI.DataPoint" Qualifier="ProcessBar">
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="processNumeric" />
@@ -404,31 +433,13 @@
              <Annotation Term="UI.HeaderFacets">
                 <Collection>
                   
-                  
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="DDFormType"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDFormType"/>
+                   <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="PartyBaseInfo"/>
+                        <PropertyValue Property="Label" String="{@i18n>PartyBaseInfo}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#HeaderBasicInfo"/>
                     </Record>
-                        <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="statusId"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#statusId"/>
-                    </Record> -->
+                    
                      <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="complianceCheckWarning"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#complianceCheckWarning"/>
-                    </Record> -->
-                   
-                    <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="CycleTime"/>
-                        <PropertyValue Property="Label" String="{@i18n>CycleTime}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#CycleTime"/>
-                    </Record> -->
-                    <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="DDResponseTime"/>
-                        <PropertyValue Property="Label" String="{@i18n>DDResponseTime}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDResponseTime"/>
-                    </Record> -->
-                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Priority"/>
                         <PropertyValue Property="Label" String="{@i18n>Priority}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#Priority"/>
@@ -436,7 +447,7 @@
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="SupplierCategory"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#SupplierCategory"/>
-                    </Record>
+                    </Record> -->
                     
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="FileCountGroup"/>
