@@ -196,7 +196,7 @@
                                 <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="ID" String="COMPLIANCE_CER"/>
                                     <PropertyValue Property="Label" String="COMPLIANCE CERTIFICATIONS"/>
-                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/SurveyQuestionAnswer/@UI.LineItem#ComplianceAnswerLineItem"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/SurveyQuestionAnswerNoDraft/@UI.LineItem#ComplianceAnswerLineItem"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>
@@ -410,7 +410,7 @@
                 </Collection>
             </Annotation>
         </Annotations>
-
+<!-- 
             <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer">
                 <Annotation Term="UI.LineItem" Qualifier="ComplianceAnswerLineItem">
                     <Collection>
@@ -450,7 +450,7 @@
                         </Record>
                     </Collection>
                 </Annotation>
-            </Annotations>
+            </Annotations> -->
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>
