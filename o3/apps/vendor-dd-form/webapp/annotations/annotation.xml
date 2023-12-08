@@ -136,10 +136,15 @@
                             <PropertyValue Property="Label" String="Previous name of Business Partner (if any) and date of name change"/>
                             <PropertyValue Property="Target" AnnotationPath="PartyNameHistory/@UI.LineItem#HistoryList"/>
                         </Record>
-                        <Record Type="UI.ReferenceFacet">
+                        <!-- <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="BeneficialPerson"/>
                             <PropertyValue Property="Label" String="Ultimate beneficiary"/>
                             <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#BeneficialPerson"/>
+                        </Record> -->
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="BeneficialPerson"/>
+                            <PropertyValue Property="Label" String="Ultimate beneficiary"/>
+                            <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#BeneficialPerson_Upload"/>
                         </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="SeniorStaff"/>
