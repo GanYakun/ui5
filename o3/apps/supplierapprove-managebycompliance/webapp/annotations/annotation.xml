@@ -40,16 +40,10 @@
                             <EnumMember>UI.ImportanceType/High</EnumMember>
                         </Annotation>
                     </Record>
-                    <Record Type="UI.DataField">
-                        <PropertyValue Property="Value">
-                            <Path>PartyClassification/PartyClassificationGroup/description</Path>
-                        </PropertyValue>
-                        <PropertyValue Property="Criticality">
-                            <Path>riskCritical</Path>
-                        </PropertyValue>
-                        <Annotation Term="UI.Importance">
-                            <EnumMember>UI.ImportanceType/High</EnumMember>
-                        </Annotation>
+                     <Record Type="UI.DataFieldForAnnotation">
+                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasificationForLineItem"/>
+                        <PropertyValue Property="Label" String="{@i18n>RiskRating}"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                     </Record>
                     <Record Type="UI.DataFieldWithUrl">
                         <PropertyValue Property="Label" String="DD Form"/>
@@ -59,6 +53,15 @@
                 </Collection>
             </Annotation>
 
+            <Annotation Term="UI.DataPoint" Qualifier="PartyClasificationForLineItem">
+                <Record Type="UI.DataPointType">
+                    <PropertyValue Property="Value" Path="ratingNumeric" />
+                    <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
+                    <!-- <PropertyValue Property="Criticality" Path="riskCritical" /> -->
+                    <PropertyValue Property="TargetValue" Decimal="5" />
+                    <PropertyValue Property="Visualization"  EnumMember="UI.VisualizationType/Rating"/>
+                </Record>
+            </Annotation>
 
              <Annotation Term="UI.HeaderFacets">
                 <Collection>
@@ -86,9 +89,11 @@
 
             <Annotation Term="UI.DataPoint" Qualifier="PartyClasification">
                 <Record Type="UI.DataPointType">
-                    <PropertyValue Property="Value" Path="PartyClassification/PartyClassificationGroup/description"/>
+                    <PropertyValue Property="Value" Path="ratingNumeric"/>
                     <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
-                    <PropertyValue Property="Criticality" Path="riskCritical"/>
+                    <!-- <PropertyValue Property="Criticality" Path="riskCritical" /> -->
+                    <PropertyValue Property="TargetValue" Int="5" />
+                    <PropertyValue Property="Visualization"  EnumMember="UI.VisualizationType/Rating"/>
                 </Record>
             </Annotation>
 
