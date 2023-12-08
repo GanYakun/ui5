@@ -400,6 +400,47 @@
                 </Collection>
             </Annotation>
         </Annotations>
+
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer">
+                <Annotation Term="UI.LineItem" Qualifier="ComplianceAnswerLineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>DDFormSurveyQuestion/question</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>enumResponse</Path>
+                            </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <If>
+                                    <Eq>
+                                        <Path>enumResponse</Path>
+                                        <String>TRUE</String>
+                                    </Eq>
+                                    <Int>2</Int>
+                                    <Int>3</Int>
+                                </If>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>textResponse</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>
