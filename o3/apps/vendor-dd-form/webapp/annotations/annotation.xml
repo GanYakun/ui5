@@ -1,4 +1,7 @@
 <edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Session.xml">
         <edmx:Include Namespace="com.sap.vocabularies.Session.v1" Alias="Session"/>
     </edmx:Reference>
@@ -179,6 +182,22 @@
                                 <NavigationPropertyPath>supplierDDForm</NavigationPropertyPath>
                             </Collection>
                         </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+
+            <Annotations Target="com.dpbird.O3Container/DDFormSurveyQuestionAnswers">
+
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                      <PropertyValue Property="Deletable" Bool="false" />
+                    </Record>
+                </Annotation>
+
+                <Annotation Term="Capabilities.InsertRestrictions" >
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                      <PropertyValue Property="Insertable" Bool="false" />
                     </Record>
                 </Annotation>
             </Annotations>

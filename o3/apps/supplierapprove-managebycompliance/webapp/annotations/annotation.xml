@@ -186,7 +186,7 @@
                                 <Record Type="UI.ReferenceFacet">
                                     <PropertyValue Property="ID" String="COMPLIANCE_CER"/>
                                     <PropertyValue Property="Label" String="COMPLIANCE CERTIFICATIONS"/>
-                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/SurveyQuestionAnswer/@UI.LineItem#AnswerLineItem"/>
+                                    <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/SurveyQuestionAnswer/@UI.LineItem#ComplianceAnswerLineItem"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>
