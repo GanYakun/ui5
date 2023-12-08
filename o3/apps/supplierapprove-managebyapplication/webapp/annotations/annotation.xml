@@ -1049,7 +1049,7 @@
                         </Annotation>
                     </Record>
                     <Record Type="UI.DataFieldWithUrl">
-                        <PropertyValue Property="Label" String="File"/>
+                        <PropertyValue Property="Label" String="View"/>
                         <PropertyValue Property="Value" Path="addNameForUpload"/>
                         <PropertyValue Property="Url" Path="fileUrl"/>
                     </Record>
@@ -1086,7 +1086,7 @@
                         </Annotation>
                     </Record>
                     <Record Type="UI.DataFieldWithUrl">
-                        <PropertyValue Property="Label" String="File"/>
+                        <PropertyValue Property="Label" String="View"/>
                         <PropertyValue Property="Value" Path="description"/>
                         <PropertyValue Property="Url" Path="fileUrl"/>
                     </Record>
