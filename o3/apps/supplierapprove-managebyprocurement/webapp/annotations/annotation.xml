@@ -46,6 +46,7 @@
                     </Record>
                     <Record Type="UI.DataFieldForAnnotation">
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasificationForLineItem"/>
+                        <PropertyValue Property="Label" String="{@i18n>RiskRating}"/>
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                     </Record>
                     <Record Type="UI.DataFieldForAnnotation">

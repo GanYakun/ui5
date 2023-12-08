@@ -497,13 +497,6 @@
                 </Record>
             </Annotation>
 
-            <Annotation Term="UI.DataPoint" Qualifier="DDResponseTime">
-                <Record Type="UI.DataPointType">
-                    <PropertyValue Property="Value" Path="ddResponseTime" />
-                    <PropertyValue Property="Title" String="{@i18n>DDResponseTime}"/>
-                </Record>
-            </Annotation>
-
             <Annotation Term="UI.DataPoint" Qualifier="Priority">
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="priority"/>
@@ -512,26 +505,7 @@
                 </Record>
             </Annotation>
 
-            <Annotation Term="UI.FieldGroup" Qualifier="FileCountGroup">
-                <Record Type="UI.FieldGroupType">
-                    <PropertyValue Property="Data">
-                        <Collection>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="fsStatus"/>
-                                <PropertyValue Property="Criticality" Path="fsStatusCriticality"/>
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="caStatus"/>
-                                <PropertyValue Property="Criticality" Path="caStatusCriticality"/>
-                            </Record>
-                            <Record Type="UI.DataField">
-                                <PropertyValue Property="Value" Path="cpStatus"/>
-                                <PropertyValue Property="Criticality" Path="cpStatusCriticality"/>
-                            </Record>
-                        </Collection>
-                    </PropertyValue>
-                </Record>
-            </Annotation>
+           
 
             <Annotation Term="UI.FieldGroup" Qualifier="ViewDDForm">
                 <Record Type="UI.FieldGroupType">
@@ -578,14 +552,7 @@
                 </Record>
             </Annotation>
 
-            <Annotation Term="UI.DataPoint" Qualifier="statusId">
-                <Record Type="UI.DataPointType">
-                    <PropertyValue Property="Value" Path="ddFormDealStatus"/>
-                    <PropertyValue Property="Title" String="{@i18n>statusId}"/>
-                    <PropertyValue Property="Criticality" Path="ddFormDealCritical" />
-                </Record>
-            </Annotation>
-
+         
              <Annotation Term="UI.DataPoint" Qualifier="PartyClasification">
                 <Record Type="UI.DataPointType">
                     <PropertyValue Property="Value" Path="ratingNumeric"/>
@@ -797,11 +764,7 @@
         <!-- <Annotations Target="com.dpbird.CreatePersonAndContact/phoneMobile">
             <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory" />
         </Annotations> -->
-        <Annotations Target="com.dpbird.CreatePersonAndContact/roleTypeIdTo">
-            <Annotation Term="UI.ParameterDefaultValue" String="CONTACT"></Annotation>
-            <Annotation Term="UI.Hidden" Bool="true"></Annotation>
-        </Annotations>
-
+   
         <Annotations Target="com.dpbird.PartyClassification">
             <Annotation Term="UI.FieldGroup" Qualifier="PartyClassificationFieldGroup">
                 <Record Type="UI.FieldGroupType">
@@ -849,9 +812,6 @@
         </Annotations>
         <Annotations Target="com.dpbird.FillSupplierBaseInfo/priority">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/priority" ></Annotation>
-        </Annotations>
-        <Annotations Target="com.dpbird.FillSupplierBaseInfo/tickerSymbol">
-            <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/tickerSymbol" ></Annotation>
         </Annotations>
          <Annotations Target="com.dpbird.FillSupplierBaseInfo/usccNumber">
             <Annotation Term="UI.ParameterDefaultValue" Path="supplierParty/usccNumber" ></Annotation>
