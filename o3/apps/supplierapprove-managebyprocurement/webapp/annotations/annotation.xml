@@ -101,6 +101,11 @@
                         <PropertyValue Property="ID" String="DDFormType"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDFormType"/>
                     </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="DDFormType"/>
+                        <PropertyValue Property="Label" String="Legal Contact"/>
+                        <PropertyValue Property="Target" AnnotationPath="ContactPerson/@Communication.Contact"/>
+                    </Record>
                     <!-- 
                      <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Priority"/>
@@ -1513,6 +1518,32 @@
             </Annotations>
 
             <Annotations Target="com.dpbird.NoteParty">
+             <Annotation Term="Communication.Contact">
+                  <Record Type="Communication.ContactType">
+                        <PropertyValue Property="fn" Path="partyName"/>
+                         
+                        <PropertyValue Property="tel"  >
+                            <Collection>
+                                <Record Type="Communication.PhoneNumberType">
+                                    <PropertyValue Property="type" EnumMember="Communication.PhoneType/cell"/>
+                                    <PropertyValue Property="uri" Path="phoneMobile"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="email" >
+                            <Collection>
+                                <Record Type="Communication.EmailAddressType">
+                                    <PropertyValue Property="type" EnumMember="Communication.ContactInformationType/work"/>
+                                    <PropertyValue Property="address" Path="primaryEmail"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="photo" String="http://dpbird.oss-cn-hangzhou.aliyuncs.com/partyManage/partyImage/d49f064f-f94b-4e7b-9265-fa38d57e2321.png" />
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.RelationshipAndToParty">
              <Annotation Term="Communication.Contact">
                   <Record Type="Communication.ContactType">
                         <PropertyValue Property="fn" Path="partyName"/>

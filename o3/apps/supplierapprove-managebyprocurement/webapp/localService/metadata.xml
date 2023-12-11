@@ -1398,6 +1398,7 @@
                 <NavigationProperty Name="ListedCountry" Type="Collection(com.dpbird.ListedCountry)"/>
                 <NavigationProperty Name="SurveyQuestionAndAnswer" Type="Collection(com.dpbird.SurveyQuestionAndAnswer)"/>
                 <NavigationProperty Name="ChildWorkEffortStatus" Type="Collection(com.dpbird.WorkEffortStatus)"/>
+                <NavigationProperty Name="ContactPerson" Type="com.dpbird.RelationshipAndToParty"/>
                 <NavigationProperty Name="CreatedParty" Type="com.dpbird.CreatedParty"/>
                 <NavigationProperty Name="FileList" Type="Collection(com.dpbird.PartyMediaResource)"/>
                 <NavigationProperty Name="ComplianceReport" Type="Collection(com.dpbird.PartyMediaResource)"/>
@@ -2122,6 +2123,7 @@
                     <NavigationPropertyBinding Path="ListedCountry" Target="ListedCountries"/>
                     <NavigationPropertyBinding Path="SurveyQuestionAndAnswer" Target="SurveyQuestionAndAnswers"/>
                     <NavigationPropertyBinding Path="ChildWorkEffortStatus" Target="WorkEffortStatus"/>
+                    <NavigationPropertyBinding Path="ContactPerson" Target="RelationshipAndToParties"/>
                     <NavigationPropertyBinding Path="CreatedParty" Target="CreatedParties"/>
                     <NavigationPropertyBinding Path="FileList" Target="PartyMediaResources"/>
                     <NavigationPropertyBinding Path="ComplianceReport" Target="PartyMediaResources"/>
