@@ -134,16 +134,16 @@
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="complianceCheckWarning"/>
-                        <!-- <PropertyValue Property="Label" String="Risk Indicator"/> -->
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#complianceCheckWarning"/>
+                        <PropertyValue Property="Label" String="Warning"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WarningContent"/>
                          <Annotation Term="UI.Hidden">
                         <If>
                             <Eq>
-                                <Path>complianceCheckWarning</Path>
-                                <String>Warning</String>
+                                <Path>warningContent</Path>
+                                <String></String>
                             </Eq>
-                            <Bool>false</Bool>
                             <Bool>true</Bool>
+                            <Bool>false</Bool>
                         </If>
                     </Annotation>
                     </Record>
@@ -188,6 +188,30 @@
                     </PropertyValue>
                 </Record>
             </Annotation>
+
+            <Annotation Term="UI.FieldGroup" Qualifier="WarningContent">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataField">
+                                <!-- <PropertyValue Property="Label" String="Warning Content"/> -->
+                                <PropertyValue Property="Value" Path="warningContent"/>
+                                <PropertyValue Property="Criticality" Int="1"/>
+                                <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
+                            </Record>
+                            <!-- <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="caStatus"/>
+                                <PropertyValue Property="Criticality" Path="caStatusCriticality"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="cpStatus"/>
+                                <PropertyValue Property="Criticality" Path="cpStatusCriticality"/>
+                            </Record> -->
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+
             <Annotation Term="UI.FieldGroup" Qualifier="ComplianceNote">
                 <Record Type="UI.FieldGroupType">
                     <PropertyValue Property="Data">
@@ -1485,9 +1509,103 @@
                         </PropertyValue>
                         <PropertyValue Property="photo" String="http://dpbird.oss-cn-hangzhou.aliyuncs.com/partyManage/partyImage/d49f064f-f94b-4e7b-9265-fa38d57e2321.png" />
                     </Record>
-             </Annotation>
-             </Annotations>
+                </Annotation>
+            </Annotations>
 
+            <Annotations Target="com.dpbird.NoteData">
+                <Annotation Term="UI.LineItem" Qualifier="NoteDataLineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteInfo</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteParty</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteDateTime</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label">
+                                <String>Create</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Action">
+                                <String>com.dpbird.CreateNoteData</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>false</Bool>
+                            </PropertyValue>
+                            <PropertyValue Property="InvocationGrouping">
+                                <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                            </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="NoteDataLineItemWithoutAction">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteInfo</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteParty</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>noteDateTime</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>
