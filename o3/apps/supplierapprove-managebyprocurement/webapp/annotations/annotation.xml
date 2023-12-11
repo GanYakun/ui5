@@ -1124,8 +1124,8 @@
                 <Record Type="UI.FieldGroupType">
                     <PropertyValue Property="Data">
                         <Collection>
-                        
                             <Record Type="UI.DataField">
+                                <PropertyValue Property="Label" String=""/>
                                 <PropertyValue Property="Value" Path="approveComments" />
                             </Record>
                         </Collection>
