@@ -168,7 +168,16 @@
                         "settings": {
                             "editableHeaderContent": false,
                             "entitySet": "SupplierParties",
-                            "sectionLayout": "Tabs"
+                            "sectionLayout": "Tabs",
+                            "controlConfiguration": {
+                                "@com.sap.vocabularies.UI.v1.HeaderFacets": {
+                                    "facets": {
+                                        "ContactPerson::@com.sap.vocabularies.Communication.v1.Contact": {
+                                            "flexSettings": {}
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
