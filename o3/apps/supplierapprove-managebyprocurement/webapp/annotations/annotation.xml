@@ -102,9 +102,19 @@
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#DDFormType"/>
                     </Record>
                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="DDFormType"/>
+                        <PropertyValue Property="ID" String="Contact"/>
                         <PropertyValue Property="Label" String="Legal Contact"/>
                         <PropertyValue Property="Target" AnnotationPath="ContactPerson/@Communication.Contact"/>
+                         <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>ContactPerson/partyName</Path>
+                                <String>Nullable</String>
+                            </Eq>
+                            <Bool>true</Bool>
+                            <Bool>false</Bool>
+                        </If>
+                    </Annotation>
                     </Record>
                     <!-- 
                      <Record Type="UI.ReferenceFacet">
@@ -757,29 +767,7 @@
         
             <Annotation Term="UI.Facets">
                 <Collection>
-                     <Record Type="UI.CollectionFacet">
-                        <PropertyValue Property="Label" String="{@i18n>ApproveInfo}"/>
-                        <PropertyValue Property="ID" String="ApproveInfo"/>
-                        <PropertyValue Property="Facets">
-                            <Collection>
-                                <Record Type="UI.ReferenceFacet">
-                                    <PropertyValue Property="ID" String="ComplianceNote"/>
-                                    <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
-                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
-                                </Record>
-                                <Record Type="UI.ReferenceFacet">
-                                    <PropertyValue Property="ID" String="Classification"/>
-                                    <!-- <PropertyValue Property="Label" String="{@i18n>RiskRating}"/> -->
-                                    <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="ApproveComments"/>
-                        <PropertyValue Property="Label" String="{@i18n>ApproveComments}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ApproveComments"/>
-                    </Record>
+                     
                     <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Classification"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
@@ -1121,6 +1109,29 @@
                             <Bool>true</Bool>
                         </If>
                         </Annotation>
+                    </Record>
+                    <Record Type="UI.CollectionFacet">
+                        <PropertyValue Property="Label" String="{@i18n>ApproveInfo}"/>
+                        <PropertyValue Property="ID" String="ApproveInfo"/>
+                        <PropertyValue Property="Facets">
+                            <Collection>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceNote"/>
+                                    <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="Classification"/>
+                                    <!-- <PropertyValue Property="Label" String="{@i18n>RiskRating}"/> -->
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ApproveComments"/>
+                        <PropertyValue Property="Label" String="{@i18n>ApproveComments}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ApproveComments"/>
                     </Record>
                 </Collection>
             </Annotation>
@@ -1547,8 +1558,7 @@
              <Annotation Term="Communication.Contact">
                   <Record Type="Communication.ContactType">
                         <PropertyValue Property="fn" Path="partyName"/>
-                         
-                        <PropertyValue Property="tel"  >
+                        <PropertyValue Property="tel">
                             <Collection>
                                 <Record Type="Communication.PhoneNumberType">
                                     <PropertyValue Property="type" EnumMember="Communication.PhoneType/cell"/>
@@ -1556,7 +1566,7 @@
                                 </Record>
                             </Collection>
                         </PropertyValue>
-                        <PropertyValue Property="email" >
+                        <PropertyValue Property="email">
                             <Collection>
                                 <Record Type="Communication.EmailAddressType">
                                     <PropertyValue Property="type" EnumMember="Communication.ContactInformationType/work"/>
@@ -1564,7 +1574,7 @@
                                 </Record>
                             </Collection>
                         </PropertyValue>
-                        <PropertyValue Property="photo" String="http://dpbird.oss-cn-hangzhou.aliyuncs.com/partyManage/partyImage/d49f064f-f94b-4e7b-9265-fa38d57e2321.png" />
+                        <PropertyValue Property="photo" String="http://dpbird.oss-cn-hangzhou.aliyuncs.com/partyManage/partyImage/d49f064f-f94b-4e7b-9265-fa38d57e2321.png"/>
                     </Record>
                 </Annotation>
             </Annotations>

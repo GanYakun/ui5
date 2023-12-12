@@ -140,30 +140,6 @@
 
             <Annotation Term="UI.Facets">
                 <Collection>
-                     <Record Type="UI.CollectionFacet">
-                        <PropertyValue Property="Label" String="{@i18n>ApproveInfo}"/>
-                        <PropertyValue Property="ID" String="ApproveInfo"/>
-                        <PropertyValue Property="Facets">
-                            <Collection>
-                                <Record Type="UI.ReferenceFacet">
-                                    <PropertyValue Property="ID" String="ComplianceNote"/>
-                                    <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
-                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
-                                </Record>
-                                <Record Type="UI.ReferenceFacet">
-                                    <PropertyValue Property="ID" String="Classification"/>
-                                    <!-- <PropertyValue Property="Label" String="{@i18n>RiskRating}"/> -->
-                                    <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
-                                </Record>
-                               
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="ApproveComments"/>
-                        <PropertyValue Property="Label" String="{@i18n>ApproveComments}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ApproveComments"/>
-                    </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="FileList"/>
                         <PropertyValue Property="Label" String="{@i18n>FileList}"/>
@@ -426,6 +402,30 @@
                             <Bool>false</Bool>
                         </If>
                         </Annotation>
+                    </Record>
+                    <Record Type="UI.CollectionFacet">
+                        <PropertyValue Property="Label" String="{@i18n>ApproveInfo}"/>
+                        <PropertyValue Property="ID" String="ApproveInfo"/>
+                        <PropertyValue Property="Facets">
+                            <Collection>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="ComplianceNote"/>
+                                    <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
+                                </Record>
+                                <Record Type="UI.ReferenceFacet">
+                                    <PropertyValue Property="ID" String="Classification"/>
+                                    <!-- <PropertyValue Property="Label" String="{@i18n>RiskRating}"/> -->
+                                    <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
+                                </Record>
+                               
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ApproveComments"/>
+                        <PropertyValue Property="Label" String="{@i18n>ApproveComments}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ApproveComments"/>
                     </Record>
                 </Collection>
             </Annotation>
