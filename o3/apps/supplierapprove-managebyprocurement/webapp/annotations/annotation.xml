@@ -103,7 +103,7 @@
                     </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Contact"/>
-                        <PropertyValue Property="Label" String="Legal Contact"/>
+                        <PropertyValue Property="Label" String="Contact Info."/>
                         <PropertyValue Property="Target" AnnotationPath="ContactPerson/@Communication.Contact"/>
                          <Annotation Term="UI.Hidden">
                         <If>
