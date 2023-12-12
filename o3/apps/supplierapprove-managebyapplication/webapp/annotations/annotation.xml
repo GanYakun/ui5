@@ -558,7 +558,7 @@
                     <PropertyValue Property="Value" Path="ratingNumeric"/>
                     <PropertyValue Property="Title" String="{@i18n>RiskRating}"/>
                     <!-- <PropertyValue Property="Criticality" Path="riskCritical" /> -->
-                    <PropertyValue Property="TargetValue" Int="5" />
+                    <PropertyValue Property="TargetValue" Int="3" />
                     <PropertyValue Property="Visualization"  EnumMember="UI.VisualizationType/Rating"/>
                 </Record>
             </Annotation>
