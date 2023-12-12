@@ -386,6 +386,7 @@
                     </Record>       
                     <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.CompleteCoWork"/>
+                        <PropertyValue Property="IconUrl" String="sap-icon://hr-approval"/>
                         <PropertyValue Property="Label"  String="{@i18n>CompleteCoWork}" />
                         <Annotation Term="UI.Hidden">
                             <If>
