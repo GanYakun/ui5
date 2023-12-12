@@ -92,6 +92,36 @@
                 <Annotation Term="UI.Facets">
                     <Collection>
                         <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Company Info"/>
+                            <PropertyValue Property="ID" String="CompanyInfo"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#DDFormBasicInfo"/>
+                            <Annotation Term="UI.Hidden">
+                                <If>
+                                    <Eq>
+                                        <Path>writeBasicInfo</Path>
+                                        <Bool>true</Bool>
+                                    </Eq>
+                                    <Bool>false</Bool>
+                                    <Bool>true</Bool>
+                                </If>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Supported Documents"/>
+                            <PropertyValue Property="ID" String="SupportedDocuments"/>
+                            <PropertyValue Property="Target" AnnotationPath="FileList/@UI.LineItem#FileList"/>
+                            <Annotation Term="UI.Hidden">
+                                <If>
+                                    <Eq>
+                                        <Path>uploadDocuments</Path>
+                                        <Bool>true</Bool>
+                                    </Eq>
+                                    <Bool>false</Bool>
+                                    <Bool>true</Bool>
+                                </If>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="Label" String="Full Name of Company or Individual Party"/>
                             <PropertyValue Property="ID" String="FullName"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FullName"/>
@@ -204,6 +234,62 @@
                     <Record Type="Capabilities.InsertRestrictionsType">
                       <PropertyValue Property="Insertable" Bool="false" />
                     </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.O3Container/PartyMediaResources">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                      <PropertyValue Property="Deletable" Bool="false" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions" >
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                      <PropertyValue Property="Insertable" Bool="false" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions" >
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                      <PropertyValue Property="Updatable" Bool="false" />
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.PartyMediaResource">
+                <Annotation Term="UI.LineItem" Qualifier="FileList">
+                    <Annotation Term="UI.Criticality" Path="uploadDocCritical"></Annotation>
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>contentName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataFieldWithUrl">
+                            <PropertyValue Property="Label" String="View"/>
+                            <PropertyValue Property="Value" Path="addNameForUpload"/>
+                            <PropertyValue Property="Url" Path="fileUrl"/>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="{@i18n>Upload}"/>
+                            <PropertyValue Property="Action">
+                                <String>com.dpbird.UploadAction</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>true</Bool>
+                            </PropertyValue>
+                            <PropertyValue Property="InvocationGrouping">
+                                <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                            </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
                 </Annotation>
             </Annotations>
         </Schema>
