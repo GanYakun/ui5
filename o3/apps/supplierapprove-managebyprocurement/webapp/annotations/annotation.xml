@@ -439,76 +439,8 @@
                 </Collection>
             </Annotation>
 
-             <Annotation Term="UI.SelectionPresentationVariant" Qualifier="ALL_COWORK">
-                <Record Type="UI.SelectionPresentationVariantType">
-                    <PropertyValue Property="PresentationVariant">
-                        <Record Type="UI.PresentationVariantType">
-                            <PropertyValue Property="Visualizations">
-                                <Collection>
-                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="SelectionVariant">
-                        <Record Type="UI.SelectionVariantType">
-                            <PropertyValue Property="SelectOptions">
-                                <Collection>
-                                    <Record Type="UI.SelectOptionType">
-                                        <PropertyValue Property="PropertyName" PropertyPath="currentStatusId" />
-                                        <PropertyValue Property="Ranges">
-                                            <Collection>
-                                                <!-- <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="COWORK_CREATED"></PropertyValue>
-                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
-                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
-                                                </Record> -->
-                                            </Collection>
-                                        </PropertyValue>
-                                    </Record>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>ALL_COWORK}"/>
-                </Record>
-            </Annotation>
-             <Annotation Term="UI.SelectionPresentationVariant" Qualifier="COWORK_CREATED">
-                <Record Type="UI.SelectionPresentationVariantType">
-                    <PropertyValue Property="PresentationVariant">
-                        <Record Type="UI.PresentationVariantType">
-                            <PropertyValue Property="Visualizations">
-                                <Collection>
-                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="SelectionVariant">
-                        <Record Type="UI.SelectionVariantType">
-                            <PropertyValue Property="SelectOptions">
-                                <Collection>
-                                    <Record Type="UI.SelectOptionType">
-                                        <PropertyValue Property="PropertyName" PropertyPath="currentStatusId" />
-                                        <PropertyValue Property="Ranges">
-                                            <Collection>
-                                                <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="COWORK_CREATED"></PropertyValue>
-                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
-                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
-                                                </Record>
-                                            </Collection>
-                                        </PropertyValue>
-                                    </Record>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>ApprovalCreated}"/>
-                </Record>
-            </Annotation>
             
-            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="REQUEST_DD">
+            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="PROCUREMENT_REVIEW">
                 <Record Type="UI.SelectionPresentationVariantType">
                     <PropertyValue Property="PresentationVariant">
                         <Record Type="UI.PresentationVariantType">
@@ -528,7 +460,7 @@
                                         <PropertyValue Property="Ranges">
                                             <Collection>
                                                 <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="REQUEST_DD"></PropertyValue>
+                                                    <PropertyValue Property="Low" String="PROCUREMENT_REVIEW"></PropertyValue>
                                                     <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
                                                     <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
                                                 </Record>
@@ -539,80 +471,11 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>REQUEST_DD}"/>
-                </Record>
-            </Annotation>
-            <!-- <Annotation Term="UI.SelectionPresentationVariant" Qualifier="COMPLETE_DD">
-                <Record Type="UI.SelectionPresentationVariantType">
-                    <PropertyValue Property="PresentationVariant">
-                        <Record Type="UI.PresentationVariantType">
-                            <PropertyValue Property="Visualizations">
-                                <Collection>
-                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="SelectionVariant">
-                        <Record Type="UI.SelectionVariantType">
-                            <PropertyValue Property="SelectOptions">
-                                <Collection>
-                                    <Record Type="UI.SelectOptionType">
-                                        <PropertyValue Property="PropertyName" PropertyPath="currentStatusId" />
-                                        <PropertyValue Property="Ranges">
-                                            <Collection>
-                                                <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="COMPLETE_DD"></PropertyValue>
-                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
-                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
-                                                </Record>
-                                            </Collection>
-                                        </PropertyValue>
-                                    </Record>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>COMPLETE_DD}"/>
-                </Record>
-            </Annotation> -->
-
-            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="DOC_READY">
-                <Record Type="UI.SelectionPresentationVariantType">
-                    <PropertyValue Property="PresentationVariant">
-                        <Record Type="UI.PresentationVariantType">
-                            <PropertyValue Property="Visualizations">
-                                <Collection>
-                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="SelectionVariant">
-                        <Record Type="UI.SelectionVariantType">
-                            <PropertyValue Property="SelectOptions">
-                                <Collection>
-                                    <Record Type="UI.SelectOptionType">
-                                        <PropertyValue Property="PropertyName" PropertyPath="currentStatusId" />
-                                        <PropertyValue Property="Ranges">
-                                            <Collection>
-                                                <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="DOC_READY"></PropertyValue>
-                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
-                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
-                                                </Record>
-                                            </Collection>
-                                        </PropertyValue>
-                                    </Record>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>DOC_READY}"/>
+                    <PropertyValue Property="Text" String="{@i18n>PROCUREMENT_REVIEW}"/>
                 </Record>
             </Annotation>
 
-             <!-- <Annotation Term="UI.SelectionPresentationVariant" Qualifier="REQUEST_COMP">
+            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="COMPLIANCE_REVIEW">
                 <Record Type="UI.SelectionPresentationVariantType">
                     <PropertyValue Property="PresentationVariant">
                         <Record Type="UI.PresentationVariantType">
@@ -632,7 +495,7 @@
                                         <PropertyValue Property="Ranges">
                                             <Collection>
                                                 <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="REQUEST_COMP"></PropertyValue>
+                                                    <PropertyValue Property="Low" String="COMPLIANCE_REVIEW"></PropertyValue>
                                                     <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
                                                     <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
                                                 </Record>
@@ -643,46 +506,11 @@
                             </PropertyValue>
                         </Record>
                     </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>REQUEST_COMP}"/>
-                </Record>
-            </Annotation> -->
-
-             <Annotation Term="UI.SelectionPresentationVariant" Qualifier="COMPLETE_COMP">
-                <Record Type="UI.SelectionPresentationVariantType">
-                    <PropertyValue Property="PresentationVariant">
-                        <Record Type="UI.PresentationVariantType">
-                            <PropertyValue Property="Visualizations">
-                                <Collection>
-                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="SelectionVariant">
-                        <Record Type="UI.SelectionVariantType">
-                            <PropertyValue Property="SelectOptions">
-                                <Collection>
-                                    <Record Type="UI.SelectOptionType">
-                                        <PropertyValue Property="PropertyName" PropertyPath="currentStatusId" />
-                                        <PropertyValue Property="Ranges">
-                                            <Collection>
-                                                <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="COMPLETE_COMP"></PropertyValue>
-                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
-                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
-                                                </Record>
-                                            </Collection>
-                                        </PropertyValue>
-                                    </Record>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>COMPLETE_COMP}"/>
+                    <PropertyValue Property="Text" String="{@i18n>COMPLIANCE_REVIEW}"/>
                 </Record>
             </Annotation>
 
-            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="COMPLETE">
+             <Annotation Term="UI.SelectionPresentationVariant" Qualifier="COMPLETED_DD">
                 <Record Type="UI.SelectionPresentationVariantType">
                     <PropertyValue Property="PresentationVariant">
                         <Record Type="UI.PresentationVariantType">
@@ -702,7 +530,42 @@
                                         <PropertyValue Property="Ranges">
                                             <Collection>
                                                 <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="COMPLETE"></PropertyValue>
+                                                    <PropertyValue Property="Low" String="COMPLETED_DD"></PropertyValue>
+                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
+                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
+                                                </Record>
+                                            </Collection>
+                                        </PropertyValue>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </PropertyValue>
+                    <PropertyValue Property="Text" String="{@i18n>COMPLETED_DD}"/>
+                </Record>
+            </Annotation>
+
+            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="REGISTERED">
+                <Record Type="UI.SelectionPresentationVariantType">
+                    <PropertyValue Property="PresentationVariant">
+                        <Record Type="UI.PresentationVariantType">
+                            <PropertyValue Property="Visualizations">
+                                <Collection>
+                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </PropertyValue>
+                    <PropertyValue Property="SelectionVariant">
+                        <Record Type="UI.SelectionVariantType">
+                            <PropertyValue Property="SelectOptions">
+                                <Collection>
+                                    <Record Type="UI.SelectOptionType">
+                                        <PropertyValue Property="PropertyName" PropertyPath="currentStatusId" />
+                                        <PropertyValue Property="Ranges">
+                                            <Collection>
+                                                <Record Type="UI.SelectionRangeType">
+                                                    <PropertyValue Property="Low" String="REGISTERED"></PropertyValue>
                                                     <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
                                                     <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
                                                 </Record>
@@ -716,55 +579,6 @@
                     <PropertyValue Property="Text" String="{@i18n>Registered}"/>
                 </Record>
             </Annotation>
-
-            <!-- TODO: Warr -->
-            <Annotation Term="UI.SelectionPresentationVariant" Qualifier="Warning">
-                <Record Type="UI.SelectionPresentationVariantType">
-                    <PropertyValue Property="PresentationVariant">
-                        <Record Type="UI.PresentationVariantType">
-                            <PropertyValue Property="Visualizations">
-                                <Collection>
-                                    <AnnotationPath>@UI.LineItem</AnnotationPath>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="SelectionVariant">
-                        <Record Type="UI.SelectionVariantType">
-                            <PropertyValue Property="SelectOptions">
-                                <Collection>
-                                    <Record Type="UI.SelectOptionType">
-                                        <PropertyValue Property="PropertyName" PropertyPath="currentStatusId" />
-                                        <PropertyValue Property="Ranges">
-                                            <Collection>
-                                                <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="COMPLETE"></PropertyValue>
-                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
-                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
-                                                </Record>
-                                            </Collection>
-                                        </PropertyValue>
-                                    </Record>
-                                    <Record Type="UI.SelectOptionType">
-                                        <PropertyValue Property="PropertyName" PropertyPath="complianceCheckWarning" />
-                                        <PropertyValue Property="Ranges">
-                                            <Collection>
-                                                <Record Type="UI.SelectionRangeType">
-                                                    <PropertyValue Property="Low" String="Warning"></PropertyValue>
-                                                    <PropertyValue Property="Option" EnumMember="UI.SelectionRangeOptionType/EQ" ></PropertyValue>
-                                                    <PropertyValue Property="Sign" EnumMember="UI.SelectionRangeSignType/I" ></PropertyValue>
-                                                </Record>
-                                            </Collection>
-                                        </PropertyValue>
-                                    </Record>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </PropertyValue>
-                    <PropertyValue Property="Text" String="{@i18n>Warning}"/>
-                </Record>
-            </Annotation>
-        
             <Annotation Term="UI.Facets">
                 <Collection>
                      
