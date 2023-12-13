@@ -358,6 +358,7 @@
                     </Record> 
                     <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.ReturnToCompliance"/>
+                        <PropertyValue Property="IconUrl" String="sap-icon://status-positive"/>
                         <PropertyValue Property="Label"  String="{@i18n>ReturnToCompliance}" />
                         <Annotation Term="UI.Hidden">
                             <If>
@@ -372,6 +373,7 @@
                     </Record>    
                     <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.ReturnToApplication"/>
+                        <PropertyValue Property="IconUrl" String="sap-icon://employee-rejections"/>
                         <PropertyValue Property="Label"  String="{@i18n>ReturnToApplication}" />
                         <Annotation Term="UI.Hidden">
                             <If>
@@ -402,6 +404,7 @@
                     <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.FinishDomUpload"/>
                         <PropertyValue Property="Label"  String="{@i18n>FinishDomUpload}" />
+                         <PropertyValue Property="IconUrl" String="sap-icon://accounting-document-verification"/>
                         <Annotation Term="UI.Hidden">
                             <If>
                                 <Or>
@@ -425,6 +428,7 @@
                     </Record>  
                     <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.FillCommentsForPRM"/>
+                         <PropertyValue Property="IconUrl" String="sap-icon://comment"/>
                         <PropertyValue Property="Label"  String="{@i18n>FillCommentsForPRM}" />
                         <Annotation Term="UI.Hidden">
                             <If>

@@ -461,7 +461,7 @@
                         <PropertyValue Property="ID" String="ViewDDForm"/>
                         <PropertyValue Property="Label" String="{@i18n>ViewDDForm}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ViewDDForm"/>
-                           <Annotation Term="UI.Hidden">
+                        <Annotation Term="UI.Hidden">
                         <If>
                             <Eq>
                                 <Path>ddFormIsSubmitted</Path>
@@ -586,6 +586,7 @@
                     <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.SubmitToProcurement"/>
                         <PropertyValue Property="Label"  String="{@i18n>SubmitApproval_Supplier}"/>
+                        <PropertyValue Property="IconUrl" String="sap-icon://hr-approval"/>
                         <Annotation Term="UI.Hidden">
                             <If>
                                 <Eq>
@@ -599,6 +600,7 @@
                     </Record> 
                     <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.ReturnToSupplier"/>
+                        <PropertyValue Property="IconUrl" String="sap-icon://email"/>
                         <PropertyValue Property="Label"  String="{@i18n>ToVendor}"/>
                         <Annotation Term="UI.Hidden">
                             <If>
@@ -619,10 +621,12 @@
                     </Record> 
                     <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.ImportProducts"/>
+                        <PropertyValue Property="IconUrl" String="sap-icon://document-text"/>
                         <PropertyValue Property="Label"  String="{@i18n>ImportProduct}"/>
                     </Record>    
                     <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.UploadSupplierLogo"/>
+                        <PropertyValue Property="IconUrl" String="sap-icon://attachment-photo"/>
                         <PropertyValue Property="Label"  String="{@i18n>UploadSupplierLogo}"/>
                     </Record>         
                 </Collection>

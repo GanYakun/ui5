@@ -69,6 +69,16 @@
                         <PropertyValue Property="ID" String="ViewDDForm"/>
                         <PropertyValue Property="Label" String="{@i18n>ViewDDForm}"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ViewDDForm"/>
+                        <Annotation Term="UI.Hidden">
+                        <If>
+                            <Eq>
+                                <Path>ddFormIsSubmitted</Path>
+                                <Bool>true</Bool>
+                            </Eq>
+                            <Bool>false</Bool>
+                            <Bool>true</Bool>
+                        </If>
+                        </Annotation>
                     </Record>
                      <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Classification"/>
