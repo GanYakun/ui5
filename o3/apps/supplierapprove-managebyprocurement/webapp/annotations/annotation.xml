@@ -337,26 +337,6 @@
             <Annotation Term="UI.Identification">
                 <Collection > 
                     <Record Type="UI.DataFieldForAction" >
-                        <PropertyValue Property="Action" String="com.dpbird.ReturnToSupplier"/>
-                        <PropertyValue Property="Label"  String="{@i18n>ReturnToSupplier}" />
-                        <Annotation Term="UI.Hidden">
-                            <If>
-                                <Or>
-                                    <Eq>
-                                        <Path>currentStatusId</Path>
-                                        <String>COMPLETE</String>
-                                    </Eq>
-                                    <Eq>
-                                        <Path>ddFormType</Path>
-                                        <String>No DD</String>
-                                    </Eq>
-                                </Or>
-                                <Bool>true</Bool>
-                                <Bool>false</Bool>
-                            </If>
-                        </Annotation>
-                    </Record> 
-                    <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.ReturnToCompliance"/>
                         <PropertyValue Property="IconUrl" String="sap-icon://status-positive"/>
                         <PropertyValue Property="Label"  String="{@i18n>ReturnToCompliance}" />
