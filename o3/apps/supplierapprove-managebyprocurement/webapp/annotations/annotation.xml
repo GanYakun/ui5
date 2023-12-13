@@ -337,15 +337,57 @@
             <Annotation Term="UI.Identification">
                 <Collection > 
                     <Record Type="UI.DataFieldForAction" >
+                        <PropertyValue Property="Action" String="com.dpbird.OnHold"/>
+                        <PropertyValue Property="IconUrl" String="sap-icon://locked"/>
+                        <PropertyValue Property="Label"  String="{@i18n>OnHold}" />
+                        <Annotation Term="UI.Hidden">
+                            <If>
+                                <Or>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>PROCUREMENT_REVIEW</String>
+                                    </Eq>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>COMPLETED_DD</String>
+                                    </Eq>
+                                </Or>
+                                <Bool>false</Bool>
+                                <Bool>true</Bool>
+                            </If>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.DataFieldForAction" >
+                        <PropertyValue Property="Action" String="com.dpbird.Enable"/>
+                        <PropertyValue Property="IconUrl" String="sap-icon://key"/>
+                        <PropertyValue Property="Label"  String="{@i18n>Enable}" />
+                        <Annotation Term="UI.Hidden">
+                            <If>
+                                <Eq>
+                                    <Path>currentStatusId</Path>
+                                    <String>ON_HOLD</String>
+                                </Eq>
+                                <Bool>false</Bool>
+                                <Bool>true</Bool>
+                            </If>
+                        </Annotation>
+                    </Record>
+                    <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.ReturnToCompliance"/>
                         <PropertyValue Property="IconUrl" String="sap-icon://status-positive"/>
                         <PropertyValue Property="Label"  String="{@i18n>ReturnToCompliance}" />
                         <Annotation Term="UI.Hidden">
                             <If>
-                                <Eq>
-                                    <Path>currentStatusId</Path>
-                                    <String>COMPLETE</String>
-                                </Eq>
+                                <Or>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>REGISTERED</String>
+                                    </Eq>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>ON_HOLD</String>
+                                    </Eq>
+                                </Or>
                                 <Bool>true</Bool>
                                 <Bool>false</Bool>
                             </If>
@@ -357,10 +399,16 @@
                         <PropertyValue Property="Label"  String="{@i18n>ReturnToApplication}" />
                         <Annotation Term="UI.Hidden">
                             <If>
-                                <Eq>
-                                    <Path>currentStatusId</Path>
-                                    <String>COMPLETE</String>
-                                </Eq>
+                                <Or>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>REGISTERED</String>
+                                    </Eq>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>ON_HOLD</String>
+                                    </Eq>
+                                </Or>
                                 <Bool>true</Bool>
                                 <Bool>false</Bool>
                             </If>
@@ -372,50 +420,37 @@
                         <PropertyValue Property="Label"  String="{@i18n>CompleteCoWork}" />
                         <Annotation Term="UI.Hidden">
                             <If>
-                                <Eq>
-                                    <Path>currentStatusId</Path>
-                                    <String>COMPLETE</String>
-                                </Eq>
+                                <Or>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>REGISTERED</String>
+                                    </Eq>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>ON_HOLD</String>
+                                    </Eq>
+                                </Or>
                                 <Bool>true</Bool>
                                 <Bool>false</Bool>
                             </If>
                         </Annotation>
                     </Record>
                     <Record Type="UI.DataFieldForAction" >
-                        <PropertyValue Property="Action" String="com.dpbird.FinishDomUpload"/>
-                        <PropertyValue Property="Label"  String="{@i18n>FinishDomUpload}" />
-                         <PropertyValue Property="IconUrl" String="sap-icon://accounting-document-verification"/>
-                        <Annotation Term="UI.Hidden">
-                            <If>
-                                <Or>
-                                    <Eq>
-                                        <Path>currentStatusId</Path>
-                                        <String>COWORK_CREATED</String>
-                                    </Eq>
-                                    <Eq>
-                                        <Path>currentStatusId</Path>
-                                        <String>REQUEST_DD</String>
-                                    </Eq>
-                                    <Eq>
-                                        <Path>currentStatusId</Path>
-                                        <String>COMPLETE_DD</String>
-                                    </Eq>
-                                </Or>
-                                <Bool>false</Bool>
-                                <Bool>true</Bool>
-                            </If>
-                        </Annotation>
-                    </Record>  
-                    <Record Type="UI.DataFieldForAction" >
                         <PropertyValue Property="Action" String="com.dpbird.FillCommentsForPRM"/>
                          <PropertyValue Property="IconUrl" String="sap-icon://comment"/>
                         <PropertyValue Property="Label"  String="{@i18n>FillCommentsForPRM}" />
                         <Annotation Term="UI.Hidden">
                             <If>
-                                <Eq>
-                                    <Path>currentStatusId</Path>
-                                    <String>COMPLETE</String>
-                                </Eq>
+                                <Or>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>REGISTERED</String>
+                                    </Eq>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>ON_HOLD</String>
+                                    </Eq>
+                                </Or>
                                 <Bool>true</Bool>
                                 <Bool>false</Bool>
                             </If>
@@ -680,7 +715,7 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>COMPLETE</String>
+                                <String>REGISTERED</String>
                             </Eq>
                             <Bool>true</Bool>
                             <Bool>false</Bool>
@@ -708,7 +743,7 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>COMPLETE</String>
+                                <String>REGISTERED</String>
                             </Eq>
                             <Bool>false</Bool>
                             <Bool>true</Bool>
@@ -723,7 +758,7 @@
                             <If>
                                 <Eq>
                                     <Path>currentStatusId</Path>
-                                    <String>COMPLETE</String>
+                                    <String>REGISTERED</String>
                                 </Eq>
                                 <Bool>true</Bool>
                                 <Bool>false</Bool>
@@ -738,7 +773,7 @@
                             <If>
                                 <Eq>
                                     <Path>currentStatusId</Path>
-                                    <String>COMPLETE</String>
+                                    <String>REGISTERED</String>
                                 </Eq>
                                 <Bool>false</Bool>
                                 <Bool>true</Bool>
@@ -759,7 +794,7 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>COMPLETE</String>
+                                <String>REGISTERED</String>
                             </Eq>
                             <Bool>false</Bool>
                             <Bool>true</Bool>
@@ -774,7 +809,7 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>COMPLETE</String>
+                                <String>REGISTERED</String>
                             </Eq>
                             <Bool>true</Bool>
                             <Bool>false</Bool>
@@ -790,7 +825,7 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>COMPLETE</String>
+                                <String>REGISTERED</String>
                             </Eq>
                             <Bool>true</Bool>
                             <Bool>false</Bool>
@@ -805,7 +840,7 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>COMPLETE</String>
+                                <String>REGISTERED</String>
                             </Eq>
                             <Bool>false</Bool>
                             <Bool>true</Bool>
@@ -821,7 +856,7 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>COMPLETE</String>
+                                <String>REGISTERED</String>
                             </Eq>
                             <Bool>true</Bool>
                             <Bool>false</Bool>
@@ -836,7 +871,7 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>COMPLETE</String>
+                                <String>REGISTERED</String>
                             </Eq>
                             <Bool>false</Bool>
                             <Bool>true</Bool>
@@ -856,7 +891,7 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>COMPLETE</String>
+                                <String>REGISTERED</String>
                             </Eq>
                             <Bool>true</Bool>
                             <Bool>false</Bool>
@@ -871,7 +906,7 @@
                         <If>
                             <Eq>
                                 <Path>currentStatusId</Path>
-                                <String>COMPLETE</String>
+                                <String>REGISTERED</String>
                             </Eq>
                             <Bool>false</Bool>
                             <Bool>true</Bool>
