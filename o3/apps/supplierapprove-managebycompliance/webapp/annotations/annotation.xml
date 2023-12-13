@@ -17,7 +17,7 @@
             <Annotation Term="UI.SelectionFields">
                 <Collection>
                     <PropertyPath>partyId</PropertyPath>
-                    <PropertyPath>PartyClassification/PartyClassificationGroup/description</PropertyPath>
+                    <PropertyPath>groupTypeId</PropertyPath>
                 </Collection>
             </Annotation>
             <Annotation Term="UI.LineItem" Qualifier="ComplianceAppLineItem">
@@ -84,7 +84,7 @@
                         <PropertyValue Property="ID" String="Classification"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#PartyClasification"/>
                     </Record>
-                    <Record Type="UI.ReferenceFacet">
+                    <!-- <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="Label" String="Compliance Response"/>
                         <PropertyValue Property="ID" String="ComplianceResult"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceResult"/>
@@ -93,7 +93,7 @@
                         <PropertyValue Property="Label" String="Work Scope"/>
                         <PropertyValue Property="ID" String="WorkScope"/>
                         <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WorkScope"/>
-                    </Record>
+                    </Record> -->
                 </Collection>
             </Annotation>
 
@@ -221,8 +221,30 @@
                             </Collection>
                         </PropertyValue>
                     </Record>
+                    <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="ComplianceNote"/>
+                        <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
+                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
+                    </Record>
                 </Collection>
-                
+            </Annotation>
+
+            <Annotation Term="UI.FieldGroup" Qualifier="ComplianceNote">
+                <Record Type="UI.FieldGroupType">
+                    <PropertyValue Property="Data">
+                        <Collection>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="adverseResults"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="additionalProtection"/>
+                            </Record>
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="complianceComments" />
+                            </Record>
+                        </Collection>
+                    </PropertyValue>
+                </Record>
             </Annotation>
 
             <Annotation Term="UI.Identification">
@@ -335,6 +357,7 @@
                                 <PropertyValue Property="Label" String=""/>
                                 <PropertyValue Property="Value" Path="ddFromName"/>
                                 <PropertyValue Property="Url" Path="ddFromUrl"/>
+                                <PropertyValue Property="IconUrl" String=""/>
                             </Record>
                         </Collection>
                     </PropertyValue>
