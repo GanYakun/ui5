@@ -57,6 +57,10 @@
                       <Record Type="UI.DataField">
                         <PropertyValue Property="Value" Path="cycleTime"/>
                         <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                    </Record> 
+                    <Record Type="UI.DataField">
+                        <PropertyValue Property="Value" Path="complianceCycleTime"/>
+                        <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                     </Record>
                 </Collection>
             </Annotation>
