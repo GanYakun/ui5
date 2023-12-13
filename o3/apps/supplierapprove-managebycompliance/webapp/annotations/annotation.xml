@@ -133,6 +133,11 @@
                             </Collection>
                         </PropertyValue>
                     </Record> -->
+                     <Record Type="UI.ReferenceFacet">
+                        <PropertyValue Property="ID" String="SupportedDocument"/>
+                        <PropertyValue Property="Label" String="Supported Documents"/>
+                        <PropertyValue Property="Target"  AnnotationPath="ComplianceViewFile/@UI.LineItem#FileList"/>
+                    </Record>
                     <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="FileList"/>
                         <PropertyValue Property="Label" String="{@i18n>FileList}"/>
