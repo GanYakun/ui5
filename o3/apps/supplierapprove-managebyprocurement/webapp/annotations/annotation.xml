@@ -1470,6 +1470,50 @@
                     </Collection>
                 </Annotation>
             </Annotations>
+
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswerNoDraft">
+                <Annotation Term="UI.LineItem" Qualifier="ComplianceAnswerLineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>DDFormSurveyQuestion/question</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>enumResponse</Path>
+                            </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <Path>enumResponseCritical</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>textResponse</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                            <Annotation Term="UI.Hidden">
+                                <If>
+                                    <Eq>
+                                        <Path>enumResponse</Path>
+                                        <String>TRUE</String>
+                                    </Eq>
+                                    <Bool>false</Bool>
+                                    <Bool>true</Bool>
+                                </If>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>

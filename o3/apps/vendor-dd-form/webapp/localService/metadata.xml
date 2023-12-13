@@ -244,10 +244,10 @@
                 <Property Name="dateIncorporation" Type="Edm.DateTimeOffset"/>
                 <Property Name="businessLocation" Type="Edm.String" MaxLength="255"/>
                 <Property Name="registrationNumber" Type="Edm.String" MaxLength="255"/>
+                <Property Name="taxCode" Type="Edm.String" MaxLength="255"/>
                 <Property Name="workScope" Type="Edm.String" MaxLength="5000"/>
                 <Property Name="ddStatus" Type="Edm.String"/>
                 <Property Name="annualRevenue" Type="Edm.Decimal" Precision="18" Scale="2"/>
-                <Property Name="tickerSymbol" Type="Edm.String" MaxLength="10"/>
                 <Property Name="comments" Type="Edm.String" MaxLength="255"/>
                 <Property Name="writeBasicInfo" Type="Edm.Boolean"/>
                 <Property Name="uploadDocuments" Type="Edm.Boolean"/>
@@ -271,6 +271,7 @@
                 <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
                 <Property Name="groupTypeId" Type="Edm.String" MaxLength="255"/>
+                <Property Name="tickerSymbol" Type="Edm.String" MaxLength="10"/>
                 <Property Name="logoImageUrl" Type="Edm.String" MaxLength="2000"/>
                 <Property Name="groupName" Type="Edm.String" MaxLength="100"/>
                 <Property Name="groupNameLocal" Type="Edm.String" MaxLength="100"/>
@@ -374,6 +375,7 @@
                     <PropertyRef Name="surveyQuestionAnswerId"/>
                 </Key>
                 <Property Name="enumResponse" Type="Edm.String" MaxLength="60"/>
+                <Property Name="hiddenText" Type="Edm.Boolean"/>
                 <Property Name="surveyQuestionAnswerId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="surveyQuestionId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
@@ -1645,17 +1647,17 @@
                             <Collection>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
+                                        <Path>taxCode</Path>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
                                         <Path>employeesSection</Path>
                                     </PropertyValue>
                                 </Record>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
                                         <Path>annualRevenue</Path>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value">
-                                        <Path>tickerSymbol</Path>
                                     </PropertyValue>
                                 </Record>
                                 <Record Type="UI.DataField">
@@ -1803,14 +1805,14 @@
                     </Record>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.SupplierDDForm/taxCode">
+                <Annotation Term="Common.Label">
+                    <String>Tax code</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.SupplierDDForm/annualRevenue">
                 <Annotation Term="Common.Label">
                     <String>Annual revenue</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.SupplierDDForm/tickerSymbol">
-                <Annotation Term="Common.Label">
-                    <String>Listed country</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierDDForm/comments">
@@ -1957,6 +1959,11 @@
             <Annotations Target="com.dpbird.SupplierDDForm/groupTypeId">
                 <Annotation Term="Common.Label">
                     <String>groupTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.SupplierDDForm/tickerSymbol">
+                <Annotation Term="Common.Label">
+                    <String>tickerSymbol</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.SupplierDDForm/logoImageUrl">
@@ -2504,6 +2511,11 @@
                 </Annotation>
                 <Annotation Term="Common.ValueListWithFixedValues">
                     <Bool>true</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/hiddenText">
+                <Annotation Term="Common.Label">
+                    <String>hiddenText</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.DDFormSurveyQuestionAnswer/surveyQuestionAnswerId">
