@@ -144,6 +144,10 @@
                                     {
                                         "key": "REGISTERED",
                                         "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#REGISTERED"
+                                    },
+                                    {
+                                        "key": "ON_HOLD",
+                                        "annotationPath": "com.sap.vocabularies.UI.v1.SelectionPresentationVariant#ON_HOLD"
                                     }
                                 ]
                             },
