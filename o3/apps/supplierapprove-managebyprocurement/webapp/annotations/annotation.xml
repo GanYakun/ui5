@@ -581,7 +581,7 @@
                         <PropertyValue Property="ID" String="SurveyQuestionApplLineItem"/>
                         <PropertyValue Property="Target" AnnotationPath="SurveyQuestionAppl/@UI.LineItem#SurveyQuestionApplLineItem"/>
                     </Record> -->
-                      <Record Type="UI.ReferenceFacet">
+                    <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="FileList"/>
                         <PropertyValue Property="Label" String="{@i18n>FileList}"/>
                         <PropertyValue Property="Target"  AnnotationPath="FileList/@UI.LineItem#FileList"/>
@@ -1322,7 +1322,7 @@
                                 </Record>
                             </Collection>
                         </PropertyValue>
-                        <PropertyValue Property="photo" String="http://dpbird.oss-cn-hangzhou.aliyuncs.com/partyManage/partyImage/d49f064f-f94b-4e7b-9265-fa38d57e2321.png" />
+                        <PropertyValue Property="photo" String="http://dpbird.oss-cn-hangzhou.aliyuncs.com/partyManage/partyImage/de32462f-c677-4e3a-976f-fed452a85e31.png" />
                     </Record>
                 </Annotation>
             </Annotations>
@@ -1373,7 +1373,7 @@
                                 </Record>
                             </Collection>
                         </PropertyValue>
-                        <PropertyValue Property="photo" String="http://dpbird.oss-cn-hangzhou.aliyuncs.com/partyManage/partyImage/d49f064f-f94b-4e7b-9265-fa38d57e2321.png"/>
+                        <PropertyValue Property="photo" String="http://dpbird.oss-cn-hangzhou.aliyuncs.com/partyManage/partyImage/eeba1cbe-ce73-4f10-901d-bb7922409a8b.png"/>
                     </Record>
                 </Annotation>
             </Annotations>
