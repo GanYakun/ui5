@@ -7,7 +7,7 @@
 |**Generation Platform**<br>Visual Studio Code|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>OData Url|
-|**Service URL**<br>http://localhost:8080/bf-demo/control/odataAppSvc/partyManage/
+|**Service URL**<br>http://localhost:8080/bf-demo/control/odatasvc/partyManage/
 |**Module Name**<br>supplierparty-manage|
 |**Application Title**<br>SupplierParty Manage|
 |**Namespace**<br>com.banfftech|

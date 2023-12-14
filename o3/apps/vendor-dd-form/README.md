@@ -7,7 +7,7 @@
 |**Generation Platform**<br>Visual Studio Code|
 |**Floorplan Used**<br>List Report Object Page V4|
 |**Service Type**<br>OData Url|
-|**Service URL**<br>http://localhost:8080/officeauto/control/odataAppSvc/supplierForm/
+|**Service URL**<br>http://localhost:8080/officeauto/control/odatasvc/supplierForm/
 |**Module Name**<br>vendor-dd-form|
 |**Application Title**<br>App Title|
 |**Namespace**<br>com.banfftech|

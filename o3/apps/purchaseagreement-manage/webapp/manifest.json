@@ -17,7 +17,7 @@
         },
         "dataSources": {
             "mainService": {
-                "uri": "/officeauto/control/odataAppSvc/purchaseAgreementManage/",
+                "uri": "/officeauto/control/odatasvc/purchaseAgreementManage/",
                 "type": "OData",
                 "settings": {
                     "annotations": [

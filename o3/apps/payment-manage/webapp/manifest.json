@@ -17,7 +17,7 @@
         },
         "dataSources": {
             "mainService": {
-                "uri": "/officeauto/control/odataAppSvc/paymentManage/",
+                "uri": "/officeauto/control/odatasvc/paymentManage/",
                 "type": "OData",
                 "settings": {
                     "odataVersion": "4.0",

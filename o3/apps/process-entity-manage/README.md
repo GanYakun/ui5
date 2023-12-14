@@ -7,7 +7,7 @@
 |**Generation Platform**<br>Visual Studio Code|
 |**Floorplan Used**<br>List Report Object Page V4|
 |**Service Type**<br>OData Url|
-|**Service URL**<br>http://127.0.0.1:8080/gongsconfig/control/odataAppSvc/approvalFlow/
+|**Service URL**<br>http://127.0.0.1:8080/gongsconfig/control/odatasvc/approvalFlow/
 |**Module Name**<br>process-entity-manage|
 |**Application Title**<br>App Title|
 |**Namespace**<br>com.banfftech|

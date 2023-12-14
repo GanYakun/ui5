@@ -7,7 +7,7 @@
 |**Generation Platform**<br>Visual Studio Code|
 |**Floorplan Used**<br>List Report Object Page V4|
 |**Service Type**<br>OData Url|
-|**Service URL**<br>http://localhost:8080/officeauto/control/odataAppSvc/supplierApproveService/
+|**Service URL**<br>http://localhost:8080/officeauto/control/odatasvc/supplierApproveService/
 |**Module Name**<br>supplierapprove-managebyapplication|
 |**Application Title**<br>App Title|
 |**Namespace**<br>com.banfftech|

@@ -21,7 +21,7 @@ server:
     beforeMiddleware: fiori-tools-proxy
     configuration:
       service:
-        urlBasePath: /gongsconfig/control/odataAppSvc/permissionManage
+        urlBasePath: /gongsconfig/control/odatasvc/permissionManage
         name: ''
         metadataXmlPath: ./webapp/localService/metadata.xml
         mockdataRootPath: ./webapp/localService/mockdata

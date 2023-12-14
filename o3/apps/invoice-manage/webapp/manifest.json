@@ -17,7 +17,7 @@
         },
         "dataSources": {
             "mainService": {
-                "uri": "/officeauto/control/odataAppSvc/invoiceManage/",
+                "uri": "/officeauto/control/odatasvc/invoiceManage/",
                 "type": "OData",
                 "settings": {
                     "odataVersion": "4.0",

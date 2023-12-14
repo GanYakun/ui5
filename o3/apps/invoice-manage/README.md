@@ -7,7 +7,7 @@
 |**Generation Platform**<br>Visual Studio Code|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>OData Url|
-|**Service URL**<br>http://localhost:8080/bf-demo/control/odataAppSvc/invoiceManage/
+|**Service URL**<br>http://localhost:8080/bf-demo/control/odatasvc/invoiceManage/
 |**Module Name**<br>invoice-manage|
 |**Application Title**<br>Manage Invoice|
 |**Namespace**<br>com.banfftech|

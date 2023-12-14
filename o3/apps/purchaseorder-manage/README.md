@@ -7,7 +7,7 @@
 |**Generation Platform**<br>Visual Studio Code|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>OData Url|
-|**Service URL**<br>http://localhost:8080/bf-demo/control/odataAppSvc/purchaseOrderManage/
+|**Service URL**<br>http://localhost:8080/bf-demo/control/odatasvc/purchaseOrderManage/
 |**Module Name**<br>purchaseorder-manage|
 |**Application Title**<br>Manage PurchaseOrder|
 |**Namespace**<br>com.banfftech|
