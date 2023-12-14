@@ -1531,7 +1531,7 @@
             <Annotations Target="com.dpbird.RelationshipAndToParty">
                 <Annotation Term="Communication.Contact">
                     <Record Type="Communication.ContactType">
-                        <PropertyValue Property="fn" Path="partyName" />
+                        <PropertyValue Property="fn" Path="lastName" />
                         <PropertyValue Property="tel">
                             <Collection>
                                 <Record Type="Communication.PhoneNumberType">
