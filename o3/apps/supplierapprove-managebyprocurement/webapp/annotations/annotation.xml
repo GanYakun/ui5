@@ -115,7 +115,7 @@
                             <PropertyValue Property="Target"
                                 AnnotationPath="@UI.DataPoint#DDFormType" />
                         </Record>
-                        <Record Type="UI.ReferenceFacet">
+                        <!-- <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="Contact" />
                             <PropertyValue Property="Label" String="Contact Info." />
                             <PropertyValue Property="Target"
@@ -130,7 +130,7 @@
                                     <Bool>false</Bool>
                                 </If>
                             </Annotation>
-                        </Record>
+                        </Record> -->
                         <!-- 
                      <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Priority"/>
