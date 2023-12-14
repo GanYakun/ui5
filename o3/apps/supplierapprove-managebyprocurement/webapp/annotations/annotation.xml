@@ -409,6 +409,10 @@
                                             <Path>currentStatusId</Path>
                                             <String>ON_HOLD</String>
                                         </Eq>
+                                        <Eq>
+                                            <Path>currentStatusId</Path>
+                                            <String>COMPLIANCE_REVIEW</String>
+                                        </Eq>
                                     </Or>
                                     <Bool>true</Bool>
                                     <Bool>false</Bool>
@@ -431,6 +435,10 @@
                                             <Path>currentStatusId</Path>
                                             <String>ON_HOLD</String>
                                         </Eq>
+                                        <Eq>
+                                            <Path>currentStatusId</Path>
+                                            <String>COMPLIANCE_REVIEW</String>
+                                        </Eq>
                                     </Or>
                                     <Bool>true</Bool>
                                     <Bool>false</Bool>
@@ -451,6 +459,10 @@
                                         <Eq>
                                             <Path>currentStatusId</Path>
                                             <String>ON_HOLD</String>
+                                        </Eq>
+                                        <Eq>
+                                            <Path>currentStatusId</Path>
+                                            <String>COMPLIANCE_REVIEW</String>
                                         </Eq>
                                     </Or>
                                     <Bool>true</Bool>
