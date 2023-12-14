@@ -1410,6 +1410,7 @@
                             <PropertyValue Property="Inline">
                                 <Bool>true</Bool>
                             </PropertyValue>
+                            <PropertyValue Property="IconUrl" String="sap-icon://upload" />
                             <PropertyValue Property="InvocationGrouping">
                                 <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
                             </PropertyValue>
@@ -1445,6 +1446,7 @@
                             <PropertyValue Property="Action">
                                 <String>com.dpbird.UploadAction</String>
                             </PropertyValue>
+                            <PropertyValue Property="IconUrl" String="sap-icon://upload" />
                             <PropertyValue Property="Inline">
                                 <Bool>true</Bool>
                             </PropertyValue>

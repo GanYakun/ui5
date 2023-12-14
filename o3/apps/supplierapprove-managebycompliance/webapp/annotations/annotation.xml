@@ -255,6 +255,7 @@
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Action" String="com.dpbird.SubmitToProcurement" />
                             <PropertyValue Property="Label" String="{@i18n>SubmitApproval_Supplier}" />
+                            <PropertyValue Property="IconUrl" String="sap-icon://hr-approval" />
                             <Annotation Term="UI.Hidden">
                                 <If>
                                     <Eq>
@@ -270,6 +271,7 @@
                             <PropertyValue Property="Action"
                                 String="com.dpbird.FillPartyClassification" />
                             <PropertyValue Property="Label" String="{@i18n>FillRisqueLevel}" />
+                            <PropertyValue Property="IconUrl" String="sap-icon://add-favorite" />
                             <Annotation Term="UI.Hidden">
                                 <If>
                                     <Eq>
@@ -462,6 +464,7 @@
                             <PropertyValue Property="Label" String="View" />
                             <PropertyValue Property="Value" Path="addNameForUpload" />
                             <PropertyValue Property="Url" Path="fileUrl" />
+                            <PropertyValue Property="IconUrl" String="sap-icon://cause" />
                         </Record>
                     </Collection>
                 </Annotation>

@@ -1096,6 +1096,7 @@
                             <PropertyValue Property="Inline">
                                 <Bool>true</Bool>
                             </PropertyValue>
+                            <PropertyValue Property="IconUrl" String="sap-icon://upload" />
                             <PropertyValue Property="InvocationGrouping">
                                 <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
                             </PropertyValue>
