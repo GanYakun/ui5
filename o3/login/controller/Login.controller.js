@@ -37,7 +37,7 @@ sap.ui.define([
                         $.ajax({
                             type: 'get',
                             async: false,
-                            url: "/officeauto/control/odatasvc/Me?app=launchpadManage",
+                            url: "/officeauto/control/odatasvc/launchpadManage/Me",
                             beforeSend: function (req) {
                                 req.setRequestHeader('Authorization', header);
                             }
