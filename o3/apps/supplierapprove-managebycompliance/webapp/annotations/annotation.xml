@@ -24,6 +24,14 @@
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
+                                <Path>logoImageUrl</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
                                 <Path>partyId</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
@@ -451,8 +459,8 @@
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataFieldWithUrl">
-                            <PropertyValue Property="Label" String="File" />
-                            <PropertyValue Property="Value" Path="dataResourceName" />
+                            <PropertyValue Property="Label" String="View" />
+                            <PropertyValue Property="Value" Path="addNameForUpload" />
                             <PropertyValue Property="Url" Path="fileUrl" />
                         </Record>
                     </Collection>
