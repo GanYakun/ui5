@@ -27,11 +27,11 @@ server:
       configuration:
         mountPath: /
         services:
-          - urlPath: /bf-demo/control/odataAppSvc/partyManage
+          - urlPath: /bf-demo/control/odatasvc/partyManage
             generateMockData: true
             metadataXmlPath: ./webapp/localService/metadata.xml
             mockdataRootPath: ./webapp/localService/data
-          - urlPath: /bf-demo/control/odataAppSvc/partyManage/
+          - urlPath: /bf-demo/control/odatasvc/partyManage/
             metadataPath: ./webapp/localService/metadata.xml
             mockdataPath: ./webapp/localService/mockdata
             generateMockData: true

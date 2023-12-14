@@ -7,7 +7,7 @@
 |**Generation Platform**<br>Visual Studio Code|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>OData Url|
-|**Service URL**<br>http://localhost:8080/gongsconfig/control/odataAppSvc/approvalManage/
+|**Service URL**<br>http://localhost:8080/gongsconfig/control/odatasvc/approvalManage/
 |**Module Name**<br>approval-manage|
 |**Application Title**<br>Approval Manage|
 |**Namespace**<br>com.banfftech|

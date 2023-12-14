@@ -7,7 +7,7 @@
 |**Generation Platform**<br>Visual Studio Code|
 |**Floorplan Used**<br>List Report Object Page V4|
 |**Service Type**<br>OData Url|
-|**Service URL**<br>http://localhost:8080/gongsconfig/control/odataAppSvc/permissionManage/
+|**Service URL**<br>http://localhost:8080/gongsconfig/control/odatasvc/permissionManage/
 |**Module Name**<br>uilab-app-manage|
 |**Application Title**<br>App Title|
 |**Namespace**<br>com.banfftech|

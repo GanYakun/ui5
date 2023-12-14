@@ -33,7 +33,7 @@ server:
       configuration:
         mountPath: /
         services:
-          - urlPath: /gongsconfig/control/odataAppSvc/approvalManage
+          - urlPath: /gongsconfig/control/odatasvc/approvalManage
             metadataPath: ./webapp/localService/metadata.xml
             mockdataPath: ./webapp/localService/data
             generateMockData: true

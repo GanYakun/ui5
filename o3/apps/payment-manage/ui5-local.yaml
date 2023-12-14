@@ -33,7 +33,7 @@ server:
       configuration:
         mountPath: /
         services:
-          - urlPath: /bf-demo/control/odataAppSvc/paymentManage
+          - urlPath: /bf-demo/control/odatasvc/paymentManage
             metadataPath: ./webapp/localService/metadata.xml
             mockdataPath: ./webapp/localService/data
             generateMockData: true

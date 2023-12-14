@@ -7,7 +7,7 @@
 |**Generation Platform**<br>Visual Studio Code|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>OData Url|
-|**Service URL**<br>http://localhost:8080/gongsconfig/control/odataAppSvc/orgStructureManage/
+|**Service URL**<br>http://localhost:8080/gongsconfig/control/odatasvc/orgStructureManage/
 |**Module Name**<br>role-manage|
 |**Application Title**<br>Role Manage|
 |**Namespace**<br>com.banfftech|

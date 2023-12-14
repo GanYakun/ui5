@@ -28,7 +28,7 @@ server:
       beforeMiddleware: csp
       configuration:
         service:
-          urlPath: /bf-demo/control/odataAppSvc/purchaseOrderManage
+          urlPath: /bf-demo/control/odatasvc/purchaseOrderManage
           metadataXmlPath: ./webapp/localService/metadata.xml
           mockdataRootPath: ./webapp/localService/data
           generateMockData: true

@@ -21,7 +21,7 @@ server:
     beforeMiddleware: fiori-tools-proxy
     configuration:
       service:
-        urlBasePath: /officeauto/control/odataAppSvc/supplierForm
+        urlBasePath: /officeauto/control/odatasvc/supplierForm
         name: ''
         metadataXmlPath: ./webapp/localService/metadata.xml
         mockdataRootPath: ./webapp/localService/mockdata

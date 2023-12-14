@@ -17,7 +17,7 @@
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
         <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
     </edmx:Reference>
-    <edmx:Reference Uri="/bf-demo/control/odataAppSvc/invoiceManage/$metadata">
+    <edmx:Reference Uri="/bf-demo/control/odatasvc/invoiceManage/$metadata">
         <edmx:Include Namespace="com.dpbird"/>
     </edmx:Reference>
     <edmx:DataServices>

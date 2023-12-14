@@ -7,7 +7,7 @@
 |**Generation Platform**<br>Visual Studio Code|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>OData Url|
-|**Service URL**<br>http://localhost:8080/bf-demo/control/odataAppSvc/paymentManage/
+|**Service URL**<br>http://localhost:8080/bf-demo/control/odatasvc/paymentManage/
 |**Module Name**<br>payment-manage|
 |**Application Title**<br>Manage Payment|
 |**Namespace**<br>com.banfftech|

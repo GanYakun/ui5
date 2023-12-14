@@ -32,7 +32,7 @@ server:
       beforeMiddleware: csp
       configuration:
         service:
-          urlPath: /officeauto/control/odataAppSvc/supplierApproveService
+          urlPath: /officeauto/control/odatasvc/supplierApproveService
           metadataXmlPath: ./webapp/localService/metadata.xml
           mockdataRootPath: ./webapp/localService/data
           generateMockData: true

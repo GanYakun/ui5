@@ -29,7 +29,7 @@ server:
       configuration:
         mountPath: /
         services:
-          - urlPath: /bf-demo/control/odataAppSvc/invoiceManage
+          - urlPath: /bf-demo/control/odatasvc/invoiceManage
             metadataPath: ./webapp/localService/metadata.xml
             mockdataPath: ./webapp/localService/data
             generateMockData: true
