@@ -59,7 +59,7 @@
                             <PropertyValue Property="Label" String="DD Form" />
                             <PropertyValue Property="Value" Path="ddFromName" />
                             <PropertyValue Property="Url" Path="ddFromUrl" />
-                            <PropertyValue Property="IconUrl" String="sap-icon://cause" />
+                            <PropertyValue Property="IconUrl" String="sap-icon://download" />
                         </Record>
                     </Collection>
                 </Annotation>
@@ -371,7 +371,7 @@
                                     <PropertyValue Property="Label" String="" />
                                     <PropertyValue Property="Value" Path="ddFromName" />
                                     <PropertyValue Property="Url" Path="ddFromUrl" />
-                                    <PropertyValue Property="IconUrl" String="sap-icon://cause" />
+                                    <PropertyValue Property="IconUrl" String="sap-icon://download" />
                                 </Record>
                             </Collection>
                         </PropertyValue>
@@ -464,7 +464,7 @@
                             <PropertyValue Property="Label" String="View" />
                             <PropertyValue Property="Value" Path="addNameForUpload" />
                             <PropertyValue Property="Url" Path="fileUrl" />
-                            <PropertyValue Property="IconUrl" String="sap-icon://cause" />
+                            <PropertyValue Property="IconUrl" String="sap-icon://download" />
                         </Record>
                     </Collection>
                 </Annotation>

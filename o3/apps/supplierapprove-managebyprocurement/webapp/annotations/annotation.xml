@@ -290,7 +290,7 @@
                                     <PropertyValue Property="Label" String="" />
                                     <PropertyValue Property="Value" Path="ddFromName" />
                                     <PropertyValue Property="Url" Path="ddFromUrl" />
-                                    <PropertyValue Property="IconUrl" String="sap-icon://cause" />
+                                    <PropertyValue Property="IconUrl" String="sap-icon://download" />
                                 </Record>
                             </Collection>
                         </PropertyValue>
@@ -398,25 +398,7 @@
                             <PropertyValue Property="Action" String="com.dpbird.ReturnToCompliance" />
                             <PropertyValue Property="IconUrl" String="sap-icon://status-positive" />
                             <PropertyValue Property="Label" String="{@i18n>ReturnToCompliance}" />
-                            <Annotation Term="UI.Hidden">
-                                <If>
-                                    <Or>
-                                        <Eq>
-                                            <Path>currentStatusId</Path>
-                                            <String>REGISTERED</String>
-                                        </Eq>
-                                        <Eq>
-                                            <Path>currentStatusId</Path>
-                                            <String>ON_HOLD</String>
-                                        </Eq>
-                                        <Eq>
-                                            <Path>currentStatusId</Path>
-                                            <String>COMPLIANCE_REVIEW</String>
-                                        </Eq>
-                                    </Or>
-                                    <Bool>true</Bool>
-                                    <Bool>false</Bool>
-                                </If>
+                            <Annotation Term="UI.Hidden" Path="procurementSubmitHidden">
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataFieldForAction">
@@ -449,7 +431,7 @@
                             <PropertyValue Property="Action" String="com.dpbird.CompleteCoWork" />
                             <PropertyValue Property="IconUrl" String="sap-icon://hr-approval" />
                             <PropertyValue Property="Label" String="{@i18n>CompleteCoWork}" />
-                            <Annotation Term="UI.Hidden">
+                            <Annotation Term="UI.Hidden" >
                                 <If>
                                     <Or>
                                         <Eq>
@@ -460,10 +442,10 @@
                                             <Path>currentStatusId</Path>
                                             <String>ON_HOLD</String>
                                         </Eq>
-                                        <Eq>
+                                        <!-- <Eq>
                                             <Path>currentStatusId</Path>
                                             <String>COMPLIANCE_REVIEW</String>
-                                        </Eq>
+                                        </Eq> -->
                                     </Or>
                                     <Bool>true</Bool>
                                     <Bool>false</Bool>
@@ -1404,7 +1386,7 @@
                             <PropertyValue Property="Label" String="View" />
                             <PropertyValue Property="Value" Path="addNameForUpload" />
                             <PropertyValue Property="Url" Path="fileUrl" />
-                            <PropertyValue Property="IconUrl" String="sap-icon://cause" />
+                            <PropertyValue Property="IconUrl" String="sap-icon://download" />
                         </Record>
                         <!-- <Record Type="UI.DataField">
                         <PropertyValue Property="Value">
@@ -1451,7 +1433,7 @@
                             <PropertyValue Property="Label" String="View" />
                             <PropertyValue Property="Value" Path="addNameForUpload" />
                             <PropertyValue Property="Url" Path="fileUrl" />
-                            <PropertyValue Property="IconUrl" String="sap-icon://cause" />
+                            <PropertyValue Property="IconUrl" String="sap-icon://download" />
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Label" String="{@i18n>Upload}" />
