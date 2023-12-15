@@ -1975,7 +1975,7 @@
             <Action Name="CreateSupplierParty" IsBound="true">
                 <Parameter Name="supplierParty" Type="Collection(com.dpbird.SupplierParty)" Nullable="false"/>
                 <Parameter Name="partyName" Type="Edm.String" Nullable="false"/>
-                <Parameter Name="groupTypeId" Type="Edm.String" Nullable="false"/>
+                <Parameter Name="partyGroupTypeId" Type="Edm.String" Nullable="false"/>
                 <Parameter Name="priority" Type="Edm.String"/>
                 <Parameter Name="productCategoryId" Type="Edm.String" Nullable="false"/>
             </Action>
@@ -3056,7 +3056,7 @@
                     <String>comments</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.Company/groupTypeId">
+            <Annotations Target="com.dpbird.Company/partyGroupTypeId">
                 <Annotation Term="Common.Label">
                     <String>groupTypeId</String>
                 </Annotation>

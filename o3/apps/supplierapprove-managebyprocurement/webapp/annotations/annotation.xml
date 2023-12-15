@@ -36,7 +36,7 @@
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High" />
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="groupTypeId" />
+                            <PropertyValue Property="Value" Path="partyGroupTypeId" />
                             <PropertyValue Property="Criticality" Path="vendorTypeCritical" />
                             <PropertyValue Property="CriticalityRepresentation"
                                 EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
@@ -77,7 +77,7 @@
                             <Collection>
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value">
-                                        <Path>groupTypeId</Path>
+                                        <Path>partyGroupTypeId</Path>
                                     </PropertyValue>
                                     <PropertyValue Property="Criticality" Path="vendorTypeCritical" />
                                     <PropertyValue Property="CriticalityRepresentation"
