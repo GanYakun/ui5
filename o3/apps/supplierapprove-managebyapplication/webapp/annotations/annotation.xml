@@ -59,6 +59,93 @@
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
+                                <Path>createdDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>cycleTime</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataFieldForAnnotation">
+                            <PropertyValue Property="Label" String="{@i18n>ProcessBar}"></PropertyValue>
+                            <PropertyValue Property="Target"
+                                AnnotationPath="@UI.DataPoint#ProcessBar" />
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High" />
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label">
+                                <String>Create</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Action">
+                                <String>com.dpbird.CreateSupplierParty</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>false</Bool>
+                            </PropertyValue>
+                            <PropertyValue Property="InvocationGrouping">
+                                <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                            </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
+                 <Annotation Term="UI.LineItem" Qualifier="SubmitLineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>logoImageUrl</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>partyId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>ddFormType</Path>
+                            </PropertyValue>
+                            <PropertyValue Property="CriticalityRepresentation"
+                                EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
+                            <PropertyValue Property="Criticality">
+                                <Path>ddFormTypeCritical</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>partyGroupTypeId</Path>
+                            </PropertyValue>
+                            <PropertyValue Property="Criticality" Path="vendorTypeCritical" />
+                            <PropertyValue Property="CriticalityRepresentation"
+                                EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
                                 <Path>lastSubmittedDate</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
@@ -599,7 +686,6 @@
                     <Record Type="UI.FieldGroupType">
                         <PropertyValue Property="Data">
                             <Collection>
-
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="approveComments" />
                                 </Record>
@@ -686,7 +772,7 @@
                             <Record Type="UI.PresentationVariantType">
                                 <PropertyValue Property="Visualizations">
                                     <Collection>
-                                        <AnnotationPath>@UI.LineItem#CreateLineItem</AnnotationPath>
+                                        <AnnotationPath>@UI.LineItem#SubmitLineItem</AnnotationPath>
                                     </Collection>
                                 </PropertyValue>
                             </Record>
