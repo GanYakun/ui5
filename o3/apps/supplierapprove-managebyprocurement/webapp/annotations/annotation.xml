@@ -408,22 +408,12 @@
                             <PropertyValue Property="Label" String="{@i18n>ReturnToApplication}" />
                             <Annotation Term="UI.Hidden">
                                 <If>
-                                    <Or>
-                                        <Eq>
-                                            <Path>currentStatusId</Path>
-                                            <String>REGISTERED</String>
-                                        </Eq>
-                                        <Eq>
-                                            <Path>currentStatusId</Path>
-                                            <String>ON_HOLD</String>
-                                        </Eq>
-                                        <Eq>
-                                            <Path>currentStatusId</Path>
-                                            <String>COMPLIANCE_REVIEW</String>
-                                        </Eq>
-                                    </Or>
-                                    <Bool>true</Bool>
+                                    <Eq>
+                                        <Path>currentStatusId</Path>
+                                        <String>COMPLIANCE_REVIEW</String>
+                                    </Eq>
                                     <Bool>false</Bool>
+                                    <Bool>true</Bool>
                                 </If>
                             </Annotation>
                         </Record>

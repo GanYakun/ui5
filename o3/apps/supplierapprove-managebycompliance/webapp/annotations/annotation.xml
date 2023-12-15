@@ -234,8 +234,26 @@
                             <PropertyValue Property="Label" String="{@i18n>ComplianceNote}"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceNote"/>
                         </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="ApproveComments" />
+                            <PropertyValue Property="Label" String="{@i18n>ApproveComments}" />
+                            <PropertyValue Property="Target"
+                                AnnotationPath="@UI.FieldGroup#ApproveComments" />
+                        </Record>
                 </Collection>
             </Annotation>
+
+            <Annotation Term="UI.FieldGroup" Qualifier="ApproveComments">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="approveComments" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
 
             <Annotation Term="UI.FieldGroup" Qualifier="ComplianceNote">
                 <Record Type="UI.FieldGroupType">
