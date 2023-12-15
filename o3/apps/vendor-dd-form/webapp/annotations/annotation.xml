@@ -95,34 +95,9 @@
                 <Annotation Term="UI.Facets">
                     <Collection>
                         <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="Label" String="Company Info"/>
-                            <PropertyValue Property="ID" String="CompanyInfo"/>
-                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#DDFormBasicInfo"/>
-                            <Annotation Term="UI.Hidden">
-                                <If>
-                                    <Eq>
-                                        <Path>writeBasicInfo</Path>
-                                        <Bool>true</Bool>
-                                    </Eq>
-                                    <Bool>false</Bool>
-                                    <Bool>true</Bool>
-                                </If>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="Label" String="Supported Documents"/>
                             <PropertyValue Property="ID" String="SupportedDocuments"/>
                             <PropertyValue Property="Target" AnnotationPath="FileList/@UI.LineItem#FileList"/>
-                            <Annotation Term="UI.Hidden">
-                                <If>
-                                    <Eq>
-                                        <Path>uploadDocuments</Path>
-                                        <Bool>true</Bool>
-                                    </Eq>
-                                    <Bool>false</Bool>
-                                    <Bool>true</Bool>
-                                </If>
-                            </Annotation>
                         </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="Label" String="Full Name of Company or Individual Party"/>
