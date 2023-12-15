@@ -140,6 +140,11 @@
                             <PropertyValue Property="Facets">
                                 <Collection>
                                     <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Commercial License"/>
+                                        <PropertyValue Property="ID" String="Commercial_License_File"/>
+                                        <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/FileList/@UI.LineItem#FileList"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
                                         <PropertyValue Property="Label"
                                             String="Full Name of Company or Individual Party" />
                                         <PropertyValue Property="ID" String="FullName" />

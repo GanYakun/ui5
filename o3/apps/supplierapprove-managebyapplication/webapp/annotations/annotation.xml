@@ -158,6 +158,11 @@
                             <PropertyValue Property="Facets">
                                 <Collection>
                                     <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Commercial License"/>
+                                        <PropertyValue Property="ID" String="Commercial_License_File"/>
+                                        <PropertyValue Property="Target" AnnotationPath="SupplierDDForm/FileList/@UI.LineItem#FileList_NoUpload"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
                                         <PropertyValue Property="Label"
                                             String="Full Name of Company or Individual Party" />
                                         <PropertyValue Property="ID" String="FullName" />
@@ -1110,6 +1115,25 @@
                     </Collection>
                 </Annotation>
 
+                <Annotation Term="UI.LineItem" Qualifier="FileList_NoUpload">
+                    <Annotation Term="UI.Criticality" Path="uploadDocCritical"></Annotation>
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>contentName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataFieldWithUrl">
+                            <PropertyValue Property="Label" String="View" />
+                            <PropertyValue Property="Value" Path="addNameForUpload" />
+                            <PropertyValue Property="Url" Path="fileUrl" />
+                            <PropertyValue Property="IconUrl" String="sap-icon://download" />
+                        </Record>
+                    </Collection>
+                </Annotation>
             </Annotations>
 
             <Annotations Target="com.dpbird.NoteParty">

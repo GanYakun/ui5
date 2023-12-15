@@ -95,8 +95,8 @@
                 <Annotation Term="UI.Facets">
                     <Collection>
                         <Record Type="UI.ReferenceFacet">
-                            <PropertyValue Property="Label" String="Supported Documents"/>
-                            <PropertyValue Property="ID" String="SupportedDocuments"/>
+                            <PropertyValue Property="Label" String="Commercial License"/>
+                            <PropertyValue Property="ID" String="Commercial_License_File"/>
                             <PropertyValue Property="Target" AnnotationPath="FileList/@UI.LineItem#FileList"/>
                         </Record>
                         <Record Type="UI.ReferenceFacet">
