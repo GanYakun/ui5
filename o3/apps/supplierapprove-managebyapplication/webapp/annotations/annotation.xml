@@ -1116,7 +1116,7 @@
                 <Annotation Term="Communication.Contact">
                     <Record Type="Communication.ContactType">
                         <PropertyValue Property="fn" Path="partyName" />
-
+                        <PropertyValue Property="org" String="Department/partyName" />
                         <PropertyValue Property="tel">
                             <Collection>
                                 <Record Type="Communication.PhoneNumberType">
@@ -1136,7 +1136,7 @@
                             </Collection>
                         </PropertyValue>
                         <PropertyValue Property="photo"
-                            String="http://dpbird.oss-cn-hangzhou.aliyuncs.com/partyManage/partyImage/de32462f-c677-4e3a-976f-fed452a85e31.png" />
+                            Path="personImageUrl" />
                     </Record>
                 </Annotation>
             </Annotations>

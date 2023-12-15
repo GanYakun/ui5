@@ -115,7 +115,7 @@
                             <PropertyValue Property="Target"
                                 AnnotationPath="@UI.DataPoint#DDFormType" />
                         </Record>
-                        <!-- <Record Type="UI.ReferenceFacet">
+                        <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="Contact" />
                             <PropertyValue Property="Label" String="Contact Info." />
                             <PropertyValue Property="Target"
@@ -130,7 +130,7 @@
                                     <Bool>false</Bool>
                                 </If>
                             </Annotation>
-                        </Record> -->
+                        </Record>
                         <!-- 
                      <Record Type="UI.ReferenceFacet">
                         <PropertyValue Property="ID" String="Priority"/>
@@ -1474,7 +1474,7 @@
                 <Annotation Term="Communication.Contact">
                     <Record Type="Communication.ContactType">
                         <PropertyValue Property="fn" Path="partyName" />
-
+                        <PropertyValue Property="org" Path="Department/partyName" />
                         <PropertyValue Property="tel">
                             <Collection>
                                 <Record Type="Communication.PhoneNumberType">
@@ -1494,7 +1494,7 @@
                             </Collection>
                         </PropertyValue>
                         <PropertyValue Property="photo"
-                            String="http://dpbird.oss-cn-hangzhou.aliyuncs.com/partyManage/partyImage/de32462f-c677-4e3a-976f-fed452a85e31.png" />
+                            Path="personImageUrl" />
                     </Record>
                 </Annotation>
             </Annotations>
@@ -1503,7 +1503,7 @@
                 <Annotation Term="Communication.Contact">
                     <Record Type="Communication.ContactType">
                         <PropertyValue Property="fn" Path="partyName" />
-
+                        <PropertyValue Property="org" Path="Department/partyName" />
                         <PropertyValue Property="tel">
                             <Collection>
                                 <Record Type="Communication.PhoneNumberType">
@@ -1523,7 +1523,7 @@
                             </Collection>
                         </PropertyValue>
                         <PropertyValue Property="photo"
-                            String="http://dpbird.oss-cn-hangzhou.aliyuncs.com/partyManage/partyImage/d49f064f-f94b-4e7b-9265-fa38d57e2321.png" />
+                            Path="personImageUrl" />
                     </Record>
                 </Annotation>
             </Annotations>
@@ -1531,7 +1531,8 @@
             <Annotations Target="com.dpbird.RelationshipAndToParty">
                 <Annotation Term="Communication.Contact">
                     <Record Type="Communication.ContactType">
-                        <PropertyValue Property="fn" Path="lastName" />
+                        <PropertyValue Property="fn" Path="partyName" />
+                        <!-- <PropertyValue Property="org" String="Department" /> -->
                         <PropertyValue Property="tel">
                             <Collection>
                                 <Record Type="Communication.PhoneNumberType">
@@ -1551,7 +1552,7 @@
                             </Collection>
                         </PropertyValue>
                         <PropertyValue Property="photo"
-                            String="http://dpbird.oss-cn-hangzhou.aliyuncs.com/partyManage/partyImage/eeba1cbe-ce73-4f10-901d-bb7922409a8b.png" />
+                            Path="personImageUrl" />
                     </Record>
                 </Annotation>
             </Annotations>
