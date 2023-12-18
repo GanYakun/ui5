@@ -8409,19 +8409,8 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
-                <Annotation Term="UI.DataPoint" Qualifier="DDFormType">
-                    <Record Type="UI.DataPointType">
-                        <PropertyValue Property="Title">
-                            <String>BPDD type</String>
-                        </PropertyValue>
-                        <PropertyValue Property="Value">
-                            <Path>ddFormType</Path>
-                        </PropertyValue>
-                        <PropertyValue Property="Criticality">
-                            <Path>ddFormTypeCritical</Path>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
+
+                
                 <Annotation Term="UI.DataPoint" Qualifier="SupplierCategory">
                     <Record Type="UI.DataPointType">
                         <PropertyValue Property="Title">

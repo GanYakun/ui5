@@ -110,10 +110,11 @@
                             <PropertyValue Property="Target"
                                 AnnotationPath="@UI.FieldGroup#HeaderBasicInfo" />
                         </Record>
-                        <Record Type="UI.ReferenceFacet">
+                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="DDFormType" />
+                             <PropertyValue Property="Label" String="{@i18n>BPDDType}" />
                             <PropertyValue Property="Target"
-                                AnnotationPath="@UI.DataPoint#DDFormType" />
+                                AnnotationPath="@UI.FieldGroup#DDFormType" />
                         </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="Contact" />
@@ -215,6 +216,23 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="cpStatus" />
                                     <PropertyValue Property="Criticality" Path="cpStatusCriticality" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <Annotation Term="UI.FieldGroup" Qualifier="DDFormType">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value">
+                                        <Path>ddFormType</Path>
+                                    </PropertyValue>
+                                    <PropertyValue Property="Criticality">
+                                        <Path>ddFormTypeCritical</Path>
+                                    </PropertyValue>
                                 </Record>
                             </Collection>
                         </PropertyValue>
