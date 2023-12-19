@@ -711,6 +711,9 @@
                                     <PropertyValue Property="Criticality">
                                         <Path>ddFormTypeCritical</Path>
                                     </PropertyValue>
+                                     <PropertyValue Property="CriticalityRepresentation" >
+                                        <EnumMember>UI.CriticalityRepresentationType/WithoutIcon</EnumMember>
+                                    </PropertyValue>
                                 </Record>
                             </Collection>
                         </PropertyValue>
