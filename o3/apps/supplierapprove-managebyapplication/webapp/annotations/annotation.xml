@@ -37,6 +37,7 @@
                             <PropertyValue Property="Value">
                                 <Path>ddFormType</Path>
                             </PropertyValue>
+                            <PropertyValue Property="Label" String="{@i18n>BPDDType}" />
                             <PropertyValue Property="CriticalityRepresentation"
                                 EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
                             <PropertyValue Property="Criticality">
@@ -1246,7 +1247,7 @@
                 <Annotation Term="Communication.Contact">
                     <Record Type="Communication.ContactType">
                         <PropertyValue Property="fn" Path="partyName" />
-                        <PropertyValue Property="org" String="Department/partyName" />
+                        <PropertyValue Property="org" Path="Department/partyName" />
                         <PropertyValue Property="tel">
                             <Collection>
                                 <Record Type="Communication.PhoneNumberType">

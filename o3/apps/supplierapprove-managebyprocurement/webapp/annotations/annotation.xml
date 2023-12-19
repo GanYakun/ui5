@@ -30,6 +30,7 @@
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="ddFormType" />
+                            <PropertyValue Property="Label" String="{@i18n>BPDDType}" />
                             <PropertyValue Property="Criticality" Path="ddFormTypeCritical" />
                             <PropertyValue Property="CriticalityRepresentation"
                                 EnumMember="UI.CriticalityRepresentationType/WithoutIcon" />
