@@ -132,22 +132,6 @@
                                 </If>
                             </Annotation>
                         </Record>
-                        <!-- 
-                     <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="Priority"/>
-                        <PropertyValue Property="Label" String="{@i18n>Priority}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#Priority"/>
-                    </Record>
-                    <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="SupplierCategory"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#SupplierCategory"/>
-                    </Record> -->
-
-                        <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="ID" String="FileCountGroup"/>
-                        <PropertyValue Property="Label" String="{@i18n>FileCountGroup}"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#FileCountGroup"/>
-                    </Record> -->
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="ViewDDForm" />
                             <PropertyValue Property="Label" String="{@i18n>ViewDDForm}" />
@@ -180,16 +164,6 @@
                                 </If>
                             </Annotation>
                         </Record>
-                        <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="Label" String="Work Scope"/>
-                        <PropertyValue Property="ID" String="WorkScope"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#WorkScope"/>
-                    </Record> -->
-                        <!-- <Record Type="UI.ReferenceFacet">
-                        <PropertyValue Property="Label" String="Progress Status"/>
-                        <PropertyValue Property="ID" String="ProgressStatus"/>
-                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ProgressStatus"/>
-                    </Record> -->
                     </Collection>
                 </Annotation>
 
@@ -199,26 +173,6 @@
                         <PropertyValue Property="Value" Path="complianceCheckWarning" />
                         <PropertyValue Property="Criticality" Path="checkWarningCritical" />
 
-                    </Record>
-                </Annotation>
-                <Annotation Term="UI.FieldGroup" Qualifier="FileCountGroup">
-                    <Record Type="UI.FieldGroupType">
-                        <PropertyValue Property="Data">
-                            <Collection>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="fsStatus" />
-                                    <PropertyValue Property="Criticality" Path="fsStatusCriticality" />
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="caStatus" />
-                                    <PropertyValue Property="Criticality" Path="caStatusCriticality" />
-                                </Record>
-                                <Record Type="UI.DataField">
-                                    <PropertyValue Property="Value" Path="cpStatus" />
-                                    <PropertyValue Property="Criticality" Path="cpStatusCriticality" />
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
                     </Record>
                 </Annotation>
 
@@ -290,12 +244,6 @@
                         <PropertyValue Property="Title" String="{@i18n>CycleTime}" />
                     </Record>
                 </Annotation>
-                <Annotation Term="UI.DataPoint" Qualifier="DDResponseTime">
-                    <Record Type="UI.DataPointType">
-                        <PropertyValue Property="Value" Path="ddResponseTime" />
-                        <PropertyValue Property="Title" String="{@i18n>DDResponseTime}" />
-                    </Record>
-                </Annotation>
                 <Annotation Term="UI.DataPoint" Qualifier="Priority">
                     <Record Type="UI.DataPointType">
                         <PropertyValue Property="Value" Path="priority" />
@@ -315,14 +263,6 @@
                                 </Record>
                             </Collection>
                         </PropertyValue>
-                    </Record>
-                </Annotation>
-
-                <Annotation Term="UI.DataPoint" Qualifier="statusId">
-                    <Record Type="UI.DataPointType">
-                        <PropertyValue Property="Value" Path="ddFormDealStatus" />
-                        <PropertyValue Property="Title" String="{@i18n>statusId}" />
-                        <PropertyValue Property="Criticality" Path="ddFormDealCritical" />
                     </Record>
                 </Annotation>
 
@@ -768,13 +708,13 @@
                                         <PropertyValue Property="Label"
                                             String="Ultimate beneficiary" />
                                         <PropertyValue Property="Target"
-                                            AnnotationPath="SupplierDDForm/BeneficialPerson/@UI.LineItem#BeneficialPerson" />
+                                            AnnotationPath="SupplierDDForm/BeneficialPerson/@UI.LineItem#BeneficialPerson_Download" />
                                     </Record>
                                     <Record Type="UI.ReferenceFacet">
                                         <PropertyValue Property="ID" String="SeniorStaff" />
                                         <PropertyValue Property="Label" String="Director/Officer" />
                                         <PropertyValue Property="Target"
-                                            AnnotationPath="SupplierDDForm/SeniorStaff/@UI.LineItem#SeniorStaff" />
+                                            AnnotationPath="SupplierDDForm/SeniorStaff/@UI.LineItem#SeniorStaff_Download" />
                                     </Record>
                                     <Record Type="UI.ReferenceFacet">
                                         <PropertyValue Property="ID" String="COMPLIANCE_CER" />
@@ -1680,6 +1620,53 @@
                                     <Bool>true</Bool>
                                 </If>
                             </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="com.dpbird.RelationshipAndToParty">
+                <Annotation Term="UI.LineItem" Qualifier="BeneficialPerson_Download">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="firstName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="lastName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="nationality"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="amount"/>
+                        </Record>
+                        <Record Type="UI.DataFieldWithUrl">
+                            <PropertyValue Property="Label" String="Copy of supporting identification attached" />
+                            <PropertyValue Property="Value" Path="addNameForUpload" />
+                            <PropertyValue Property="Url" Path="fileUrl" />
+                            <PropertyValue Property="IconUrl" String="sap-icon://download" />
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="SeniorStaff_Download">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="firstName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="lastName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="nationality"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="positionTitle"/>
+                        </Record>
+                        <Record Type="UI.DataFieldWithUrl">
+                            <PropertyValue Property="Label" String="Copy of supporting identification attached" />
+                            <PropertyValue Property="Value" Path="addNameForUpload" />
+                            <PropertyValue Property="Url" Path="fileUrl" />
+                            <PropertyValue Property="IconUrl" String="sap-icon://download" />
                         </Record>
                     </Collection>
                 </Annotation>

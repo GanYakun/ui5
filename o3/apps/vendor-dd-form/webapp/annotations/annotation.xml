@@ -157,7 +157,7 @@
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="SeniorStaff"/>
                             <PropertyValue Property="Label" String="Director/Officer"/>
-                            <PropertyValue Property="Target" AnnotationPath="SeniorStaff/@UI.LineItem#SeniorStaff"/>
+                            <PropertyValue Property="Target" AnnotationPath="SeniorStaff/@UI.LineItem#SeniorStaff_Upload"/>
                         </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="COMPLIANCE_CER"/>

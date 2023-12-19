@@ -211,13 +211,13 @@
                                         <PropertyValue Property="Label"
                                             String="Ultimate beneficiary" />
                                         <PropertyValue Property="Target"
-                                            AnnotationPath="SupplierDDForm/BeneficialPerson/@UI.LineItem#BeneficialPerson" />
+                                            AnnotationPath="SupplierDDForm/BeneficialPerson/@UI.LineItem#BeneficialPerson_Download" />
                                     </Record>
                                     <Record Type="UI.ReferenceFacet">
                                         <PropertyValue Property="ID" String="SeniorStaff" />
                                         <PropertyValue Property="Label" String="Director/Officer" />
                                         <PropertyValue Property="Target"
-                                            AnnotationPath="SupplierDDForm/SeniorStaff/@UI.LineItem#SeniorStaff" />
+                                            AnnotationPath="SupplierDDForm/SeniorStaff/@UI.LineItem#SeniorStaff_Download" />
                                     </Record>
                                     <Record Type="UI.ReferenceFacet">
                                         <PropertyValue Property="ID" String="COMPLIANCE_CER" />
@@ -531,6 +531,52 @@
                                     <Bool>true</Bool>
                                 </If>
                             </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RelationshipAndToParty">
+                <Annotation Term="UI.LineItem" Qualifier="BeneficialPerson_Download">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="firstName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="lastName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="nationality"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="amount"/>
+                        </Record>
+                        <Record Type="UI.DataFieldWithUrl">
+                            <PropertyValue Property="Label" String="Copy of supporting identification attached" />
+                            <PropertyValue Property="Value" Path="addNameForUpload" />
+                            <PropertyValue Property="Url" Path="fileUrl" />
+                            <PropertyValue Property="IconUrl" String="sap-icon://download" />
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="SeniorStaff_Download">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="firstName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="lastName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="nationality"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="positionTitle"/>
+                        </Record>
+                        <Record Type="UI.DataFieldWithUrl">
+                            <PropertyValue Property="Label" String="Copy of supporting identification attached" />
+                            <PropertyValue Property="Value" Path="addNameForUpload" />
+                            <PropertyValue Property="Url" Path="fileUrl" />
+                            <PropertyValue Property="IconUrl" String="sap-icon://download" />
                         </Record>
                     </Collection>
                 </Annotation>
