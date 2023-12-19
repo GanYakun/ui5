@@ -368,16 +368,7 @@
                             <PropertyValue Property="IconUrl"
                                 String="sap-icon://employee-rejections" />
                             <PropertyValue Property="Label" String="{@i18n>ReturnToApplication}" />
-                            <Annotation Term="UI.Hidden">
-                                <If>
-                                    <Eq>
-                                        <Path>currentStatusId</Path>
-                                        <String>COMPLIANCE_REVIEW</String>
-                                    </Eq>
-                                    <Bool>false</Bool>
-                                    <Bool>true</Bool>
-                                </If>
-                            </Annotation>
+                            <Annotation Term="UI.Hidden" Path="procurementRejectidden"/>
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Action" String="com.dpbird.CompleteCoWork" />

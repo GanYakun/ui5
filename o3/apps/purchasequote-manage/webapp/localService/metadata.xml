@@ -1,0 +1,312 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Measures.V1.xml">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Core.xml">
+        <edmx:Include Namespace="Org.OData.Core.V1" Alias="Core"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Capabilities.xml">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Aggregation.xml">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/odata/vocabularies/Session.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Session.v1" Alias="Session"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.dpbird">
+            <EntityType Name="PurchaseQuote">
+                <Key>
+                    <PropertyRef Name="quoteId"/>
+                </Key>
+                <Property Name="quoteId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="quoteTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="issueDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="currencyUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productStoreId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="salesChannelEnumId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="validFromDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="validThruDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="quoteName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="custRequestId" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="PurchaseRequest" Type="com.dpbird.PurchaseRequest">
+                    <ReferentialConstraint Property="custRequestId" ReferencedProperty="custRequestId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="PurchaseOrder" Type="Collection(com.dpbird.PurchaseOrder)"/>
+            </EntityType>
+            <EntityType Name="PurchaseOrder">
+                <Key>
+                    <PropertyRef Name="orderId"/>
+                </Key>
+                <Property Name="orderId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="orderName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="orderTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="quoteId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="agreementId" Type="Edm.String" MaxLength="60"/>
+            </EntityType>
+            <EntityType Name="PurchaseRequest">
+                <Key>
+                    <PropertyRef Name="custRequestId"/>
+                </Key>
+                <Property Name="custRequestId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="custRequestTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="custRequestCategoryId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="fromPartyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="priority" Type="Edm.Int64"/>
+                <Property Name="custRequestDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="responseRequiredDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="custRequestName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="maximumAmountUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productStoreId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="salesChannelEnumId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="fulfillContactMechId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="currencyUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="openDateTime" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="closedDateTime" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="internalComment" Type="Edm.String" MaxLength="255"/>
+                <Property Name="reason" Type="Edm.String" MaxLength="255"/>
+                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="lastModifiedByUserLogin" Type="Edm.String" MaxLength="320"/>
+            </EntityType>
+            <EntityContainer Name="O3Container">
+                <EntitySet Name="PurchaseQuotes" EntityType="com.dpbird.PurchaseQuote">
+                    <NavigationPropertyBinding Path="PurchaseRequest" Target="PurchaseRequests"/>
+                    <NavigationPropertyBinding Path="PurchaseOrder" Target="PurchaseOrderHeaders"/>
+                </EntitySet>
+                <EntitySet Name="PurchaseRequests" EntityType="com.dpbird.PurchaseRequest"/>
+                <EntitySet Name="PurchaseOrderHeaders" EntityType="com.dpbird.PurchaseOrder"/>
+            </EntityContainer>
+            <Annotations Target="com.dpbird.PurchaseQuote/quoteId">
+                <Annotation Term="Common.Label">
+                    <String>quoteId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseQuote/quoteTypeId">
+                <Annotation Term="Common.Label">
+                    <String>quoteTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseQuote/partyId">
+                <Annotation Term="Common.Label">
+                    <String>partyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseQuote/issueDate">
+                <Annotation Term="Common.Label">
+                    <String>issueDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseQuote/statusId">
+                <Annotation Term="Common.Label">
+                    <String>statusId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseQuote/currencyUomId">
+                <Annotation Term="Common.Label">
+                    <String>currencyUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseQuote/productStoreId">
+                <Annotation Term="Common.Label">
+                    <String>productStoreId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseQuote/salesChannelEnumId">
+                <Annotation Term="Common.Label">
+                    <String>salesChannelEnumId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseQuote/validFromDate">
+                <Annotation Term="Common.Label">
+                    <String>validFromDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseQuote/validThruDate">
+                <Annotation Term="Common.Label">
+                    <String>validThruDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseQuote/quoteName">
+                <Annotation Term="Common.Label">
+                    <String>quoteName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseQuote/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseQuote/custRequestId">
+                <Annotation Term="Common.Label">
+                    <String>custRequestId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseOrder/orderId">
+                <Annotation Term="Common.Label">
+                    <String>orderId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseOrder/orderName">
+                <Annotation Term="Common.Label">
+                    <String>orderName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseOrder/orderTypeId">
+                <Annotation Term="Common.Label">
+                    <String>orderTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseOrder/orderName">
+                <Annotation Term="Common.Label">
+                    <String>orderName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseOrder/statusId">
+                <Annotation Term="Common.Label">
+                    <String>statusId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseOrder/quoteId">
+                <Annotation Term="Common.Label">
+                    <String>quoteId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseOrder/agreementId">
+                <Annotation Term="Common.Label">
+                    <String>agreementId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/custRequestId">
+                <Annotation Term="Common.Label">
+                    <String>custRequestId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/custRequestTypeId">
+                <Annotation Term="Common.Label">
+                    <String>custRequestTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/custRequestCategoryId">
+                <Annotation Term="Common.Label">
+                    <String>custRequestCategoryId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/statusId">
+                <Annotation Term="Common.Label">
+                    <String>statusId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/fromPartyId">
+                <Annotation Term="Common.Label">
+                    <String>fromPartyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/priority">
+                <Annotation Term="Common.Label">
+                    <String>priority</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/custRequestDate">
+                <Annotation Term="Common.Label">
+                    <String>custRequestDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/responseRequiredDate">
+                <Annotation Term="Common.Label">
+                    <String>responseRequiredDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/custRequestName">
+                <Annotation Term="Common.Label">
+                    <String>custRequestName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/maximumAmountUomId">
+                <Annotation Term="Common.Label">
+                    <String>maximumAmountUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/productStoreId">
+                <Annotation Term="Common.Label">
+                    <String>productStoreId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/salesChannelEnumId">
+                <Annotation Term="Common.Label">
+                    <String>salesChannelEnumId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/fulfillContactMechId">
+                <Annotation Term="Common.Label">
+                    <String>fulfillContactMechId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/currencyUomId">
+                <Annotation Term="Common.Label">
+                    <String>currencyUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/openDateTime">
+                <Annotation Term="Common.Label">
+                    <String>openDateTime</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/closedDateTime">
+                <Annotation Term="Common.Label">
+                    <String>closedDateTime</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/internalComment">
+                <Annotation Term="Common.Label">
+                    <String>internalComment</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/reason">
+                <Annotation Term="Common.Label">
+                    <String>reason</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/createdDate">
+                <Annotation Term="Common.Label">
+                    <String>createdDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/createdByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>createdByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/lastModifiedDate">
+                <Annotation Term="Common.Label">
+                    <String>lastModifiedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest/lastModifiedByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>lastModifiedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

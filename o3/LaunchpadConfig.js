@@ -143,21 +143,7 @@
         isVisible: true,
         isGroupLocked: false,
         tiles: [
-          {
-            id: "purchaseorder_Manage",//tile的ID
-            chipId: "catalogTile_35",
-            size: "1x1",
-            tileType: "sap.ushell.ui.tile.StaticTile",
-            isLinkPersonalizationSupported: true,
-            "semanticObject": "PurchaseOrder",
-            "semanticAction": "Manage",
-            properties: {
-              title: "采购单",
-              subtitle: "采购单主数据",
-              info: "采购单的通用管理",
-              targetURL: "#PurchaseOrder-manage",
-            }
-          },
+         
           {
             id: "supplierParty_manage",//tile的ID
             chipId: "catalogTile_35",
@@ -257,6 +243,21 @@
             tileType: "sap.ushell.ui.tile.StaticTile",
             isLinkPersonalizationSupported: true,
             "semanticObject": "Purchase",
+            "semanticAction": "Manage",
+            properties: {
+              title: "采购需求",
+              subtitle: "采购需求管理",
+              info: "采购需求应用",
+              targetURL: "#Requirement-Manage",
+            }
+          },
+          {
+            id: "purchaseRequest_Manage",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "Purchase",
             "semanticAction": "Request",
             properties: {
               title: "采购请求",
@@ -281,50 +282,65 @@
             }
           },
           {
-            id: "Invoice",//tile的ID
+            id: "purchaseorder_Manage",//tile的ID
             chipId: "catalogTile_35",
             size: "1x1",
             tileType: "sap.ushell.ui.tile.StaticTile",
             isLinkPersonalizationSupported: true,
-            "semanticObject": "Invoice",
+            "semanticObject": "PurchaseOrder",
             "semanticAction": "Manage",
             properties: {
-              title: "发票",
-              subtitle: "发票主数据",
-              info: "发票的通用管理",
-              targetURL: "#Invoice-Manage",
+              title: "采购单",
+              subtitle: "采购单主数据",
+              info: "采购单的通用管理",
+              targetURL: "#PurchaseOrder-manage",
             }
           },
-          {
-            id: "payment_Manage",//tile的ID
-            chipId: "catalogTile_35",
-            size: "1x1",
-            tileType: "sap.ushell.ui.tile.StaticTile",
-            isLinkPersonalizationSupported: true,
-            "semanticObject": "Payment",
-            "semanticAction": "Manage",
-            properties: {
-              title: "支付",
-              subtitle: "支付主数据",
-              info: "支付的通用管理",
-              targetURL: "#Payment-Manage",
-            }
-          },
-          {
-            id: "purchaseAgreement_Manage",//tile的ID
-            chipId: "catalogTile_35",
-            size: "1x1",
-            tileType: "sap.ushell.ui.tile.StaticTile",
-            isLinkPersonalizationSupported: true,
-            "semanticObject": "PurchaseAgreement",
-            "semanticAction": "Manage",
-            properties: {
-              title: "合同",
-              subtitle: "合同主数据",
-              info: "合同的通用管理",
-              targetURL: "#PurchaseAgreement-Manage",
-            }
-          },
+          // {
+          //   id: "Invoice",//tile的ID
+          //   chipId: "catalogTile_35",
+          //   size: "1x1",
+          //   tileType: "sap.ushell.ui.tile.StaticTile",
+          //   isLinkPersonalizationSupported: true,
+          //   "semanticObject": "Invoice",
+          //   "semanticAction": "Manage",
+          //   properties: {
+          //     title: "发票",
+          //     subtitle: "发票主数据",
+          //     info: "发票的通用管理",
+          //     targetURL: "#Invoice-Manage",
+          //   }
+          // },
+          // {
+          //   id: "payment_Manage",//tile的ID
+          //   chipId: "catalogTile_35",
+          //   size: "1x1",
+          //   tileType: "sap.ushell.ui.tile.StaticTile",
+          //   isLinkPersonalizationSupported: true,
+          //   "semanticObject": "Payment",
+          //   "semanticAction": "Manage",
+          //   properties: {
+          //     title: "支付",
+          //     subtitle: "支付主数据",
+          //     info: "支付的通用管理",
+          //     targetURL: "#Payment-Manage",
+          //   }
+          // },
+          // {
+          //   id: "purchaseAgreement_Manage",//tile的ID
+          //   chipId: "catalogTile_35",
+          //   size: "1x1",
+          //   tileType: "sap.ushell.ui.tile.StaticTile",
+          //   isLinkPersonalizationSupported: true,
+          //   "semanticObject": "PurchaseAgreement",
+          //   "semanticAction": "Manage",
+          //   properties: {
+          //     title: "合同",
+          //     subtitle: "合同主数据",
+          //     info: "合同的通用管理",
+          //     targetURL: "#PurchaseAgreement-Manage",
+          //   }
+          // },
           ]
       }
     ],
@@ -426,6 +442,12 @@
         additionalInformation: "SAPUI5.Component=com.banfftech.purchasequotemanage",
         applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
         url: sUshellO3RootPath + "/apps/purchasequote-manage/webapp",
+        description: "管理订单"
+      },
+      "Requirement-Manage": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.requirementmanage",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/requirement-manage/webapp",
         description: "管理订单"
       },
       "Payment-Manage": {
