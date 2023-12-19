@@ -1453,6 +1453,11 @@
                                         EnumMember="Communication.PhoneType/cell" />
                                     <PropertyValue Property="uri" Path="phoneMobile" />
                                 </Record>
+                                <Record Type="Communication.PhoneNumberType">
+                                    <PropertyValue Property="type"
+                                        EnumMember="Communication.PhoneType/preferred" />
+                                    <PropertyValue Property="uri" Path="primaryPhone" />
+                                </Record>
                             </Collection>
                         </PropertyValue>
                         <PropertyValue Property="email">
@@ -1482,6 +1487,11 @@
                                         EnumMember="Communication.PhoneType/cell" />
                                     <PropertyValue Property="uri" Path="phoneMobile" />
                                 </Record>
+                                 <Record Type="Communication.PhoneNumberType">
+                                    <PropertyValue Property="type"
+                                        EnumMember="Communication.PhoneType/preferred" />
+                                    <PropertyValue Property="uri" Path="primaryPhone" />
+                                </Record>
                             </Collection>
                         </PropertyValue>
                         <PropertyValue Property="email">
@@ -1510,6 +1520,11 @@
                                     <PropertyValue Property="type"
                                         EnumMember="Communication.PhoneType/cell" />
                                     <PropertyValue Property="uri" Path="phoneMobile" />
+                                </Record>
+                                <Record Type="Communication.PhoneNumberType">
+                                    <PropertyValue Property="type"
+                                        EnumMember="Communication.PhoneType/preferred" />
+                                    <PropertyValue Property="uri" Path="primaryPhone" />
                                 </Record>
                             </Collection>
                         </PropertyValue>
