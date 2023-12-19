@@ -30,6 +30,7 @@
                 <Property Name="orderId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="orderName" Type="Edm.String" MaxLength="100"/>
                 <Property Name="orderTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="orderDate" Type="Edm.DateTimeOffset" Precision="3"/>
                 <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="quoteId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="agreementId" Type="Edm.String" MaxLength="60"/>
@@ -55,6 +56,9 @@
                 <Property Name="description" Type="Edm.String" MaxLength="255"/>
                 <Property Name="custRequestId" Type="Edm.String" MaxLength="60"/>
             </EntityType>
+            <Action Name="CreatePurchaseOrder" IsBound="true">
+                <Parameter Name="purchaseOrder" Type="Collection(com.dpbird.PurchaseOrder)" Nullable="false"/>
+            </Action>
             <EntityContainer Name="O3Container">
                 <EntitySet Name="PurchaseQuotes" EntityType="com.dpbird.PurchaseQuote"/>
                 <EntitySet Name="PurchaseOrderHeaders" EntityType="com.dpbird.PurchaseOrder">
@@ -79,6 +83,11 @@
             <Annotations Target="com.dpbird.PurchaseOrder/orderName">
                 <Annotation Term="Common.Label">
                     <String>orderName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseOrder/orderDate">
+                <Annotation Term="Common.Label">
+                    <String>orderDate</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseOrder/statusId">

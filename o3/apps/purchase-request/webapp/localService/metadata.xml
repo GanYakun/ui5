@@ -81,6 +81,10 @@
                 <Property Name="productId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
             </EntityType>
+            <Action Name="CreatePurchaseRequest" IsBound="true">
+                <Parameter Name="purchaseRequest" Type="Collection(com.dpbird.PurchaseRequest)" Nullable="false"/>
+                <Parameter Name="reason" Type="Edm.String"/>
+            </Action>
             <EntityContainer Name="O3Container">
                 <EntitySet Name="PurchaseRequests" EntityType="com.dpbird.PurchaseRequest">
                     <NavigationPropertyBinding Path="PurchaseQuote" Target="PurchaseQuotes"/>
@@ -292,6 +296,11 @@
             <Annotations Target="com.dpbird.ProductRequirement/statusId">
                 <Annotation Term="Common.Label">
                     <String>statusId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreatePurchaseRequest/reason">
+                <Annotation Term="Common.Label">
+                    <String>Reason</String>
                 </Annotation>
             </Annotations>
         </Schema>

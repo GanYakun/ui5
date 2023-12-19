@@ -84,6 +84,21 @@
                 <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
                 <Property Name="lastModifiedByUserLogin" Type="Edm.String" MaxLength="320"/>
             </EntityType>
+            <EntityType Name="QuoteParty">
+                <Key>
+                    <PropertyRef Name="partyId"/>
+                </Key>
+                <Property Name="partyName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="phoneMobile" Type="Edm.String" MaxLength="60"/>
+                <Property Name="primaryPhone" Type="Edm.String" MaxLength="60"/>
+                <Property Name="primaryEmail" Type="Edm.String" MaxLength="255"/>
+                <Property Name="address1" Type="Edm.String" MaxLength="255"/>
+                <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+            </EntityType>
+            <Action Name="CreatePurchaseQuote" IsBound="true">
+                <Parameter Name="purchaseRequest" Type="Collection(com.dpbird.PurchaseRequest)" Nullable="false"/>
+                <Parameter Name="partyId" Type="Edm.String"/>
+            </Action>
             <EntityContainer Name="O3Container">
                 <EntitySet Name="PurchaseQuotes" EntityType="com.dpbird.PurchaseQuote">
                     <NavigationPropertyBinding Path="PurchaseRequest" Target="PurchaseRequests"/>
@@ -91,6 +106,7 @@
                 </EntitySet>
                 <EntitySet Name="PurchaseRequests" EntityType="com.dpbird.PurchaseRequest"/>
                 <EntitySet Name="PurchaseOrderHeaders" EntityType="com.dpbird.PurchaseOrder"/>
+                <EntitySet Name="QuoteParties" EntityType="com.dpbird.QuoteParty"/>
             </EntityContainer>
             <Annotations Target="com.dpbird.PurchaseQuote/quoteId">
                 <Annotation Term="Common.Label">
@@ -305,6 +321,92 @@
             <Annotations Target="com.dpbird.PurchaseRequest/lastModifiedByUserLogin">
                 <Annotation Term="Common.Label">
                     <String>lastModifiedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.QuoteParty/partyName">
+                <Annotation Term="Common.Label">
+                    <String>partyName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.QuoteParty/phoneMobile">
+                <Annotation Term="Common.Label">
+                    <String>phoneMobile</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.QuoteParty/primaryPhone">
+                <Annotation Term="Common.Label">
+                    <String>primaryPhone</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.QuoteParty/primaryEmail">
+                <Annotation Term="Common.Label">
+                    <String>primaryEmail</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.QuoteParty/address1">
+                <Annotation Term="Common.Label">
+                    <String>address1</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.QuoteParty/partyId">
+                <Annotation Term="Common.Label">
+                    <String>partyId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>partyName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreatePurchaseQuote/partyId">
+                <Annotation Term="Common.Label">
+                    <String>QuoteParty</String>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>QuoteParty</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>QuoteParties</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>partyId</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>partyId</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>phoneMobile</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>primaryPhone</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>primaryEmail</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>address1</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>false</Bool>
                 </Annotation>
             </Annotations>
         </Schema>
