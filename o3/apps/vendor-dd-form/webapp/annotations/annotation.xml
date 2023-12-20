@@ -225,11 +225,11 @@
                       <PropertyValue Property="Insertable" Bool="false" />
                     </Record>
                 </Annotation>
-                <Annotation Term="Capabilities.UpdateRestrictions" >
+                <!-- <Annotation Term="Capabilities.UpdateRestrictions" >
                     <Record Type="Capabilities.UpdateRestrictionsType">
                       <PropertyValue Property="Updatable" Bool="false" />
                     </Record>
-                </Annotation>
+                </Annotation> -->
             </Annotations>
 
             <Annotations Target="com.dpbird.PartyMediaResource">
@@ -237,14 +237,12 @@
                     <Annotation Term="UI.Criticality" Path="uploadDocCritical"></Annotation>
                     <Collection>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>contentName</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
+                            <PropertyValue Property="Value" Path="contentName"/>
                         </Record>
-                        <Record Type="UI.DataFieldWithUrl">
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="otherData"/>
+                        </Record>
+                        <!-- <Record Type="UI.DataFieldWithUrl">
                             <PropertyValue Property="Label" String="View"/>
                             <PropertyValue Property="Value" Path="addNameForUpload"/>
                             <PropertyValue Property="Url" Path="fileUrl"/>
@@ -266,7 +264,7 @@
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
                             </Annotation>
-                        </Record>
+                        </Record> -->
                     </Collection>
                 </Annotation>
             </Annotations>

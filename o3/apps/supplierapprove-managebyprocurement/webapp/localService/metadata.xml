@@ -1338,6 +1338,7 @@
                 <Property Name="warningContent" Type="Edm.String"/>
                 <Property Name="applicantSubmitHidden" Type="Edm.Boolean"/>
                 <Property Name="procurementSubmitHidden" Type="Edm.Boolean"/>
+                <Property Name="procurementRejectHidden" Type="Edm.Boolean"/>
                 <Property Name="ddFormIsSubmitted" Type="Edm.Boolean"/>
                 <NavigationProperty Name="Product" Type="Collection(com.dpbird.Product)"/>
                 <NavigationProperty Name="Service" Type="Collection(com.dpbird.Service)"/>
@@ -1587,12 +1588,17 @@
                 <Property Name="primaryPhone" Type="Edm.String" MaxLength="60"/>
                 <Property Name="primaryEmail" Type="Edm.String" MaxLength="255"/>
                 <Property Name="fileUrl" Type="Edm.String"/>
+                <Property Name="uploadDocCritical" Type="Edm.Int64"/>
                 <Property Name="addNameForUpload" Type="Edm.String"/>
+                <Property Name="dataResourceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="dataResourceName" Type="Edm.String" MaxLength="255"/>
+                <Property Name="dataResourceContent" Type="Edm.Stream"/>
                 <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="phoneMobile" Type="Edm.String" MaxLength="60"/>
                 <Property Name="address1" Type="Edm.String" MaxLength="255"/>
                 <Property Name="address2" Type="Edm.String" MaxLength="255"/>
                 <Property Name="city" Type="Edm.String" MaxLength="100"/>
+                <Property Name="mimeTypeId" Type="Edm.String" MaxLength="320"/>
                 <Property Name="roleTypeIdTo" Type="Edm.String" MaxLength="60"/>
                 <Property Name="partyIdFrom" Type="Edm.String" MaxLength="60"/>
                 <Property Name="comments" Type="Edm.String" MaxLength="255"/>
@@ -1817,13 +1823,13 @@
                 <Property Name="partyContentId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="partyId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="contentId" Type="Edm.String" MaxLength="60"/>
-                <Property Name="contentName" Type="Edm.String" MaxLength="255"/>
                 <Property Name="mimeTypeId" Type="Edm.String" MaxLength="320"/>
                 <Property Name="dataResourceId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="dataResourceName" Type="Edm.String" MaxLength="255"/>
                 <Property Name="fromDate" Type="Edm.DateTimeOffset" Precision="3"/>
                 <Property Name="imageData" Type="Edm.Stream"/>
                 <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="contentName" Type="Edm.String" MaxLength="255"/>
                 <Property Name="otherData" Type="Edm.Stream"/>
                 <Property Name="fileUrl" Type="Edm.String"/>
                 <Property Name="uploadDocCritical" Type="Edm.Int64"/>
@@ -1868,10 +1874,6 @@
             <Action Name="UploadAction" IsBound="true">
                 <Parameter Name="partyMediaResource" Type="com.dpbird.PartyMediaResource" Nullable="false"/>
                 <Parameter Name="file" Type="Edm.Stream" Nullable="false"/>
-            </Action>
-            <Action Name="UBOUpload" EntitySetPath="supplierDDForm" IsBound="true">
-                <Parameter Name="relationshipAndToParty" Type="com.dpbird.RelationshipAndToParty" Nullable="false"/>
-                <Parameter Name="file" Type="Edm.Stream"/>
             </Action>
             <Action Name="UploadSupplierLogo" IsBound="true">
                 <Parameter Name="supplierParty" Type="com.dpbird.SupplierParty" Nullable="false"/>
@@ -1975,10 +1977,6 @@
                 <Parameter Name="address2" Type="Edm.String" Nullable="false"/>
                 <Parameter Name="contactNumber" Type="Edm.String" Nullable="false"/>
                 <Parameter Name="email" Type="Edm.String" Nullable="false"/>
-            </Action>
-            <Action Name="UploadAction" IsBound="true">
-                <Parameter Name="partyMediaResource" Type="com.dpbird.PartyMediaResource" Nullable="false"/>
-                <Parameter Name="file" Type="Edm.Stream" Nullable="false"/>
             </Action>
             <Action Name="CreateNoteData" IsBound="true">
                 <Parameter Name="noteData" Type="Collection(com.dpbird.NoteData)" Nullable="false"/>
@@ -9246,6 +9244,14 @@
                     <String>procurementSubmitHidden</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.SupplierParty/procurementRejectHidden">
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>procurementRejectHidden</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.SupplierParty/ddFormIsSubmitted">
                 <Annotation Term="UI.Hidden">
                     <Bool>true</Bool>
@@ -10108,14 +10114,6 @@
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
                             </Annotation>
                         </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>copyIdentificationAttached</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
                     </Collection>
                 </Annotation>
                 <Annotation Term="UI.LineItem" Qualifier="BeneficialPerson_Upload">
@@ -10154,27 +10152,7 @@
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
-                                <Path>copyIdentificationAttached</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Label">
-                                <String>Upload</String>
-                            </PropertyValue>
-                            <PropertyValue Property="Action">
-                                <String>com.dpbird.UBOUpload</String>
-                            </PropertyValue>
-                            <PropertyValue Property="Inline">
-                                <Bool>true</Bool>
-                            </PropertyValue>
-                            <PropertyValue Property="InvocationGrouping">
-                                <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
-                            </PropertyValue>
-                            <PropertyValue Property="Criticality">
-                                <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                                <Path>dataResourceContent</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -10211,14 +10189,6 @@
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
                                 <Path>positionTitle</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value">
-                                <Path>copyIdentificationAttached</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -10262,27 +10232,7 @@
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value">
-                                <Path>copyIdentificationAttached</Path>
-                            </PropertyValue>
-                            <Annotation Term="UI.Importance">
-                                <EnumMember>UI.ImportanceType/High</EnumMember>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Label">
-                                <String>Upload</String>
-                            </PropertyValue>
-                            <PropertyValue Property="Action">
-                                <String>com.dpbird.UBOUpload</String>
-                            </PropertyValue>
-                            <PropertyValue Property="Inline">
-                                <Bool>true</Bool>
-                            </PropertyValue>
-                            <PropertyValue Property="InvocationGrouping">
-                                <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
-                            </PropertyValue>
-                            <PropertyValue Property="Criticality">
-                                <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                                <Path>dataResourceContent</Path>
                             </PropertyValue>
                             <Annotation Term="UI.Importance">
                                 <EnumMember>UI.ImportanceType/High</EnumMember>
@@ -10391,9 +10341,32 @@
                     <String>fileUrl</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.RelationshipAndToParty/uploadDocCritical">
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>uploadDocCritical</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/addNameForUpload">
                 <Annotation Term="Common.Label">
                     <String>addNameForUpload</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RelationshipAndToParty/dataResourceId">
+                <Annotation Term="Common.Label">
+                    <String>dataResourceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RelationshipAndToParty/dataResourceName">
+                <Annotation Term="Common.Label">
+                    <String>dataResourceName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RelationshipAndToParty/dataResourceContent">
+                <Annotation Term="Common.Label">
+                    <String>File</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/partyId">
@@ -10419,6 +10392,11 @@
             <Annotations Target="com.dpbird.RelationshipAndToParty/city">
                 <Annotation Term="Common.Label">
                     <String>city</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RelationshipAndToParty/mimeTypeId">
+                <Annotation Term="Common.Label">
+                    <String>mimeTypeId</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty/roleTypeIdTo">
@@ -11543,11 +11521,6 @@
                     <String>contentId</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.PartyMediaResource/contentName">
-                <Annotation Term="Common.Label">
-                    <String>文件描述</String>
-                </Annotation>
-            </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/mimeTypeId">
                 <Annotation Term="Common.Label">
                     <String>mimeTypeId</String>
@@ -11578,9 +11551,17 @@
                     <String>description</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.PartyMediaResource/contentName">
+                <Annotation Term="Core.Computed">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>文件描述</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/otherData">
                 <Annotation Term="Common.Label">
-                    <String>文件</String>
+                    <String>File</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PartyMediaResource/fileUrl">

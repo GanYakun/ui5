@@ -537,6 +537,7 @@
             </Annotations>
             <Annotations Target="com.dpbird.RelationshipAndToParty">
                 <Annotation Term="UI.LineItem" Qualifier="BeneficialPerson_Download">
+                    <Annotation Term="UI.Criticality" Path="uploadDocCritical"></Annotation>
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="firstName"/>
@@ -559,6 +560,7 @@
                     </Collection>
                 </Annotation>
                 <Annotation Term="UI.LineItem" Qualifier="SeniorStaff_Download">
+                    <Annotation Term="UI.Criticality" Path="uploadDocCritical"></Annotation>
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="firstName"/>
