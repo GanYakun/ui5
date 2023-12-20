@@ -34,6 +34,7 @@
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Action" String="com.dpbird.CreatePurchaseOrder"/>
                             <PropertyValue Property="Label" String="Create"/>
+                            <PropertyValue Property="Inline" Bool="false"/>
                             <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Positive" />
                         </Record>
                     </Collection>
