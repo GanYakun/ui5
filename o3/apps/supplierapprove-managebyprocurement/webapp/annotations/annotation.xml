@@ -368,7 +368,7 @@
                             <PropertyValue Property="IconUrl"
                                 String="sap-icon://employee-rejections" />
                             <PropertyValue Property="Label" String="{@i18n>ReturnToApplication}" />
-                            <Annotation Term="UI.Hidden" Path="procurementRejectidden"/>
+                            <Annotation Term="UI.Hidden" Path="procurementRejectHidden"/>
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Action" String="com.dpbird.CompleteCoWork" />
