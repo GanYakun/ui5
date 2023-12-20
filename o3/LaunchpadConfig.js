@@ -237,6 +237,21 @@
             }
           },
           {
+            id: "catalogRequest_Manage",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "Catalog",
+            "semanticAction": "Request",
+            properties: {
+              title: "Catalog-Request",
+              subtitle: "Catalog-Request",
+              info: "Catalog-Request",
+              targetURL: "#Catalog-Request",
+            }
+          },
+          {
             id: "purchaseRequest_Manage",//tile的ID
             chipId: "catalogTile_35",
             size: "1x1",
@@ -245,9 +260,9 @@
             "semanticObject": "Purchase",
             "semanticAction": "Manage",
             properties: {
-              title: "采购需求",
-              subtitle: "采购需求管理",
-              info: "采购需求应用",
+              title: "Requirement",
+              subtitle: "Requirement Manage",
+              info: "Requirement Manage",
               targetURL: "#Requirement-Manage",
             }
           },
@@ -260,9 +275,9 @@
             "semanticObject": "Purchase",
             "semanticAction": "Request",
             properties: {
-              title: "采购请求",
-              subtitle: "采购请求管理",
-              info: "采购请求应用",
+              title: "Purchase-Request",
+              subtitle: "Purchase-Request",
+              info: "Purchase-Request",
               targetURL: "#Purchase-Request",
             }
           },
@@ -275,9 +290,9 @@
             "semanticObject": "PurchaseQuote",
             "semanticAction": "Manage",
             properties: {
-              title: "报价",
-              subtitle: "报价管理",
-              info: "报价应用",
+              title: "PurchaseQuote",
+              subtitle: "PurchaseQuote Manage",
+              info: "PurchaseQuote Manage",
               targetURL: "#PurchaseQuote-Manage",
             }
           },
@@ -290,9 +305,9 @@
             "semanticObject": "PurchaseOrder",
             "semanticAction": "Manage",
             properties: {
-              title: "采购单",
-              subtitle: "采购单主数据",
-              info: "采购单的通用管理",
+              title: "PurchaseOrder",
+              subtitle: "PurchaseOrder Manage",
+              info: "PurchaseOrder Manage",
               targetURL: "#PurchaseOrder-manage",
             }
           },
@@ -436,6 +451,12 @@
         additionalInformation: "SAPUI5.Component=com.banfftech.purchaserequest",
         applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
         url: sUshellO3RootPath + "/apps/purchase-request/webapp",
+        description: "管理订单"
+      },
+      "Catalog-Request": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.catalogrequest",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/catalog-request/webapp",
         description: "管理订单"
       },
       "PurchaseQuote-Manage": {

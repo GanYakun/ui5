@@ -31,11 +31,6 @@
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="validThruDate" ></PropertyValue>
                         </Record>
-                        <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Action" String="com.dpbird.CreatePurchaseQuote"/>
-                            <PropertyValue Property="Label" String="Create"/>
-                            <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Positive" />
-                        </Record>
                     </Collection>
                 </Annotation>
                 

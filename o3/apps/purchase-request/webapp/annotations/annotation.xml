@@ -28,11 +28,6 @@
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="reason" />
                         </Record>
-                        <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Action" String="com.dpbird.CreatePurchaseRequest"/>
-                            <PropertyValue Property="Label" String="Create"/>
-                            <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Positive" />
-                        </Record>
                     </Collection>
                 </Annotation>
                 
