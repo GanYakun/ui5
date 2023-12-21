@@ -13,6 +13,17 @@
     </edmx:Reference>
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">
+            <Annotations Target="com.dpbird.CatalogRequest">
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="Facet1"/>
+                            <PropertyValue Property="Label" String="{@i18n>CustRequestItem}"/>
+                            <PropertyValue Property="Target" AnnotationPath="CustRequestItem/@UI.LineItem#RelatedCatalogRequest"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>
