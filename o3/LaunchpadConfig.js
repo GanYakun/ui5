@@ -245,9 +245,9 @@
             "semanticObject": "Catalog",
             "semanticAction": "Request",
             properties: {
-              title: "Catalog-Request",
-              subtitle: "Catalog-Request",
-              info: "Catalog-Request",
+              title: "Request-Applicant",
+              subtitle: "Request-Applicant",
+              info: "Request-Applicant",
               targetURL: "#Catalog-Request",
             }
           },
@@ -260,9 +260,9 @@
             "semanticObject": "Purchase",
             "semanticAction": "Manage",
             properties: {
-              title: "Requirement",
-              subtitle: "Requirement Manage",
-              info: "Requirement Manage",
+              title: "Requirement-Applicant",
+              subtitle: "Requirement-Applicant Manage",
+              info: "Requirement-Applicant Manage",
               targetURL: "#Requirement-Manage",
             }
           },
