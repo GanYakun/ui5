@@ -23,6 +23,62 @@
     </edmx:Reference>
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.dpbird">
+            <EntityType Name="Uom">
+                <Key>
+                    <PropertyRef Name="uomId"/>
+                </Key>
+                <Property Name="uomId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="uomTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="abbreviation" Type="Edm.String" MaxLength="60"/>
+                <Property Name="numericCode" Type="Edm.Int64"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
+            <EntityType Name="CatalogRequest">
+                <Key>
+                    <PropertyRef Name="custRequestId"/>
+                </Key>
+                <Property Name="custRequestId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="custRequestTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="custRequestCategoryId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="fromPartyId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="priority" Type="Edm.Int64"/>
+                <Property Name="custRequestDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="responseRequiredDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="custRequestName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="maximumAmountUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productStoreId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="salesChannelEnumId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="fulfillContactMechId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="currencyUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="openDateTime" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="closedDateTime" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="internalComment" Type="Edm.String" MaxLength="255"/>
+                <Property Name="reason" Type="Edm.String" MaxLength="255"/>
+                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="lastModifiedByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <NavigationProperty Name="PurchaseQuote" Type="Collection(com.dpbird.PurchaseQuote)"/>
+                <NavigationProperty Name="ProductRequirement" Type="Collection(com.dpbird.ProductRequirement)"/>
+            </EntityType>
+            <EntityType Name="ProductCategory">
+                <Key>
+                    <PropertyRef Name="productCategoryId"/>
+                </Key>
+                <Property Name="productCategoryId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="productCategoryTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="primaryParentCategoryId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="categoryName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="longDescription" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="categoryImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="linkOneImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="linkTwoImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="detailScreen" Type="Edm.String" MaxLength="255"/>
+                <Property Name="showInSelect" Type="Edm.String" MaxLength="1"/>
+            </EntityType>
             <EntityType Name="PurchaseQuote">
                 <Key>
                     <PropertyRef Name="quoteId"/>
@@ -50,11 +106,96 @@
                     <PropertyRef Name="orderId"/>
                 </Key>
                 <Property Name="orderId" Type="Edm.String" Nullable="false" MaxLength="60"/>
-                <Property Name="orderName" Type="Edm.String" MaxLength="100"/>
                 <Property Name="orderTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="orderName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="orderDate" Type="Edm.DateTimeOffset" Precision="3"/>
                 <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="quoteId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="agreementId" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="PurchaseQuote" Type="com.dpbird.PurchaseQuote">
+                    <ReferentialConstraint Property="quoteId" ReferencedProperty="quoteId"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Product">
+                <Key>
+                    <PropertyRef Name="productId"/>
+                </Key>
+                <Property Name="quantityUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="primaryProductCategoryId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="productName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="productTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="facilityId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="introductionDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="releaseDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="supportDiscontinuationDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="salesDiscontinuationDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="salesDiscWhenNotAvail" Type="Edm.String" MaxLength="1"/>
+                <Property Name="internalName" Type="Edm.String" MaxLength="255"/>
+                <Property Name="brandName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="comments" Type="Edm.String" MaxLength="255"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+                <Property Name="longDescription" Type="Edm.String" MaxLength="5000"/>
+                <Property Name="priceDetailText" Type="Edm.String" MaxLength="255"/>
+                <Property Name="smallImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="mediumImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="largeImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="detailImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="originalImageUrl" Type="Edm.String" MaxLength="2000"/>
+                <Property Name="detailScreen" Type="Edm.String" MaxLength="255"/>
+                <Property Name="inventoryMessage" Type="Edm.String" MaxLength="255"/>
+                <Property Name="inventoryItemTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="requireInventory" Type="Edm.String" MaxLength="1"/>
+                <Property Name="quantityIncluded" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="piecesIncluded" Type="Edm.Int64"/>
+                <Property Name="requireAmount" Type="Edm.String" MaxLength="1"/>
+                <Property Name="fixedAmount" Type="Edm.Decimal" Precision="18" Scale="2"/>
+                <Property Name="amountUomTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="weightUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="shippingWeight" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="productWeight" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="heightUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productHeight" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="shippingHeight" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="widthUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productWidth" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="shippingWidth" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="depthUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productDepth" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="shippingDepth" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="diameterUomId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="productDiameter" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="productRating" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="ratingTypeEnum" Type="Edm.String" MaxLength="60"/>
+                <Property Name="returnable" Type="Edm.String" MaxLength="1"/>
+                <Property Name="taxable" Type="Edm.String" MaxLength="1"/>
+                <Property Name="chargeShipping" Type="Edm.String" MaxLength="1"/>
+                <Property Name="autoCreateKeywords" Type="Edm.String" MaxLength="1"/>
+                <Property Name="includeInPromotions" Type="Edm.String" MaxLength="1"/>
+                <Property Name="isVirtual" Type="Edm.String" MaxLength="1"/>
+                <Property Name="isVariant" Type="Edm.String" MaxLength="1"/>
+                <Property Name="virtualVariantMethodEnum" Type="Edm.String" MaxLength="60"/>
+                <Property Name="originGeoId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="requirementMethodEnumId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="billOfMaterialLevel" Type="Edm.Int64"/>
+                <Property Name="reservMaxPersons" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="reserv2ndPPPerc" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="reservNthPPPerc" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="configId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="lastModifiedByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="inShippingBox" Type="Edm.String" MaxLength="1"/>
+                <Property Name="defaultShipmentBoxTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="lotIdFilledIn" Type="Edm.String" MaxLength="255"/>
+                <Property Name="orderDecimalQuantity" Type="Edm.String" MaxLength="1"/>
+                <NavigationProperty Name="QuantityUom" Type="com.dpbird.Uom">
+                    <ReferentialConstraint Property="quantityUomId" ReferencedProperty="uomId"/>
+                </NavigationProperty>
+                <NavigationProperty Name="PrimaryProductCategory" Type="com.dpbird.ProductCategory">
+                    <ReferentialConstraint Property="primaryProductCategoryId" ReferencedProperty="productCategoryId"/>
+                </NavigationProperty>
             </EntityType>
             <EntityType Name="PurchaseRequest">
                 <Key>
@@ -83,31 +224,452 @@
                 <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
                 <Property Name="lastModifiedDate" Type="Edm.DateTimeOffset" Precision="3"/>
                 <Property Name="lastModifiedByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <NavigationProperty Name="ProductRequirement" Type="Collection(com.dpbird.ProductRequirement)"/>
+                <NavigationProperty Name="PurchaseQuote" Type="Collection(com.dpbird.PurchaseQuote)"/>
             </EntityType>
-            <EntityType Name="QuoteParty">
+            <EntityType Name="ProductRequirement">
                 <Key>
-                    <PropertyRef Name="partyId"/>
+                    <PropertyRef Name="requirementId"/>
                 </Key>
-                <Property Name="partyName" Type="Edm.String" MaxLength="100"/>
-                <Property Name="phoneMobile" Type="Edm.String" MaxLength="60"/>
-                <Property Name="primaryPhone" Type="Edm.String" MaxLength="60"/>
-                <Property Name="primaryEmail" Type="Edm.String" MaxLength="255"/>
-                <Property Name="address1" Type="Edm.String" MaxLength="255"/>
-                <Property Name="partyId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="requirementId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="requirementTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="facilityId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="quantity" Type="Edm.Decimal" Precision="18" Scale="6"/>
+                <Property Name="reason" Type="Edm.String" MaxLength="255"/>
+                <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="productId" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="PurchaseRequest" Type="Collection(com.dpbird.PurchaseRequest)"/>
+                <NavigationProperty Name="Product" Type="com.dpbird.Product">
+                    <ReferentialConstraint Property="productId" ReferencedProperty="productId"/>
+                </NavigationProperty>
             </EntityType>
-            <Action Name="CreatePurchaseQuote" IsBound="true">
-                <Parameter Name="purchaseRequest" Type="Collection(com.dpbird.PurchaseRequest)" Nullable="false"/>
-                <Parameter Name="partyId" Type="Edm.String"/>
+            <Action Name="CreatePurchaseRequest" EntitySetPath="purchaseRequest" IsBound="true">
+                <Parameter Name="catalogRequest" Type="Collection(com.dpbird.CatalogRequest)" Nullable="false"/>
+                <Parameter Name="reason" Type="Edm.String"/>
+                <Parameter Name="custRequestTypeId" Type="Edm.String"/>
+            </Action>
+            <Action Name="CreateProductRequirement" EntitySetPath="productRequirement" IsBound="true">
+                <Parameter Name="productRequirement" Type="Collection(com.dpbird.ProductRequirement)" Nullable="false"/>
+                <Parameter Name="productId" Type="Edm.String"/>
+                <Parameter Name="quantity" Type="Edm.Decimal" Scale="2"/>
+                <Parameter Name="requirementTypeId" Type="Edm.String"/>
             </Action>
             <EntityContainer Name="O3Container">
+                <EntitySet Name="Products" EntityType="com.dpbird.Product">
+                    <NavigationPropertyBinding Path="QuantityUom" Target="Unm"/>
+                    <NavigationPropertyBinding Path="PrimaryProductCategory" Target="ProductCategories"/>
+                </EntitySet>
+                <EntitySet Name="PurchaseRequests" EntityType="com.dpbird.PurchaseRequest">
+                    <NavigationPropertyBinding Path="ProductRequirement" Target="ProductRequirements"/>
+                    <NavigationPropertyBinding Path="PurchaseQuote" Target="PurchaseQuotes"/>
+                </EntitySet>
                 <EntitySet Name="PurchaseQuotes" EntityType="com.dpbird.PurchaseQuote">
                     <NavigationPropertyBinding Path="PurchaseRequest" Target="PurchaseRequests"/>
                     <NavigationPropertyBinding Path="PurchaseOrder" Target="PurchaseOrderHeaders"/>
                 </EntitySet>
-                <EntitySet Name="PurchaseRequests" EntityType="com.dpbird.PurchaseRequest"/>
-                <EntitySet Name="PurchaseOrderHeaders" EntityType="com.dpbird.PurchaseOrder"/>
-                <EntitySet Name="QuoteParties" EntityType="com.dpbird.QuoteParty"/>
+                <EntitySet Name="ProductCategories" EntityType="com.dpbird.ProductCategory"/>
+                <EntitySet Name="Unm" EntityType="com.dpbird.Uom"/>
+                <EntitySet Name="CatalogRequests" EntityType="com.dpbird.CatalogRequest">
+                    <NavigationPropertyBinding Path="PurchaseQuote" Target="PurchaseQuotes"/>
+                    <NavigationPropertyBinding Path="ProductRequirement" Target="ProductRequirements"/>
+                </EntitySet>
+                <EntitySet Name="PurchaseOrderHeaders" EntityType="com.dpbird.PurchaseOrder">
+                    <NavigationPropertyBinding Path="PurchaseQuote" Target="PurchaseQuotes"/>
+                </EntitySet>
+                <EntitySet Name="ProductRequirements" EntityType="com.dpbird.ProductRequirement">
+                    <NavigationPropertyBinding Path="PurchaseRequest" Target="PurchaseRequests"/>
+                    <NavigationPropertyBinding Path="Product" Target="Products"/>
+                </EntitySet>
             </EntityContainer>
+            <Annotations Target="com.dpbird.Uom/uomId">
+                <Annotation Term="Common.Label">
+                    <String>uomId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextLast</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Uom/uomTypeId">
+                <Annotation Term="Common.Label">
+                    <String>uomTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Uom/abbreviation">
+                <Annotation Term="Common.Label">
+                    <String>abbreviation</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Uom/numericCode">
+                <Annotation Term="Common.Label">
+                    <String>numericCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Uom/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName">
+                            <String>Purchase Request</String>
+                        </PropertyValue>
+                        <PropertyValue Property="TypeNamePlural">
+                            <String>Purchase Requests</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>custRequestName</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>description</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>fromPartyId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>createdDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>responseRequiredDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>reason</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label">
+                                <String>Create</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Action">
+                                <String>com.dpbird.CreatePurchaseRequest</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>false</Bool>
+                            </PropertyValue>
+                            <PropertyValue Property="InvocationGrouping">
+                                <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                            </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="RelatedQuote">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>fromPartyId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>createdDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>responseRequiredDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>reason</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/custRequestId">
+                <Annotation Term="Common.Label">
+                    <String>custRequestId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/custRequestTypeId">
+                <Annotation Term="Common.Label">
+                    <String>custRequestTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/custRequestCategoryId">
+                <Annotation Term="Common.Label">
+                    <String>custRequestCategoryId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/statusId">
+                <Annotation Term="Common.Label">
+                    <String>statusId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/fromPartyId">
+                <Annotation Term="Common.Label">
+                    <String>fromPartyId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/priority">
+                <Annotation Term="Common.Label">
+                    <String>priority</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/custRequestDate">
+                <Annotation Term="Common.Label">
+                    <String>custRequestDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/responseRequiredDate">
+                <Annotation Term="Common.Label">
+                    <String>responseRequiredDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/custRequestName">
+                <Annotation Term="Common.Label">
+                    <String>custRequestName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/maximumAmountUomId">
+                <Annotation Term="Common.Label">
+                    <String>maximumAmountUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/productStoreId">
+                <Annotation Term="Common.Label">
+                    <String>productStoreId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/salesChannelEnumId">
+                <Annotation Term="Common.Label">
+                    <String>salesChannelEnumId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/fulfillContactMechId">
+                <Annotation Term="Common.Label">
+                    <String>fulfillContactMechId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/currencyUomId">
+                <Annotation Term="Common.Label">
+                    <String>currencyUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/openDateTime">
+                <Annotation Term="Common.Label">
+                    <String>openDateTime</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/closedDateTime">
+                <Annotation Term="Common.Label">
+                    <String>closedDateTime</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/internalComment">
+                <Annotation Term="Common.Label">
+                    <String>internalComment</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/reason">
+                <Annotation Term="Common.Label">
+                    <String>reason</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/createdDate">
+                <Annotation Term="Common.Label">
+                    <String>createdDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/createdByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>createdByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/lastModifiedDate">
+                <Annotation Term="Common.Label">
+                    <String>lastModifiedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CatalogRequest/lastModifiedByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>lastModifiedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductCategory/productCategoryId">
+                <Annotation Term="Common.Label">
+                    <String>productCategoryId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>categoryName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductCategory/productCategoryTypeId">
+                <Annotation Term="Common.Label">
+                    <String>productCategoryTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductCategory/primaryParentCategoryId">
+                <Annotation Term="Common.Label">
+                    <String>primaryParentCategoryId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductCategory/categoryName">
+                <Annotation Term="Common.Label">
+                    <String>Category Name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductCategory/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductCategory/longDescription">
+                <Annotation Term="Common.Label">
+                    <String>longDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductCategory/categoryImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>categoryImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductCategory/linkOneImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>linkOneImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductCategory/linkTwoImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>linkTwoImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductCategory/detailScreen">
+                <Annotation Term="Common.Label">
+                    <String>detailScreen</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductCategory/showInSelect">
+                <Annotation Term="Common.Label">
+                    <String>showInSelect</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseQuote">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName">
+                            <String>Purchase Quote</String>
+                        </PropertyValue>
+                        <PropertyValue Property="TypeNamePlural">
+                            <String>Purchase Quotes</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>quoteName</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>description</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="RelatedPurchaseRequest">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>quoteName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>partyId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>statusId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>validFromDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.PurchaseQuote/quoteId">
                 <Annotation Term="Common.Label">
                     <String>quoteId</String>
@@ -173,14 +735,63 @@
                     <String>custRequestId</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.PurchaseOrder">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName">
+                            <String>Purchase Order</String>
+                        </PropertyValue>
+                        <PropertyValue Property="TypeNamePlural">
+                            <String>Purchase Orders</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>orderId</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>orderName</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="RelatedQuote">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>orderName</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>orderDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>statusId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.PurchaseOrder/orderId">
                 <Annotation Term="Common.Label">
                     <String>orderId</String>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="com.dpbird.PurchaseOrder/orderName">
-                <Annotation Term="Common.Label">
-                    <String>orderName</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseOrder/orderTypeId">
@@ -191,6 +802,11 @@
             <Annotations Target="com.dpbird.PurchaseOrder/orderName">
                 <Annotation Term="Common.Label">
                     <String>orderName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseOrder/orderDate">
+                <Annotation Term="Common.Label">
+                    <String>orderDate</String>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseOrder/statusId">
@@ -206,6 +822,514 @@
             <Annotations Target="com.dpbird.PurchaseOrder/agreementId">
                 <Annotation Term="Common.Label">
                     <String>agreementId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/quantityUomId">
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>Quantity UOM</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>QuantityUom/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/primaryProductCategoryId">
+                <Annotation Term="Common.Label">
+                    <String>Financial category</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>PrimaryProductCategory/categoryName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productId">
+                <Annotation Term="Common.Label">
+                    <String>Goods name</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>productName</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productName">
+                <Annotation Term="Core.Immutable">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="Common.Label">
+                    <String>Goods name</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productTypeId">
+                <Annotation Term="Common.Label">
+                    <String>Product type</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/facilityId">
+                <Annotation Term="Common.Label">
+                    <String>facilityId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/introductionDate">
+                <Annotation Term="Common.Label">
+                    <String>introductionDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/releaseDate">
+                <Annotation Term="Common.Label">
+                    <String>releaseDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/supportDiscontinuationDate">
+                <Annotation Term="Common.Label">
+                    <String>supportDiscontinuationDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/salesDiscontinuationDate">
+                <Annotation Term="Common.Label">
+                    <String>salesDiscontinuationDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/salesDiscWhenNotAvail">
+                <Annotation Term="Common.Label">
+                    <String>salesDiscWhenNotAvail</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/internalName">
+                <Annotation Term="Common.Label">
+                    <String>internalName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/brandName">
+                <Annotation Term="Common.Label">
+                    <String>brandName</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/comments">
+                <Annotation Term="Common.Label">
+                    <String>comments</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/description">
+                <Annotation Term="Common.Label">
+                    <String>description</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/longDescription">
+                <Annotation Term="Common.Label">
+                    <String>longDescription</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/priceDetailText">
+                <Annotation Term="Common.Label">
+                    <String>priceDetailText</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/smallImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>smallImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/mediumImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>mediumImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/largeImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>largeImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/detailImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>detailImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/originalImageUrl">
+                <Annotation Term="Common.Label">
+                    <String>originalImageUrl</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/detailScreen">
+                <Annotation Term="Common.Label">
+                    <String>detailScreen</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/inventoryMessage">
+                <Annotation Term="Common.Label">
+                    <String>inventoryMessage</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/inventoryItemTypeId">
+                <Annotation Term="Common.Label">
+                    <String>inventoryItemTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/requireInventory">
+                <Annotation Term="Common.Label">
+                    <String>requireInventory</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/quantityIncluded">
+                <Annotation Term="Common.Label">
+                    <String>quantityIncluded</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/piecesIncluded">
+                <Annotation Term="Common.Label">
+                    <String>piecesIncluded</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/requireAmount">
+                <Annotation Term="Common.Label">
+                    <String>requireAmount</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/fixedAmount">
+                <Annotation Term="Common.Label">
+                    <String>fixedAmount</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/amountUomTypeId">
+                <Annotation Term="Common.Label">
+                    <String>amountUomTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/weightUomId">
+                <Annotation Term="Common.Label">
+                    <String>weightUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/shippingWeight">
+                <Annotation Term="Common.Label">
+                    <String>shippingWeight</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productWeight">
+                <Annotation Term="Common.Label">
+                    <String>productWeight</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/heightUomId">
+                <Annotation Term="Common.Label">
+                    <String>heightUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productHeight">
+                <Annotation Term="Common.Label">
+                    <String>productHeight</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/shippingHeight">
+                <Annotation Term="Common.Label">
+                    <String>shippingHeight</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/widthUomId">
+                <Annotation Term="Common.Label">
+                    <String>widthUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productWidth">
+                <Annotation Term="Common.Label">
+                    <String>productWidth</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/shippingWidth">
+                <Annotation Term="Common.Label">
+                    <String>shippingWidth</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/depthUomId">
+                <Annotation Term="Common.Label">
+                    <String>depthUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productDepth">
+                <Annotation Term="Common.Label">
+                    <String>productDepth</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/shippingDepth">
+                <Annotation Term="Common.Label">
+                    <String>shippingDepth</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/diameterUomId">
+                <Annotation Term="Common.Label">
+                    <String>diameterUomId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productDiameter">
+                <Annotation Term="Common.Label">
+                    <String>productDiameter</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/productRating">
+                <Annotation Term="Common.Label">
+                    <String>productRating</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/ratingTypeEnum">
+                <Annotation Term="Common.Label">
+                    <String>ratingTypeEnum</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/returnable">
+                <Annotation Term="Common.Label">
+                    <String>returnable</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/taxable">
+                <Annotation Term="Common.Label">
+                    <String>taxable</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/chargeShipping">
+                <Annotation Term="Common.Label">
+                    <String>chargeShipping</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/autoCreateKeywords">
+                <Annotation Term="Common.Label">
+                    <String>autoCreateKeywords</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/includeInPromotions">
+                <Annotation Term="Common.Label">
+                    <String>includeInPromotions</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/isVirtual">
+                <Annotation Term="Common.Label">
+                    <String>isVirtual</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/isVariant">
+                <Annotation Term="Common.Label">
+                    <String>isVariant</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/virtualVariantMethodEnum">
+                <Annotation Term="Common.Label">
+                    <String>virtualVariantMethodEnum</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/originGeoId">
+                <Annotation Term="Common.Label">
+                    <String>originGeoId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/requirementMethodEnumId">
+                <Annotation Term="Common.Label">
+                    <String>requirementMethodEnumId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/billOfMaterialLevel">
+                <Annotation Term="Common.Label">
+                    <String>billOfMaterialLevel</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/reservMaxPersons">
+                <Annotation Term="Common.Label">
+                    <String>reservMaxPersons</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/reserv2ndPPPerc">
+                <Annotation Term="Common.Label">
+                    <String>reserv2ndPPPerc</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/reservNthPPPerc">
+                <Annotation Term="Common.Label">
+                    <String>reservNthPPPerc</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/configId">
+                <Annotation Term="Common.Label">
+                    <String>configId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/createdDate">
+                <Annotation Term="Common.Label">
+                    <String>createdDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/createdByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>createdByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/lastModifiedDate">
+                <Annotation Term="Common.Label">
+                    <String>lastModifiedDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/lastModifiedByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>lastModifiedByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/inShippingBox">
+                <Annotation Term="Common.Label">
+                    <String>inShippingBox</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/defaultShipmentBoxTypeId">
+                <Annotation Term="Common.Label">
+                    <String>defaultShipmentBoxTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/lotIdFilledIn">
+                <Annotation Term="Common.Label">
+                    <String>lotIdFilledIn</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.Product/orderDecimalQuantity">
+                <Annotation Term="Common.Label">
+                    <String>orderDecimalQuantity</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.PurchaseRequest">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName">
+                            <String>Purchase Request</String>
+                        </PropertyValue>
+                        <PropertyValue Property="TypeNamePlural">
+                            <String>Purchase Requests</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>custRequestName</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>description</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="RelatedRequirement">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>fromPartyId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>createdDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>responseRequiredDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>reason</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="RelatedPurchaseQuote">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>fromPartyId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>createdDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>responseRequiredDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>reason</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>fromPartyId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>createdDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>responseRequiredDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>reason</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.PurchaseRequest/custRequestId">
@@ -323,82 +1447,176 @@
                     <String>lastModifiedByUserLogin</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.QuoteParty/partyName">
-                <Annotation Term="Common.Label">
-                    <String>partyName</String>
+            <Annotations Target="com.dpbird.ProductRequirement">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName">
+                            <String>Requirement</String>
+                        </PropertyValue>
+                        <PropertyValue Property="TypeNamePlural">
+                            <String>Requirements</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>requirementId</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value">
+                                    <Path>productId</Path>
+                                </PropertyValue>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="RelatedPurchaseRequest">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>productId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>facilityId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>statusId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.QuoteParty/phoneMobile">
+            <Annotations Target="com.dpbird.ProductRequirement/requirementId">
                 <Annotation Term="Common.Label">
-                    <String>phoneMobile</String>
+                    <String>requirementId</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.QuoteParty/primaryPhone">
+            <Annotations Target="com.dpbird.ProductRequirement/requirementTypeId">
                 <Annotation Term="Common.Label">
-                    <String>primaryPhone</String>
+                    <String>requirementTypeId</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.QuoteParty/primaryEmail">
+            <Annotations Target="com.dpbird.ProductRequirement/facilityId">
                 <Annotation Term="Common.Label">
-                    <String>primaryEmail</String>
+                    <String>facilityId</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.QuoteParty/address1">
+            <Annotations Target="com.dpbird.ProductRequirement/statusId">
                 <Annotation Term="Common.Label">
-                    <String>address1</String>
+                    <String>statusId</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.QuoteParty/partyId">
+            <Annotations Target="com.dpbird.ProductRequirement/quantity">
                 <Annotation Term="Common.Label">
-                    <String>partyId</String>
+                    <String>quantity</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductRequirement/reason">
+                <Annotation Term="Common.Label">
+                    <String>reason</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductRequirement/createdDate">
+                <Annotation Term="Common.Label">
+                    <String>createdDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductRequirement/createdByUserLogin">
+                <Annotation Term="Common.Label">
+                    <String>createdByUserLogin</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.ProductRequirement/productId">
+                <Annotation Term="Common.Label">
+                    <String>productId</String>
                 </Annotation>
                 <Annotation Term="Common.Text">
-                    <Path>partyName</Path>
+                    <Path>Product/productName</Path>
                     <Annotation Term="UI.TextArrangement">
                         <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
                     </Annotation>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.CreatePurchaseQuote/partyId">
+            <Annotations Target="com.dpbird.CreatePurchaseRequest">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>catalogRequest</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreatePurchaseRequest/reason">
                 <Annotation Term="Common.Label">
-                    <String>QuoteParty</String>
+                    <String>Reason</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreatePurchaseRequest/custRequestTypeId">
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.ParameterDefaultValue">
+                    <String>RF_CATALOG</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreateProductRequirement">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>productRequirement</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreateProductRequirement/productId">
+                <Annotation Term="Common.Label">
+                    <String>ProductName</String>
                 </Annotation>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
                         <PropertyValue Property="Label">
-                            <String>QuoteParty</String>
+                            <String>ProductName</String>
                         </PropertyValue>
                         <PropertyValue Property="CollectionPath">
-                            <String>QuoteParties</String>
+                            <String>Products</String>
                         </PropertyValue>
                         <PropertyValue Property="Parameters">
                             <Collection>
                                 <Record Type="Common.ValueListParameterInOut">
                                     <PropertyValue Property="LocalDataProperty">
-                                        <PropertyPath>partyId</PropertyPath>
+                                        <PropertyPath>productId</PropertyPath>
                                     </PropertyValue>
                                     <PropertyValue Property="ValueListProperty">
-                                        <String>partyId</String>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="Common.ValueListParameterDisplayOnly">
-                                    <PropertyValue Property="ValueListProperty">
-                                        <String>phoneMobile</String>
+                                        <String>productId</String>
                                     </PropertyValue>
                                 </Record>
                                 <Record Type="Common.ValueListParameterDisplayOnly">
                                     <PropertyValue Property="ValueListProperty">
-                                        <String>primaryPhone</String>
+                                        <String>quantityUomId</String>
                                     </PropertyValue>
                                 </Record>
                                 <Record Type="Common.ValueListParameterDisplayOnly">
                                     <PropertyValue Property="ValueListProperty">
-                                        <String>primaryEmail</String>
-                                    </PropertyValue>
-                                </Record>
-                                <Record Type="Common.ValueListParameterDisplayOnly">
-                                    <PropertyValue Property="ValueListProperty">
-                                        <String>address1</String>
+                                        <String>primaryProductCategoryId</String>
                                     </PropertyValue>
                                 </Record>
                             </Collection>
@@ -407,6 +1625,19 @@
                 </Annotation>
                 <Annotation Term="Common.ValueListWithFixedValues">
                     <Bool>false</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreateProductRequirement/quantity">
+                <Annotation Term="Common.Label">
+                    <String>Quantity</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CreateProductRequirement/requirementTypeId">
+                <Annotation Term="UI.Hidden">
+                    <Bool>true</Bool>
+                </Annotation>
+                <Annotation Term="UI.ParameterDefaultValue">
+                    <String>PRODUCT_REQUIREMENT</String>
                 </Annotation>
             </Annotations>
         </Schema>

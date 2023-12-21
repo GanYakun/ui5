@@ -34,6 +34,20 @@
                     </Collection>
                 </Annotation>
                 
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="Facet1"/>
+                            <PropertyValue Property="Label" String="{@i18n>PurchaseOrder}"/>
+                            <PropertyValue Property="Target" AnnotationPath="PurchaseOrder/@UI.LineItem#RelatedQuote"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="Facet2"/>
+                            <PropertyValue Property="Label" String="{@i18n>PurchaseRequest}"/>
+                            <PropertyValue Property="Target" AnnotationPath="PurchaseRequest/@UI.LineItem#RelatedPurchaseQuote"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
             </Annotations>
         </Schema>
     </edmx:DataServices>

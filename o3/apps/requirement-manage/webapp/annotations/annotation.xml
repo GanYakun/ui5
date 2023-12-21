@@ -17,19 +17,28 @@
                 <Annotation Term="UI.LineItem">
                     <Collection>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="productId" ></PropertyValue>
+                            <PropertyValue Property="Value" Path="requirementId" ></PropertyValue>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="quantity" ></PropertyValue>
+                            <PropertyValue Property="Value" Path="facilityId" ></PropertyValue>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="productId" ></PropertyValue>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="statusId" ></PropertyValue>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="createdDate" ></PropertyValue>
+                            <PropertyValue Property="Value" Path="requiredByDate" ></PropertyValue>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="createdByUserLogin" ></PropertyValue>
+                            <PropertyValue Property="Value" Path="estimatedBudget" ></PropertyValue>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="quantity" ></PropertyValue>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="createdDate" ></PropertyValue>
                         </Record>
                         <Record Type="UI.DataFieldForAction">
                             <PropertyValue Property="Action" String="com.dpbird.CreateProductRequirement"/>
