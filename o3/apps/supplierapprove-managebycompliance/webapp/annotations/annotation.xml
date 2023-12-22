@@ -123,7 +123,7 @@
                     <Collection>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="SupportedDocument" />
-                            <PropertyValue Property="Label" String="Supported Documents" />
+                            <PropertyValue Property="Label" String="Supporting Documents" />
                             <PropertyValue Property="Target"
                                 AnnotationPath="ComplianceViewFile/@UI.LineItem#FileList" />
                         </Record>
