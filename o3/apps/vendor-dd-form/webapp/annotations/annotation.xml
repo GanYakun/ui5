@@ -151,7 +151,8 @@
                         </Record> -->
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="BeneficialPerson"/>
-                            <PropertyValue Property="Label" String="Ultimate beneficiary"/>
+                            <PropertyValue Property="Label" String="Full name of Ultimate Beneficial Owner(s) 
+                            (all direct and indirect beneficial owners holding 25% or more economic, voting or control rights)"/>
                             <PropertyValue Property="Target" AnnotationPath="BeneficialPerson/@UI.LineItem#BeneficialPerson_Upload"/>
                         </Record>
                         <Record Type="UI.ReferenceFacet">
