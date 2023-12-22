@@ -233,13 +233,13 @@
                     </Record>
                 </Annotation>
 
-                <Annotation Term="UI.Facets">
+                <Annotation Term="UI.Facets" Qualifier="">
                     <Collection>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="FileList" />
                             <PropertyValue Property="Label" String="{@i18n>FileList}" />
                             <PropertyValue Property="Target"
-                                AnnotationPath="FileList/@UI.LineItem#FileList" />
+                                AnnotationPath="FileList/@UI.PresentationVariant#FileList" />
                         </Record>
                         <Record Type="UI.CollectionFacet">
                             <PropertyValue Property="Label" String="{@i18n>ViewDDForm}" />
@@ -1242,6 +1242,15 @@
                             <PropertyValue Property="IconUrl" String="sap-icon://download" />
                         </Record>
                     </Collection>
+                </Annotation>
+                <Annotation Term="UI.PresentationVariant" Qualifier="FileList">
+                    <Record Type="UI.PresentationVariantType">
+                        <PropertyValue Property="Visualizations">
+                            <Collection>
+                                <AnnotationPath>@UI.LineItem#FileList</AnnotationPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
                 </Annotation>
             </Annotations>
 
