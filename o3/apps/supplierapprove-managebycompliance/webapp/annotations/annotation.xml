@@ -123,16 +123,16 @@
                     <Collection>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="SupportedDocument" />
-                            <PropertyValue Property="Label" String="Supported Documents" />
+                            <PropertyValue Property="Label" String="Attached Documents" />
                             <PropertyValue Property="Target"
                                 AnnotationPath="ComplianceViewFile/@UI.LineItem#FileList" />
                         </Record>
-                        <Record Type="UI.ReferenceFacet">
+                        <!-- <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="FileList" />
                             <PropertyValue Property="Label" String="{@i18n>FileList}" />
                             <PropertyValue Property="Target"
                                 AnnotationPath="ComplianceReport/@UI.LineItem#FileList" />
-                        </Record>
+                        </Record> -->
                        
                         <Record Type="UI.CollectionFacet">
                             <PropertyValue Property="Label" String="{@i18n>ViewDDForm}" />
@@ -209,7 +209,8 @@
                                     <Record Type="UI.ReferenceFacet">
                                         <PropertyValue Property="ID" String="BeneficialPerson" />
                                         <PropertyValue Property="Label"
-                                            String="Ultimate beneficiary" />
+                                            String="Full name of Ultimate Beneficial Owner(s) 
+                                            (all direct and indirect beneficial owners holding 25% or more economic, voting or control rights)" />
                                         <PropertyValue Property="Target"
                                             AnnotationPath="SupplierDDForm/BeneficialPerson/@UI.LineItem#BeneficialPerson_Download" />
                                     </Record>
