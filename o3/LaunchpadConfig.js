@@ -252,18 +252,49 @@
             }
           },
           {
-            id: "purchaseRequest_Manage",//tile的ID
+            id: "itRequest_Manage",//tile的ID
             chipId: "catalogTile_35",
             size: "1x1",
             tileType: "sap.ushell.ui.tile.StaticTile",
             isLinkPersonalizationSupported: true,
-            "semanticObject": "Purchase",
+            "semanticObject": "Catalog",
+            "semanticAction": "RequestByIT",
+            properties: {
+              title: "Request-IT",
+              subtitle: "Request-IT",
+              info: "Request-IT",
+              targetURL: "#Catalog-IT",
+            }
+          },
+          
+          {
+            id: "requirementApp_Manage",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "Requirement",
             "semanticAction": "Manage",
             properties: {
               title: "Requirement-Applicant",
               subtitle: "Requirement-Applicant Manage",
               info: "Requirement-Applicant Manage",
               targetURL: "#Requirement-Manage",
+            }
+          },
+          {
+            id: "requirementPro_Manage",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "Requirement",
+            "semanticAction": "ManageByProcurement",
+            properties: {
+              title: "Requirement-Procurement",
+              subtitle: "Requirement-Procurement Manage",
+              info: "Requirement-Procurement Manage",
+              targetURL: "#Requirement-ManageByProcurement",
             }
           },
           {
@@ -453,10 +484,22 @@
         url: sUshellO3RootPath + "/apps/purchase-request/webapp",
         description: "管理订单"
       },
+      // "RequestWorkEffort-Manage": {
+      //   additionalInformation: "SAPUI5.Component=com.banfftech.requestworkeffortmanage",
+      //   applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+      //   url: sUshellO3RootPath + "/apps/requestworkeffort-manage/webapp",
+      //   description: "管理订单"
+      // },
       "Catalog-Request": {
         additionalInformation: "SAPUI5.Component=com.banfftech.catalogrequest",
         applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
         url: sUshellO3RootPath + "/apps/catalog-request/webapp",
+        description: "管理订单"
+      },
+      "Catalog-IT": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.catalogrequestbyit",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/catalog-requestbyit/webapp",
         description: "管理订单"
       },
       "PurchaseQuote-Manage": {
@@ -469,6 +512,12 @@
         additionalInformation: "SAPUI5.Component=com.banfftech.requirementmanage",
         applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
         url: sUshellO3RootPath + "/apps/requirement-manage/webapp",
+        description: "管理订单"
+      },
+      "Requirement-ManageByProcurement": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.requirementmanagebyprocurement",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/requirement-managebyprocurement/webapp",
         description: "管理订单"
       },
       "Payment-Manage": {

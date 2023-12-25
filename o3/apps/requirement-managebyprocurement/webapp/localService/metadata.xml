@@ -33,6 +33,16 @@
                 <Property Name="sequenceId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="description" Type="Edm.String" MaxLength="255"/>
             </EntityType>
+            <EntityType Name="RequestItemStatus">
+                <Key>
+                    <PropertyRef Name="statusId"/>
+                </Key>
+                <Property Name="statusId" Type="Edm.String" Nullable="false" MaxLength="60"/>
+                <Property Name="statusTypeId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="statusCode" Type="Edm.String" MaxLength="60"/>
+                <Property Name="sequenceId" Type="Edm.String" MaxLength="60"/>
+                <Property Name="description" Type="Edm.String" MaxLength="255"/>
+            </EntityType>
             <EntityType Name="PurchaseQuote">
                 <Key>
                     <PropertyRef Name="quoteId"/>
@@ -249,9 +259,12 @@
                 <Property Name="custRequestItemSeqId" Type="Edm.String" Nullable="false" MaxLength="60"/>
                 <Property Name="productId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="quantity" Type="Edm.Decimal" Precision="18" Scale="6"/>
-                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="description" Type="Edm.String" MaxLength="255"/>
                 <Property Name="requiredByDate" Type="Edm.DateTimeOffset" Precision="3"/>
+                <Property Name="statusId" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="RequestItemStatus" Type="com.dpbird.RequestItemStatus">
+                    <ReferentialConstraint Property="statusId" ReferencedProperty="statusId"/>
+                </NavigationProperty>
             </EntityType>
             <EntityType Name="Facility">
                 <Key>
@@ -319,6 +332,7 @@
                 <Property Name="reason" Type="Edm.String" MaxLength="255"/>
                 <Property Name="createdDate" Type="Edm.DateTimeOffset" Precision="3"/>
                 <Property Name="createdByUserLogin" Type="Edm.String" MaxLength="320"/>
+                <Property Name="partyId" Type="Edm.String" DefaultValue="${userLoginId}" MaxLength="60"/>
                 <Property Name="productId" Type="Edm.String" MaxLength="60"/>
                 <Property Name="statusId" Type="Edm.String" DefaultValue="REQUIREMENT_NOT_APPROVED" MaxLength="60"/>
                 <Property Name="facilityId" Type="Edm.String" MaxLength="60"/>
@@ -342,7 +356,7 @@
                 <Parameter Name="statusId" Type="Edm.String"/>
             </Action>
             <Action Name="CatalogRequestSubmit" EntitySetPath="catalogRequest" IsBound="true">
-                <Parameter Name="catalogRequest" Type="Collection(com.dpbird.CatalogRequest)" Nullable="false"/>
+                <Parameter Name="catalogRequest" Type="com.dpbird.CatalogRequest" Nullable="false"/>
             </Action>
             <Action Name="RFQSubmit" EntitySetPath="purchaseRequest" IsBound="true">
                 <Parameter Name="purchaseRequest" Type="com.dpbird.PurchaseRequest" Nullable="false"/>
@@ -373,6 +387,16 @@
                 <Parameter Name="description" Type="Edm.String"/>
                 <Parameter Name="requiredByDate" Type="Edm.DateTimeOffset"/>
             </Action>
+            <Action Name="AssignTaskToFix" EntitySetPath="custRequestItem" IsBound="true">
+                <Parameter Name="custRequestItem" Type="com.dpbird.CustRequestItem" Nullable="false"/>
+                <Parameter Name="partyId" Type="Edm.String" Nullable="false"/>
+            </Action>
+            <Action Name="GenerateRequirement" EntitySetPath="custRequestItem" IsBound="true">
+                <Parameter Name="custRequestItem" Type="com.dpbird.CustRequestItem" Nullable="false"/>
+                <Parameter Name="facilityId" Type="Edm.String"/>
+                <Parameter Name="estimatedBudget" Type="Edm.Decimal" Scale="2"/>
+                <Parameter Name="quantity" Type="Edm.Decimal" Scale="2"/>
+            </Action>
             <EntityContainer Name="O3Container">
                 <EntitySet Name="Products" EntityType="com.dpbird.Product">
                     <NavigationPropertyBinding Path="QuantityUom" Target="Unm"/>
@@ -386,11 +410,25 @@
                     <NavigationPropertyBinding Path="PurchaseRequest" Target="PurchaseRequests"/>
                     <NavigationPropertyBinding Path="PurchaseOrder" Target="PurchaseOrderHeaders"/>
                 </EntitySet>
+                <EntitySet Name="ITCatalogRequests" EntityType="com.dpbird.CatalogRequest">
+                    <NavigationPropertyBinding Path="PurchaseQuote" Target="PurchaseQuotes"/>
+                    <NavigationPropertyBinding Path="ProductRequirement" Target="ProductRequirements"/>
+                    <NavigationPropertyBinding Path="CustRequestCategory" Target="CustRequestCategories"/>
+                    <NavigationPropertyBinding Path="CustRequestItem" Target="CustRequestItems"/>
+                    <NavigationPropertyBinding Path="CatalogRequestStatus" Target="CatalogRequestStatuses"/>
+                </EntitySet>
                 <EntitySet Name="PurchaseOrderHeaders" EntityType="com.dpbird.PurchaseOrder">
                     <NavigationPropertyBinding Path="PurchaseQuote" Target="PurchaseQuotes"/>
                 </EntitySet>
                 <EntitySet Name="Facilities" EntityType="com.dpbird.Facility"/>
                 <EntitySet Name="CatalogRequestStatuses" EntityType="com.dpbird.CatalogRequestStatus"/>
+                <EntitySet Name="RequestItemStatuses" EntityType="com.dpbird.RequestItemStatus"/>
+                <EntitySet Name="CGProductRequirements" EntityType="com.dpbird.ProductRequirement">
+                    <NavigationPropertyBinding Path="PurchaseRequest" Target="PurchaseRequests"/>
+                    <NavigationPropertyBinding Path="Product" Target="Products"/>
+                    <NavigationPropertyBinding Path="Facility" Target="Facilities"/>
+                    <NavigationPropertyBinding Path="StatusItem" Target="StatusItems"/>
+                </EntitySet>
                 <EntitySet Name="CustRequestCategories" EntityType="com.dpbird.CustRequestCategory"/>
                 <EntitySet Name="ProductCategories" EntityType="com.dpbird.ProductCategory"/>
                 <EntitySet Name="Unm" EntityType="com.dpbird.Uom"/>
@@ -402,7 +440,9 @@
                     <NavigationPropertyBinding Path="CatalogRequestStatus" Target="CatalogRequestStatuses"/>
                 </EntitySet>
                 <EntitySet Name="StatusItems" EntityType="com.dpbird.StatusItem"/>
-                <EntitySet Name="CustRequestItems" EntityType="com.dpbird.CustRequestItem"/>
+                <EntitySet Name="CustRequestItems" EntityType="com.dpbird.CustRequestItem">
+                    <NavigationPropertyBinding Path="RequestItemStatus" Target="RequestItemStatuses"/>
+                </EntitySet>
                 <EntitySet Name="RequestWorkEfforts" EntityType="com.dpbird.RequestWorkEffort"/>
                 <EntitySet Name="ProductRequirements" EntityType="com.dpbird.ProductRequirement">
                     <NavigationPropertyBinding Path="PurchaseRequest" Target="PurchaseRequests"/>
@@ -438,6 +478,37 @@
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CatalogRequestStatus/description">
+                <Annotation Term="Common.Label">
+                    <String>Status</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RequestItemStatus/statusId">
+                <Annotation Term="Common.Label">
+                    <String>Status ID</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RequestItemStatus/statusTypeId">
+                <Annotation Term="Common.Label">
+                    <String>statusTypeId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RequestItemStatus/statusCode">
+                <Annotation Term="Common.Label">
+                    <String>statusCode</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RequestItemStatus/sequenceId">
+                <Annotation Term="Common.Label">
+                    <String>sequenceId</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.RequestItemStatus/description">
                 <Annotation Term="Common.Label">
                     <String>Status</String>
                 </Annotation>
@@ -1537,6 +1608,98 @@
                         </Record>
                     </Collection>
                 </Annotation>
+                <Annotation Term="UI.LineItem" Qualifier="RelatedCatalogRequestByIT">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>custRequestItemSeqId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>productId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>quantity</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>statusId</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>description</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value">
+                                <Path>requiredByDate</Path>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label">
+                                <String>Fix</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Action">
+                                <String>com.dpbird.AssignTaskToFix</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>true</Bool>
+                            </PropertyValue>
+                            <PropertyValue Property="InvocationGrouping">
+                                <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                            </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Label">
+                                <String>Requirement</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Action">
+                                <String>com.dpbird.GenerateRequirement</String>
+                            </PropertyValue>
+                            <PropertyValue Property="Inline">
+                                <Bool>true</Bool>
+                            </PropertyValue>
+                            <PropertyValue Property="InvocationGrouping">
+                                <EnumMember>UI.OperationGroupingType/Isolated</EnumMember>
+                            </PropertyValue>
+                            <PropertyValue Property="Criticality">
+                                <EnumMember>UI.CriticalityType/Positive</EnumMember>
+                            </PropertyValue>
+                            <Annotation Term="UI.Importance">
+                                <EnumMember>UI.ImportanceType/High</EnumMember>
+                            </Annotation>
+                        </Record>
+                    </Collection>
+                </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.CustRequestItem/custRequestId">
                 <Annotation Term="Common.Label">
@@ -1558,11 +1721,6 @@
                     <String>quantity</String>
                 </Annotation>
             </Annotations>
-            <Annotations Target="com.dpbird.CustRequestItem/statusId">
-                <Annotation Term="Common.Label">
-                    <String>statusId</String>
-                </Annotation>
-            </Annotations>
             <Annotations Target="com.dpbird.CustRequestItem/description">
                 <Annotation Term="Common.Label">
                     <String>description</String>
@@ -1571,6 +1729,17 @@
             <Annotations Target="com.dpbird.CustRequestItem/requiredByDate">
                 <Annotation Term="Common.Label">
                     <String>requiredByDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.CustRequestItem/statusId">
+                <Annotation Term="Common.Label">
+                    <String>statusId</String>
+                </Annotation>
+                <Annotation Term="Common.Text">
+                    <Path>RequestItemStatus/description</Path>
+                    <Annotation Term="UI.TextArrangement">
+                        <EnumMember>UI.TextArrangementType/TextOnly</EnumMember>
+                    </Annotation>
                 </Annotation>
             </Annotations>
             <Annotations Target="com.dpbird.Facility/facilityId">
@@ -2063,6 +2232,11 @@
                     <String>createdByUserLogin</String>
                 </Annotation>
             </Annotations>
+            <Annotations Target="com.dpbird.ProductRequirement/partyId">
+                <Annotation Term="Common.Label">
+                    <String>partyId</String>
+                </Annotation>
+            </Annotations>
             <Annotations Target="com.dpbird.ProductRequirement/productId">
                 <Annotation Term="Common.Label">
                     <String>productId</String>
@@ -2440,6 +2614,83 @@
             <Annotations Target="com.dpbird.UpdateCustRequestItem/requiredByDate">
                 <Annotation Term="Common.Label">
                     <String>RequiredByDate</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AssignTaskToFix">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>custRequestItem</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.AssignTaskToFix/partyId">
+                <Annotation Term="Common.Label">
+                    <String>FixedByParty</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GenerateRequirement">
+                <Annotation Term="Common.SideEffects">
+                    <Record>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>custRequestItem</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GenerateRequirement/facilityId">
+                <Annotation Term="Common.Label">
+                    <String>FacilityName</String>
+                </Annotation>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label">
+                            <String>FacilityName</String>
+                        </PropertyValue>
+                        <PropertyValue Property="CollectionPath">
+                            <String>Facilities</String>
+                        </PropertyValue>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty">
+                                        <PropertyPath>facilityId</PropertyPath>
+                                    </PropertyValue>
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>facilityId</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>facilitySize</String>
+                                    </PropertyValue>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty">
+                                        <String>openedDate</String>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues">
+                    <Bool>false</Bool>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GenerateRequirement/estimatedBudget">
+                <Annotation Term="Common.Label">
+                    <String>EstimatedBudget</String>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="com.dpbird.GenerateRequirement/quantity">
+                <Annotation Term="Common.Label">
+                    <String>Quantity</String>
                 </Annotation>
             </Annotations>
         </Schema>
