@@ -40,14 +40,19 @@
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="createdDate" ></PropertyValue>
                         </Record>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Action" String="com.dpbird.CreateProductRequirement"/>
+                            <PropertyValue Property="Label" String="Create"/>
+                            <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Positive" />
+                        </Record>
                     </Collection>
                 </Annotation>
 
                 <Annotation Term="UI.Identification">
                     <Collection>
                         <Record Type="UI.DataFieldForAction">
-                            <PropertyValue Property="Action" String="com.dpbird.ApproveRequirement"/>
-                            <PropertyValue Property="Label" String="Approve"/>
+                            <PropertyValue Property="Action" String="com.dpbird.SubmitRequirement"/>
+                            <PropertyValue Property="Label" String="Submit"/>
                         </Record>
                     </Collection>
                 </Annotation>

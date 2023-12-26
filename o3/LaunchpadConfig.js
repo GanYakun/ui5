@@ -283,6 +283,36 @@
             }
           },
           {
+            id: "requirement_ApproveByRequester",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "Requirement",
+            "semanticAction": "ApproveByRequester",
+            properties: {
+              title: "Requirement-ApproveByRequester",
+              subtitle: "Requirement-ApproveByRequester",
+              info: "Requirement-ApproveByRequester",
+              targetURL: "#Requirement-ApproveByRequester",
+            }
+          },
+          {
+            id: "requirement_CreatedByIT",//tile的ID
+            chipId: "catalogTile_35",
+            size: "1x1",
+            tileType: "sap.ushell.ui.tile.StaticTile",
+            isLinkPersonalizationSupported: true,
+            "semanticObject": "Requirement",
+            "semanticAction": "CreatedByIT",
+            properties: {
+              title: "Requirement-CreatedByIT",
+              subtitle: "Requirement-CreatedByIT",
+              info: "Requirement-CreatedByIT",
+              targetURL: "#Requirement-CreatedByIT",
+            }
+          },
+          {
             id: "requirementPro_Manage",//tile的ID
             chipId: "catalogTile_35",
             size: "1x1",
@@ -512,6 +542,18 @@
         additionalInformation: "SAPUI5.Component=com.banfftech.requirementmanage",
         applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
         url: sUshellO3RootPath + "/apps/requirement-manage/webapp",
+        description: "管理订单"
+      },
+      "Requirement-CreatedByIT": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.requirementcreatedbyit",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/requirement-createdbyit/webapp",
+        description: "管理订单"
+      },
+      "Requirement-ApproveByRequester": {
+        additionalInformation: "SAPUI5.Component=com.banfftech.requirementapprovebyrequester",
+        applicationType: "URL",//URL 当前窗口,NWBC 跳出新窗口
+        url: sUshellO3RootPath + "/apps/requirement-approvebyrequester/webapp",
         description: "管理订单"
       },
       "Requirement-ManageByProcurement": {
