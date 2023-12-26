@@ -58,6 +58,14 @@
                     </Collection>
                 </Annotation>
 
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataFieldForAction">
+                            <PropertyValue Property="Action" String="com.dpbird.SubmitRequirement"/>
+                            <PropertyValue Property="Label" String="Submit"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
             </Annotations>
         </Schema>
     </edmx:DataServices>
